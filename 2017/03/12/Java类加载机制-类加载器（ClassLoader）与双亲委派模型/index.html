@@ -64,12 +64,10 @@
 <meta property="og:site_name" content="ByteLife">
 <meta property="og:description" content="Java虚拟机类加载过程中的“加载”阶段第一步就是“通过一个类的全限定名来获取描述此类的二级制字节流”，这个动作由Java虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类，实现这个动作的模块叫做“类加载器”。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-12_08-34-52.png">
 <meta property="og:updated_time" content="2019-09-10T14:50:26.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java类加载机制-类加载器（ClassLoader）与双亲委派模型">
 <meta name="twitter:description" content="Java虚拟机类加载过程中的“加载”阶段第一步就是“通过一个类的全限定名来获取描述此类的二级制字节流”，这个动作由Java虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类，实现这个动作的模块叫做“类加载器”。">
-<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-12_08-34-52.png">
   <link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
   <link rel="canonical" href="http://yoursite.com/2017/03/12/Java类加载机制-类加载器（ClassLoader）与双亲委派模型/">
 
@@ -213,6 +211,8 @@
     <span>0%</span>
   </div>
 
+  <a href="https://github.com/huzhanfei" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
 
     <main id="main" class="main">
       <div class="main-inner">
@@ -324,7 +324,7 @@
 <p>因此，为了保证类加载器都正确实现代理模式，在开发自己的类加载器时，最好不要覆写 loadClass()方法，而是覆写 findClass()方法。 下面是一个文件系统类加载器的例子：</p>
 <p>public class FileSystemClassLoader extends ClassLoader {<br>    private String rootDir;<br>    public FileSystemClassLoader(String rootDir) {<br>        this.rootDir = rootDir;<br>    }<br>    protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException {<br>        byte[] classData = getClassData(name);<br>        if (classData == null) {<br>            throw new ClassNotFoundException();<br>        }<br>        else {<br>            return defineClass(name, classData, 0, classData.length);<br>        }<br>    }<br>    private byte[] getClassData(String className) {<br>        String path = classNameToPath(className);<br>        try {<br>            InputStream ins = new FileInputStream(path);<br>            ByteArrayOutputStream baos = new ByteArrayOutputStream();<br>            int bufferSize = 4096;<br>            byte[] buffer = new byte[bufferSize];<br>            int bytesNumRead = 0;<br>            while ((bytesNumRead = ins.read(buffer)) != -1) {<br>                baos.write(buffer, 0, bytesNumRead);<br>            }<br>            return baos.toByteArray();<br>        } catch (IOException e) {<br>            e.printStackTrace();<br>        }<br>        return null;<br>    }<br>    private String classNameToPath(String className) {<br>        return rootDir + File.separatorChar<br>                + className.replace(‘.’, File.separatorChar) + “.class”;<br>    }<br> }</p>
 <h2 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h2><p>下图展示的类加载器之间的层次关系，称为类加载器的“双亲委派模型”。双亲委派模型要求除了顶层的启动类加载器外，其它类加载器必须有自己的父加载器。</p>
-<p><img src="https://cdn.javacodes.cn/files/2017/03/2017-03-12_08-34-52.png" alt></p>
+<p><img alt data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-12_08-34-52.png"></p>
 <blockquote>
 <p>这里的类加载器之间的父子关系一般不通过继承（Inheritance）来实现，而是通过组合（Composition）关系来服用父加载器代码。 双亲委派模型并不是一个强制性约束，而是Java设计者推荐给开发者的一种类加载实现方式。</p>
 </blockquote>
