@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="最近接到电话面试中，面试官问我ClassNotFoundException与NoClassDefFoundError有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一下，感觉非">
+<meta name="keywords" content="Java,类加载,异常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析ClassNotFoundException与NoClassDefFoundError">
+<meta property="og:url" content="http://yoursite.com/2017/03/18/浅析ClassNotFoundException与NoClassDefFoundError/index.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="最近接到电话面试中，面试官问我ClassNotFoundException与NoClassDefFoundError有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一下，感觉非">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-18_02-57-20.jpg">
+<meta property="og:updated_time" content="2019-09-10T14:53:41.831Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析ClassNotFoundException与NoClassDefFoundError">
+<meta name="twitter:description" content="最近接到电话面试中，面试官问我ClassNotFoundException与NoClassDefFoundError有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一下，感觉非">
+<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-18_02-57-20.jpg">
+  <link rel="canonical" href="http://yoursite.com/2017/03/18/浅析ClassNotFoundException与NoClassDefFoundError/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>浅析ClassNotFoundException与NoClassDefFoundError | ByteLife</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ByteLife</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/18/浅析ClassNotFoundException与NoClassDefFoundError/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">浅析ClassNotFoundException与NoClassDefFoundError
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2017-03-18 10:57:13" itemprop="dateCreated datePublished" datetime="2017-03-18T10:57:13+08:00">2017-03-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-10 22:53:41" itemprop="dateModified" datetime="2019-09-10T22:53:41+08:00">2019-09-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近接到电话面试中，面试官问我ClassNotFoundException与NoClassDefFoundError有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一下，感觉非常尴尬。 回来以后又查阅了一些相关的资料，并尝试了一下，整理分享给网友。</p>
+<a id="more"></a>
+<h3 id="ClassNotFoundException"><a href="#ClassNotFoundException" class="headerlink" title="ClassNotFoundException"></a>ClassNotFoundException</h3><p>这个异常我们遇到的频率还是很高的，先来看看官方文档中的定义：</p>
+<blockquote>
+<p>当应用程序试图使用以下方法通过<strong>字符串名</strong>加载类时，抛出该异常：</p>
+<ul>
+<li>Class 类中的 forName 方法。</li>
+<li>ClassLoader 类中的 findSystemClass 方法。</li>
+<li>ClassLoader 类中的 loadClass 方法。</li>
+</ul>
+<p>但是没有找到具有指定名称的类的定义。 从 1.4 版本开始，此异常已经更新，以符合通用的异常链机制。在构造时提供并通过 <code>getException()</code> 方法访问的“加载类时引发的可选异常”，现在被称为原因，它可以通过 <code>Throwable.getCause()</code> 方法以及与上面提到的“遗留方法”来访问。</p>
+</blockquote>
+<p>也就是说在<strong>类加载</strong>阶段，通过类全名加载类时，如果不能找到这个类，就会抛出ClassNotFoundException，当然，通常在开发中可能出现该异常的情况总结如下：</p>
+<ol>
+<li>所需要的支持类库放错了地方，并没有放在类路径(CLASSPATH环境变量)里面。</li>
+<li>使用了重复的类库，且版本不一致。导致低版本的被优先使用。</li>
+<li>类名错了，一般是使用Class.forName的时候，手工指定了类名的情况。</li>
+<li>没有导入纯JAVA驱动包。</li>
+</ol>
+<p>当然啦，我经常遇到这个异常，尤其是在使用JDBC加载驱动的时候，驱动类的类全名真的是很难记的有木有！</p>
+<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>可以看到这个错误的类名以Error结尾，因此它属于JVM虚拟机错误，不需要程序员捕获，下图是它的继承结构： <img src="https://cdn.javacodes.cn/files/2017/03/2017-03-18_02-57-20.jpg" alt>￼ 还是同样先来看下官方文档中的定义：</p>
+<blockquote>
+<p>当 Java 虚拟机或 ClassLoader 实例试图在类的定义中加载（作为通常方法调用的一部分或者作为使用 new 表达式创建的新实例的一部分），但无法找到该类的定义时，抛出此异常。 当前执行的类被编译时，所搜索的类定义存在，但无法再找到该定义。</p>
+</blockquote>
+<p>通俗的说，就是编译的时候有这个类，而<strong>运行期</strong>的时候，这个类找不到了！就会抛出NoClassDefFoundError异常。 想要演示这个异常的出现很简单，只需要在编译好的class文件中将对应类的class文件删除，运行的时候就会抛出这个异常啦！ 那么在实际开发中，通常会在哪些情况遇到该异常呢？通常我们在开发过程中，肯定不会刻意的去删除某个class文件，但仍然有出现该异常的情况。 比如我们在使用第三方jar包时，有些SDK也会设定自己的Classpath。编译过程结束后在运行的过程中就要将已开发的应用和所有引入的jar包拷贝到应用服务器的相应目录下才可以运行，而应用服务器使用的Classpath也很有可能与SDK的不同，在这个过程中就有很大的几率造成双方环境不一致。所以很多开发者就会遇到在SDK中可以编译，运行也没有问题，但是同样的程序放到应用服务器上就出现NoClassDefFoundErr这个异常这种情况。</p>
+<blockquote>
+<p><strong>参考文章</strong>： 1. JavaTM Platform Standard Edition 6 的 API 规范 2. <a href="http://blog.csdn.net/fengkuangqi/article/details/32324053" target="_blank" rel="noopener">NoClassDefDoundErr与ClassNotFoundException区别</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Java/" rel="tag"># Java</a>
+            
+              <a href="/tags/类加载/" rel="tag"># 类加载</a>
+            
+              <a href="/tags/异常/" rel="tag"># 异常</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/03/15/ThreadLocal 详解/" rel="next" title="ThreadLocal 详解">
+                  <i class="fa fa-chevron-left"></i> ThreadLocal 详解
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/03/20/动态规划算法问题（经典找零案例）/" rel="prev" title="动态规划算法问题（经典找零案例）">
+                  动态规划算法问题（经典找零案例） <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ClassNotFoundException"><span class="nav-number">1.</span> <span class="nav-text">ClassNotFoundException</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NoClassDefFoundError"><span class="nav-number">2.</span> <span class="nav-text">NoClassDefFoundError</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

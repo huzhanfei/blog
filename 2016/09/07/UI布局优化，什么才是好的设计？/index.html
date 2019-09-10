@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="今天为大家分享一些Good UI 在一些项目中获取的设计以及运营策略等方面的经验。 这是本人收藏了很久的干货，最近开始做网站产品，又把它翻出来了。 Good UI是一家研究用户体验的设计机构。我们知道成功的页面设计不仅有很高的转化率更便于用户使用，既能满足商业目标更能为用户带来良好的体验。">
+<meta name="keywords" content="UI设计,布局优化,网页布局">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UI布局优化，什么才是好的设计？">
+<meta property="og:url" content="http://yoursite.com/2016/09/07/UI布局优化，什么才是好的设计？/index.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="今天为大家分享一些Good UI 在一些项目中获取的设计以及运营策略等方面的经验。 这是本人收藏了很久的干货，最近开始做网站产品，又把它翻出来了。 Good UI是一家研究用户体验的设计机构。我们知道成功的页面设计不仅有很高的转化率更便于用户使用，既能满足商业目标更能为用户带来良好的体验。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-54-2.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-55.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-57.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-57-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-57-2.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-58.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-58-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-59.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-59-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-00.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-00-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-01.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-01-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-01-2.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-02.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-02-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-03.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-04.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-04-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-04-2.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-05.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-05-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-27.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-27-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-28.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-28-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-29.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-29-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-30.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-30-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-31.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-31-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-31-2.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-32.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-48.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-48-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-49.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-49-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-49-2.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-50.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-50-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-51.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-51-1.png">
+<meta property="og:updated_time" content="2019-09-10T14:52:19.621Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UI布局优化，什么才是好的设计？">
+<meta name="twitter:description" content="今天为大家分享一些Good UI 在一些项目中获取的设计以及运营策略等方面的经验。 这是本人收藏了很久的干货，最近开始做网站产品，又把它翻出来了。 Good UI是一家研究用户体验的设计机构。我们知道成功的页面设计不仅有很高的转化率更便于用户使用，既能满足商业目标更能为用户带来良好的体验。">
+<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-54-2.png">
+  <link rel="canonical" href="http://yoursite.com/2016/09/07/UI布局优化，什么才是好的设计？/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>UI布局优化，什么才是好的设计？ | ByteLife</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ByteLife</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/07/UI布局优化，什么才是好的设计？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">UI布局优化，什么才是好的设计？
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2016-09-07 15:52:54" itemprop="dateCreated datePublished" datetime="2016-09-07T15:52:54+08:00">2016-09-07</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-10 22:52:19" itemprop="dateModified" datetime="2019-09-10T22:52:19+08:00">2019-09-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Web前端/" itemprop="url" rel="index"><span itemprop="name">Web前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天为大家分享一些Good UI 在一些项目中获取的设计以及运营策略等方面的经验。 这是本人收藏了很久的干货，最近开始做网站产品，又把它翻出来了。 Good UI是一家研究用户体验的设计机构。我们知道成功的页面设计不仅有很高的转化率更便于用户使用，既能满足商业目标更能为用户带来良好的体验。 </p>
+<a id="more"></a>
+<ol>
+<li>用通栏布局代替多栏布局</li>
+</ol>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-54-2.png" alt></p>
+<p>2. 给用户些好处，别急着做生意</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-55.png" alt></p>
+<p>3. 整合相似的功能，去掉零碎的UI元素</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-57.png" alt></p>
+<p>4.利用社会认同效应，别总是自吹自擂</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-57-1.png" alt></p>
+<p>5.主要功能需要多次强化显示</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-57-2.png" alt></p>
+<p>6.区分选中和可点击的状态，不要使用户困惑</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-58.png" alt></p>
+<p>7.布局有层次有重点，而非简单罗列</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-58-1.png" alt></p>
+<p>8. 允许用户撤销操作而不是使用弹窗需要用户确认</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-59.png" alt></p>
+<p>9. 明确的告知用户适用人群而不是简单的面向所用用户</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-59-1.png" alt></p>
+<p>10.简洁明了，直接了当</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-00.png" alt></p>
+<p>11.页面上多使用对比的方法</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-00-1.png" alt></p>
+<p>12.直接标出产地，别总单纯的讲历史</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-01.png" alt></p>
+<p>13.使用简洁的表单</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-01-1.png" alt></p>
+<p>14.把选项列出来而不是藏起来</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-01-2.png" alt></p>
+<p>15.使用连续性的提示符，别让用户误以为页面到了终点</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-02.png" alt></p>
+<p>16.功能专一而不是使用太多的链接</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-02-1.png" alt></p>
+<p>17.提示体统状态</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-03.png" alt></p>
+<p>18. 在动作按钮上增加些吸引人的诱惑</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-04.png" alt></p>
+<p>19.用直接操作来代替无数个菜单</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-04-1.png" alt></p>
+<p>20.直接显示输入框可以省略一个页面</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-04-2.png" alt></p>
+<p>21. 用一些动效过度而不用立即显示变化</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-05.png" alt></p>
+<p>22. 循序渐进的引导用户而非生硬的要求用户注册</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-05-1.png" alt></p>
+<p>23.试着减少线框，减少不必要的注意</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-27.png" alt></p>
+<p>24.向用户展示功能上的便捷之处而不是泛泛的展示特性</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-27-1.png" alt></p>
+<p>25. 用户没有使用记录的时候要善于引导</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-28.png" alt></p>
+<p>26. 给出默认的选项而不需要用户选择</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-28-1.png" alt></p>
+<p>27.保持一致性降低用户的学习成本</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-29.png" alt></p>
+<p>28. 自动补全一些数据，降低用户的操作负担</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-29-1.png" alt></p>
+<p>29. 尊重用户的使用习惯而不是创造新的规则</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-30.png" alt></p>
+<p>30. 提示用户如何规避风险，而不是总想着如何获利</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-30-1.png" alt></p>
+<p>31. 善于引导用户的视觉浏览线，而非单一布局</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-31.png" alt></p>
+<p>32. 将相关的条目分组，不要杂乱无章的排列</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-31-1.png" alt></p>
+<p>33.采用及时校验而不是到最后才提示错误</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-31-2.png" alt></p>
+<p>34.需要用户输入的格式宽松严格限定格式</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-32.png" alt></p>
+<p>35.让用户有一些紧急的意识，别让用户拖得太久</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-48.png" alt></p>
+<p>36. 适当尝试饥饿营销</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-48-1.png" alt></p>
+<p>37. 帮助用户识别</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-49.png" alt></p>
+<p>38. 使用更大的点击区域</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-49-1.png" alt></p>
+<p>39. 增加加载的速度，别让用户等太久</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-49-2.png" alt></p>
+<p>40. 可以给用户提供一些快捷操作</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-50.png" alt></p>
+<p>41. 使用一些对比</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-50-1.png" alt></p>
+<p>42. 初始化的时候给用户一些激励</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-51.png" alt></p>
+<p>43.循序渐进地引导用户，不要简单粗暴地直接呈现给用户</p>
+<p><img src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-53-51-1.png" alt></p>
+<p>文／神奇的bebe（简书作者） 原文链接：<a href="http://www.jianshu.com/p/2d1c9d8d55a7" target="_blank" rel="noopener">http://www.jianshu.com/p/2d1c9d8d55a7</a> 著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/UI设计/" rel="tag"># UI设计</a>
+            
+              <a href="/tags/布局优化/" rel="tag"># 布局优化</a>
+            
+              <a href="/tags/网页布局/" rel="tag"># 网页布局</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/09/07/Java程序员最可能被考到的面试题/" rel="next" title="Java程序员最可能被考到的面试题">
+                  <i class="fa fa-chevron-left"></i> Java程序员最可能被考到的面试题
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/09/07/使用Jackson解析JSON和序列化/" rel="prev" title="使用Jackson解析JSON和序列化">
+                  使用Jackson解析JSON和序列化 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

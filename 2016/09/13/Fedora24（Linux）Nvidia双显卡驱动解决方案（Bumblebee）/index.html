@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="现在的笔记本显卡多为Intel核心显卡+Nvidia显卡的组合模式，如果没能正确的管理Linux操作系统的双显卡驱动，可能会导致发热和性能差的问题。由于我们在Linux中极少运行对显卡要求特别高的3D程序，因此并不需要一直开启Nvidia独立显卡，只在需要它的时候再开启就好，Bumblebee提供了一个很棒的解决方案。 本文以Fedora24为例： 一、确认硬件环境当然，首先你得确定你的电脑确实是">
+<meta name="keywords" content="Fedora,Fedora24,Linux,nvidia,双显卡驱动,驱动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）">
+<meta property="og:url" content="http://yoursite.com/2016/09/13/Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）/index.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="现在的笔记本显卡多为Intel核心显卡+Nvidia显卡的组合模式，如果没能正确的管理Linux操作系统的双显卡驱动，可能会导致发热和性能差的问题。由于我们在Linux中极少运行对显卡要求特别高的3D程序，因此并不需要一直开启Nvidia独立显卡，只在需要它的时候再开启就好，Bumblebee提供了一个很棒的解决方案。 本文以Fedora24为例： 一、确认硬件环境当然，首先你得确定你的电脑确实是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-13_03-31-45.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-13_03-53-59.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-13_03-57-34.png">
+<meta property="og:updated_time" content="2019-09-10T14:47:56.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）">
+<meta name="twitter:description" content="现在的笔记本显卡多为Intel核心显卡+Nvidia显卡的组合模式，如果没能正确的管理Linux操作系统的双显卡驱动，可能会导致发热和性能差的问题。由于我们在Linux中极少运行对显卡要求特别高的3D程序，因此并不需要一直开启Nvidia独立显卡，只在需要它的时候再开启就好，Bumblebee提供了一个很棒的解决方案。 本文以Fedora24为例： 一、确认硬件环境当然，首先你得确定你的电脑确实是">
+<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-13_03-31-45.png">
+  <link rel="canonical" href="http://yoursite.com/2016/09/13/Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee） | ByteLife</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ByteLife</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/13/Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2016-09-13 12:09:05" itemprop="dateCreated datePublished" datetime="2016-09-13T12:09:05+08:00">2016-09-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-10 22:47:56" itemprop="dateModified" datetime="2019-09-10T22:47:56+08:00">2019-09-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux-服务器-网络/" itemprop="url" rel="index"><span itemprop="name">Linux/服务器/网络</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>现在的笔记本显卡多为Intel核心显卡+Nvidia显卡的组合模式，如果没能正确的管理Linux操作系统的双显卡驱动，可能会导致发热和性能差的问题。由于我们在Linux中极少运行对显卡要求特别高的3D程序，因此并不需要一直开启Nvidia独立显卡，只在需要它的时候再开启就好，Bumblebee提供了一个很棒的解决方案。 本文以Fedora24为例：</p>
+<h3 id="一、确认硬件环境"><a href="#一、确认硬件环境" class="headerlink" title="一、确认硬件环境"></a>一、确认硬件环境</h3><p>当然，首先你得确定你的电脑确实是Intel+Nvidia的双显卡组合模式（optimus），查看方法很简单，只需要一条命令：</p>
+<p>lspci | egrep ‘VGA|3D’</p>
+<a id="more"></a>
+<p>如果你的电脑是双显卡，将会输出类似如下的信息： <img src="https://cdn.javacodes.cn/files/2016/09/2016-09-13_03-31-45.png" alt="2016-09-13 11-31-27屏幕截图"></p>
+<h3 id="二、禁用Nouveau"><a href="#二、禁用Nouveau" class="headerlink" title="二、禁用Nouveau"></a>二、禁用Nouveau</h3><p>Nouveau是一个大多数Linux发行版都会自带的Nvidia第三方驱动程序，不过Nouveau只支持2D，不支持3D，可想而知其性能有多差。安装Bumblebee之前必须禁用Nouveau，否则会出现问题，方法如下： 运行命令：</p>
+<p>sudo gedit /etc/modprobe.d/blacklist.conf</p>
+<p>在打开的窗口中加上如下内容：</p>
+<blockquote>
+<p>blacklist nouveau options nouveau modeset=0</p>
+</blockquote>
+<p>保存并重新启动操作系统。</p>
+<h3 id="三、安装Bumblebee"><a href="#三、安装Bumblebee" class="headerlink" title="三、安装Bumblebee"></a>三、安装Bumblebee</h3><p>不同版本的Fedora稍有不同 开源驱动（Nouveau）命令如下（如果安装此版本，则无需执行上面的第二步）： <strong>fedora 22:</strong></p>
+<p># dnf -y –nogpgcheck install <a href="http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee/fedora22/noarch/bumblebee-release-1.2-1.noarch.rpm" target="_blank" rel="noopener">http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee/fedora22/noarch/bumblebee-release-1.2-1.noarch.rpm</a></p>
+<p><strong>fedora 23:</strong></p>
+<p># dnf -y –nogpgcheck install <a href="http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee/fedora23/noarch/bumblebee-release-1.2-1.noarch.rpm" target="_blank" rel="noopener">http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee/fedora23/noarch/bumblebee-release-1.2-1.noarch.rpm</a></p>
+<p><strong>fedora 24:</strong></p>
+<p># dnf -y –nogpgcheck install <a href="http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee/fedora24/noarch/bumblebee-release-1.2-1.noarch.rpm" target="_blank" rel="noopener">http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee/fedora24/noarch/bumblebee-release-1.2-1.noarch.rpm</a></p>
+<p>闭源驱动（Nvidia）命令如下：（推荐） <strong>fedora 22:</strong></p>
+<p># dnf -y –nogpgcheck install <a href="http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee-nonfree/fedora22/noarch/bumblebee-nonfree-release-1.2-1.noarch.rpm" target="_blank" rel="noopener">http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee-nonfree/fedora22/noarch/bumblebee-nonfree-release-1.2-1.noarch.rpm</a></p>
+<p><strong>fedora 23:</strong></p>
+<p># dnf -y –nogpgcheck install <a href="http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee-nonfree/fedora23/noarch/bumblebee-nonfree-release-1.2-1.noarch.rpm" target="_blank" rel="noopener">http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee-nonfree/fedora23/noarch/bumblebee-nonfree-release-1.2-1.noarch.rpm</a></p>
+<p><strong>fedora 24:</strong></p>
+<p># dnf -y –nogpgcheck install <a href="http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee-nonfree/fedora24/noarch/bumblebee-nonfree-release-1.2-1.noarch.rpm" target="_blank" rel="noopener">http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee-nonfree/fedora24/noarch/bumblebee-nonfree-release-1.2-1.noarch.rpm</a></p>
+<h3 id="四、安装Bumblebee-nvidia"><a href="#四、安装Bumblebee-nvidia" class="headerlink" title="四、安装Bumblebee-nvidia"></a>四、安装Bumblebee-nvidia</h3><p>接下来执行（根据系统选择）： 1、32位系统：</p>
+<p># dnf install bumblebee-nvidia bbswitch-dkms primus kernel-devel</p>
+<p>2、64位系统：</p>
+<p># dnf install bumblebee-nvidia bbswitch-dkms VirtualGL.x86_64 VirtualGL.i686 primus.x86_64 primus.i686 kernel-devel</p>
+<p>耐心的等待下载并安装完成，重新启动操作系统。</p>
+<h3 id="五、检查是否成功"><a href="#五、检查是否成功" class="headerlink" title="五、检查是否成功"></a>五、检查是否成功</h3><p>1、运行如下命令再次查看显卡pci信息：</p>
+<p>lspci | egrep ‘VGA|3D’</p>
+<p>检查nvidia显卡信息后面是否是(rev ff)，如果是，则证明Bumblebee已经运行； 2、运行如下命令比较帧数： 首先运行：</p>
+<p>glxgears</p>
+<p>查看终端中输出的FPS数值，此处的数值为使用核心显卡时的数值： <img src="https://cdn.javacodes.cn/files/2016/09/2016-09-13_03-53-59.png" alt="2016-09-13 11-53-42屏幕截图"> 运行：</p>
+<p>optirun glxgears</p>
+<p>查看终端FPS信息，此时如果能够正常运行，则为Nvidia显卡在工作： <img src="https://cdn.javacodes.cn/files/2016/09/2016-09-13_03-57-34.png" alt="2016-09-13 11-56-31屏幕截图"> 明显看出FPS从60飙升到2000，证明NVIDIA生效；</p>
+<h3 id="六、使用Bumblebee软件"><a href="#六、使用Bumblebee软件" class="headerlink" title="六、使用Bumblebee软件"></a>六、使用Bumblebee软件</h3><p>常规用法：</p>
+<p>$ optirun [options] application [application-parameters]</p>
+<p>下面举几个例子： 1、使用独立显卡运行Windows（通过Wine）应用程序：</p>
+<p>$ optirun wine application.exe</p>
+<p>我就是用这种方式来运行魔兽世界的，虽然不总玩，哈哈，谁说Linux不可以玩游戏！ 2、打开nvidia显卡设置</p>
+<p>$ optirun -b none nvidia-settings -c :8</p>
+<p>3、使用独立显卡运行Java程序</p>
+<p>$ optirun -b primus java -jar /PATH/TO/Minecraft.jar</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Fedora/" rel="tag"># Fedora</a>
+            
+              <a href="/tags/Fedora24/" rel="tag"># Fedora24</a>
+            
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+            
+              <a href="/tags/nvidia/" rel="tag"># nvidia</a>
+            
+              <a href="/tags/双显卡驱动/" rel="tag"># 双显卡驱动</a>
+            
+              <a href="/tags/驱动/" rel="tag"># 驱动</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/09/10/WordPress 博客同步到 CSDN 插件/" rel="next" title="WordPress 博客同步到 CSDN 插件">
+                  <i class="fa fa-chevron-left"></i> WordPress 博客同步到 CSDN 插件
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/09/18/Spring学习笔记之自动化装配Bean/" rel="prev" title="Spring学习笔记之自动化装配Bean">
+                  Spring学习笔记之自动化装配Bean <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、确认硬件环境"><span class="nav-number">1.</span> <span class="nav-text">一、确认硬件环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、禁用Nouveau"><span class="nav-number">2.</span> <span class="nav-text">二、禁用Nouveau</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、安装Bumblebee"><span class="nav-number">3.</span> <span class="nav-text">三、安装Bumblebee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、安装Bumblebee-nvidia"><span class="nav-number">4.</span> <span class="nav-text">四、安装Bumblebee-nvidia</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、检查是否成功"><span class="nav-number">5.</span> <span class="nav-text">五、检查是否成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、使用Bumblebee软件"><span class="nav-number">6.</span> <span class="nav-text">六、使用Bumblebee软件</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
