@@ -18,24 +18,24 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="博客简介老H博客是一个以Java语言为主的技术分享博客，主要分享有关Java语言、Android、数据库、Web前端、计算机网络、服务器搭建、操作系统等相关技术经验。本站内容如无特殊注明来源均为原创文章，转载请遵循“创作共用”版权协议。 博主简介博主目前为本科在校生，喜爱编程、互联网等一些计算机相关的技术，主要擅长领域为Java Web应用开发。博主受Java语言的影响，崇尚免费、开源，希望将更多">
 <meta property="og:type" content="website">
 <meta property="og:title" content="关于本站">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta property="og:url" content="https://bytelife.net/about/index.html">
 <meta property="og:site_name" content="ByteLife">
 <meta property="og:description" content="博客简介老H博客是一个以Java语言为主的技术分享博客，主要分享有关Java语言、Android、数据库、Web前端、计算机网络、服务器搭建、操作系统等相关技术经验。本站内容如无特殊注明来源均为原创文章，转载请遵循“创作共用”版权协议。 博主简介博主目前为本科在校生，喜爱编程、互联网等一些计算机相关的技术，主要擅长领域为Java Web应用开发。博主受Java语言的影响，崇尚免费、开源，希望将更多">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://javacodes.cn/files/2016/07/2016-11-03_15-08-48.gif">
 <meta property="article:published_time" content="2016-07-18T06:22:46.000Z">
-<meta property="article:modified_time" content="2020-06-06T23:47:01.905Z">
+<meta property="article:modified_time" content="2020-06-07T18:53:40.246Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://javacodes.cn/files/2016/07/2016-11-03_15-08-48.gif">
 
-<link rel="canonical" href="http://yoursite.com/about/">
+<link rel="canonical" href="https://bytelife.net/about/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -259,7 +259,25 @@
 </li>
 </ul>
 <p>非商业用途，不能为某种利益而擅自改动或者删除作者名发表在任何商业媒体上。 如果基于原作品内容进行再创作，应使用“署名·非商业用途·保持一致”的协议分发最终作品。</p>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
       </div>
       
       

@@ -18,18 +18,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="ByteLife">
-<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:url" content="https://bytelife.net/page/3/index.html">
 <meta property="og:site_name" content="ByteLife">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Jeffrey Hu">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/page/3/">
+<link rel="canonical" href="https://bytelife.net/page/3/">
 
 
 <script id="page-configurations">
@@ -74,7 +74,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -177,7 +177,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/18/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E8%87%AA%E5%8A%A8%E5%8C%96%E8%A3%85%E9%85%8DBean/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -191,7 +191,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/18/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E8%87%AA%E5%8A%A8%E5%8C%96%E8%A3%85%E9%85%8DBean/" class="post-title-link" itemprop="url">Spring学习笔记之自动化装配Bean</a>
+            <a href="/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html" class="post-title-link" itemprop="url">Spring学习笔记之自动化装配Bean</a>
         </h2>
 
         <div class="post-meta">
@@ -208,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,7 +234,7 @@
           <p>在Spring中可以使用Java代码、XML和自动化装配三种方式来装配Bean。从便利性角度来说，最强大的还是Spring的自动化配置，如果Spring能够进行自动化装配的话，那何苦还要显式的将这些Bean装配在一起呢？ Spring从两个角度来实现自动化装配： 组件扫描：Spring会自动发现应用上下文中所创建的Bean； 自动装配：Spring自动满足bean之间的依赖。 为了阐述组件扫描和装配，我们需要创建几个Bean，它们代表了一个音响系统中的组件。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/18/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E8%87%AA%E5%8A%A8%E5%8C%96%E8%A3%85%E9%85%8DBean/#more" rel="contents">
+              <a class="btn" href="/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -258,7 +258,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/13/Fedora24%EF%BC%88Linux%EF%BC%89Nvidia%E5%8F%8C%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%88Bumblebee%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/fedora24-linux-nvidia-shuang-xian-qia-qu-dong-jie-jue-fang-an-bumblebee.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -272,7 +272,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/13/Fedora24%EF%BC%88Linux%EF%BC%89Nvidia%E5%8F%8C%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%88Bumblebee%EF%BC%89/" class="post-title-link" itemprop="url">Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）</a>
+            <a href="/articles/fedora24-linux-nvidia-shuang-xian-qia-qu-dong-jie-jue-fang-an-bumblebee.html" class="post-title-link" itemprop="url">Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）</a>
         </h2>
 
         <div class="post-meta">
@@ -289,7 +289,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -317,7 +317,7 @@
 <p>lspci | egrep ‘VGA|3D’</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/13/Fedora24%EF%BC%88Linux%EF%BC%89Nvidia%E5%8F%8C%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%88Bumblebee%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/articles/fedora24-linux-nvidia-shuang-xian-qia-qu-dong-jie-jue-fang-an-bumblebee.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -341,7 +341,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/10/WordPress%20%E5%8D%9A%E5%AE%A2%E5%90%8C%E6%AD%A5%E5%88%B0%20CSDN%20%E6%8F%92%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/wordpress-bo-ke-tong-bu-dao-csdn-cha-jian.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -355,7 +355,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/10/WordPress%20%E5%8D%9A%E5%AE%A2%E5%90%8C%E6%AD%A5%E5%88%B0%20CSDN%20%E6%8F%92%E4%BB%B6/" class="post-title-link" itemprop="url">WordPress 博客同步到 CSDN 插件</a>
+            <a href="/articles/wordpress-bo-ke-tong-bu-dao-csdn-cha-jian.html" class="post-title-link" itemprop="url">WordPress 博客同步到 CSDN 插件</a>
         </h2>
 
         <div class="post-meta">
@@ -372,7 +372,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -401,7 +401,7 @@
 <p>在没用 WordPress 博客前就在 CSDN 写了一些日志，后来自己搭建博客后，就希望能够将博客同步到 CSDN 中，无奈 CSDN 在 2011 年 7 月宣布暂不支持 Windows Live Writer 发布博文，直到在2014 年 5 月 29 日才宣布重新<a href="http://blog.csdn.net/csdnproduct/article/details/27504397" target="_blank" rel="noopener">支持离线写博客</a>，让插件同步成为可能，不过目前网上搜到的插件现在都已经失效了。 </p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/10/WordPress%20%E5%8D%9A%E5%AE%A2%E5%90%8C%E6%AD%A5%E5%88%B0%20CSDN%20%E6%8F%92%E4%BB%B6/#more" rel="contents">
+              <a class="btn" href="/articles/wordpress-bo-ke-tong-bu-dao-csdn-cha-jian.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -425,7 +425,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/07/%E4%BD%BF%E7%94%A8Jackson%E8%A7%A3%E6%9E%90JSON%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/shi-yong-jackson-jie-xi-json-he-xu-lie-hua.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -439,7 +439,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/07/%E4%BD%BF%E7%94%A8Jackson%E8%A7%A3%E6%9E%90JSON%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-title-link" itemprop="url">使用Jackson解析JSON和序列化</a>
+            <a href="/articles/shi-yong-jackson-jie-xi-json-he-xu-lie-hua.html" class="post-title-link" itemprop="url">使用Jackson解析JSON和序列化</a>
         </h2>
 
         <div class="post-meta">
@@ -456,7 +456,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -489,7 +489,7 @@
 <p>目前Jackson的最新版本为2.8.2。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/07/%E4%BD%BF%E7%94%A8Jackson%E8%A7%A3%E6%9E%90JSON%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/#more" rel="contents">
+              <a class="btn" href="/articles/shi-yong-jackson-jie-xi-json-he-xu-lie-hua.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -513,7 +513,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/07/UI%E5%B8%83%E5%B1%80%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%80%E4%B9%88%E6%89%8D%E6%98%AF%E5%A5%BD%E7%9A%84%E8%AE%BE%E8%AE%A1%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/ui-bu-ju-you-hua-shi-me-cai-shi-hao-de-she-ji.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -527,7 +527,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/07/UI%E5%B8%83%E5%B1%80%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%80%E4%B9%88%E6%89%8D%E6%98%AF%E5%A5%BD%E7%9A%84%E8%AE%BE%E8%AE%A1%EF%BC%9F/" class="post-title-link" itemprop="url">UI布局优化，什么才是好的设计？</a>
+            <a href="/articles/ui-bu-ju-you-hua-shi-me-cai-shi-hao-de-she-ji.html" class="post-title-link" itemprop="url">UI布局优化，什么才是好的设计？</a>
         </h2>
 
         <div class="post-meta">
@@ -544,7 +544,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -570,7 +570,7 @@
           <p>今天为大家分享一些Good UI 在一些项目中获取的设计以及运营策略等方面的经验。 这是本人收藏了很久的干货，最近开始做网站产品，又把它翻出来了。 Good UI是一家研究用户体验的设计机构。我们知道成功的页面设计不仅有很高的转化率更便于用户使用，既能满足商业目标更能为用户带来良好的体验。 </p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/07/UI%E5%B8%83%E5%B1%80%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%80%E4%B9%88%E6%89%8D%E6%98%AF%E5%A5%BD%E7%9A%84%E8%AE%BE%E8%AE%A1%EF%BC%9F/#more" rel="contents">
+              <a class="btn" href="/articles/ui-bu-ju-you-hua-shi-me-cai-shi-hao-de-she-ji.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -594,7 +594,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/07/Java%E7%A8%8B%E5%BA%8F%E5%91%98%E6%9C%80%E5%8F%AF%E8%83%BD%E8%A2%AB%E8%80%83%E5%88%B0%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/java-cheng-xu-yuan-zui-ke-neng-bei-kao-dao-de-mian-shi-ti.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -608,7 +608,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/07/Java%E7%A8%8B%E5%BA%8F%E5%91%98%E6%9C%80%E5%8F%AF%E8%83%BD%E8%A2%AB%E8%80%83%E5%88%B0%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-title-link" itemprop="url">Java程序员最可能被考到的面试题</a>
+            <a href="/articles/java-cheng-xu-yuan-zui-ke-neng-bei-kao-dao-de-mian-shi-ti.html" class="post-title-link" itemprop="url">Java程序员最可能被考到的面试题</a>
         </h2>
 
         <div class="post-meta">
@@ -625,7 +625,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -651,7 +651,7 @@
           <p>作为程序员在面试的时候碰到的问题还是很多的，不光要掌握像数组、链表、栈、队列和树这样基本的数据结构，在面试中还会碰到数据结构和算法问题。所以小编在这里告诉大家，下面的面试题目很有可能被碰到，一起来看看吧！ </p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/07/Java%E7%A8%8B%E5%BA%8F%E5%91%98%E6%9C%80%E5%8F%AF%E8%83%BD%E8%A2%AB%E8%80%83%E5%88%B0%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/#more" rel="contents">
+              <a class="btn" href="/articles/java-cheng-xu-yuan-zui-ke-neng-bei-kao-dao-de-mian-shi-ti.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -675,7 +675,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/07/Java%E5%8A%A0%E8%A7%A3%E5%AF%86%E4%B8%8E%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/java-jia-jie-mi-yu-shu-zi-qian-ming.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -689,7 +689,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/07/Java%E5%8A%A0%E8%A7%A3%E5%AF%86%E4%B8%8E%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/" class="post-title-link" itemprop="url">Java加解密与数字签名</a>
+            <a href="/articles/java-jia-jie-mi-yu-shu-zi-qian-ming.html" class="post-title-link" itemprop="url">Java加解密与数字签名</a>
         </h2>
 
         <div class="post-meta">
@@ -706,7 +706,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -730,12 +730,12 @@
 
       
           <blockquote>
-<p>本文转载自：QQ兴趣部落：<strong>java学习（部落）</strong> <a href="http://buluo.qq.com/p/detail.html?bid=11148&pid=1064765-1472376406&from=share_qq" target="_blank" rel="noopener">原文地址：点击访问</a></p>
+<p>本文转载自：QQ兴趣部落：<strong>java学习（部落）</strong> <a href="http://buluo.qq.com/p/detail.html?bid=11148&amp;pid=1064765-1472376406&amp;from=share_qq" target="_blank" rel="noopener">原文地址：点击访问</a></p>
 </blockquote>
 <p>实现方式：JDK实现，CC，BC JDK提供比较基础的底层的实现；CC提供一些简化的操作；BC提供补充 <strong>一、Base64加密</strong> 非常简单，加密解密就一个函数。 </p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/07/Java%E5%8A%A0%E8%A7%A3%E5%AF%86%E4%B8%8E%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/#more" rel="contents">
+              <a class="btn" href="/articles/java-jia-jie-mi-yu-shu-zi-qian-ming.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -759,7 +759,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBean%E7%9A%84%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-bean-de-shu-xing-zhu-ru.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -773,7 +773,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBean%E7%9A%84%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5/" class="post-title-link" itemprop="url">Spring学习笔记之Bean的属性注入</a>
+            <a href="/articles/spring-xue-xi-bi-ji-zhi-bean-de-shu-xing-zhu-ru.html" class="post-title-link" itemprop="url">Spring学习笔记之Bean的属性注入</a>
         </h2>
 
         <div class="post-meta">
@@ -790,7 +790,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -816,7 +816,7 @@
           <p>通常，JavaBean的属性值是私有的，同时拥有一组存取器方法，以setXxx()和getXxx()的形式存在。Spring通过Java 的反射机制借助属性的set方法来配置属性的值，以实现setter方式的注入。 </p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBean%E7%9A%84%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5/#more" rel="contents">
+              <a class="btn" href="/articles/spring-xue-xi-bi-ji-zhi-bean-de-shu-xing-zhu-ru.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -840,7 +840,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%85%8D%E7%BD%AEBean/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-pei-zhi-bean.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -854,7 +854,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%85%8D%E7%BD%AEBean/" class="post-title-link" itemprop="url">Spring学习笔记之配置Bean</a>
+            <a href="/articles/spring-xue-xi-bi-ji-zhi-pei-zhi-bean.html" class="post-title-link" itemprop="url">Spring学习笔记之配置Bean</a>
         </h2>
 
         <div class="post-meta">
@@ -871,7 +871,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -898,7 +898,7 @@
 <p>&lt;!-- 配置Bean –&gt;<br><bean id="helloWorld" class="cn.javacodes.spring.beans.HelloWorld"></bean></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%85%8D%E7%BD%AEBean/#more" rel="contents">
+              <a class="btn" href="/articles/spring-xue-xi-bi-ji-zhi-pei-zhi-bean.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -922,7 +922,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BIOC%E4%B8%8EDI%E6%A6%82%E8%BF%B0/">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-ioc-yu-di-gai-shu.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -936,7 +936,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BIOC%E4%B8%8EDI%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">Spring学习笔记之IOC与DI概述</a>
+            <a href="/articles/spring-xue-xi-bi-ji-zhi-ioc-yu-di-gai-shu.html" class="post-title-link" itemprop="url">Spring学习笔记之IOC与DI概述</a>
         </h2>
 
         <div class="post-meta">
@@ -953,7 +953,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 07:47:01" itemprop="dateModified" datetime="2020-06-07T07:47:01+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-08 02:53:40" itemprop="dateModified" datetime="2020-06-08T02:53:40+08:00">2020-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -982,7 +982,7 @@
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/09/06/Spring%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BIOC%E4%B8%8EDI%E6%A6%82%E8%BF%B0/#more" rel="contents">
+              <a class="btn" href="/articles/spring-xue-xi-bi-ji-zhi-ioc-yu-di-gai-shu.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
