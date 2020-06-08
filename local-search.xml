@@ -13,14 +13,12 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>动态规划</tag>
       
       <tag>算法</tag>
       
@@ -40,7 +38,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -50,8 +48,6 @@
       <tag>Java</tag>
       
       <tag>类加载</tag>
-      
-      <tag>异常</tag>
       
     </tags>
     
@@ -69,7 +65,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -79,8 +75,6 @@
       <tag>Java</tag>
       
       <tag>并发</tag>
-      
-      <tag>ThreadLocal</tag>
       
     </tags>
     
@@ -98,7 +92,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -125,7 +119,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -135,8 +129,6 @@
       <tag>Java</tag>
       
       <tag>并发</tag>
-      
-      <tag>CopyOnWrite</tag>
       
     </tags>
     
@@ -154,14 +146,12 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>ConcurrentLinkedQueue</tag>
       
       <tag>Java</tag>
       
@@ -183,7 +173,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -193,8 +183,6 @@
       <tag>Java</tag>
       
       <tag>并发</tag>
-      
-      <tag>ConcurrentHashMap</tag>
       
     </tags>
     
@@ -212,7 +200,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -220,8 +208,6 @@
     <tags>
       
       <tag>Java</tag>
-      
-      <tag>HashMap</tag>
       
     </tags>
     
@@ -239,7 +225,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -247,10 +233,6 @@
     <tags>
       
       <tag>Java</tag>
-      
-      <tag>JVM</tag>
-      
-      <tag>ClassLoader</tag>
       
       <tag>类加载</tag>
       
@@ -270,7 +252,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -278,10 +260,6 @@
     <tags>
       
       <tag>Java</tag>
-      
-      <tag>JVM</tag>
-      
-      <tag>ClassLoader</tag>
       
       <tag>类加载</tag>
       
@@ -301,7 +279,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -311,10 +289,6 @@
       <tag>Java</tag>
       
       <tag>JVM</tag>
-      
-      <tag>GC</tag>
-      
-      <tag>垃圾回收</tag>
       
     </tags>
     
@@ -332,7 +306,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -359,7 +333,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -395,12 +369,6 @@
       
       <tag>Linux</tag>
       
-      <tag>ServerSpeeder</tag>
-      
-      <tag>SS</tag>
-      
-      <tag>锐速</tag>
-      
     </tags>
     
   </entry>
@@ -417,28 +385,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>request</tag>
-      
-      <tag>session</tag>
+      <tag>Java</tag>
       
       <tag>Spring</tag>
-      
-      <tag>Spring学习笔记</tag>
-      
-      <tag>代理</tag>
-      
-      <tag>会话</tag>
-      
-      <tag>作用域</tag>
-      
-      <tag>请求</tag>
       
     </tags>
     
@@ -456,24 +412,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
+      <tag>Java</tag>
+      
       <tag>Spring</tag>
-      
-      <tag>Spring学习笔记</tag>
-      
-      <tag>@Qualifier</tag>
-      
-      <tag>Primary</tag>
-      
-      <tag>自动装配歧义性</tag>
-      
-      <tag>首选Bean</tag>
       
     </tags>
     
@@ -491,24 +439,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
+      <tag>Java</tag>
+      
       <tag>Spring</tag>
-      
-      <tag>Spring学习笔记</tag>
-      
-      <tag>c命名空间</tag>
-      
-      <tag>p命名空间</tag>
-      
-      <tag>util命名空间</tag>
-      
-      <tag>装配集合</tag>
       
     </tags>
     
@@ -526,18 +466,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
+      <tag>Java</tag>
+      
       <tag>Spring</tag>
-      
-      <tag>Spring学习笔记</tag>
-      
-      <tag>Java代码装配Bean</tag>
       
     </tags>
     
@@ -555,7 +493,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -564,21 +502,7 @@
       
       <tag>Java</tag>
       
-      <tag>中位数</tag>
-      
-      <tag>众数</tag>
-      
-      <tag>四分位数</tag>
-      
-      <tag>常用算法</tag>
-      
-      <tag>数据处理</tag>
-      
-      <tag>方差</tag>
-      
-      <tag>极差</tag>
-      
-      <tag>标准差</tag>
+      <tag>算法</tag>
       
     </tags>
     
@@ -596,14 +520,14 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>IntelliJ Idea</tag>
+      <tag>Java</tag>
       
       <tag>常用快捷键</tag>
       
@@ -623,18 +547,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
+      <tag>Java</tag>
+      
       <tag>Spring</tag>
-      
-      <tag>Spring学习笔记</tag>
-      
-      <tag>Spring自动装配</tag>
       
     </tags>
     
@@ -659,17 +581,7 @@
     
     <tags>
       
-      <tag>Fedora</tag>
-      
-      <tag>Fedora24</tag>
-      
       <tag>Linux</tag>
-      
-      <tag>nvidia</tag>
-      
-      <tag>双显卡驱动</tag>
-      
-      <tag>驱动</tag>
       
     </tags>
     
@@ -696,12 +608,6 @@
       
       <tag>Wordpress</tag>
       
-      <tag>Wordpress插件</tag>
-      
-      <tag>WP插件</tag>
-      
-      <tag>同步CSDN</tag>
-      
     </tags>
     
   </entry>
@@ -718,7 +624,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -726,10 +632,6 @@
     <tags>
       
       <tag>Java</tag>
-      
-      <tag>Jackson</tag>
-      
-      <tag>JSON</tag>
       
     </tags>
     
@@ -754,11 +656,7 @@
     
     <tags>
       
-      <tag>UI设计</tag>
-      
-      <tag>布局优化</tag>
-      
-      <tag>网页布局</tag>
+      <tag>Web前端</tag>
       
     </tags>
     
@@ -776,7 +674,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -801,16 +699,14 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>加解密</tag>
-      
-      <tag>数字签名</tag>
+      <tag>JAVA</tag>
       
     </tags>
     
@@ -828,18 +724,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
+      <tag>Java</tag>
+      
       <tag>Spring</tag>
-      
-      <tag>Spring学习笔记</tag>
-      
-      <tag>属性注入</tag>
       
     </tags>
     
@@ -857,16 +751,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>Spring</tag>
+      <tag>Java</tag>
       
-      <tag>Spring学习笔记</tag>
+      <tag>Spring</tag>
       
     </tags>
     
@@ -884,16 +778,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>Spring</tag>
+      <tag>Java</tag>
       
-      <tag>Spring学习笔记</tag>
+      <tag>Spring</tag>
       
     </tags>
     
@@ -911,16 +805,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>Spring</tag>
+      <tag>Java</tag>
       
-      <tag>Spring学习笔记</tag>
+      <tag>Spring</tag>
       
     </tags>
     
@@ -938,16 +832,12 @@
     
     <categories>
       
-      <category>JAVA</category>
-      
       <category>Web前端</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>AJAX</tag>
       
       <tag>JavaScript</tag>
       
@@ -974,17 +864,7 @@
     
     <tags>
       
-      <tag>CentOs</tag>
-      
-      <tag>LNMP</tag>
-      
-      <tag>MySQL</tag>
-      
-      <tag>Nginx</tag>
-      
-      <tag>PHP</tag>
-      
-      <tag>服务器搭建</tag>
+      <tag>Linux</tag>
       
     </tags>
     
@@ -1002,16 +882,14 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>XML</tag>
-      
-      <tag>XPath</tag>
+      <tag>Java</tag>
       
     </tags>
     
@@ -1029,16 +907,14 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>XML</tag>
-      
-      <tag>dom4j</tag>
+      <tag>Java</tag>
       
     </tags>
     
@@ -1065,8 +941,6 @@
       
       <tag>网络协议</tag>
       
-      <tag>HTTP</tag>
-      
     </tags>
     
   </entry>
@@ -1090,9 +964,7 @@
     
     <tags>
       
-      <tag>HTTP</tag>
-      
-      <tag>状态码</tag>
+      <tag>网络协议</tag>
       
     </tags>
     
@@ -1110,18 +982,16 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
     
     <tags>
       
+      <tag>Java</tag>
+      
       <tag>并发</tag>
-      
-      <tag>HashMap</tag>
-      
-      <tag>多线程</tag>
       
     </tags>
     
@@ -1139,7 +1009,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -1147,10 +1017,6 @@
     <tags>
       
       <tag>Java</tag>
-      
-      <tag>Date</tag>
-      
-      <tag>Java APIs</tag>
       
     </tags>
     
@@ -1168,7 +1034,7 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>Java</category>
       
     </categories>
     
@@ -1176,8 +1042,6 @@
     <tags>
       
       <tag>Java</tag>
-      
-      <tag>编码</tag>
       
     </tags>
     
@@ -1202,30 +1066,9 @@
     
     <tags>
       
-      <tag>HTTPS</tag>
-      
       <tag>网络协议</tag>
       
     </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>关于本站</title>
-    <link href="/articles/guan-yu-ben-zhan.html"/>
-    <url>/articles/guan-yu-ben-zhan.html</url>
-    
-    <content type="html"><![CDATA[<h3 id="博客简介"><a href="#博客简介" class="headerlink" title="博客简介"></a>博客简介</h3><p>老H博客是一个以Java语言为主的技术分享博客，主要分享有关Java语言、Android、数据库、Web前端、计算机网络、服务器搭建、操作系统等相关技术经验。本站内容如无特殊注明来源均为原创文章，转载请遵循“创作共用”版权协议。</p><h3 id="博主简介"><a href="#博主简介" class="headerlink" title="博主简介"></a>博主简介</h3><p>博主目前为本科在校生，喜爱编程、互联网等一些计算机相关的技术，主要擅长领域为Java Web应用开发。博主受Java语言的影响，崇尚免费、开源，希望将更多的技术分享给大众。</p><a id="more"></a><h3 id="博客大事记"><a href="#博客大事记" class="headerlink" title="博客大事记"></a>博客大事记</h3><h4 id="2017年3月："><a href="#2017年3月：" class="headerlink" title="2017年3月："></a><strong>2017年3月：</strong></h4><ul><li>改用更加极简的单栏博客主题Simple</li></ul><h4 id="2016年11月："><a href="#2016年11月：" class="headerlink" title="2016年11月："></a>2016年11月：</h4><ul><li>改用更为简洁的黑糖主题</li><li>更新SSL证书</li></ul><h4 id="2016年7月："><a href="#2016年7月：" class="headerlink" title="2016年7月："></a>2016年7月：</h4><ul><li>弃用wpdx主题，改为Owl主题；</li><li>网站迁移至腾讯云CVM云服务器；</li><li>网站全面启用https协议</li></ul><h4 id="2015年10月7日："><a href="#2015年10月7日：" class="headerlink" title="2015年10月7日："></a>2015年10月7日：</h4><ul><li>放弃DUX主题，改用WP大学wpdx 2.4版本主题；</li><li>启用用户中心，支持用户投稿；增加站内信息功能；</li><li>增加问答中心功能；</li><li>网页静态文件存储于七牛云CDN</li></ul><h4 id="2015年10月6日："><a href="#2015年10月6日：" class="headerlink" title="2015年10月6日："></a>2015年10月6日：</h4><ul><li>博客正式运行。</li></ul><h4 id="2015年8月："><a href="#2015年8月：" class="headerlink" title="2015年8月："></a>2015年8月：</h4><ul><li>初步搭建博客，主题使用DUX主题，平台基于Wordpress。</li></ul><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明"></a>版权声明</h3><p>为了保护和分享JavaCodes的作品，本站正式采用“创作共用”的授权协议。 <a href="http://creativecommons.org/" target="_blank" rel="noopener">Creative Commons</a>（<a href="http://cn.creativecommons.org/" target="_blank" rel="noopener">创作共用</a>）是网络上的数字作品（文学、美术、音乐等）许可授权机制，它致力于让任何创造性作品都有机会被更多人分享和再创造，共同促进人类知识作品在其生命周期内产生最大价值。 JavaCodes使用如下授权方式：</p><p><strong>署名·非商业用途·保持一致</strong></p><p><strong>你可以免费：</strong> ·拷贝、分发、呈现和表演当前作品 ·制作派生作品 <strong>但是必须基于以下条款：</strong> <strong>署名。</strong> 你必须明确标明原始作者的名字。 <strong>非商业用途。</strong> 你不可将当前作品用于商业目的。 <strong>保持一致。</strong> 如果你基于当前作品更改、变换或构造新作品，你应当按照与当前协议完全相同的协议分发最终作品。 对于任何二次使用或分发，你必须让其他人明确当前作品的授权条款，在得到作者的明确允许下，这里的某些条款可以放弃。 你的合理使用以及其他权利不受上述规定的影响。 英文版本的授权说明如下：</p><p>　　<strong>Attribution-NonCommercial-ShareAlike</strong></p><p><strong>You are free:</strong> ·to copy, distribute, display, and perform the work ·to make derivative works <strong>Under the following conditions:</strong> <strong>Attribution.</strong> You must attribute the work in the manner specified by the author or licensor. <strong>Noncommercial.</strong> You may not use this work for commercial purposes. <strong>Share Alike.</strong> If you alter, transform, or build upon this work, you may distribute the resulting work only under a license identical to this one. For any reuse or distribution, you must make clear to others the license terms of this work. Any of these conditions can be waived if you get permission from the copyright holder. <strong>Your fair use and other rights are in no way affected by the above.</strong> 关于授权协议的其他相关说明： ·为什么不使用“保留所有权利”（All Rights Reserved）的授权协议。 “版权”（Copyright）的概念是为了限制他人任意使用创作物的自由。我们通常熟知的唯一一种版权声明方式“保留所有权利”（All Rights Reserved）已经被滥用到任何人都可能触犯版权法律，人们只知道在自己的任何大小的作品（甚至本身也是在别人的成果基础上的再创造）都无以复加地声明为“保留所有权利”。这样的结果一方面导致原创者应有的权利得不到尊重，另一方面是很多优秀的作品（无论是艺术作品、文学作品、个人思想还是其他数字作品等）都无法得到最大价值利用或最广泛传播。虽然在很多国家的版权法律默认地赋予原创者很多权利，但是越来越多的人们开始意识到自己并非需要保留所有权利。相反他们更愿意选择“保留部分权利”（Some Rights Reserved）或“不保留权利”（No Rights Reserved）。而创作共用授权协议则可以更好的进行分享和传播网络上的数字作品，使得分享思想能在自己权益得到保护的前提下更好地实现。 ·使用本站内容的授权的参考示例。 注明出处或作者，如引用自（出处），原作者为某某，如果是在网上发布，需要以超链接形式标明文章原始出处。 非商业用途，不能为某种利益而擅自改动或者删除作者名发表在任何商业媒体上。 如果基于原作品内容进行再创作，应使用“署名·非商业用途·保持一致”的协议分发最终作品。</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-    
-    
-    <categories>
-      
-      <category>随笔杂谈</category>
-      
-    </categories>
-    
     
   </entry>
   

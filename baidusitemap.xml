@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-tong-guo-xml-zhuang-pei-bean-de-yi-xie-xi-jie.html</loc>
+    <lastmod>2020-06-08</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-pei-zhi-bean.html</loc>
+    <lastmod>2020-06-08</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/tcp-jia-su-rui-su-ss-serverspeeder-po-jie-ban-yi-jian-an-zhuang.html</loc>
+    <lastmod>2020-06-08</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/threadlocal-xiang-jie.html</loc>
+    <lastmod>2020-06-08</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/ui-bu-ju-you-hua-shi-me-cai-shi-hao-de-she-ji.html</loc>
+    <lastmod>2020-06-08</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/wordpress-bo-ke-tong-bu-dao-csdn-cha-jian.html</loc>
+    <lastmod>2020-06-08</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/xpath-biao-da-shi-yu-fa-xiang-jie.html</loc>
+    <lastmod>2020-06-08</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/shi-yong-dom4j-cao-zuo-xml.html</loc>
+    <lastmod>2020-06-08</lastmod>
+  </url>  <url>
     <loc>https://bytelife.net/articles/shi-yong-jackson-jie-xi-json-he-xu-lie-hua.html</loc>
     <lastmod>2020-06-08</lastmod>
   </url>  <url>
     <loc>https://bytelife.net/articles/quan-mian-li-jie-http.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/guan-yu-ben-zhan.html</loc>
     <lastmod>2020-06-08</lastmod>
   </url>  <url>
     <loc>https://bytelife.net/articles/dong-tai-gui-hua-suan-fa-wen-ti-jing-dian-zhao-ling-an-li.html</loc>
@@ -101,30 +122,6 @@
     <lastmod>2020-06-08</lastmod>
   </url>  <url>
     <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-tong-guo-java-dai-ma-zhuang-pei-bean.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-tong-guo-xml-zhuang-pei-bean-de-yi-xie-xi-jie.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-pei-zhi-bean.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/tcp-jia-su-rui-su-ss-serverspeeder-po-jie-ban-yi-jian-an-zhuang.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/threadlocal-xiang-jie.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/ui-bu-ju-you-hua-shi-me-cai-shi-hao-de-she-ji.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/wordpress-bo-ke-tong-bu-dao-csdn-cha-jian.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/xpath-biao-da-shi-yu-fa-xiang-jie.html</loc>
-    <lastmod>2020-06-08</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/shi-yong-dom4j-cao-zuo-xml.html</loc>
     <lastmod>2020-06-08</lastmod>
   </url>
 </urlset>
