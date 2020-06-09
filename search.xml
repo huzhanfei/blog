@@ -1076,7 +1076,6 @@ public class MyTest {
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>常用快捷键</tag>
       </tags>
   </entry>
   <entry>
@@ -1897,7 +1896,7 @@ public class BlackListServiceImpl {
         <category>Java</category>
       </categories>
       <tags>
-        <tag>JAVA</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>

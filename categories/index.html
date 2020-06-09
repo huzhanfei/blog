@@ -178,7 +178,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckb6r6rut000ghshibejw7rwo" role="tab" data-toggle="collapse" href="#collapse-ckb6r6rut000ghshibejw7rwo"
+        id="heading-ckb8647sv000gfdhfb7fqfl5a" role="tab" data-toggle="collapse" href="#collapse-ckb8647sv000gfdhfb7fqfl5a"
         aria-expanded="false"
       >
         Java
@@ -191,8 +191,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckb6r6rut000ghshibejw7rwo" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckb6r6rut000ghshibejw7rwo">
+  <div id="collapse-ckb8647sv000gfdhfb7fqfl5a" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckb8647sv000gfdhfb7fqfl5a">
     
     
     
@@ -283,7 +283,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckb6r6ruw000lhshibo0823uf" role="tab" data-toggle="collapse" href="#collapse-ckb6r6ruw000lhshibo0823uf"
+        id="heading-ckb8647t0000lfdhf9rhe1ibj" role="tab" data-toggle="collapse" href="#collapse-ckb8647t0000lfdhf9rhe1ibj"
         aria-expanded="false"
       >
         Linux/服务器/网络
@@ -296,8 +296,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckb6r6ruw000lhshibo0823uf" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckb6r6ruw000lhshibo0823uf">
+  <div id="collapse-ckb8647t0000lfdhf9rhe1ibj" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckb8647t0000lfdhf9rhe1ibj">
     
     
     
@@ -354,7 +354,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckb6r6ruo000ahshi16iu32t7" role="tab" data-toggle="collapse" href="#collapse-ckb6r6ruo000ahshi16iu32t7"
+        id="heading-ckb8647sr000afdhfh2nx4vyp" role="tab" data-toggle="collapse" href="#collapse-ckb8647sr000afdhfh2nx4vyp"
         aria-expanded="false"
       >
         Web前端
@@ -367,8 +367,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckb6r6ruo000ahshi16iu32t7" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckb6r6ruo000ahshi16iu32t7">
+  <div id="collapse-ckb8647sr000afdhfh2nx4vyp" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckb8647sr000afdhfh2nx4vyp">
     
     
     
@@ -397,7 +397,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckb6r6rug0004hshi9yzs5q4k" role="tab" data-toggle="collapse" href="#collapse-ckb6r6rug0004hshi9yzs5q4k"
+        id="heading-ckb8647sj0004fdhf6mtbfhgr" role="tab" data-toggle="collapse" href="#collapse-ckb8647sj0004fdhf6mtbfhgr"
         aria-expanded="false"
       >
         随笔杂谈
@@ -410,8 +410,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckb6r6rug0004hshi9yzs5q4k" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckb6r6rug0004hshi9yzs5q4k">
+  <div id="collapse-ckb8647sj0004fdhf6mtbfhgr" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckb8647sj0004fdhf6mtbfhgr">
     
     
     
@@ -467,6 +467,29 @@
   </div>
 </div>
   
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
+<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
+<script type="text/javascript">
+  var oldLoadAp = window.onload;
+  window.onload = function () {
+    oldLoadAp && oldLoadAp();
+
+    new APlayer({
+      container: document.getElementById('aplayer'),
+      fixed: true,
+      autoplay: 'false' === 'true',
+      loop: 'all',
+      order: 'list',
+      theme: '#b7daff',
+      preload: 'none',
+      audio: [{"name":"なんでもないや (movie ver.)","artist":"RADWIMPS","url":"/uploads/MEI-SHEN-ME-DA-BU-LIAO.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"三葉のテーマ","artist":"RADWIMPS","url":"/uploads/SAN-YE.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Alpha","artist":"Christophe Lebled","url":"/uploads/Alpha.mp3","cover":"/uploads/Alpha.jpg"},{"name":"森林狂想曲","artist":"吴金黛","url":"/uploads/Forest-Rhapsody.mp3","cover":"/uploads/Forest-Rhapsody.jpg"},{"name":"Auld Lang Syne","artist":"Home Free","url":"/uploads/Auld-Lang-Syne.mp3","cover":"/uploads/Auld-Lang-Syne.jpg"},{"name":"On a Slow Boat to China","artist":"Luke Thompson","url":"/uploads/On-a-Slow-Boat-to-China.mp3","cover":"/img/cover.jpg"},{"name":"Right Here Waiting","artist":"Richard Marx","url":"/uploads/Right-Here-Waiting.mp3","cover":"/uploads/Right-Here-Waiting.jpg"},{"name":"Something Just Like This","artist":"The Chainsmokers","url":"/uploads/Something-Just-Like-This.mp3","cover":"/uploads/Something-Just-Like-This.jpg"},{"name":"Beautiful In White","artist":"Shane Filan","url":"/uploads/Beautiful-In-White.mp3","cover":"/uploads/Beautiful-In-White.jpg"},{"name":"Illusionary Daytime","artist":"Shirfine","url":"/uploads/Illusionary-Daytime.mp3","cover":"/uploads/Illusionary-Daytime.jpg"},{"name":"夢灯籠","artist":"RADWIMPS","url":"/uploads/MENG-DENG-LONG.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"前前前世 (movie ver.)","artist":"RADWIMPS","url":"/uploads/QIAN-QIAN-QIAN-SHI.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Naruto Main Theme","artist":"Musashi","url":"/uploads/Naruto-Main-Theme.mp3","cover":"/uploads/Naruto-Main-Theme.jpg"},{"name":"Legends Never Die","artist":"英雄联盟","url":"/uploads/Legends-Never-Die.mp3","cover":"/uploads/Legends-Never-Die.jpg"}]
+    });
+  }
+</script>
 
   
 
