@@ -1,63 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bytelife.net/articles/java-8-zhong-xin-de-date-he-time-lei-ru-men-xiang-jie.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/java-nio-jiao-cheng-xiang-jie.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/java-zhong-de-copy-on-write-rong-qi.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/java-jia-jie-mi-yu-shu-zi-qian-ming.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/java-la-ji-hui-shou-ji-zhi-gc.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/java-shi-xian-shu-ju-tong-ji-de-chang-yong-suan-fa.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/java-cheng-xu-yuan-zui-ke-neng-bei-kao-dao-de-mian-shi-ti.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/java-lei-jia-zai-ji-zhi-lei-jia-zai-qi-classloader-yu-shuang-qin-wei-pai-mo-xing.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/java-lei-jia-zai-ji-zhi-lei-jia-zai-de-shi-ji-he-guo-cheng.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-bean-de-zuo-yong-yu.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-bean-de-shu-xing-zhu-ru.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-ioc-yu-di-gai-shu.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-spring-helloworld.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-chu-li-zi-dong-zhuang-pei-de-qi-yi-xing.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-tong-guo-java-dai-ma-zhuang-pei-bean.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-tong-guo-xml-zhuang-pei-bean-de-yi-xie-xi-jie.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-pei-zhi-bean.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
-    <loc>https://bytelife.net/articles/tcp-jia-su-rui-su-ss-serverspeeder-po-jie-ban-yi-jian-an-zhuang.html</loc>
-    <lastmod>2020-06-09</lastmod>
-  </url>  <url>
     <loc>https://bytelife.net/articles/threadlocal-xiang-jie.html</loc>
     <lastmod>2020-06-09</lastmod>
   </url>  <url>
@@ -122,6 +65,63 @@
     <lastmod>2020-06-09</lastmod>
   </url>  <url>
     <loc>https://bytelife.net/articles/jvm-nei-cun-hua-fen.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-8-zhong-xin-de-date-he-time-lei-ru-men-xiang-jie.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-nio-jiao-cheng-xiang-jie.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-zhong-de-copy-on-write-rong-qi.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-jia-jie-mi-yu-shu-zi-qian-ming.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-la-ji-hui-shou-ji-zhi-gc.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-shi-xian-shu-ju-tong-ji-de-chang-yong-suan-fa.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-cheng-xu-yuan-zui-ke-neng-bei-kao-dao-de-mian-shi-ti.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-lei-jia-zai-ji-zhi-lei-jia-zai-qi-classloader-yu-shuang-qin-wei-pai-mo-xing.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/java-lei-jia-zai-ji-zhi-lei-jia-zai-de-shi-ji-he-guo-cheng.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-bean-de-zuo-yong-yu.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-bean-de-shu-xing-zhu-ru.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-ioc-yu-di-gai-shu.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-spring-helloworld.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-chu-li-zi-dong-zhuang-pei-de-qi-yi-xing.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-tong-guo-java-dai-ma-zhuang-pei-bean.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-tong-guo-xml-zhuang-pei-bean-de-yi-xie-xi-jie.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-pei-zhi-bean.html</loc>
+    <lastmod>2020-06-09</lastmod>
+  </url>  <url>
+    <loc>https://bytelife.net/articles/tcp-jia-su-rui-su-ss-serverspeeder-po-jie-ban-yi-jian-an-zhuang.html</loc>
     <lastmod>2020-06-09</lastmod>
   </url>
 </urlset>
