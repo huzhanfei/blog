@@ -34,7 +34,7 @@
 <meta property="og:description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-12-20T12:58:19.000Z">
-<meta property="article:modified_time" content="2021-02-19T18:22:38.101Z">
+<meta property="article:modified_time" content="2021-02-19T19:05:45.129Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,huzhanfei">
 <meta name="twitter:card" content="summary">
@@ -414,9 +414,14 @@ document.addEventListener('pjax:success', () => {
                 console.error('Failed to save visitor count', error);
               });
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
           }
         })
         .catch(error => {
@@ -443,7 +448,7 @@ document.addEventListener('pjax:success', () => {
         });
     }
 
-    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":true};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":false};
     function fetchData(api_server) {
       const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
