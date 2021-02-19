@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bytelife.net/articles/ui-bu-ju-you-hua-shi-me-cai-shi-hao-de-she-ji.html</loc>
-    <lastmod>2021-02-19</lastmod>
-  </url>
-  <url>
-    <loc>https://bytelife.net/articles/wordpress-bo-ke-tong-bu-dao-csdn-cha-jian.html</loc>
-    <lastmod>2021-02-19</lastmod>
-  </url>
-  <url>
-    <loc>https://bytelife.net/articles/xpath-biao-da-shi-yu-fa-xiang-jie.html</loc>
-    <lastmod>2021-02-19</lastmod>
-  </url>
-  <url>
     <loc>https://bytelife.net/articles/shi-yong-dom4j-cao-zuo-xml.html</loc>
     <lastmod>2021-02-19</lastmod>
   </url>
@@ -146,6 +134,18 @@
   </url>
   <url>
     <loc>https://bytelife.net/articles/tcp-jia-su-rui-su-ss-serverspeeder-po-jie-ban-yi-jian-an-zhuang.html</loc>
+    <lastmod>2021-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://bytelife.net/articles/ui-bu-ju-you-hua-shi-me-cai-shi-hao-de-she-ji.html</loc>
+    <lastmod>2021-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://bytelife.net/articles/wordpress-bo-ke-tong-bu-dao-csdn-cha-jian.html</loc>
+    <lastmod>2021-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://bytelife.net/articles/xpath-biao-da-shi-yu-fa-xiang-jie.html</loc>
     <lastmod>2021-02-19</lastmod>
   </url>
   <url>
