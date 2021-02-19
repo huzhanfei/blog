@@ -1,824 +1,668 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-
-
-
-
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
-  <link rel="icon" type="image/png" href="/images/favicon.ico">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="在 Spring 中可以使用 Java 代码、XML 和自动化装配三种方式来装配 Bean。从便利性角度来说，最强大的还是 Spring 的自动化配置，如果 Spring 能够进行自动化装配的话，那何苦还要显式的将这些 Bean 装配在一起呢？ Spring 从两个角度来实现自动化装配： 组件扫描：Spring 会自动发现应用上下文中所创建的 Bean； 自动装配：Spring 自动满足 bean">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 学习笔记之自动化装配 Bean">
+<meta property="og:url" content="https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="在 Spring 中可以使用 Java 代码、XML 和自动化装配三种方式来装配 Bean。从便利性角度来说，最强大的还是 Spring 的自动化配置，如果 Spring 能够进行自动化装配的话，那何苦还要显式的将这些 Bean 装配在一起呢？ Spring 从两个角度来实现自动化装配： 组件扫描：Spring 会自动发现应用上下文中所创建的 Bean； 自动装配：Spring 自动满足 bean">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-09-17T16:14:00.000Z">
+<meta property="article:modified_time" content="2021-02-19T18:18:32.403Z">
+<meta property="article:author" content="Jeffrey Hu">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Spring 学习笔记之自动化装配 Bean | ByteLife</title>
   
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
-  <meta name="author" content="Jeffrey Hu">
-  <meta name="keywords" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,huzhanfei">
-  <title>Spring学习笔记之自动化装配Bean - ByteLife</title>
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
 
 
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script  src="/js/utils.js" ></script>
-<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>ByteLife</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-          </li>
-        
-      </ul>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">ByteLife</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术交流与学习自留地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
-         style="background: url('/images/banner.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
-              
-            </span>
 
-            
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2016-09-18 00:14">
-      2016年9月18日 凌晨
-    </time>
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%A2%AB%E5%8F%91%E7%8E%B0%E7%9A%84bean"><span class="nav-number">1.</span> <span class="nav-text">一、创建可被发现的 bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F%E7%9A%84bean%E5%91%BD%E5%90%8D"><span class="nav-number">2.</span> <span class="nav-text">二、为组件扫描的 bean 命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%AE%BE%E7%BD%AE%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F%E7%9A%84%E5%9F%BA%E7%A1%80%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">三、设置组件扫描的基础包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%80%9A%E8%BF%87%E4%B8%BAbean%E6%B7%BB%E5%8A%A0%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="nav-number">4.</span> <span class="nav-text">四、通过为 bean 添加注解实现自动装配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%AA%8C%E8%AF%81%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="nav-number">5.</span> <span class="nav-text">五、验证自动装配</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeffrey Hu"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description">专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
   </div>
 
 
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      2.7k 字
-    </span>
-  
 
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      33
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- LeanCloud 统计文章PV -->
-      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="leancloud-post-views"></span> 次
-      </span>
-    
-  
-</div>
-
-            
-          </div>
-
-          
         </div>
       </div>
     </div>
-  </header>
+  </aside>
+  <div class="sidebar-dimmer"></div>
 
-  <main>
+
+    </header>
+
     
-      
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
-            
-            <article class="markdown-body">
-              <p>在Spring中可以使用Java代码、XML和自动化装配三种方式来装配Bean。从便利性角度来说，最强大的还是Spring的自动化配置，如果Spring能够进行自动化装配的话，那何苦还要显式的将这些Bean装配在一起呢？ Spring从两个角度来实现自动化装配： 组件扫描：Spring会自动发现应用上下文中所创建的Bean； 自动装配：Spring自动满足bean之间的依赖。 为了阐述组件扫描和装配，我们需要创建几个Bean，它们代表了一个音响系统中的组件。</p>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring 学习笔记之自动化装配 Bean
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-09-18 00:14:00" itemprop="dateCreated datePublished" datetime="2016-09-18T00:14:00+08:00">2016-09-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-20 02:18:32" itemprop="dateModified" datetime="2021-02-20T02:18:32+08:00">2021-02-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html" class="post-meta-item leancloud_visitors" data-flag-title="Spring 学习笔记之自动化装配 Bean" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在 Spring 中可以使用 Java 代码、XML 和自动化装配三种方式来装配 Bean。从便利性角度来说，最强大的还是 Spring 的自动化配置，如果 Spring 能够进行自动化装配的话，那何苦还要显式的将这些 Bean 装配在一起呢？ Spring 从两个角度来实现自动化装配： 组件扫描：Spring 会自动发现应用上下文中所创建的 Bean； 自动装配：Spring 自动满足 bean 之间的依赖。 为了阐述组件扫描和装配，我们需要创建几个 Bean，它们代表了一个音响系统中的组件。</p>
 <a id="more"></a>
 
-<h3 id="一、创建可被发现的bean"><a href="#一、创建可被发现的bean" class="headerlink" title="一、创建可被发现的bean"></a>一、创建可被发现的bean</h3><p>定义CD的一个接口：</p>
+<h3 id="一、创建可被发现的bean"><a href="#一、创建可被发现的bean" class="headerlink" title="一、创建可被发现的bean"></a>一、创建可被发现的 bean</h3><p>定义 CD 的一个接口：</p>
 <p>package cn.javacodes.spring.beans.soundsystem;<br>public interface CompactDisc {<br>    void play();<br>}</p>
-<p>CompactDisc接口定义了CD播放器对一盘CD所能进行的操作。它将CD播放器的任意实现与CD本身的耦合降低到了最小的程度。 下面创建一个CompactDisc的实现：</p>
-<p>package cn.javacodes.spring.beans.soundsystem;<br>import org.springframework.stereotype.Component;<br>@Component<br>public class Transfer implements CompactDisc {<br>    private String title = “transfer”;<br>    private String artist = “周传雄/小刚”;<br>    public void play() {<br>        System.out.println(“正在播放”+artist+”的专辑：” + title);<br>    }<br>}</p>
-<p>这里需要注意的是该类使用了@Component注解，表明该类会作为组件类，并告知Spring要为这个组件创建bean。但是在这之前，由于默认组件扫描是不启用的。我们还需要显式配置一下Spring，从而命令它去寻找带有@Component注解的类，并为其创建bean。 下面的这个类展现了完成这件事情的最简介配置方式：</p>
+<p>CompactDisc 接口定义了 CD 播放器对一盘 CD 所能进行的操作。它将 CD 播放器的任意实现与 CD 本身的耦合降低到了最小的程度。 下面创建一个 CompactDisc 的实现：</p>
+<p>package cn.javacodes.spring.beans.soundsystem;<br>import org.springframework.stereotype.Component;<br>@Component<br>public class Transfer implements CompactDisc {<br>    private String title = “transfer”;<br>    private String artist = “周传雄 / 小刚”;<br>    public void play() {<br>        System.out.println (“正在播放”+artist+” 的专辑：” + title);<br>    }<br>}</p>
+<p>这里需要注意的是该类使用了 @Component 注解，表明该类会作为组件类，并告知 Spring 要为这个组件创建 bean。但是在这之前，由于默认组件扫描是不启用的。我们还需要显式配置一下 Spring，从而命令它去寻找带有 @Component 注解的类，并为其创建 bean。 下面的这个类展现了完成这件事情的最简介配置方式：</p>
 <p>package cn.javacodes.spring.beans.soundsystem;<br>import org.springframework.context.annotation.ComponentScan;<br>import org.springframework.context.annotation.Configuration;<br>@Configuration<br>@ComponentScan<br>public class CDPlayerConfig {<br>}</p>
-<p>如果没有其他配置的话，@ComponentScan默认会扫描与配置类相同的包。因为CDPlayerConfig类位于cn.javacodes.spring.beans.soundsystem包中，因此Spring将会扫描这个包以及这个包下的所有子包，查找带有@Component注解标示的类，并在Spring中自动为其创建一个bean。 当然，如果你更加倾向于使用XML来启用组件扫描的话，那么可以使用Spring context命名空间的<a href="context:component-scan">context:component-scan</a>元素。</p>
+<p>如果没有其他配置的话，@ComponentScan 默认会扫描与配置类相同的包。因为 CDPlayerConfig 类位于 cn.javacodes.spring.beans.soundsystem 包中，因此 Spring 将会扫描这个包以及这个包下的所有子包，查找带有 @Component 注解标示的类，并在 Spring 中自动为其创建一个 bean。 当然，如果你更加倾向于使用 XML 来启用组件扫描的话，那么可以使用 Spring context 命名空间的 <a href="context:component-scan">context:component-scan</a> 元素。</p>
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <p><beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:configurator="http://www.springframework.org/schema/c" xmlns:avalon="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context" xsi:schemalocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"><br>    &lt;context:component-scan base-package=”cn.javacodes.spring.beans.soundsystem”/&gt;<br></beans></p>
-<p>尽管我们可以使用XML的方案来启用组件扫描，但在后面的讨论中，更多的还是会使用基于Java的配置。 下面我们创建一个简单的JUnit测试，它会创建Spring上下文，并判断CompactDisc是不是真的创建出来了。</p>
+<p>尽管我们可以使用 XML 的方案来启用组件扫描，但在后面的讨论中，更多的还是会使用基于 Java 的配置。 下面我们创建一个简单的 JUnit 测试，它会创建 Spring 上下文，并判断 CompactDisc 是不是真的创建出来了。</p>
 <p>package cn.javacodes.spring.beans.soundsystem;<br>import org.junit.Test;<br>import org.junit.runner.RunWith;<br>import org.springframework.beans.factory.annotation.Autowired;<br>import org.springframework.test.context.ContextConfiguration;<br>import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;<br>import static org.junit.Assert.assertNotNull;<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(classes = CDPlayerConfig.class)<br>public class CDPlayerTest {<br>    @Autowired<br>    private CompactDisc cd;<br>    @Test<br>    public void cdShouldNotBeNull(){<br>        assertNotNull(cd);<br>    }<br>}</p>
-<p>该类使用了Spring的SpringJUnit4ClassRunner，以便在测试开始的时候自动创建Spring的上下文。注解@ContextConfiguration会告诉它需要在CDPlayerConfig中加载配置。因为CDPlayerConfig类中包含了@ComponentScan注解，因此最终的应用上下文中应该包含CompactDisc bean。 为了证明这一点，在测试代码中有一个CompactDisc属性，并且这个属性带有@Autowired注解，以便于将CompactDisc bean注入到测试代码中，有关与@Autowired注解的更多内容将在后面讲述。最后，有一个简单的测试方法断言cd属性不为null。如果它不为null的话，就意味着Spring能够发现CompactDisc类，自动在Spring上下文中将其创建为bean并将其注入到了测试代码中。 这个代码应该能够通过测试，并以测试成功的颜色显示。</p>
-<h3 id="二、为组件扫描的bean命名"><a href="#二、为组件扫描的bean命名" class="headerlink" title="二、为组件扫描的bean命名"></a>二、为组件扫描的bean命名</h3><p>Spring上下文中所有的bean都有一个id。在前面的例子中，即使我们并没有明确的给定Transfer bean一个id，但Spring会根据类名为其给定一个id。具体来讲，Spring会默认给定一个将类名首字母变为小写的id，例如上例中将给定的id为transfer。 如果想为这个bean给定不同的id，你需要做的就是将你所想要给定的id作为参数传递给@Component注解。例如：</p>
-<p>package cn.javacodes.spring.beans.soundsystem;<br>import org.springframework.stereotype.Component;<br>@Component(“transfer”)<br>public class Transfer implements CompactDisc {<br>    private String title = “transfer”;<br>    private String artist = “周传雄/小刚”;<br>    public void play() {<br>        System.out.println(“正在播放”+artist+”的专辑：” + title);<br>    }<br>}</p>
-<p>还有另外一种为bean命名的方式，使用Java依赖注入规范中提供的@Named注解来为bean设置id：</p>
-<p>package cn.javacodes.spring.beans.soundsystem;<br>import javax.inject.Named;<br>@Named(“transfer”)<br>public class Transfer implements CompactDisc {<br>    private String title = “transfer”;<br>    private String artist = “周传雄/小刚”;<br>    public void play() {<br>        System.out.println(“正在播放”+artist+”的专辑：” + title);<br>    }<br>}</p>
-<p>Spring支持将@Named作为@Component注解的替代方案。两者之间有一些细微的差别，不过大多数场景种它们使可以相互替换的。但是推荐使用@Component而不是@Named，因为@Component注解看起来更加能够知道它是干什么的。</p>
-<h3 id="三、设置组件扫描的基础包"><a href="#三、设置组件扫描的基础包" class="headerlink" title="三、设置组件扫描的基础包"></a>三、设置组件扫描的基础包</h3><p>现在我们已经知道，默认情况下@ComponentScan注解会扫描当前配置类所在的包及其子包，但我们可能更希望将配置类与其它类放在不同的包中，那么为了指定不同的基础包，可以将指定的包名作为参数传递给@ComponentScan注解即可：</p>
+<p>该类使用了 Spring 的 SpringJUnit4ClassRunner，以便在测试开始的时候自动创建 Spring 的上下文。注解 @ContextConfiguration 会告诉它需要在 CDPlayerConfig 中加载配置。因为 CDPlayerConfig 类中包含了 @ComponentScan 注解，因此最终的应用上下文中应该包含 CompactDisc bean。 为了证明这一点，在测试代码中有一个 CompactDisc 属性，并且这个属性带有 @Autowired 注解，以便于将 CompactDisc bean 注入到测试代码中，有关与 @Autowired 注解的更多内容将在后面讲述。最后，有一个简单的测试方法断言 cd 属性不为 null。如果它不为 null 的话，就意味着 Spring 能够发现 CompactDisc 类，自动在 Spring 上下文中将其创建为 bean 并将其注入到了测试代码中。 这个代码应该能够通过测试，并以测试成功的颜色显示。</p>
+<h3 id="二、为组件扫描的bean命名"><a href="#二、为组件扫描的bean命名" class="headerlink" title="二、为组件扫描的bean命名"></a>二、为组件扫描的 bean 命名</h3><p>Spring 上下文中所有的 bean 都有一个 id。在前面的例子中，即使我们并没有明确的给定 Transfer bean 一个 id，但 Spring 会根据类名为其给定一个 id。具体来讲，Spring 会默认给定一个将类名首字母变为小写的 id，例如上例中将给定的 id 为 transfer。 如果想为这个 bean 给定不同的 id，你需要做的就是将你所想要给定的 id 作为参数传递给 @Component 注解。例如：</p>
+<p>package cn.javacodes.spring.beans.soundsystem;<br>import org.springframework.stereotype.Component;<br>@Component(“transfer”)<br>public class Transfer implements CompactDisc {<br>    private String title = “transfer”;<br>    private String artist = “周传雄 / 小刚”;<br>    public void play() {<br>        System.out.println (“正在播放”+artist+” 的专辑：” + title);<br>    }<br>}</p>
+<p>还有另外一种为 bean 命名的方式，使用 Java 依赖注入规范中提供的 @Named 注解来为 bean 设置 id：</p>
+<p>package cn.javacodes.spring.beans.soundsystem;<br>import javax.inject.Named;<br>@Named(“transfer”)<br>public class Transfer implements CompactDisc {<br>    private String title = “transfer”;<br>    private String artist = “周传雄 / 小刚”;<br>    public void play() {<br>        System.out.println (“正在播放”+artist+” 的专辑：” + title);<br>    }<br>}</p>
+<p>Spring 支持将 @Named 作为 @Component 注解的替代方案。两者之间有一些细微的差别，不过大多数场景种它们使可以相互替换的。但是推荐使用 @Component 而不是 @Named，因为 @Component 注解看起来更加能够知道它是干什么的。</p>
+<h3 id="三、设置组件扫描的基础包"><a href="#三、设置组件扫描的基础包" class="headerlink" title="三、设置组件扫描的基础包"></a>三、设置组件扫描的基础包</h3><p>现在我们已经知道，默认情况下 @ComponentScan 注解会扫描当前配置类所在的包及其子包，但我们可能更希望将配置类与其它类放在不同的包中，那么为了指定不同的基础包，可以将指定的包名作为参数传递给 @ComponentScan 注解即可：</p>
 <p>@Configuration<br>@ComponentScan(“cn.javacodes.spring.beans.soundsystem”)<br>public class CDPlayerConfig {<br>}</p>
-<p>当然也可以更加清晰的指明其是基础包，使用basePackages属性：</p>
+<p>当然也可以更加清晰的指明其是基础包，使用 basePackages 属性：</p>
 <p>@Configuration<br>@ComponentScan(basePackages = “cn.javacodes.spring.beans.soundsystem”)<br>public class CDPlayerConfig {<br>}</p>
-<p>这里我们发现basePackages属性是复数形式，我们猜测它是否可以指定多个基础包呢？答案是正确的，如果想要指定多个包，那么只需要将要扫描的包放到一个数组中即可：</p>
+<p>这里我们发现 basePackages 属性是复数形式，我们猜测它是否可以指定多个基础包呢？答案是正确的，如果想要指定多个包，那么只需要将要扫描的包放到一个数组中即可：</p>
 <p>@Configuration<br>@ComponentScan(basePackages = {“cn.javacodes.spring.beans.soundsystem”, “cn.javacodes.spring.beans.video”})<br>public class CDPlayerConfig {<br>}</p>
 <p>上面的方式中，包名以简单的字符串进行表示，当然这是可以的。但是如果我们日后对代码进行重构，很有可能就会出现问题，所以这种通过简单的字符串来配置基础包的方式是不安全的。为了解决这个问题，我们可以将其指定为包中所包含的类或接口：</p>
 <p>package cn.javacodes.spring.configuration;<br>import cn.javacodes.spring.beans.soundsystem.CDPlayer;<br>import cn.javacodes.spring.beans.video.DVDPlayer;<br>import org.springframework.context.annotation.ComponentScan;<br>import org.springframework.context.annotation.Configuration;<br>@Configuration<br>@ComponentScan(basePackageClasses = {CDPlayer.class, DVDPlayer.class})<br>public class CDPlayerConfig {<br>}</p>
-<p>注意：这里不再使用basePackages属性，取而代之的是basePackageClasses属性。我们不再使用String类型的包名来指定包，而是为basePackageClasses属性设置的数组中包含了类。这些类所在的包会作为组件扫描的基础包。 当然，使用组件类直接给basePackageClasses属性并不是很好的方式，我们可以考虑在包中创建一个用来进行扫描的空标记接口。通过标记接口的方式，你依然能够保持对重构友好的接口引用，但是可以避免引用任何实际的应用程序代码。</p>
-<h3 id="四、通过为bean添加注解实现自动装配"><a href="#四、通过为bean添加注解实现自动装配" class="headerlink" title="四、通过为bean添加注解实现自动装配"></a>四、通过为bean添加注解实现自动装配</h3><p>简单来说，自动装配就是让Spring自动满足bean依赖的一种方法，在满足依赖的过程中，会在Spring应用上下文中寻找匹配某个bean需求的其它bean。为了声明要进行自动装配，我们可以考虑使用Spring的@Autowired注解。 比如下面的CDPlayer类，它的构造器使用了@Autowired注解，表明当Spring创建CDPlayer bean的时候，会通过这个构造器来进行实例化并会传入一个可以设置给CompactDisc类型的bean：</p>
+<p>注意：这里不再使用 basePackages 属性，取而代之的是 basePackageClasses 属性。我们不再使用 String 类型的包名来指定包，而是为 basePackageClasses 属性设置的数组中包含了类。这些类所在的包会作为组件扫描的基础包。 当然，使用组件类直接给 basePackageClasses 属性并不是很好的方式，我们可以考虑在包中创建一个用来进行扫描的空标记接口。通过标记接口的方式，你依然能够保持对重构友好的接口引用，但是可以避免引用任何实际的应用程序代码。</p>
+<h3 id="四、通过为bean添加注解实现自动装配"><a href="#四、通过为bean添加注解实现自动装配" class="headerlink" title="四、通过为bean添加注解实现自动装配"></a>四、通过为 bean 添加注解实现自动装配</h3><p>简单来说，自动装配就是让 Spring 自动满足 bean 依赖的一种方法，在满足依赖的过程中，会在 Spring 应用上下文中寻找匹配某个 bean 需求的其它 bean。为了声明要进行自动装配，我们可以考虑使用 Spring 的 @Autowired 注解。 比如下面的 CDPlayer 类，它的构造器使用了 @Autowired 注解，表明当 Spring 创建 CDPlayer bean 的时候，会通过这个构造器来进行实例化并会传入一个可以设置给 CompactDisc 类型的 bean：</p>
 <p>package cn.javacodes.spring.beans.soundsystem;<br>import org.springframework.beans.factory.annotation.Autowired;<br>import org.springframework.stereotype.Component;<br>@Component<br>public class CDPlayer {<br>    private CompactDisc cd;<br>    @Autowired<br>    public CDPlayer(CompactDisc cd) {<br>        this.cd = cd;<br>    }</p>
 <pre><code>public void play(){
     cd.play();
-}</code></pre><p>}</p>
-<p>@Autowired属性不仅可以用在构造器上，还可以用在属性的Setter方法上。比如说，如果CDPlayer有一个setCompactDisc()方法，那么可以采用下面的方式来进行自动装配：</p>
+}
+</code></pre>
+<p>}</p>
+<p>@Autowired 属性不仅可以用在构造器上，还可以用在属性的 Setter 方法上。比如说，如果 CDPlayer 有一个 setCompactDisc () 方法，那么可以采用下面的方式来进行自动装配：</p>
 <pre><code>@Autowired
 public void setCompactDisc(CompactDisc cd){
     this.cd = cd;
-}</code></pre><p>在Spring完成初始化bean之后，它会尽可能的去满足bean的依赖。实际上，Setter方法并没有什么特殊之处，@Autowired可以出现在任何方法上。 假如有且只有一个bean匹配依赖需求的话，那么这个bean将会被封装起来。 如果没有匹配的bean，那么在应用上下文创建的时候，Spring将会抛出一个异常。为了避免异常，可以将@Autowired的required属性设置为false，Spring会尝试执行自动匹配，但是如果没有匹配的bean的话，Spring会让这个bean处于未装配的状态：</p>
+}
+</code></pre>
+<p>在 Spring 完成初始化 bean 之后，它会尽可能的去满足 bean 的依赖。实际上，Setter 方法并没有什么特殊之处，@Autowired 可以出现在任何方法上。 假如有且只有一个 bean 匹配依赖需求的话，那么这个 bean 将会被封装起来。 如果没有匹配的 bean，那么在应用上下文创建的时候，Spring 将会抛出一个异常。为了避免异常，可以将 @Autowired 的 required 属性设置为 false，Spring 会尝试执行自动匹配，但是如果没有匹配的 bean 的话，Spring 会让这个 bean 处于未装配的状态：</p>
 <pre><code>@Autowired(required = false)
 public CDPlayer(CompactDisc cd) {
     this.cd = cd;
-}</code></pre><p>但是，把required属性设置为false的时候你需要注意，如果你的代码中没有null检查的话，这个处于未装配状态的属性有可能会出现空指针异常（NullPointerException）。 如果有多个bean都能满足依赖关系的话，Spring会抛出一个异常，表明没有明确指定要选择哪个bean进行装配，有关于Spring自动化装配的歧义性的问题，我会在后续的文章中进行说明。 @Autowired是Spring特有的注解，如果你不希望在代码中到处使用Spring特有的注解的话，那么可以考虑使用@Inject注解对其进行替换，例如：</p>
+}
+</code></pre>
+<p>但是，把 required 属性设置为 false 的时候你需要注意，如果你的代码中没有 null 检查的话，这个处于未装配状态的属性有可能会出现空指针异常（NullPointerException）。 如果有多个 bean 都能满足依赖关系的话，Spring 会抛出一个异常，表明没有明确指定要选择哪个 bean 进行装配，有关于 Spring 自动化装配的歧义性的问题，我会在后续的文章中进行说明。 @Autowired 是 Spring 特有的注解，如果你不希望在代码中到处使用 Spring 特有的注解的话，那么可以考虑使用 @Inject 注解对其进行替换，例如：</p>
 <p>package cn.javacodes.spring.beans.soundsystem;<br>import javax.inject.Inject;<br>import javax.inject.Named;<br>@Named<br>public class CDPlayer {<br>    private CompactDisc cd;<br>    @Inject<br>    public CDPlayer(CompactDisc cd) {<br>        this.cd = cd;<br>    }<br>    public void play(){<br>        cd.play();<br>    }<br>}</p>
-<p>@Inject注解来源于Java依赖注入规范，同@Named注解一样，@Inject注解与@Autowired注解存在一些细微的差别，但大多数情况下它们可以进行相互替换。</p>
-<h3 id="五、验证自动装配"><a href="#五、验证自动装配" class="headerlink" title="五、验证自动装配"></a>五、验证自动装配</h3><p>我们修改一下测试类CDPlayerTest，使其能够借助CDPlayer bean播放CD：</p>
-<p>package cn.javacodes.spring.beans.soundsystem;<br>import cn.javacodes.spring.beans.MediaPlayer;<br>import cn.javacodes.spring.configuration.CDPlayerConfig;<br>import org.junit.Rule;<br>import org.junit.Test;<br>import org.junit.contrib.java.lang.system.StandardOutputStreamLog;<br>import org.junit.runner.RunWith;<br>import org.springframework.beans.factory.annotation.Autowired;<br>import org.springframework.test.context.ContextConfiguration;<br>import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;<br>import static org.junit.Assert.assertEquals;<br>import static org.junit.Assert.assertNotNull;<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(classes = CDPlayerConfig.class)<br>public class CDPlayerTest {<br>    @Rule<br>    public final StandardOutputStreamLog log = new StandardOutputStreamLog();<br>    @Autowired<br>    private MediaPlayer player;<br>    @Autowired<br>    private CompactDisc cd;<br>    @Test<br>    public void cdShouldNotBeNull() {<br>        assertNotNull(cd);<br>    }<br>    @Test<br>    public void play() {<br>        player.play();<br>        assertEquals(“正在播放周传雄/小刚的专辑：transfern”, log.getLog());<br>    }<br>}</p>
-<p>该类中，除了注入CompactDisc，还将CDPlayer bean注入到了测试代码中（更为通用的MediaPlayer类型）。在play()方法中，我们可以调用CDPlayer的play()方法并断言它的行为与你的预期是否一致。 自动化装配Bean还有更多的细节，我会在后续的文章中进行阐述。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-            </article>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Spring/">Spring</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
-              
-              
-                <div class="post-prevnext row">
-                  <div class="post-prev col-6">
-                    
-                    
-                      <a href="/articles/intellij-idea-chang-yong-kuai-jie-jian-lie-biao.html">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">IntelliJ Idea 常用快捷键列表</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </div>
-                  <div class="post-next col-6">
-                    
-                    
-                      <a href="/articles/fedora24-linux-nvidia-shuang-xian-qia-qu-dong-jie-jue-fang-an-bumblebee.html">
-                        <span class="hidden-mobile">Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </div>
-                </div>
-              
-            </div>
+<p>@Inject 注解来源于 Java 依赖注入规范，同 @Named 注解一样，@Inject 注解与 @Autowired 注解存在一些细微的差别，但大多数情况下它们可以进行相互替换。</p>
+<h3 id="五、验证自动装配"><a href="#五、验证自动装配" class="headerlink" title="五、验证自动装配"></a>五、验证自动装配</h3><p>我们修改一下测试类 CDPlayerTest，使其能够借助 CDPlayer bean 播放 CD：</p>
+<p>package cn.javacodes.spring.beans.soundsystem;<br>import cn.javacodes.spring.beans.MediaPlayer;<br>import cn.javacodes.spring.configuration.CDPlayerConfig;<br>import org.junit.Rule;<br>import org.junit.Test;<br>import org.junit.contrib.java.lang.system.StandardOutputStreamLog;<br>import org.junit.runner.RunWith;<br>import org.springframework.beans.factory.annotation.Autowired;<br>import org.springframework.test.context.ContextConfiguration;<br>import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;<br>import static org.junit.Assert.assertEquals;<br>import static org.junit.Assert.assertNotNull;<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(classes = CDPlayerConfig.class)<br>public class CDPlayerTest {<br>    @Rule<br>    public final StandardOutputStreamLog log = new StandardOutputStreamLog();<br>    @Autowired<br>    private MediaPlayer player;<br>    @Autowired<br>    private CompactDisc cd;<br>    @Test<br>    public void cdShouldNotBeNull() {<br>        assertNotNull(cd);<br>    }<br>    @Test<br>    public void play() {<br>        player.play();<br>        assertEquals (“正在播放周传雄 / 小刚的专辑：transfern”, log.getLog ());<br>    }<br>}</p>
+<p>该类中，除了注入 CompactDisc，还将 CDPlayer bean 注入到了测试代码中（更为通用的 MediaPlayer 类型）。在 play () 方法中，我们可以调用 CDPlayer 的 play () 方法并断言它的行为与你的预期是否一致。 自动化装配 Bean 还有更多的细节，我会在后续的文章中进行阐述。</p>
 
-            
-              <!-- Comments -->
-              <div class="comments" id="comments">
-                
-                
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    function loadGitalk(){
-      addScript('https://cdn.staticfile.org/gitalk/1.6.2/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: 'b98b717d30c8867a2377',
-          clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
-          repo: 'blog-gitalk-comments',
-          owner: 'huzhanfei',
-          admin: 'huzhanfei',
-          id: 'abe2f11339bee105f3f102052ebaa0c7',
-          language: 'zh-CN',
-          perPage: 15,
-          pagerDirection: 'last',
-          createIssueManually: 'true',
-          distractionFreeMode: 'false'
-        });
-        gitalk.render('gitalk-container');
-      });
-    }
-    createObserver(loadGitalk, 'gitalk-container');
-  </script>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/spring-xue-xi-bi-ji-zhi-bean-de-zuo-yong-yu.html" rel="bookmark">Spring 学习笔记之 Bean 的作用域</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/spring-xue-xi-bi-ji-zhi-bean-de-shu-xing-zhu-ru.html" rel="bookmark">Spring 学习笔记之 Bean 的属性注入</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/spring-xue-xi-bi-ji-zhi-ioc-yu-di-gai-shu.html" rel="bookmark">Spring 学习笔记之 IOC 与 DI 概述</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/spring-xue-xi-bi-ji-zhi-spring-helloworld.html" rel="bookmark">Spring 学习笔记之 Spring HelloWorld</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/spring-xue-xi-bi-ji-zhi-chu-li-zi-dong-zhuang-pei-de-qi-yi-xing.html" rel="bookmark">Spring 学习笔记之处理自动装配的歧义性</a></div>
+    </li>
+  </ul>
 
 
-              </div>
-            
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jeffrey Hu
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html" title="Spring 学习笔记之自动化装配 Bean">https://bytelife.net/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
           </div>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/fedora24-linux-nvidia-shuang-xian-qia-qu-dong-jie-jue-fang-an-bumblebee.html" rel="prev" title="Fedora24（Linux）Nvidia 双显卡驱动解决方案（Bumblebee）">
+                  <i class="fa fa-chevron-left"></i> Fedora24（Linux）Nvidia 双显卡驱动解决方案（Bumblebee）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/intellij-idea-chang-yong-kuai-jie-jian-lie-biao.html" rel="next" title="IntelliJ Idea 常用快捷键列表">
+                  IntelliJ Idea 常用快捷键列表 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
 </div>
 
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
 
 
-    
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
 
-  
-    <!-- APlayer 音乐播放器 -->
-    <div id="aplayer"></div>
-    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
-<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
-<script type="text/javascript">
-  var oldLoadAp = window.onload;
-  window.onload = function () {
-    oldLoadAp && oldLoadAp();
+    <div class="comments gitalk-container"></div>
 
-    new APlayer({
-      container: document.getElementById('aplayer'),
-      fixed: true,
-      autoplay: 'false' === 'true',
-      loop: 'all',
-      order: 'list',
-      theme: '#b7daff',
-      preload: 'none',
-      audio: [{"name":"なんでもないや (movie ver.)","artist":"RADWIMPS","url":"/uploads/MEI-SHEN-ME-DA-BU-LIAO.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"三葉のテーマ","artist":"RADWIMPS","url":"/uploads/SAN-YE.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Alpha","artist":"Christophe Lebled","url":"/uploads/Alpha.mp3","cover":"/uploads/Alpha.jpg"},{"name":"森林狂想曲","artist":"吴金黛","url":"/uploads/Forest-Rhapsody.mp3","cover":"/uploads/Forest-Rhapsody.jpg"},{"name":"Auld Lang Syne","artist":"Home Free","url":"/uploads/Auld-Lang-Syne.mp3","cover":"/uploads/Auld-Lang-Syne.jpg"},{"name":"On a Slow Boat to China","artist":"Luke Thompson","url":"/uploads/On-a-Slow-Boat-to-China.mp3","cover":"/uploads/On-a-Slow-Boat-to-China.jpg"},{"name":"Right Here Waiting","artist":"Richard Marx","url":"/uploads/Right-Here-Waiting.mp3","cover":"/uploads/Right-Here-Waiting.jpg"},{"name":"Something Just Like This","artist":"The Chainsmokers","url":"/uploads/Something-Just-Like-This.mp3","cover":"/uploads/Something-Just-Like-This.jpg"},{"name":"Beautiful In White","artist":"Shane Filan","url":"/uploads/Beautiful-In-White.mp3","cover":"/uploads/Beautiful-In-White.jpg"},{"name":"Illusionary Daytime","artist":"Shirfine","url":"/uploads/Illusionary-Daytime.mp3","cover":"/uploads/Illusionary-Daytime.jpg"},{"name":"夢灯籠","artist":"RADWIMPS","url":"/uploads/MENG-DENG-LONG.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"前前前世 (movie ver.)","artist":"RADWIMPS","url":"/uploads/QIAN-QIAN-QIAN-SHI.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Naruto Main Theme","artist":"Musashi","url":"/uploads/Naruto-Main-Theme.mp3","cover":"/uploads/Naruto-Main-Theme.jpg"},{"name":"Legends Never Die","artist":"英雄联盟","url":"/uploads/Legends-Never-Die.mp3","cover":"/uploads/Legends-Never-Die.jpg"}]
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
+</div>
+  </main>
 
-  
+  <footer class="footer">
+    <div class="footer-inner">
 
-  
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
+      <img src="/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备 44030502005735号 </a>
+  </div>
 
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
+<div class="copyright">
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
     </div>
-    
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
-
-    
-  <!-- 备案信息 -->
-  <div class="beian">
-    <a href="http://beian.miit.gov.cn/" target="_blank"
-       rel="nofollow noopener">粤ICP备20059294号</a>
-    
-  </div>
-
-
-    
-  </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
-
-<!-- Plugins -->
-
+  </footer>
 
   
-    <script  src="/js/lazyload.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
   
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
 
 
-
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
-
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
-
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
       }
-    }
-
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
+      if (document.readyState === 'complete') {
+        NProgress.done();
       }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+
+
+<script data-pjax>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
     function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
           }
-        });
-        getterArr.push(pvGetter);
-      }
-
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
-
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('true' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/articles/spring-xue-xi-bi-ji-zhi-zi-dong-hua-zhuang-pei-bean.html');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
-
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
         })
-      }
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
     }
 
-    var app_id = 'WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz'
-    var app_key = 'bG7qAcDfxStNdWtC1T8EE9ku'
-    var server_url = 'https://wapgmgrp.lc-cn-n1-shared.com'
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
 
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":true};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data)
         });
       };
-
-      addCount(Counter);
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
     }
 
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
     } else {
       fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
+        .then(response => response.json())
+        .then(({ api_server }) => {
           fetchData('https://' + api_server);
         });
     }
   })();
 </script>
 
+    <div class="pjax">
+
+  
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
 
-
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b98b717d30c8867a2377',
+      clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
+      repo        : 'blog-gitalk-comments',
+      owner       : 'huzhanfei',
+      admin       : ['huzhanfei'],
+      id          : 'e83de0ad08a3b275329e258a20136191',
+        language: 'zh-CN',
+      distractionFreeMode: true
     });
-  </script>
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
 
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "Spring学习笔记之自动化装配Bean&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-
-
+    </div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

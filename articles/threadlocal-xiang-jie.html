@@ -1,233 +1,323 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-
-
-
-
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
-  <link rel="icon" type="image/png" href="/images/favicon.ico">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="ThreadLocal 是什么　　早在 JDK 1.2 的版本中就提供 Java.lang.ThreadLocal，ThreadLocal 为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。 　　 　　当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThreadLocal 详解">
+<meta property="og:url" content="https://bytelife.net/articles/threadlocal-xiang-jie.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="ThreadLocal 是什么　　早在 JDK 1.2 的版本中就提供 Java.lang.ThreadLocal，ThreadLocal 为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。 　　 　　当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-15_15-34-09.gif">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-15_15-34-09.jpg">
+<meta property="article:published_time" content="2017-03-15T15:34:01.000Z">
+<meta property="article:modified_time" content="2021-02-19T18:18:32.403Z">
+<meta property="article:author" content="Jeffrey Hu">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="并发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-15_15-34-09.gif">
+
+
+<link rel="canonical" href="https://bytelife.net/articles/threadlocal-xiang-jie.html">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>ThreadLocal 详解 | ByteLife</title>
   
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
-  <meta name="author" content="Jeffrey Hu">
-  <meta name="keywords" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,huzhanfei">
-  <title>ThreadLocal 详解 - ByteLife</title>
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
 
 
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script  src="/js/utils.js" ></script>
-<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>ByteLife</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-          </li>
-        
-      </ul>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">ByteLife</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术交流与学习自留地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
-         style="background: url('/images/banner.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
-              
-            </span>
 
-            
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2017-03-15 23:34">
-      2017年3月15日 晚上
-    </time>
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">ThreadLocal 是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal%E7%9A%84%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">ThreadLocal 的接口方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">3.</span> <span class="nav-text">Thread 同步机制的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-lang-ThreadLocal%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">java.lang.ThreadLocal 的具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.1.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeffrey Hu"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description">专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
   </div>
 
 
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      3.6k 字
-    </span>
-  
 
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      45
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- LeanCloud 统计文章PV -->
-      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="leancloud-post-views"></span> 次
-      </span>
-    
-  
-</div>
-
-            
-          </div>
-
-          
         </div>
       </div>
     </div>
-  </header>
+  </aside>
+  <div class="sidebar-dimmer"></div>
 
-  <main>
+
+    </header>
+
     
-      
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
-            
-            <article class="markdown-body">
-              <h2 id="ThreadLocal是什么"><a href="#ThreadLocal是什么" class="headerlink" title="ThreadLocal是什么"></a>ThreadLocal是什么</h2><p>　　早在JDK 1.2的版本中就提供Java.lang.ThreadLocal，ThreadLocal为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。 　　 　　当使用ThreadLocal维护变量时，ThreadLocal为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。 　　 　　从线程的角度看，目标变量就象是线程的本地变量，这也是类名中“Local”所要表达的意思。 　　 　　所以，在Java中编写线程局部变量的代码相对来说要笨拙一些，因此造成线程局部变量没有在Java开发者中得到很好的普及。 　　</p>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/threadlocal-xiang-jie.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ThreadLocal 详解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-15 23:34:01" itemprop="dateCreated datePublished" datetime="2017-03-15T23:34:01+08:00">2017-03-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-20 02:18:32" itemprop="dateModified" datetime="2021-02-20T02:18:32+08:00">2021-02-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/articles/threadlocal-xiang-jie.html" class="post-meta-item leancloud_visitors" data-flag-title="ThreadLocal 详解" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="ThreadLocal是什么"><a href="#ThreadLocal是什么" class="headerlink" title="ThreadLocal是什么"></a>ThreadLocal 是什么</h2><p>　　早在 JDK 1.2 的版本中就提供 Java.lang.ThreadLocal，ThreadLocal 为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。 　　 　　当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。 　　 　　从线程的角度看，目标变量就象是线程的本地变量，这也是类名中 “Local” 所要表达的意思。 　　 　　所以，在 Java 中编写线程局部变量的代码相对来说要笨拙一些，因此造成线程局部变量没有在 Java 开发者中得到很好的普及。 　　</p>
 <a id="more"></a>
 
-<h2 id="ThreadLocal的接口方法"><a href="#ThreadLocal的接口方法" class="headerlink" title="ThreadLocal的接口方法"></a>ThreadLocal的接口方法</h2><p>ThreadLocal类接口很简单，只有4个方法，我们先来了解一下：</p>
+<h2 id="ThreadLocal的接口方法"><a href="#ThreadLocal的接口方法" class="headerlink" title="ThreadLocal的接口方法"></a>ThreadLocal 的接口方法</h2><p>ThreadLocal 类接口很简单，只有 4 个方法，我们先来了解一下：</p>
 <ul>
-<li><strong>void set(Object value)</strong>：设置当前线程的线程局部变量的值。</li>
-<li><strong>public Object get()</strong>：该方法返回当前线程所对应的线程局部变量。</li>
-<li><strong>public void remove()</strong>：将当前线程局部变量的值删除，目的是为了减少内存的占用，该方法是JDK 5.0新增的方法。需要指出的是，当线程结束后，对应该线程的局部变量将自动被垃圾回收，所以显式调用该方法清除线程的局部变量并不是必须的操作，但它可以加快内存回收的速度。</li>
-<li><strong>protected Object initialValue()</strong>：返回该线程局部变量的初始值，该方法是一个protected的方法，显然是为了让子类覆盖而设计的。这个方法是一个延迟调用方法，在线程第1次调用get()或set(Object)时才执行，并且仅执行1次。ThreadLocal中的缺省实现直接返回一个null。</li>
+<li>  **void set (Object value)**：设置当前线程的线程局部变量的值。</li>
+<li>  **public Object get ()**：该方法返回当前线程所对应的线程局部变量。</li>
+<li>  **public void remove ()**：将当前线程局部变量的值删除，目的是为了减少内存的占用，该方法是 JDK 5.0 新增的方法。需要指出的是，当线程结束后，对应该线程的局部变量将自动被垃圾回收，所以显式调用该方法清除线程的局部变量并不是必须的操作，但它可以加快内存回收的速度。</li>
+<li>  **protected Object initialValue ()**：返回该线程局部变量的初始值，该方法是一个 protected 的方法，显然是为了让子类覆盖而设计的。这个方法是一个延迟调用方法，在线程第 1 次调用 get () 或 set (Object) 时才执行，并且仅执行 1 次。ThreadLocal 中的缺省实现直接返回一个 null。</li>
 </ul>
-<p>　　值得一提的是，在JDK5.0中，ThreadLocal已经支持泛型，该类的类名已经变为ThreadLocal。API方法也相应进行了调整，新版本的API方法分别是void set(T value)、T get()以及T initialValue()。 　　 　　ThreadLocal是如何做到为每一个线程维护变量的副本的呢？其实实现的思路很简单：在ThreadLocal类中有一个Map，用于存储每一个线程的变量副本，Map中元素的键为线程对象，而值对应线程的变量副本。我们自己就可以提供一个简单的实现版本：</p>
+<p>　　值得一提的是，在 JDK5.0 中，ThreadLocal 已经支持泛型，该类的类名已经变为 ThreadLocal。API 方法也相应进行了调整，新版本的 API 方法分别是 void set (T value)、T get () 以及 T initialValue ()。 　　 　　ThreadLocal 是如何做到为每一个线程维护变量的副本的呢？其实实现的思路很简单：在 ThreadLocal 类中有一个 Map，用于存储每一个线程的变量副本，Map 中元素的键为线程对象，而值对应线程的变量副本。我们自己就可以提供一个简单的实现版本：</p>
 <pre><code>package com.test;
 public class TestNum {
     // ①通过匿名内部类覆盖ThreadLocal的initialValue()方法，指定初始值
@@ -264,7 +354,9 @@ public class TestNum {
             }
         }
     }
-}</code></pre><p>　　通常我们通过匿名内部类的方式定义ThreadLocal的子类，提供初始的变量值，如例子中①处所示。TestClient线程产生一组序列号，在③处，我们生成3个TestClient，它们共享同一个TestNum实例。运行以上代码，在控制台上输出以下的结果：</p>
+}
+</code></pre>
+<p>　　通常我们通过匿名内部类的方式定义 ThreadLocal 的子类，提供初始的变量值，如例子中①处所示。TestClient 线程产生一组序列号，在③处，我们生成 3 个 TestClient，它们共享同一个 TestNum 实例。运行以上代码，在控制台上输出以下的结果：</p>
 <pre><code>thread[Thread-0] --&gt; sn[1]
 thread[Thread-1] --&gt; sn[1]
 thread[Thread-2] --&gt; sn[1]
@@ -273,8 +365,10 @@ thread[Thread-0] --&gt; sn[2]
 thread[Thread-1] --&gt; sn[3]
 thread[Thread-2] --&gt; sn[2]
 thread[Thread-0] --&gt; sn[3]
-thread[Thread-2] --&gt; sn[3]</code></pre><p>　　考察输出的结果信息，我们发现每个线程所产生的序号虽然都共享同一个TestNum实例，但它们并没有发生相互干扰的情况，而是各自产生独立的序列号，这是因为我们通过ThreadLocal为每一个线程提供了单独的副本。</p>
-<h2 id="Thread同步机制的比较"><a href="#Thread同步机制的比较" class="headerlink" title="Thread同步机制的比较"></a>Thread同步机制的比较</h2><p>　　ThreadLocal和线程同步机制相比有什么优势呢？ThreadLocal和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。 　　 　　在同步机制中，通过对象的锁机制保证同一时间只有一个线程访问变量。这时该变量是多个线程共享的，使用同步机制要求程序慎密地分析什么时候对变量进行读写，什么时候需要锁定某个对象，什么时候释放对象锁等繁杂的问题，程序设计和编写难度相对较大。 　　 　　而ThreadLocal则从另一个角度来解决多线程的并发访问。ThreadLocal会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进ThreadLocal。 　　 　　由于ThreadLocal中可以持有任何类型的对象，低版本JDK所提供的get()返回的是Object对象，需要强制类型转换。但JDK 5.0通过泛型很好的解决了这个问题，在一定程度地简化ThreadLocal的使用，代码清单 9 2就使用了JDK 5.0新的ThreadLocal版本。 　　 　　概括起来说，对于多线程资源共享的问题，同步机制采用了“以时间换空间”的方式，而ThreadLocal采用了“以空间换时间”的方式。前者仅提供一份变量，让不同的线程排队访问，而后者为每一个线程都提供了一份变量，因此可以同时访问而互不影响。 　　 　　spring使用ThreadLocal解决线程安全问题我们知道在一般情况下，只有无状态的Bean才可以在多线程环境下共享，在Spring中，绝大部分Bean都可以声明为singleton作用域。就是因为Spring对一些Bean（如RequestContextHolder、TransactionSynchronizationManager、LocaleContextHolder等）中非线程安全状态采用ThreadLocal进行处理，让它们也成为线程安全的状态，因为有状态的Bean就可以在多线程中共享了。 　　 　　一般的Web应用划分为展现层、服务层和持久层三个层次，在不同的层中编写对应的逻辑，下层通过接口向上层开放功能调用。在一般情况下，从接收请求到返回响应所经过的所有程序调用都同属于一个线程，如图9‑2所示： 　　 　　<img src="https://cdn.javacodes.cn/files/2017/03/2017-03-15_15-34-09.gif" srcset="/img/loading.gif" alt="">￼ 　　同一线程贯通三层这样你就可以根据需要，将一些非线程安全的变量以ThreadLocal存放，在同一次请求响应的调用线程中，所有关联的对象引用到的都是同一个变量。 　　下面的实例能够体现Spring对有状态Bean的改造思路： 　　代码清单3 TestDao：非线程安全</p>
+thread[Thread-2] --&gt; sn[3]
+</code></pre>
+<p>　　考察输出的结果信息，我们发现每个线程所产生的序号虽然都共享同一个 TestNum 实例，但它们并没有发生相互干扰的情况，而是各自产生独立的序列号，这是因为我们通过 ThreadLocal 为每一个线程提供了单独的副本。</p>
+<h2 id="Thread同步机制的比较"><a href="#Thread同步机制的比较" class="headerlink" title="Thread同步机制的比较"></a>Thread 同步机制的比较</h2><p>　　ThreadLocal 和线程同步机制相比有什么优势呢？ThreadLocal 和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。 　　 　　在同步机制中，通过对象的锁机制保证同一时间只有一个线程访问变量。这时该变量是多个线程共享的，使用同步机制要求程序慎密地分析什么时候对变量进行读写，什么时候需要锁定某个对象，什么时候释放对象锁等繁杂的问题，程序设计和编写难度相对较大。 　　 　　而 ThreadLocal 则从另一个角度来解决多线程的并发访问。ThreadLocal 会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。ThreadLocal 提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进 ThreadLocal。 　　 　　由于 ThreadLocal 中可以持有任何类型的对象，低版本 JDK 所提供的 get () 返回的是 Object 对象，需要强制类型转换。但 JDK 5.0 通过泛型很好的解决了这个问题，在一定程度地简化 ThreadLocal 的使用，代码清单 9 2 就使用了 JDK 5.0 新的 ThreadLocal 版本。 　　 　　概括起来说，对于多线程资源共享的问题，同步机制采用了 “以时间换空间” 的方式，而 ThreadLocal 采用了 “以空间换时间” 的方式。前者仅提供一份变量，让不同的线程排队访问，而后者为每一个线程都提供了一份变量，因此可以同时访问而互不影响。 　　 　　spring 使用 ThreadLocal 解决线程安全问题我们知道在一般情况下，只有无状态的 Bean 才可以在多线程环境下共享，在 Spring 中，绝大部分 Bean 都可以声明为 singleton 作用域。就是因为 Spring 对一些 Bean（如 RequestContextHolder、TransactionSynchronizationManager、LocaleContextHolder 等）中非线程安全状态采用 ThreadLocal 进行处理，让它们也成为线程安全的状态，因为有状态的 Bean 就可以在多线程中共享了。 　　 　　一般的 Web 应用划分为展现层、服务层和持久层三个层次，在不同的层中编写对应的逻辑，下层通过接口向上层开放功能调用。在一般情况下，从接收请求到返回响应所经过的所有程序调用都同属于一个线程，如图 9‑2 所示： 　　 　　<img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-15_15-34-09.gif">￼ 　　同一线程贯通三层这样你就可以根据需要，将一些非线程安全的变量以 ThreadLocal 存放，在同一次请求响应的调用线程中，所有关联的对象引用到的都是同一个变量。 　　下面的实例能够体现 Spring 对有状态 Bean 的改造思路： 　　代码清单 3 TestDao：非线程安全</p>
 <pre><code>package com.test;
 
 import java.sql.Connection;
@@ -288,7 +382,9 @@ public class TestDao {
         Statement stat = conn.createStatement();// ②引用非线程安全变量
         // …
     }
-}</code></pre><p>　　由于①处的conn是成员变量，因为addTopic()方法是非线程安全的，必须在使用时创建一个新TopicDao实例（非singleton）。下面使用ThreadLocal对conn这个非线程安全的“状态”进行改造： 　　代码清单4 TestDao：线程安全</p>
+}
+</code></pre>
+<p>　　由于①处的 conn 是成员变量，因为 addTopic () 方法是非线程安全的，必须在使用时创建一个新 TopicDao 实例（非 singleton）。下面使用 ThreadLocal 对 conn 这个非线程安全的 “状态” 进行改造： 　　代码清单 4 TestDao：线程安全</p>
 <pre><code>package com.test;
 
 import java.sql.Connection;
@@ -315,7 +411,9 @@ public class TestDaoNew {
         // ④从ThreadLocal中获取线程对应的Connection
         Statement stat = getConnection().createStatement();
     }
-}</code></pre><p>　　不同的线程在使用TopicDao时，先判断connThreadLocal.get()是否是null，如果是null，则说明当前线程还没有对应的Connection对象，这时创建一个Connection对象并添加到本地线程变量中；如果不为null，则说明当前的线程已经拥有了Connection对象，直接使用就可以了。这样，就保证了不同的线程使用线程相关的Connection，而不会使用其它线程的Connection。因此，这个TopicDao就可以做到singleton共享了。 　　 　　当然，这个例子本身很粗糙，将Connection的ThreadLocal直接放在DAO只能做到本DAO的多个方法共享Connection时不发生线程安全问题，但无法和其它DAO共用同一个Connection，要做到同一事务多DAO共享同一Connection，必须在一个共同的外部类使用ThreadLocal保存Connection。</p>
+}
+</code></pre>
+<p>　　不同的线程在使用 TopicDao 时，先判断 connThreadLocal.get () 是否是 null，如果是 null，则说明当前线程还没有对应的 Connection 对象，这时创建一个 Connection 对象并添加到本地线程变量中；如果不为 null，则说明当前的线程已经拥有了 Connection 对象，直接使用就可以了。这样，就保证了不同的线程使用线程相关的 Connection，而不会使用其它线程的 Connection。因此，这个 TopicDao 就可以做到 singleton 共享了。 　　 　　当然，这个例子本身很粗糙，将 Connection 的 ThreadLocal 直接放在 DAO 只能做到本 DAO 的多个方法共享 Connection 时不发生线程安全问题，但无法和其它 DAO 共用同一个 Connection，要做到同一事务多 DAO 共享同一 Connection，必须在一个共同的外部类使用 ThreadLocal 保存 Connection。</p>
 <pre><code>package com.test;
 
 import java.sql.Connection;
@@ -346,24 +444,28 @@ public class ConnectionManager {
     public static void setConnection(Connection conn) {
         connectionHolder.set(conn);
     }
-}</code></pre><h2 id="java-lang-ThreadLocal的具体实现"><a href="#java-lang-ThreadLocal的具体实现" class="headerlink" title="java.lang.ThreadLocal的具体实现"></a>java.lang.ThreadLocal的具体实现</h2><p>　　那么到底ThreadLocal类是如何实现这种“为每个线程提供不同的变量拷贝”的呢？先来看一下ThreadLocal的set()方法的源码是如何实现的：</p>
-<pre><code>/**
-    * Sets the current thread's copy of this thread-local variable
-    * to the specified value.  Most subclasses will have no need to
-    * override this method, relying solely on the {@link #initialValue}
-    * method to set the values of thread-locals.
-    *
-    * @param value the value to be stored in the current thread's copy of
-    *        this thread-local.
-    */
-   public void set(T value) {
-       Thread t = Thread.currentThread();
-       ThreadLocalMap map = getMap(t);
-       if (map != null)
-           map.set(this, value);
-       else
-           createMap(t, value);
-   }</code></pre><p>　　在这个方法内部我们看到，首先通过getMap(Thread t)方法获取一个和当前线程相关的ThreadLocalMap，然后将变量的值设置到这个ThreadLocalMap对象中，当然如果获取到的ThreadLocalMap对象为空，就通过createMap方法创建。 　　线程隔离的秘密，就在于ThreadLocalMap这个类。ThreadLocalMap是ThreadLocal类的一个静态内部类，它实现了键值对的设置和获取（对比Map对象来理解），每个线程中都有一个独立的ThreadLocalMap副本，它所存储的值，只能被当前线程读取和修改。ThreadLocal类通过操作每一个线程特有的ThreadLocalMap副本，从而实现了变量访问在不同线程中的隔离。因为每个线程的变量都是自己特有的，完全不会有并发错误。还有一点就是，ThreadLocalMap存储的键值对中的键是this对象指向的ThreadLocal对象，而值就是你所设置的对象了。 　　为了加深理解，我们接着看上面代码中出现的getMap和createMap方法的实现：</p>
+}
+</code></pre>
+<h2 id="java-lang-ThreadLocal的具体实现"><a href="#java-lang-ThreadLocal的具体实现" class="headerlink" title="java.lang.ThreadLocal的具体实现"></a>java.lang.ThreadLocal 的具体实现</h2><p>　　那么到底 ThreadLocal 类是如何实现这种 “为每个线程提供不同的变量拷贝” 的呢？先来看一下 ThreadLocal 的 set () 方法的源码是如何实现的：</p>
+<pre><code> /**
+     * Sets the current thread's copy of this thread-local variable
+     * to the specified value.  Most subclasses will have no need to
+     * override this method, relying solely on the {@link #initialValue}
+     * method to set the values of thread-locals.
+     *
+     * @param value the value to be stored in the current thread's copy of
+     *        this thread-local.
+     */
+    public void set(T value) {
+        Thread t = Thread.currentThread();
+        ThreadLocalMap map = getMap(t);
+        if (map != null)
+            map.set(this, value);
+        else
+            createMap(t, value);
+    }
+</code></pre>
+<p>　　在这个方法内部我们看到，首先通过 getMap (Thread t) 方法获取一个和当前线程相关的 ThreadLocalMap，然后将变量的值设置到这个 ThreadLocalMap 对象中，当然如果获取到的 ThreadLocalMap 对象为空，就通过 createMap 方法创建。 　　线程隔离的秘密，就在于 ThreadLocalMap 这个类。ThreadLocalMap 是 ThreadLocal 类的一个静态内部类，它实现了键值对的设置和获取（对比 Map 对象来理解），每个线程中都有一个独立的 ThreadLocalMap 副本，它所存储的值，只能被当前线程读取和修改。ThreadLocal 类通过操作每一个线程特有的 ThreadLocalMap 副本，从而实现了变量访问在不同线程中的隔离。因为每个线程的变量都是自己特有的，完全不会有并发错误。还有一点就是，ThreadLocalMap 存储的键值对中的键是 this 对象指向的 ThreadLocal 对象，而值就是你所设置的对象了。 　　为了加深理解，我们接着看上面代码中出现的 getMap 和 createMap 方法的实现：</p>
 <pre><code>    /**
      * Get the map associated with a ThreadLocal. Overridden in
      * InheritableThreadLocal.
@@ -386,28 +488,30 @@ public class ConnectionManager {
     void createMap(Thread t, T firstValue) {
         t.threadLocals = new ThreadLocalMap(this, firstValue);
     }
-    <pre><code class="hljs kotlin">
-　　接下来再看一下ThreadLocal类中的<span class="hljs-keyword">get</span>()方法:
+    ```
+
+　　接下来再看一下ThreadLocal类中的get()方法:
 
 ```java
-    <span class="hljs-comment">/**</span>
-<span class="hljs-comment">     * Returns the value in the current thread's copy of this</span>
-<span class="hljs-comment">     * thread-local variable.  If the variable has no value for the</span>
-<span class="hljs-comment">     * current thread, it is first initialized to the value returned</span>
-<span class="hljs-comment">     * by an invocation of the {<span class="hljs-doctag">@link</span> #initialValue} method.</span>
-<span class="hljs-comment">     *</span>
-<span class="hljs-comment">     * <span class="hljs-doctag">@return</span> the current thread's value of this thread-local</span>
-<span class="hljs-comment">     */</span>
-    <span class="hljs-keyword">public</span> T <span class="hljs-keyword">get</span>() {
+    /**
+     * Returns the value in the current thread's copy of this
+     * thread-local variable.  If the variable has no value for the
+     * current thread, it is first initialized to the value returned
+     * by an invocation of the {@link #initialValue} method.
+     *
+     * @return the current thread's value of this thread-local
+     */
+    public T get() {
         Thread t = Thread.currentThread();
         ThreadLocalMap map = getMap(t);
-        <span class="hljs-keyword">if</span> (map != <span class="hljs-literal">null</span>) {
-            ThreadLocalMap.Entry e = map.getEntry(<span class="hljs-keyword">this</span>);
-            <span class="hljs-keyword">if</span> (e != <span class="hljs-literal">null</span>)
-                <span class="hljs-keyword">return</span> (T)e.value;
+        if (map != null) {
+            ThreadLocalMap.Entry e = map.getEntry(this);
+            if (e != null)
+                return (T)e.value;
         }
-        <span class="hljs-keyword">return</span> setInitialValue();
-    }</code></pre>
+        return setInitialValue();
+    }
+    ```
 
 
 　　再来看setInitialValue()方法：
@@ -428,8 +532,10 @@ public class ConnectionManager {
         else
             createMap(t, value);
         return value;
-    }</code></pre><p>　　获取和当前线程绑定的值时，ThreadLocalMap对象是以this指向的ThreadLocal对象为键进行查找的，这当然和前面set()方法的代码是相呼应的。 　　进一步地，我们可以创建不同的ThreadLocal实例来实现多个变量在不同线程间的访问隔离，为什么可以这么做？因为不同的ThreadLocal对象作为不同键，当然也可以在线程的ThreadLocalMap对象中设置不同的值了。通过ThreadLocal对象，在多线程中共享一个值和多个值的区别，就像你在一个HashMap对象中存储一个键值对和多个键值对一样，仅此而已。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>　　ThreadLocal是解决线程安全问题一个很好的思路，它通过为每个线程提供一个独立的变量副本解决了变量并发访问的冲突问题。在很多情况下，ThreadLocal比直接使用synchronized同步机制解决线程安全问题更简单，更方便，且结果程序拥有更高的并发性。 ConnectionManager.java</p>
+    }
+</code></pre>
+<p>　　获取和当前线程绑定的值时，ThreadLocalMap 对象是以 this 指向的 ThreadLocal 对象为键进行查找的，这当然和前面 set () 方法的代码是相呼应的。 　　进一步地，我们可以创建不同的 ThreadLocal 实例来实现多个变量在不同线程间的访问隔离，为什么可以这么做？因为不同的 ThreadLocal 对象作为不同键，当然也可以在线程的 ThreadLocalMap 对象中设置不同的值了。通过 ThreadLocal 对象，在多线程中共享一个值和多个值的区别，就像你在一个 HashMap 对象中存储一个键值对和多个键值对一样，仅此而已。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>　　ThreadLocal 是解决线程安全问题一个很好的思路，它通过为每个线程提供一个独立的变量副本解决了变量并发访问的冲突问题。在很多情况下，ThreadLocal 比直接使用 synchronized 同步机制解决线程安全问题更简单，更方便，且结果程序拥有更高的并发性。 ConnectionManager.java</p>
 <pre><code>package com.test;
 
 import java.sql.Connection;
@@ -460,7 +566,9 @@ public class ConnectionManager {
     public static void setConnection(Connection conn) {
         connectionHolder.set(conn);
     }
-}</code></pre><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>　　看到网友评论的很激烈，甚至关于ThreadLocalMap不是ThreadLocal里面的，而是Thread里面的这种评论都出现了，于是有了这个后记，下面先把jdk源码贴上，源码最有说服力了。</p>
+}
+</code></pre>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>　　看到网友评论的很激烈，甚至关于 ThreadLocalMap 不是 ThreadLocal 里面的，而是 Thread 里面的这种评论都出现了，于是有了这个后记，下面先把 jdk 源码贴上，源码最有说服力了。</p>
 <pre><code>/**
      * ThreadLocalMap is a customized hash map suitable only for
      * maintaining thread local values. No operations are exported
@@ -471,564 +579,317 @@ public class ConnectionManager {
      * used, stale entries are guaranteed to be removed only when
      * the table starts running out of space.
      */
-    static class ThreadLocalMap {...}</code></pre><p>　　源码就是以上，这源码自然是在ThreadLocal里面的，有截图为证。 　　 　　<img src="https://cdn.javacodes.cn/files/2017/03/2017-03-15_15-34-09.jpg" srcset="/img/loading.gif" alt="">￼ 　　本文是自己在学习ThreadLocal的时候，一时兴起，深入看了源码，思考了此类的作用、使用范围，进而联想到对传统的synchronize共享变量线程安全的问题进行比较，而总结的博文，总结一句话就是一个是锁机制进行时间换空间，一个是存储拷贝进行空间换时间。 (全文完)</p>
+    static class ThreadLocalMap {...}
+</code></pre>
+<p>　　源码就是以上，这源码自然是在 ThreadLocal 里面的，有截图为证。 　　 　　<img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-15_15-34-09.jpg">￼ 　　本文是自己在学习 ThreadLocal 的时候，一时兴起，深入看了源码，思考了此类的作用、使用范围，进而联想到对传统的 synchronize 共享变量线程安全的问题进行比较，而总结的博文，总结一句话就是一个是锁机制进行时间换空间，一个是存储拷贝进行空间换时间。 (全文完)</p>
 <blockquote>
-<p>转载自<a href="http://blog.csdn.net/lufeng20" target="_blank" rel="noopener">http://blog.csdn.net/lufeng20</a></p>
+<p>转载自 <a target="_blank" rel="noopener" href="http://blog.csdn.net/lufeng20">http://blog.csdn.net/lufeng20</a></p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-            </article>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%B9%B6%E5%8F%91/">并发</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
-              
-              
-                <div class="post-prevnext row">
-                  <div class="post-prev col-6">
-                    
-                    
-                      <a href="/articles/qian-xi-classnotfoundexception-yu-noclassdeffounderror.html">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">浅析ClassNotFoundException与NoClassDefFoundError</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </div>
-                  <div class="post-next col-6">
-                    
-                    
-                      <a href="/articles/java-nio-jiao-cheng-xiang-jie.html">
-                        <span class="hidden-mobile">Java NIO 教程详解</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </div>
-                </div>
-              
-            </div>
 
-            
-              <!-- Comments -->
-              <div class="comments" id="comments">
-                
-                
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    function loadGitalk(){
-      addScript('https://cdn.staticfile.org/gitalk/1.6.2/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: 'b98b717d30c8867a2377',
-          clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
-          repo: 'blog-gitalk-comments',
-          owner: 'huzhanfei',
-          admin: 'huzhanfei',
-          id: 'abe2f11339bee105f3f102052ebaa0c7',
-          language: 'zh-CN',
-          perPage: 15,
-          pagerDirection: 'last',
-          createIssueManually: 'true',
-          distractionFreeMode: 'false'
-        });
-        gitalk.render('gitalk-container');
-      });
-    }
-    createObserver(loadGitalk, 'gitalk-container');
-  </script>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/concurrentlinkedqueue-de-shi-xian-yuan-li-fen-xi.html" rel="bookmark">ConcurrentLinkedQueue 的实现原理分析</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/java-zhong-de-copy-on-write-rong-qi.html" rel="bookmark">Java 中的 Copy-On-Write 容器</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/shen-ru-pou-xi-concurrenthashmap.html" rel="bookmark">深入剖析 ConcurrentHashMap</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/hashmap-duo-xian-cheng-bing-fa-wen-ti-fen-xi.html" rel="bookmark">HashMap 多线程并发问题分析</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/intellij-idea-chang-yong-kuai-jie-jian-lie-biao.html" rel="bookmark">IntelliJ Idea 常用快捷键列表</a></div>
+    </li>
+  </ul>
 
 
-              </div>
-            
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jeffrey Hu
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://bytelife.net/articles/threadlocal-xiang-jie.html" title="ThreadLocal 详解">https://bytelife.net/articles/threadlocal-xiang-jie.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag"># 并发</a>
           </div>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/java-nio-jiao-cheng-xiang-jie.html" rel="prev" title="Java NIO 教程详解">
+                  <i class="fa fa-chevron-left"></i> Java NIO 教程详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/qian-xi-classnotfoundexception-yu-noclassdeffounderror.html" rel="next" title="浅析 ClassNotFoundException 与 NoClassDefFoundError">
+                  浅析 ClassNotFoundException 与 NoClassDefFoundError <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
 </div>
 
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
 
 
-    
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
 
-  
-    <!-- APlayer 音乐播放器 -->
-    <div id="aplayer"></div>
-    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
-<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
-<script type="text/javascript">
-  var oldLoadAp = window.onload;
-  window.onload = function () {
-    oldLoadAp && oldLoadAp();
+    <div class="comments gitalk-container"></div>
 
-    new APlayer({
-      container: document.getElementById('aplayer'),
-      fixed: true,
-      autoplay: 'false' === 'true',
-      loop: 'all',
-      order: 'list',
-      theme: '#b7daff',
-      preload: 'none',
-      audio: [{"name":"なんでもないや (movie ver.)","artist":"RADWIMPS","url":"/uploads/MEI-SHEN-ME-DA-BU-LIAO.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"三葉のテーマ","artist":"RADWIMPS","url":"/uploads/SAN-YE.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Alpha","artist":"Christophe Lebled","url":"/uploads/Alpha.mp3","cover":"/uploads/Alpha.jpg"},{"name":"森林狂想曲","artist":"吴金黛","url":"/uploads/Forest-Rhapsody.mp3","cover":"/uploads/Forest-Rhapsody.jpg"},{"name":"Auld Lang Syne","artist":"Home Free","url":"/uploads/Auld-Lang-Syne.mp3","cover":"/uploads/Auld-Lang-Syne.jpg"},{"name":"On a Slow Boat to China","artist":"Luke Thompson","url":"/uploads/On-a-Slow-Boat-to-China.mp3","cover":"/uploads/On-a-Slow-Boat-to-China.jpg"},{"name":"Right Here Waiting","artist":"Richard Marx","url":"/uploads/Right-Here-Waiting.mp3","cover":"/uploads/Right-Here-Waiting.jpg"},{"name":"Something Just Like This","artist":"The Chainsmokers","url":"/uploads/Something-Just-Like-This.mp3","cover":"/uploads/Something-Just-Like-This.jpg"},{"name":"Beautiful In White","artist":"Shane Filan","url":"/uploads/Beautiful-In-White.mp3","cover":"/uploads/Beautiful-In-White.jpg"},{"name":"Illusionary Daytime","artist":"Shirfine","url":"/uploads/Illusionary-Daytime.mp3","cover":"/uploads/Illusionary-Daytime.jpg"},{"name":"夢灯籠","artist":"RADWIMPS","url":"/uploads/MENG-DENG-LONG.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"前前前世 (movie ver.)","artist":"RADWIMPS","url":"/uploads/QIAN-QIAN-QIAN-SHI.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Naruto Main Theme","artist":"Musashi","url":"/uploads/Naruto-Main-Theme.mp3","cover":"/uploads/Naruto-Main-Theme.jpg"},{"name":"Legends Never Die","artist":"英雄联盟","url":"/uploads/Legends-Never-Die.mp3","cover":"/uploads/Legends-Never-Die.jpg"}]
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
+</div>
+  </main>
 
-  
+  <footer class="footer">
+    <div class="footer-inner">
 
-  
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
+      <img src="/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备 44030502005735号 </a>
+  </div>
 
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
+<div class="copyright">
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
     </div>
-    
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
-
-    
-  <!-- 备案信息 -->
-  <div class="beian">
-    <a href="http://beian.miit.gov.cn/" target="_blank"
-       rel="nofollow noopener">粤ICP备20059294号</a>
-    
-  </div>
-
-
-    
-  </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
-
-<!-- Plugins -->
-
+  </footer>
 
   
-    <script  src="/js/lazyload.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
   
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
 
 
-
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
-
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
-
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
       }
-    }
-
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
+      if (document.readyState === 'complete') {
+        NProgress.done();
       }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+
+
+<script data-pjax>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
     function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
           }
-        });
-        getterArr.push(pvGetter);
-      }
-
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
-
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('true' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/articles/threadlocal-xiang-jie.html');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
-
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
         })
-      }
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
     }
 
-    var app_id = 'WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz'
-    var app_key = 'bG7qAcDfxStNdWtC1T8EE9ku'
-    var server_url = 'https://wapgmgrp.lc-cn-n1-shared.com'
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
 
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":true};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data)
         });
       };
-
-      addCount(Counter);
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
     }
 
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
     } else {
       fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
+        .then(response => response.json())
+        .then(({ api_server }) => {
           fetchData('https://' + api_server);
         });
     }
   })();
 </script>
 
+    <div class="pjax">
+
+  
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
 
-
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b98b717d30c8867a2377',
+      clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
+      repo        : 'blog-gitalk-comments',
+      owner       : 'huzhanfei',
+      admin       : ['huzhanfei'],
+      id          : '651d0944cbf0a9d3e20ffd5531937380',
+        language: 'zh-CN',
+      distractionFreeMode: true
     });
-  </script>
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
 
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "ThreadLocal 详解&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-
-
+    </div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

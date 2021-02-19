@@ -1,946 +1,779 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-
-
-
-
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
-  <link rel="icon" type="image/png" href="/images/favicon.ico">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="问题： 给定数组 arr，arr 中的所有的值都为正数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个整数 aim 代表要找的钱数，求换钱有多少种方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划算法问题（经典找零案例）">
+<meta property="og:url" content="https://bytelife.net/articles/dong-tai-gui-hua-suan-fa-wen-ti-jing-dian-zhao-ling-an-li.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="问题： 给定数组 arr，arr 中的所有的值都为正数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个整数 aim 代表要找的钱数，求换钱有多少种方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32.jpg">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32-2.jpg">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32-1.jpg">
+<meta property="article:published_time" content="2017-03-19T17:51:28.000Z">
+<meta property="article:modified_time" content="2021-02-19T18:18:32.407Z">
+<meta property="article:author" content="Jeffrey Hu">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32.jpg">
+
+
+<link rel="canonical" href="https://bytelife.net/articles/dong-tai-gui-hua-suan-fa-wen-ti-jing-dian-zhao-ling-an-li.html">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>动态规划算法问题（经典找零案例） | ByteLife</title>
   
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
-  <meta name="author" content="Jeffrey Hu">
-  <meta name="keywords" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,huzhanfei">
-  <title>动态规划算法问题（经典找零案例） - ByteLife</title>
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
 
 
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script  src="/js/utils.js" ></script>
-<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>ByteLife</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-          </li>
-        
-      </ul>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">ByteLife</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术交流与学习自留地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
-         style="background: url('/images/banner.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
-              
-            </span>
 
-            
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2017-03-20 01:51">
-      2017年3月20日 凌晨
-    </time>
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E6%90%9C%E7%B4%A2%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">暴力搜索方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BF%86%E6%90%9C%E7%B4%A2%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">记忆搜索方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0-1"><span class="nav-number">2.2.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">动态规划方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90-2"><span class="nav-number">3.1.</span> <span class="nav-text">思路分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%B0%E5%BF%86%E6%90%9C%E7%B4%A2%E6%96%B9%E6%B3%95%E4%B8%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-number">3.1.1.</span> <span class="nav-text">记忆搜索方法与动态规划方法的联系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.2.</span> <span class="nav-text">什么是动态规划方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0-2"><span class="nav-number">3.2.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E7%9A%84%E5%86%8D%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">动态规划方法的再优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90-3"><span class="nav-number">4.1.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0-3"><span class="nav-number">4.2.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E7%9A%84%E7%A9%BA%E9%97%B4%E4%BC%98%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">动态规划方法的空间优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95%E7%9A%84%E8%BF%90%E8%A1%8C%E9%80%9F%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">6.</span> <span class="nav-text">各种计算方法的运行速度对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96%E6%88%90%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E7%9A%84%E5%A4%A7%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="nav-number">7.</span> <span class="nav-text">暴力递归优化成动态规划方法的大体过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E7%9A%84%E5%85%B3%E9%94%AE%E7%82%B9"><span class="nav-number">8.</span> <span class="nav-text">动态规划方法的关键点</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeffrey Hu"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description">专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
   </div>
 
 
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      2.9k 字
-    </span>
-  
 
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      35
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- LeanCloud 统计文章PV -->
-      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="leancloud-post-views"></span> 次
-      </span>
-    
-  
-</div>
-
-            
-          </div>
-
-          
         </div>
       </div>
     </div>
-  </header>
+  </aside>
+  <div class="sidebar-dimmer"></div>
 
-  <main>
+
+    </header>
+
     
-      
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
-            
-            <article class="markdown-body">
-              <p>问题： 给定数组arr，arr中的所有的值都为正数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个整数aim代表要找的钱数，求换钱有多少种方法。</p>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/dong-tai-gui-hua-suan-fa-wen-ti-jing-dian-zhao-ling-an-li.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态规划算法问题（经典找零案例）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-20 01:51:28" itemprop="dateCreated datePublished" datetime="2017-03-20T01:51:28+08:00">2017-03-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-20 02:18:32" itemprop="dateModified" datetime="2021-02-20T02:18:32+08:00">2021-02-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/articles/dong-tai-gui-hua-suan-fa-wen-ti-jing-dian-zhao-ling-an-li.html" class="post-meta-item leancloud_visitors" data-flag-title="动态规划算法问题（经典找零案例）" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>问题： 给定数组 arr，arr 中的所有的值都为正数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个整数 aim 代表要找的钱数，求换钱有多少种方法。</p>
 <a id="more"></a>
 
-<h2 id="暴力搜索方法"><a href="#暴力搜索方法" class="headerlink" title="暴力搜索方法"></a>暴力搜索方法</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><p>若给定arr={5, 10, 25, 1}，aim=1000。</p>
+<h2 id="暴力搜索方法"><a href="#暴力搜索方法" class="headerlink" title="暴力搜索方法"></a>暴力搜索方法</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><p>若给定 arr={5, 10, 25, 1}，aim=1000。</p>
 <ul>
-<li>用0张5元的货币，让[10, 25, 1]组成剩下的1000元，最终方法数记作——res1；</li>
-<li>用1张5元的货币，让[10, 25, 1]组成剩下的995元，最终方法数记作——res2；</li>
-<li>用2张5元的货币，让[10, 25, 1]组成剩下的990元，最终方法数记作——res3；</li>
-<li>用3张5元的货币，让[10, 25, 1]组成剩下的985元，最终方法数记作——res4；</li>
-<li>……</li>
-<li>用200张5元的货币，让[10, 25, 1]组成剩下的0元，最终方法数记作——res201；</li>
+<li>  用 0 张 5 元的货币，让 [10, 25, 1] 组成剩下的 1000 元，最终方法数记作 ——res1；</li>
+<li>  用 1 张 5 元的货币，让 [10, 25, 1] 组成剩下的 995 元，最终方法数记作 ——res2；</li>
+<li>  用 2 张 5 元的货币，让 [10, 25, 1] 组成剩下的 990 元，最终方法数记作 ——res3；</li>
+<li>  用 3 张 5 元的货币，让 [10, 25, 1] 组成剩下的 985 元，最终方法数记作 ——res4；</li>
+<li>  ……</li>
+<li>  用 200 张 5 元的货币，让 [10, 25, 1] 组成剩下的 0 元，最终方法数记作 ——res201；</li>
 </ul>
-<p>则res1、res2……res201的累加和即为最终的结果。</p>
-<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><p>定义递归函数：<code>int process1(arr, index, aim)</code>, 它的含义是如果用arr[index……N-1]这些面值的钱组成aim，返回总的方法数。</p>
-<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">coins1</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> aim)</span> </span>{
-    <span class="hljs-keyword">long</span> startTime = System.currentTimeMillis();
-    <span class="hljs-keyword">if</span> (arr == <span class="hljs-keyword">null</span> || arr.length == <span class="hljs-number">0</span> || aim &lt; <span class="hljs-number">0</span>) {
-        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-    }
-    <span class="hljs-keyword">int</span> result = process1(arr,<span class="hljs-number">0</span>,aim);
-    <span class="hljs-keyword">long</span> endTime = System.currentTimeMillis();
-    System.out.println(<span class="hljs-string">"暴力搜索方法所用时间："</span> + (endTime - startTime) +<span class="hljs-string">"ms"</span>);
-    <span class="hljs-keyword">return</span> result;
-}
-    
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">process1</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> aim)</span> </span>{
-    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-    <span class="hljs-comment">// 判断是否所有面值的货币均已经计算完</span>
-    <span class="hljs-keyword">if</span> (index == arr.length) {
-        <span class="hljs-comment">// 判断本次递归调用时钱的总数是否已经凑够，如果已经凑够则将总方法数加1</span>
-        res = aim == <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>; 
-    } <span class="hljs-keyword">else</span> { 
-        <span class="hljs-comment">// 循环计算i张当前面值的货币</span>
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; arr[index] * i &lt;= aim; i++) {
-            <span class="hljs-comment">// 递归调用当使用i张当前面值的货币时，用其它货币组成剩下的钱</span>
-            res += process1(arr, index + <span class="hljs-number">1</span>, aim - arr[index] * i);
-        }
-    }
-    <span class="hljs-keyword">return</span> res;
-}</code></pre>
-
-<p>暴力搜索方法比较好理解，但他在计算中存在大量的重复递归过程。 例如已经使用了0张5元和1张10元货币的情况下，后续将求： <code>process1(arr,2,990)</code> 而当计算使用2张5元和0张10元时，后续同样需要求： <code>process1(arr,2,990)</code> 因此这种重复的递归运算将造成大量的时间浪费。</p>
-<h2 id="记忆搜索方法"><a href="#记忆搜索方法" class="headerlink" title="记忆搜索方法"></a>记忆搜索方法</h2><h3 id="思路分析-1"><a href="#思路分析-1" class="headerlink" title="思路分析"></a>思路分析</h3><p>由于暴力搜索方法中存在大量的重复递归，因此我们可以使用一个“记忆库”用于存储已经计算过的值，在本题中，使用index货币组成剩下的aim钱的值是一一对应的，因此可以使用int mem[index][aim]数组表示记忆库，其元素值为可以组成的方法数。</p>
-<h3 id="具体实现-1"><a href="#具体实现-1" class="headerlink" title="具体实现"></a>具体实现</h3><ul>
-<li>每计算完一个process(index,aim)，都将结果放入mem中，index和aim组成共同的key，返回结果为value。</li>
-<li>要进入一个递归过程时，先以index和aim组成的key在mem中进行查询，如果已经存在value，则直接使用，如果不存在，再进入递归过程。</li>
-</ul>
-<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">process2</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> aim, <span class="hljs-keyword">int</span>[][] mem)</span> </span>{
-    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-    <span class="hljs-comment">// 判断是否所有面值的货币均已经计算完</span>
-    <span class="hljs-keyword">if</span> (index == arr.length) {
-        <span class="hljs-comment">// 判断本次递归调用时钱的总数是否已经凑够，如果已经凑够则将总方法数加1</span>
-        res = aim == <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
-    } <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">int</span> memVal = <span class="hljs-number">0</span>;
-        <span class="hljs-comment">// 循环计算i张当前面值的货币</span>
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; arr[index] * i &lt;= aim; i++) {
-            <span class="hljs-comment">// 获取记忆库中当使用i张index货币时，用其它货币组成剩下的钱</span>
-            memVal = mem[index + <span class="hljs-number">1</span>][aim - arr[index] * i];
-            <span class="hljs-comment">// 判断记忆库中存在记录</span>
-            <span class="hljs-keyword">if</span> (memVal != <span class="hljs-number">0</span>) {
-                <span class="hljs-comment">// 将记忆库中的方法数累加到结果中</span>
-                res += memVal == -<span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : memVal;
-            } <span class="hljs-keyword">else</span> {
-                <span class="hljs-comment">// 递归调用当使用i张当前面值的货币时，用其它货币组成剩下的钱</span>
-                res += process2(arr, index + <span class="hljs-number">1</span>, aim - arr[index] * i, mem);
+<p>则 res1、res2……res201 的累加和即为最终的结果。</p>
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><p>定义递归函数：<code>int process1(arr, index, aim)</code>, 它的含义是如果用 arr [index……N-1] 这些面值的钱组成 aim，返回总的方法数。</p>
+<pre><code class="java">        public static int coins1(int[] arr, int aim) {
+            long startTime = System.currentTimeMillis();
+            if (arr == null || arr.length == 0 || aim &lt; 0) {
+                return 0;
             }
+            int result = process1(arr,0,aim);
+            long endTime = System.currentTimeMillis();
+            System.out.println("暴力搜索方法所用时间：" + (endTime - startTime) +"ms");
+            return result;
         }
-    }
-    <span class="hljs-comment">// 将使用index货币组成aim钱的结果存储到记忆库中</span>
-    mem[index][aim] = res == <span class="hljs-number">0</span> ? -<span class="hljs-number">1</span> : res;
-    <span class="hljs-keyword">return</span> res;
-}</code></pre>
-
-<h2 id="动态规划方法"><a href="#动态规划方法" class="headerlink" title="动态规划方法"></a>动态规划方法</h2><h3 id="思路分析-2"><a href="#思路分析-2" class="headerlink" title="思路分析"></a>思路分析</h3><p>如果arr长度为N，生成行数为N，列数为aim+1的矩阵dp。 dp[i][j]的含义是在使用arr[0]…arr[i]货币的情况下，组成钱数j的方法数。 <img src="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32.jpg" srcset="/img/loading.gif" alt="">￼</p>
+    
+        public static int process1(int[] arr, int index, int aim) {
+            int res = 0;
+            // 判断是否所有面值的货币均已经计算完
+            if (index == arr.length) {
+                // 判断本次递归调用时钱的总数是否已经凑够，如果已经凑够则将总方法数加1
+                res = aim == 0 ? 1 : 0; 
+            } else { 
+                // 循环计算i张当前面值的货币
+                for (int i = 0; arr[index] * i &lt;= aim; i++) {
+                    // 递归调用当使用i张当前面值的货币时，用其它货币组成剩下的钱
+                    res += process1(arr, index + 1, aim - arr[index] * i);
+                }
+            }
+            return res;
+        }
+</code></pre>
+<p>暴力搜索方法比较好理解，但他在计算中存在大量的重复递归过程。 例如已经使用了 0 张 5 元和 1 张 10 元货币的情况下，后续将求： <code>process1(arr,2,990)</code> 而当计算使用 2 张 5 元和 0 张 10 元时，后续同样需要求： <code>process1(arr,2,990)</code> 因此这种重复的递归运算将造成大量的时间浪费。</p>
+<h2 id="记忆搜索方法"><a href="#记忆搜索方法" class="headerlink" title="记忆搜索方法"></a>记忆搜索方法</h2><h3 id="思路分析-1"><a href="#思路分析-1" class="headerlink" title="思路分析"></a>思路分析</h3><p>由于暴力搜索方法中存在大量的重复递归，因此我们可以使用一个 “记忆库” 用于存储已经计算过的值，在本题中，使用 index 货币组成剩下的 aim 钱的值是一一对应的，因此可以使用 int mem [index][aim] 数组表示记忆库，其元素值为可以组成的方法数。</p>
+<h3 id="具体实现-1"><a href="#具体实现-1" class="headerlink" title="具体实现"></a>具体实现</h3><ul>
+<li>  每计算完一个 process (index,aim)，都将结果放入 mem 中，index 和 aim 组成共同的 key，返回结果为 value。</li>
+<li>  要进入一个递归过程时，先以 index 和 aim 组成的 key 在 mem 中进行查询，如果已经存在 value，则直接使用，如果不存在，再进入递归过程。</li>
+</ul>
+<pre><code class="java">        public static int process2(int[] arr, int index, int aim, int[][] mem) {
+            int res = 0;
+            // 判断是否所有面值的货币均已经计算完
+            if (index == arr.length) {
+                // 判断本次递归调用时钱的总数是否已经凑够，如果已经凑够则将总方法数加1
+                res = aim == 0 ? 1 : 0;
+            } else {
+                int memVal = 0;
+                // 循环计算i张当前面值的货币
+                for (int i = 0; arr[index] * i &lt;= aim; i++) {
+                    // 获取记忆库中当使用i张index货币时，用其它货币组成剩下的钱
+                    memVal = mem[index + 1][aim - arr[index] * i];
+                    // 判断记忆库中存在记录
+                    if (memVal != 0) {
+                        // 将记忆库中的方法数累加到结果中
+                        res += memVal == -1 ? 0 : memVal;
+                    } else {
+                        // 递归调用当使用i张当前面值的货币时，用其它货币组成剩下的钱
+                        res += process2(arr, index + 1, aim - arr[index] * i, mem);
+                    }
+                }
+            }
+            // 将使用index货币组成aim钱的结果存储到记忆库中
+            mem[index][aim] = res == 0 ? -1 : res;
+            return res;
+        }
+</code></pre>
+<h2 id="动态规划方法"><a href="#动态规划方法" class="headerlink" title="动态规划方法"></a>动态规划方法</h2><h3 id="思路分析-2"><a href="#思路分析-2" class="headerlink" title="思路分析"></a>思路分析</h3><p>如果 arr 长度为 N，生成行数为 N，列数为 aim+1 的矩阵 dp。 dp [i][j] 的含义是在使用 arr [0]…arr [i] 货币的情况下，组成钱数 j 的方法数。 <img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32.jpg">￼</p>
 <ol>
-<li>如果完全不用arr[i]货币，只使用arr[0]…arr[i-1]货币时，方法数为dp[i-1][j]。</li>
-<li>如果用1张arr[i]货币，剩下的钱使用arr[0]…arr[i-1]货币组成，方法数为dp[i-1][j-1*arr[i]]。</li>
-<li>如果用2张arr[i]货币，剩下的钱使用arr[0]…arr[i-1]货币组成，方法数为dp[i-1][j-1*arr[i]]。</li>
-<li>如果用3张arr[i]货币，剩下的钱使用arr[0]…arr[i-1]货币组成，方法数为dp[i-1][j-1*arr[i]]。</li>
-<li>……</li>
+<li> 如果完全不用 arr [i] 货币，只使用 arr [0]…arr [i-1] 货币时，方法数为 dp [i-1][j]。</li>
+<li> 如果用 1 张 arr [i] 货币，剩下的钱使用 arr [0]…arr [i-1] 货币组成，方法数为 dp [i-1][j-1*arr [i]]。</li>
+<li> 如果用 2 张 arr [i] 货币，剩下的钱使用 arr [0]…arr [i-1] 货币组成，方法数为 dp [i-1][j-1*arr [i]]。</li>
+<li> 如果用 3 张 arr [i] 货币，剩下的钱使用 arr [0]…arr [i-1] 货币组成，方法数为 dp [i-1][j-1*arr [i]]。</li>
+<li> ……</li>
 </ol>
-<p>dp[i][j]的值即为上述所有值得累加和。 求每一个位置都需要枚举，时间复杂度为O(aim)。dp一共有N*aim个位置，所以总的时间复杂度为O(N*aim2) 最终的结果值即为矩阵最右下角的dp[N-1][aim]。</p>
+<p>dp [i][j] 的值即为上述所有值得累加和。 求每一个位置都需要枚举，时间复杂度为 O (aim)。dp 一共有 N*aim 个位置，所以总的时间复杂度为 O (N*aim2) 最终的结果值即为矩阵最右下角的 dp [N-1][aim]。</p>
 <h4 id="记忆搜索方法与动态规划方法的联系"><a href="#记忆搜索方法与动态规划方法的联系" class="headerlink" title="记忆搜索方法与动态规划方法的联系"></a>记忆搜索方法与动态规划方法的联系</h4><ul>
-<li>记忆化搜索方法就是某种形态的动态规划方法。</li>
-<li>记忆化搜索不关心到达某一个递归路径的路程。只是单纯地堆计算过的递归过程进行记录，避免重复递归的过程。</li>
-<li>动态规划方法则是规定好每一个递归霍城的计算顺序，一次进行计算，后面的计算过程严格依赖前面的计算过程。</li>
-<li>两者都是空间换时间的方法，也有枚举的过程，区别在于动态规划规定计算顺序，而记忆搜索不用规定。</li>
+<li>  记忆化搜索方法就是某种形态的动态规划方法。</li>
+<li>  记忆化搜索不关心到达某一个递归路径的路程。只是单纯地堆计算过的递归过程进行记录，避免重复递归的过程。</li>
+<li>  动态规划方法则是规定好每一个递归霍城的计算顺序，一次进行计算，后面的计算过程严格依赖前面的计算过程。</li>
+<li>  两者都是空间换时间的方法，也有枚举的过程，区别在于动态规划规定计算顺序，而记忆搜索不用规定。</li>
 </ul>
 <h4 id="什么是动态规划方法"><a href="#什么是动态规划方法" class="headerlink" title="什么是动态规划方法"></a>什么是动态规划方法</h4><ul>
-<li>本质是利用申请的空间来记录每一个暴力搜索的计算过程，下次要用结果的时候直接使用，而不再进行重复的递归过程。</li>
-<li>动态规划规定每一种递归状态的计算顺序，依次进行计算。从简单到复杂，按顺序计算。</li>
+<li>  本质是利用申请的空间来记录每一个暴力搜索的计算过程，下次要用结果的时候直接使用，而不再进行重复的递归过程。</li>
+<li>  动态规划规定每一种递归状态的计算顺序，依次进行计算。从简单到复杂，按顺序计算。</li>
 </ul>
-<h3 id="具体实现-2"><a href="#具体实现-2" class="headerlink" title="具体实现"></a>具体实现</h3><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">process3</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> aim)</span> </span>{
-    <span class="hljs-comment">// 创建dp矩阵</span>
-    <span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[arr.length][aim + <span class="hljs-number">1</span>];
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; dp.length; i++) {
-        dp[i][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>; <span class="hljs-comment">// 凑成0元的方法必然是什么货币都不用，只有1种</span>
-        <span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>) {
-            <span class="hljs-comment">// 如果只是用arr[0]这一种货币，则能凑到j钱置1</span>
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; dp[i].length; j++) {
-                dp[i][j] = j % arr[i] == <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
-            }
-        } <span class="hljs-keyword">else</span> {
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt; dp[i].length; j++) {
-                <span class="hljs-keyword">int</span> temp = <span class="hljs-number">0</span>;
-                <span class="hljs-comment">// 枚举使用k张arr[i]货币后dp[i-1]中组成剩下钱数的方法数</span>
-                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k * arr[i] &lt;= j; k++) {
-                    temp += dp[i - <span class="hljs-number">1</span>][j - k * arr[i]];<span class="hljs-comment">//方法数累加</span>
+<h3 id="具体实现-2"><a href="#具体实现-2" class="headerlink" title="具体实现"></a>具体实现</h3><pre><code class="java">        public static int process3(int[] arr, int aim) {
+            // 创建dp矩阵
+            int[][] dp = new int[arr.length][aim + 1];
+            for (int i = 0; i &lt; dp.length; i++) {
+                dp[i][0] = 1; // 凑成0元的方法必然是什么货币都不用，只有1种
+                if (i == 0) {
+                    // 如果只是用arr[0]这一种货币，则能凑到j钱置1
+                    for (int j = 0; j &lt; dp[i].length; j++) {
+                        dp[i][j] = j % arr[i] == 0 ? 1 : 0;
+                    }
+                } else {
+                    for (int j = 1; j &lt; dp[i].length; j++) {
+                        int temp = 0;
+                        // 枚举使用k张arr[i]货币后dp[i-1]中组成剩下钱数的方法数
+                        for (int k = 0; k * arr[i] &lt;= j; k++) {
+                            temp += dp[i - 1][j - k * arr[i]];//方法数累加
+                        }
+                        dp[i][j] = temp;
+                    }
                 }
-                dp[i][j] = temp;
             }
+            // 返回dp矩阵最右下角的值即为最后结果
+            return dp[arr.length - 1][aim];
         }
-    }
-    <span class="hljs-comment">// 返回dp矩阵最右下角的值即为最后结果</span>
-    <span class="hljs-keyword">return</span> dp[arr.length - <span class="hljs-number">1</span>][aim];
-}</code></pre>
-
-<h2 id="动态规划方法的再优化"><a href="#动态规划方法的再优化" class="headerlink" title="动态规划方法的再优化"></a>动态规划方法的再优化</h2><h3 id="思路分析-3"><a href="#思路分析-3" class="headerlink" title="思路分析"></a>思路分析</h3><p>由于动态规划方法的执行顺序有着严格的规定，因此使得对算法的进一步优化成为可能。 对于刚才的问题中，我们需要枚举<code>dp[i-1][j-k*arr[i]]</code>(k=1,2,3…)并与<code>dp[i-1][j]</code>累加，实际上<code>dp[i-1][j-k*arr[i]]</code>(k=1,2,3…)的累加值就是<code>dp[i][j-arr[i]]</code>。 <img src="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32-2.jpg" srcset="/img/loading.gif" alt="">￼ 所以可以简化为： <code>dp[i][j] = dp[i][j-arr[i]] + dp[i-1][j]</code> 从而彻底省略枚举过程。时间复杂度从O(N<em>aim2)变为O(N</em>aim)</p>
+</code></pre>
+<h2 id="动态规划方法的再优化"><a href="#动态规划方法的再优化" class="headerlink" title="动态规划方法的再优化"></a>动态规划方法的再优化</h2><h3 id="思路分析-3"><a href="#思路分析-3" class="headerlink" title="思路分析"></a>思路分析</h3><p>由于动态规划方法的执行顺序有着严格的规定，因此使得对算法的进一步优化成为可能。 对于刚才的问题中，我们需要枚举 <code>dp[i-1][j-k*arr[i]]</code>(k=1,2,3…) 并与 <code>dp[i-1][j]</code> 累加，实际上 <code>dp[i-1][j-k*arr[i]]</code>(k=1,2,3…) 的累加值就是 <code>dp[i][j-arr[i]]</code>。 <img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32-2.jpg">￼ 所以可以简化为： <code>dp[i][j] = dp[i][j-arr[i]] + dp[i-1][j]</code> 从而彻底省略枚举过程。时间复杂度从 O (N<em>aim2) 变为 O (N</em>aim)</p>
 <h3 id="具体实现-3"><a href="#具体实现-3" class="headerlink" title="具体实现"></a>具体实现</h3><p>经过优化后的代码实现如下：</p>
-<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">process4</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> aim)</span> </span>{
-    <span class="hljs-comment">// 创建dp矩阵</span>
-    <span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[arr.length][aim + <span class="hljs-number">1</span>];
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; dp.length; i++) {
-        dp[i][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>; <span class="hljs-comment">// 凑成0元的方法必然是什么货币都不用，只有1种</span>
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt; dp[i].length; j++) {
-            <span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>) {
-                dp[i][j] = j % arr[i] == <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
-            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(j &gt;= arr[i]){
-                dp[i][j] = dp[i][j - arr[i]] + dp[i - <span class="hljs-number">1</span>][j];
-            } <span class="hljs-keyword">else</span> {
-                dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];
+<pre><code class="java">        public static int process4(int[] arr, int aim) {
+            // 创建dp矩阵
+            int[][] dp = new int[arr.length][aim + 1];
+            for (int i = 0; i &lt; dp.length; i++) {
+                dp[i][0] = 1; // 凑成0元的方法必然是什么货币都不用，只有1种
+                for (int j = 1; j &lt; dp[i].length; j++) {
+                    if (i == 0) {
+                        dp[i][j] = j % arr[i] == 0 ? 1 : 0;
+                    } else if(j &gt;= arr[i]){
+                        dp[i][j] = dp[i][j - arr[i]] + dp[i - 1][j];
+                    } else {
+                        dp[i][j] = dp[i - 1][j];
+                    }
+                }
             }
+            // 返回dp矩阵最右下角的值即为最后结果
+            return dp[arr.length - 1][aim];
         }
-    }
-    <span class="hljs-comment">// 返回dp矩阵最右下角的值即为最后结果</span>
-    <span class="hljs-keyword">return</span> dp[arr.length - <span class="hljs-number">1</span>][aim];
-}</code></pre>
-
-<h2 id="动态规划方法的空间优化"><a href="#动态规划方法的空间优化" class="headerlink" title="动态规划方法的空间优化"></a>动态规划方法的空间优化</h2><p>我们可以看到，经过优化的动态规划方法速度已经非常让人满意，但是它的空间浪费却很严重，我们发现动态规划方法是严格的矩阵从上至下、从左至右的方向顺序计算，那么其实真正每次计算式只需要用到的是当前行与当前行的上一行，因此其实我们可以将原本的dp二维矩阵简化为一维向量。 通过读取和修改向量本身的元素值来达到目的，修改后的代码如下所示：</p>
-<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">process5</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> aim)</span> </span>{
-    <span class="hljs-comment">// 创建dp向量</span>
-    <span class="hljs-keyword">int</span>[] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[aim + <span class="hljs-number">1</span>];
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) {
-        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>; <span class="hljs-comment">// 凑成0元的方法必然是什么货币都不用，只有1种</span>
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt; dp.length; j++) {
-            <span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>) {
-                dp[j] = j % arr[i] == <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
-            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(j &gt;= arr[i]){
-                dp[j] += dp[j - arr[i]];
+</code></pre>
+<h2 id="动态规划方法的空间优化"><a href="#动态规划方法的空间优化" class="headerlink" title="动态规划方法的空间优化"></a>动态规划方法的空间优化</h2><p>我们可以看到，经过优化的动态规划方法速度已经非常让人满意，但是它的空间浪费却很严重，我们发现动态规划方法是严格的矩阵从上至下、从左至右的方向顺序计算，那么其实真正每次计算式只需要用到的是当前行与当前行的上一行，因此其实我们可以将原本的 dp 二维矩阵简化为一维向量。 通过读取和修改向量本身的元素值来达到目的，修改后的代码如下所示：</p>
+<pre><code class="java">        public static int process5(int[] arr, int aim) {
+            // 创建dp向量
+            int[] dp = new int[aim + 1];
+            for (int i = 0; i &lt; arr.length; i++) {
+                dp[0] = 1; // 凑成0元的方法必然是什么货币都不用，只有1种
+                for (int j = 1; j &lt; dp.length; j++) {
+                    if (i == 0) {
+                        dp[j] = j % arr[i] == 0 ? 1 : 0;
+                    } else if(j &gt;= arr[i]){
+                        dp[j] += dp[j - arr[i]];
+                    }
+                }
             }
+            // 返回dp向量尾元素即最终结果
+            return dp[aim];
         }
-    }
-    <span class="hljs-comment">// 返回dp向量尾元素即最终结果</span>
-    <span class="hljs-keyword">return</span> dp[aim];
-}</code></pre>
-
-<h2 id="各种计算方法的运行速度对比"><a href="#各种计算方法的运行速度对比" class="headerlink" title="各种计算方法的运行速度对比"></a>各种计算方法的运行速度对比</h2><p>上述所有的实现代码中，都加入了记录算法开始时间和结束时间的代码，我们通过运行测试，得到下面的结果： <img src="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32-1.jpg" srcset="/img/loading.gif" alt="">￼</p>
+</code></pre>
+<h2 id="各种计算方法的运行速度对比"><a href="#各种计算方法的运行速度对比" class="headerlink" title="各种计算方法的运行速度对比"></a>各种计算方法的运行速度对比</h2><p>上述所有的实现代码中，都加入了记录算法开始时间和结束时间的代码，我们通过运行测试，得到下面的结果： <img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-19_17-51-32-1.jpg">￼</p>
 <ul>
-<li>可以看到，暴力搜索方法毋庸置疑是速度最慢的，因为其存在大量的重复递归过程。</li>
-<li>记忆化搜索方法由于避免了重复递归，因此效率更高一些。</li>
-<li>经过优化的动态规划方法可以看到在我的实测环境中，运行时间近乎为0ms，可以说是非常快的。</li>
+<li>  可以看到，暴力搜索方法毋庸置疑是速度最慢的，因为其存在大量的重复递归过程。</li>
+<li>  记忆化搜索方法由于避免了重复递归，因此效率更高一些。</li>
+<li>  经过优化的动态规划方法可以看到在我的实测环境中，运行时间近乎为 0ms，可以说是非常快的。</li>
 </ul>
 <h2 id="暴力递归优化成动态规划方法的大体过程"><a href="#暴力递归优化成动态规划方法的大体过程" class="headerlink" title="暴力递归优化成动态规划方法的大体过程"></a>暴力递归优化成动态规划方法的大体过程</h2><ol>
-<li>实现暴力递归方法；</li>
-<li>在暴力搜索方法的函数中看看哪些参数可以代表递归过程。</li>
-<li>找到代表递归过程的参数之后，记忆化搜索方法的实现非常容易。</li>
-<li>通过分析记忆化搜索的依赖路径，进而实现动态规划。</li>
-<li>根据记忆化搜索方法改出动态规划方法，进而看看是否能够化简，如果能化简，还能实现时间复杂度更低的动态规划方法。</li>
+<li> 实现暴力递归方法；</li>
+<li> 在暴力搜索方法的函数中看看哪些参数可以代表递归过程。</li>
+<li> 找到代表递归过程的参数之后，记忆化搜索方法的实现非常容易。</li>
+<li> 通过分析记忆化搜索的依赖路径，进而实现动态规划。</li>
+<li> 根据记忆化搜索方法改出动态规划方法，进而看看是否能够化简，如果能化简，还能实现时间复杂度更低的动态规划方法。</li>
 </ol>
 <h2 id="动态规划方法的关键点"><a href="#动态规划方法的关键点" class="headerlink" title="动态规划方法的关键点"></a>动态规划方法的关键点</h2><ol>
-<li><strong>最优化原理</strong>：也就是<strong>最优子结构性质</strong>。指一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简单来说就是一个最优化策略的子策略总是最优的，如果一个问题满足最优化原理，就成为其具有最优子结构性质。</li>
-<li><strong>无后效性</strong>：指某状态下决策的收益，只与状态和决策相关，与到达该状态的路径无关。</li>
-<li><strong>子问题的重叠性</strong>：动态规划将原来具有指数级时间复杂度的暴力搜索算法改进成了具有多项式时间复杂度的算法。其中的关键在于解决冗余，这是动态规划算法的根本目的。</li>
+<li> <strong>最优化原理</strong>：也就是<strong>最优子结构性质</strong>。指一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简单来说就是一个最优化策略的子策略总是最优的，如果一个问题满足最优化原理，就成为其具有最优子结构性质。</li>
+<li> <strong>无后效性</strong>：指某状态下决策的收益，只与状态和决策相关，与到达该状态的路径无关。</li>
+<li> <strong>子问题的重叠性</strong>：动态规划将原来具有指数级时间复杂度的暴力搜索算法改进成了具有多项式时间复杂度的算法。其中的关键在于解决冗余，这是动态规划算法的根本目的。</li>
 </ol>
 <blockquote>
-<p>本文为博主学习牛客网课程<a href="https://www.nowcoder.com/courses/semester/algorithm" target="_blank" rel="noopener">《直通BAT-面试算法精讲课》</a>的学习笔记 如果需要购买该课程，可以使用博主的优惠码：<strong>Adg00aI</strong>，获取10元优惠。</p>
+<p>本文为博主学习牛客网课程<a target="_blank" rel="noopener" href="https://www.nowcoder.com/courses/semester/algorithm">《直通 BAT - 面试算法精讲课》</a>的学习笔记 如果需要购买该课程，可以使用博主的优惠码：<strong>Adg00aI</strong>，获取 10 元优惠。</p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-            </article>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
-              
-              
-                <div class="post-prevnext row">
-                  <div class="post-prev col-6">
-                    
-                    
-                  </div>
-                  <div class="post-next col-6">
-                    
-                    
-                      <a href="/articles/qian-xi-classnotfoundexception-yu-noclassdeffounderror.html">
-                        <span class="hidden-mobile">浅析ClassNotFoundException与NoClassDefFoundError</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </div>
-                </div>
-              
-            </div>
 
-            
-              <!-- Comments -->
-              <div class="comments" id="comments">
-                
-                
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    function loadGitalk(){
-      addScript('https://cdn.staticfile.org/gitalk/1.6.2/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: 'b98b717d30c8867a2377',
-          clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
-          repo: 'blog-gitalk-comments',
-          owner: 'huzhanfei',
-          admin: 'huzhanfei',
-          id: 'abe2f11339bee105f3f102052ebaa0c7',
-          language: 'zh-CN',
-          perPage: 15,
-          pagerDirection: 'last',
-          createIssueManually: 'true',
-          distractionFreeMode: 'false'
-        });
-        gitalk.render('gitalk-container');
-      });
-    }
-    createObserver(loadGitalk, 'gitalk-container');
-  </script>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/java-shi-xian-shu-ju-tong-ji-de-chang-yong-suan-fa.html" rel="bookmark">Java 实现数据统计的常用算法</a></div>
+    </li>
+  </ul>
 
 
-              </div>
-            
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jeffrey Hu
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://bytelife.net/articles/dong-tai-gui-hua-suan-fa-wen-ti-jing-dian-zhao-ling-an-li.html" title="动态规划算法问题（经典找零案例）">https://bytelife.net/articles/dong-tai-gui-hua-suan-fa-wen-ti-jing-dian-zhao-ling-an-li.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
           </div>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/qian-xi-classnotfoundexception-yu-noclassdeffounderror.html" rel="prev" title="浅析 ClassNotFoundException 与 NoClassDefFoundError">
+                  <i class="fa fa-chevron-left"></i> 浅析 ClassNotFoundException 与 NoClassDefFoundError
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
 </div>
 
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
 
 
-    
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
 
-  
-    <!-- APlayer 音乐播放器 -->
-    <div id="aplayer"></div>
-    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
-<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
-<script type="text/javascript">
-  var oldLoadAp = window.onload;
-  window.onload = function () {
-    oldLoadAp && oldLoadAp();
+    <div class="comments gitalk-container"></div>
 
-    new APlayer({
-      container: document.getElementById('aplayer'),
-      fixed: true,
-      autoplay: 'false' === 'true',
-      loop: 'all',
-      order: 'list',
-      theme: '#b7daff',
-      preload: 'none',
-      audio: [{"name":"なんでもないや (movie ver.)","artist":"RADWIMPS","url":"/uploads/MEI-SHEN-ME-DA-BU-LIAO.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"三葉のテーマ","artist":"RADWIMPS","url":"/uploads/SAN-YE.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Alpha","artist":"Christophe Lebled","url":"/uploads/Alpha.mp3","cover":"/uploads/Alpha.jpg"},{"name":"森林狂想曲","artist":"吴金黛","url":"/uploads/Forest-Rhapsody.mp3","cover":"/uploads/Forest-Rhapsody.jpg"},{"name":"Auld Lang Syne","artist":"Home Free","url":"/uploads/Auld-Lang-Syne.mp3","cover":"/uploads/Auld-Lang-Syne.jpg"},{"name":"On a Slow Boat to China","artist":"Luke Thompson","url":"/uploads/On-a-Slow-Boat-to-China.mp3","cover":"/uploads/On-a-Slow-Boat-to-China.jpg"},{"name":"Right Here Waiting","artist":"Richard Marx","url":"/uploads/Right-Here-Waiting.mp3","cover":"/uploads/Right-Here-Waiting.jpg"},{"name":"Something Just Like This","artist":"The Chainsmokers","url":"/uploads/Something-Just-Like-This.mp3","cover":"/uploads/Something-Just-Like-This.jpg"},{"name":"Beautiful In White","artist":"Shane Filan","url":"/uploads/Beautiful-In-White.mp3","cover":"/uploads/Beautiful-In-White.jpg"},{"name":"Illusionary Daytime","artist":"Shirfine","url":"/uploads/Illusionary-Daytime.mp3","cover":"/uploads/Illusionary-Daytime.jpg"},{"name":"夢灯籠","artist":"RADWIMPS","url":"/uploads/MENG-DENG-LONG.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"前前前世 (movie ver.)","artist":"RADWIMPS","url":"/uploads/QIAN-QIAN-QIAN-SHI.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Naruto Main Theme","artist":"Musashi","url":"/uploads/Naruto-Main-Theme.mp3","cover":"/uploads/Naruto-Main-Theme.jpg"},{"name":"Legends Never Die","artist":"英雄联盟","url":"/uploads/Legends-Never-Die.mp3","cover":"/uploads/Legends-Never-Die.jpg"}]
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
+</div>
+  </main>
 
-  
+  <footer class="footer">
+    <div class="footer-inner">
 
-  
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
+      <img src="/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备 44030502005735号 </a>
+  </div>
 
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
+<div class="copyright">
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
     </div>
-    
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
-
-    
-  <!-- 备案信息 -->
-  <div class="beian">
-    <a href="http://beian.miit.gov.cn/" target="_blank"
-       rel="nofollow noopener">粤ICP备20059294号</a>
-    
-  </div>
-
-
-    
-  </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
-
-<!-- Plugins -->
-
+  </footer>
 
   
-    <script  src="/js/lazyload.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
   
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
 
 
-
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
-
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
-
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
       }
-    }
-
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
+      if (document.readyState === 'complete') {
+        NProgress.done();
       }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+
+
+<script data-pjax>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
     function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
           }
-        });
-        getterArr.push(pvGetter);
-      }
-
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
-
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('true' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/articles/dong-tai-gui-hua-suan-fa-wen-ti-jing-dian-zhao-ling-an-li.html');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
-
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
         })
-      }
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
     }
 
-    var app_id = 'WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz'
-    var app_key = 'bG7qAcDfxStNdWtC1T8EE9ku'
-    var server_url = 'https://wapgmgrp.lc-cn-n1-shared.com'
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
 
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":true};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data)
         });
       };
-
-      addCount(Counter);
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
     }
 
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
     } else {
       fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
+        .then(response => response.json())
+        .then(({ api_server }) => {
           fetchData('https://' + api_server);
         });
     }
   })();
 </script>
 
+    <div class="pjax">
+
+  
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
 
-
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b98b717d30c8867a2377',
+      clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
+      repo        : 'blog-gitalk-comments',
+      owner       : 'huzhanfei',
+      admin       : ['huzhanfei'],
+      id          : '5955598d7d062ccb42fad59b5a638dcb',
+        language: 'zh-CN',
+      distractionFreeMode: true
     });
-  </script>
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
 
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "动态规划算法问题（经典找零案例）&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-
-
+    </div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

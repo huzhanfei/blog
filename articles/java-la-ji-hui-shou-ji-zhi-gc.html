@@ -1,301 +1,391 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-
-
-
-
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
-  <link rel="icon" type="image/png" href="/images/favicon.ico">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="判断对象是否可回收的常见方法引用计数算法（Reference Counting）给对象中添加一个引用计数器，每当有一个地方引用时，计数器加 1；当引用失效时，计数器减 1；任何时刻计数器为 0 的对象就是不可能再被使用的。    优点：实现简单，判定效率高；    缺点：很难解决对象之间的循环引用问题；   JVM 并不使用这种算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 垃圾回收机制（GC）">
+<meta property="og:url" content="https://bytelife.net/articles/java-la-ji-hui-shou-ji-zhi-gc.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="判断对象是否可回收的常见方法引用计数算法（Reference Counting）给对象中添加一个引用计数器，每当有一个地方引用时，计数器加 1；当引用失效时，计数器减 1；任何时刻计数器为 0 的对象就是不可能再被使用的。    优点：实现简单，判定效率高；    缺点：很难解决对象之间的循环引用问题；   JVM 并不使用这种算法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-18.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-20.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-21.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-21-1.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-22.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-23.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-24.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-24-1.png">
+<meta property="article:published_time" content="2017-03-11T12:38:18.000Z">
+<meta property="article:modified_time" content="2021-02-19T18:18:32.403Z">
+<meta property="article:author" content="Jeffrey Hu">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-18.png">
+
+
+<link rel="canonical" href="https://bytelife.net/articles/java-la-ji-hui-shou-ji-zhi-gc.html">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Java 垃圾回收机制（GC） | ByteLife</title>
   
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
-  <meta name="author" content="Jeffrey Hu">
-  <meta name="keywords" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,huzhanfei">
-  <title>Java垃圾回收机制（GC） - ByteLife</title>
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
 
 
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script  src="/js/utils.js" ></script>
-<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>ByteLife</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-          </li>
-        
-      </ul>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">ByteLife</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术交流与学习自留地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
-         style="background: url('/images/banner.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
-              
-            </span>
 
-            
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2017-03-11 20:38">
-      2017年3月11日 晚上
-    </time>
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E5%8F%AF%E5%9B%9E%E6%94%B6%E7%9A%84%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">判断对象是否可回收的常见方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E7%AE%97%E6%B3%95%EF%BC%88Reference-Counting%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">引用计数算法（Reference Counting）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95%EF%BC%88Reachability-Analysis%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">可达性分析算法（Reachability Analysis）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E6%A0%87%E8%AE%B0"><span class="nav-number">1.3.</span> <span class="nav-text">二次标记</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">垃圾收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95%EF%BC%88Mark-Sweep%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">标记 - 清除算法（Mark-Sweep）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%AE%97%E6%B3%95%EF%BC%88Copying%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">复制算法（Copying）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%E6%95%B4%E7%90%86%E7%AE%97%E6%B3%95%EF%BC%88Mark-Compact%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">标记整理算法（Mark-Compact）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E4%BB%A3%E6%94%B6%E9%9B%86%E7%AE%97%E6%B3%95%EF%BC%88Generational-Collection%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">分代收集算法（Generational Collection）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Serial-Garbage-Collector"><span class="nav-number">3.1.</span> <span class="nav-text">1. Serial Garbage Collector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Parallel-Garbage-Collector"><span class="nav-number">3.2.</span> <span class="nav-text">2. Parallel Garbage Collector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-CMS-Garbage-Collector"><span class="nav-number">3.3.</span> <span class="nav-text">3. CMS Garbage Collector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-G1-Garbage-Collector"><span class="nav-number">3.4.</span> <span class="nav-text">4. G1 Garbage Collector</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E9%80%89%E9%A1%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">Java 虚拟机中的垃圾回收选项配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E9%80%89%E6%8B%A9"><span class="nav-number">4.1.</span> <span class="nav-text">垃圾收集器选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%BC%98%E5%8C%96%E9%80%89%E9%A1%B9"><span class="nav-number">4.2.</span> <span class="nav-text">垃圾回收优化选项</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeffrey Hu"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description">专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
   </div>
 
 
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      2.7k 字
-    </span>
-  
 
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      29
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- LeanCloud 统计文章PV -->
-      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="leancloud-post-views"></span> 次
-      </span>
-    
-  
-</div>
-
-            
-          </div>
-
-          
         </div>
       </div>
     </div>
-  </header>
+  </aside>
+  <div class="sidebar-dimmer"></div>
 
-  <main>
+
+    </header>
+
     
-      
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
-            
-            <article class="markdown-body">
-              <h3 id="判断对象是否可回收的常见方法"><a href="#判断对象是否可回收的常见方法" class="headerlink" title="判断对象是否可回收的常见方法"></a>判断对象是否可回收的常见方法</h3><h4 id="引用计数算法（Reference-Counting）"><a href="#引用计数算法（Reference-Counting）" class="headerlink" title="引用计数算法（Reference Counting）"></a>引用计数算法（Reference Counting）</h4><p>给对象中添加一个引用计数器，每当有一个地方引用时，计数器加1；当引用失效时，计数器减1；任何时刻计数器为0的对象就是不可能再被使用的。</p>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/java-la-ji-hui-shou-ji-zhi-gc.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java 垃圾回收机制（GC）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-11 20:38:18" itemprop="dateCreated datePublished" datetime="2017-03-11T20:38:18+08:00">2017-03-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-20 02:18:32" itemprop="dateModified" datetime="2021-02-20T02:18:32+08:00">2021-02-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/articles/java-la-ji-hui-shou-ji-zhi-gc.html" class="post-meta-item leancloud_visitors" data-flag-title="Java 垃圾回收机制（GC）" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="判断对象是否可回收的常见方法"><a href="#判断对象是否可回收的常见方法" class="headerlink" title="判断对象是否可回收的常见方法"></a>判断对象是否可回收的常见方法</h3><h4 id="引用计数算法（Reference-Counting）"><a href="#引用计数算法（Reference-Counting）" class="headerlink" title="引用计数算法（Reference Counting）"></a>引用计数算法（Reference Counting）</h4><p>给对象中添加一个引用计数器，每当有一个地方引用时，计数器加 1；当引用失效时，计数器减 1；任何时刻计数器为 0 的对象就是不可能再被使用的。</p>
 <ul>
-<li><p>优点：实现简单，判定效率高；</p>
+<li><p>  优点：实现简单，判定效率高；</p>
 </li>
-<li><p>缺点：很难解决对象之间的循环引用问题；</p>
+<li><p>  缺点：很难解决对象之间的循环引用问题；</p>
 </li>
 </ul>
-<p>JVM并不使用这种算法。</p>
+<p>JVM 并不使用这种算法。</p>
 <a id="more"></a>
 
-<h4 id="可达性分析算法（Reachability-Analysis）"><a href="#可达性分析算法（Reachability-Analysis）" class="headerlink" title="可达性分析算法（Reachability Analysis）"></a>可达性分析算法（Reachability Analysis）</h4><p>通过一些列称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径叫做引用链，当一个对象到GC Roots没有任何引用链与之相连时，则证明该对象是不可用的。 <img src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-18.png" srcset="/img/loading.gif" alt=""></p>
-<p>在Java语言中，可作为GC Roots的对象包括：</p>
+<h4 id="可达性分析算法（Reachability-Analysis）"><a href="#可达性分析算法（Reachability-Analysis）" class="headerlink" title="可达性分析算法（Reachability Analysis）"></a>可达性分析算法（Reachability Analysis）</h4><p>通过一些列称为 “GC Roots” 的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径叫做引用链，当一个对象到 GC Roots 没有任何引用链与之相连时，则证明该对象是不可用的。 <img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-18.png"></p>
+<p>在 Java 语言中，可作为 GC Roots 的对象包括：</p>
 <ul>
-<li><p>虚拟机栈（栈帧中的本地变量表）中引用的对象；</p>
+<li><p>  虚拟机栈（栈帧中的本地变量表）中引用的对象；</p>
 </li>
-<li><p>方法区中静态属性引用的对象；</p>
+<li><p>  方法区中静态属性引用的对象；</p>
 </li>
-<li><p>方法区中常量引用的对象；</p>
+<li><p>  方法区中常量引用的对象；</p>
 </li>
-<li><p>本地方法栈中JNI（Native方法）引用的对象；</p>
+<li><p>  本地方法栈中 JNI（Native 方法）引用的对象；</p>
 </li>
 </ul>
-<h4 id="二次标记"><a href="#二次标记" class="headerlink" title="二次标记"></a>二次标记</h4><p>如果一个对象真正宣告“死亡”，至少要经过两次标记过程：</p>
+<h4 id="二次标记"><a href="#二次标记" class="headerlink" title="二次标记"></a>二次标记</h4><p>如果一个对象真正宣告 “死亡”，至少要经过两次标记过程：</p>
 <ul>
-<li><p>如果一个对象经过可达性分析算法判定为可回收对象，则它将会被第一次标记并进行一次筛选，筛选的条件是判断该对象是否有必要执行finalize()方法。当对象没有覆盖finalize()方法或者已经执行过一次finalize()方法，则虚拟将将判定为“没有必要执行”。如果判定为“有必要执行finalize()方法”，那么这个对象将被置入F-Queue队列，并在稍后由一个虚拟机自动建立的、低优先级的Finalizer线程区执行（仅仅是触发）它。</p>
+<li><p>  如果一个对象经过可达性分析算法判定为可回收对象，则它将会被第一次标记并进行一次筛选，筛选的条件是判断该对象是否有必要执行 finalize () 方法。当对象没有覆盖 finalize () 方法或者已经执行过一次 finalize () 方法，则虚拟将将判定为 “没有必要执行”。如果判定为 “有必要执行 finalize () 方法”，那么这个对象将被置入 F-Queue 队列，并在稍后由一个虚拟机自动建立的、低优先级的 Finalizer 线程区执行（仅仅是触发）它。</p>
 </li>
-<li><p>finalize()方法是逃脱死亡的最后机会，稍后GC将堆F-Queue队列进行再一次的小规模标记，如果对象在finalize()方法中重新与引用链上的任何一个对象建立关联，那么在第二次标记的时候将会被移除“即将回收”的集合；如果对象这时候还没有逃脱，那么基本上对象宣告“死亡”并将被回收。</p>
+<li><p>  finalize () 方法是逃脱死亡的最后机会，稍后 GC 将堆 F-Queue 队列进行再一次的小规模标记，如果对象在 finalize () 方法中重新与引用链上的任何一个对象建立关联，那么在第二次标记的时候将会被移除 “即将回收” 的集合；如果对象这时候还没有逃脱，那么基本上对象宣告 “死亡” 并将被回收。</p>
 </li>
 </ul>
-<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="标记-清除算法（Mark-Sweep）"><a href="#标记-清除算法（Mark-Sweep）" class="headerlink" title="标记-清除算法（Mark-Sweep）"></a>标记-清除算法（Mark-Sweep）</h4><p><img src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-20.png" srcset="/img/loading.gif" alt=""></p>
-<p>算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。 <img src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-21.png" srcset="/img/loading.gif" alt=""> 主要缺点：</p>
+<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="标记-清除算法（Mark-Sweep）"><a href="#标记-清除算法（Mark-Sweep）" class="headerlink" title="标记-清除算法（Mark-Sweep）"></a>标记 - 清除算法（Mark-Sweep）</h4><p><img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-20.png"></p>
+<p>算法分为 “标记” 和 “清除” 两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。 <img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-21.png"> 主要缺点：</p>
 <ul>
-<li>效率问题，标记和清除过程的<strong>效率都不高</strong>；</li>
-<li>空间问题，标记清除之后会产生大量<strong>不连续的内存碎片</strong>，空间碎片太多可能会导致，当程序在以后的运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作；</li>
+<li>  效率问题，标记和清除过程的<strong>效率都不高</strong>；</li>
+<li>  空间问题，标记清除之后会产生大量<strong>不连续的内存碎片</strong>，空间碎片太多可能会导致，当程序在以后的运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作；</li>
 </ul>
 <h4 id="复制算法（Copying）"><a href="#复制算法（Copying）" class="headerlink" title="复制算法（Copying）"></a>复制算法（Copying）</h4><p>它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
-<p><img src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-21-1.png" srcset="/img/loading.gif" alt=""></p>
+<p><img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-21-1.png"></p>
 <p>这样使得每次都是对其中的一块进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可，实现简单，运行高效。只是这种算法的代价是将内存缩小为原来的一半，未免太高了一点。</p>
-<p><img src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-22.png" srcset="/img/loading.gif" alt=""></p>
-<p>现在的商业虚拟机都采用这种收集算法来<strong>回收新生代</strong>，新生代中的对象98%是朝生夕死的，所以并不需要按照1∶1的比例来划分内存空间，而是将内存分为<strong>一块较大的Eden空间</strong>和<strong>两块较小的Survivor空间</strong>，每次使用Eden和其中的一块Survivor。</p>
-<p>当回收时，将Eden和Survivor中还存活着的对象一次性地拷贝到另外一块Survivor空间上，最后清理掉Eden和刚才用过的Survivor的空间。HotSpot虚拟机默认Eden和Survivor的大小比例是8∶1，也就是每次新生代中可用内存空间为整个新生代容量的90%（80%+10%），只有10%的内存是会被“浪费”的。</p>
-<p>当然，98%的对象可回收只是一般场景下的数据，我们没有办法保证每次回收都只有不多于10%的对象存活，当Survivor空间不够用时，需要依赖其他内存（这里指老年代）进行分配担保（Handle Promotion）。如果另外一块Survivor空间没有足够的空间存放上一次新生代收集下来的存活对象，这些对象将直接通过分配担保机制进入老年代。</p>
-<h4 id="标记整理算法（Mark-Compact）"><a href="#标记整理算法（Mark-Compact）" class="headerlink" title="标记整理算法（Mark-Compact）"></a>标记整理算法（Mark-Compact）</h4><p>复制收集算法在对象存活率较高时就要执行较多的复制操作，效率将会变低。更关键的是，如果不想浪费50%的空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都100%存活的极端情况，所以在老年代一般不能直接选用这种算法。</p>
-<p><img src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-23.png" srcset="/img/loading.gif" alt=""></p>
-<p>根据<strong>老年代</strong>的特点，有人提出了另外一种“<strong>标记-整理</strong>”（Mark-Compact）算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。</p>
-<p><img src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-24.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="分代收集算法（Generational-Collection）"><a href="#分代收集算法（Generational-Collection）" class="headerlink" title="分代收集算法（Generational Collection）"></a>分代收集算法（Generational Collection）</h4><p>当前商业虚拟机的垃圾收集都采用“分代收集”（Generational Collection）算法，这种算法并没有什么新的思想，只是根据对象的存活周期的不同将内存划分为几块。 一般是把Java堆分为<strong>新生代</strong>和<strong>老年代</strong>，这样就可以根据各个年代的特点采用最适当的收集算法。</p>
+<p><img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-22.png"></p>
+<p>现在的商业虚拟机都采用这种收集算法来<strong>回收新生代</strong>，新生代中的对象 98% 是朝生夕死的，所以并不需要按照 1∶1 的比例来划分内存空间，而是将内存分为<strong>一块较大的 Eden 空间</strong>和<strong>两块较小的 Survivor 空间</strong>，每次使用 Eden 和其中的一块 Survivor。</p>
+<p>当回收时，将 Eden 和 Survivor 中还存活着的对象一次性地拷贝到另外一块 Survivor 空间上，最后清理掉 Eden 和刚才用过的 Survivor 的空间。HotSpot 虚拟机默认 Eden 和 Survivor 的大小比例是 8∶1，也就是每次新生代中可用内存空间为整个新生代容量的 90%（80%+10%），只有 10% 的内存是会被 “浪费” 的。</p>
+<p>当然，98% 的对象可回收只是一般场景下的数据，我们没有办法保证每次回收都只有不多于 10% 的对象存活，当 Survivor 空间不够用时，需要依赖其他内存（这里指老年代）进行分配担保（Handle Promotion）。如果另外一块 Survivor 空间没有足够的空间存放上一次新生代收集下来的存活对象，这些对象将直接通过分配担保机制进入老年代。</p>
+<h4 id="标记整理算法（Mark-Compact）"><a href="#标记整理算法（Mark-Compact）" class="headerlink" title="标记整理算法（Mark-Compact）"></a>标记整理算法（Mark-Compact）</h4><p>复制收集算法在对象存活率较高时就要执行较多的复制操作，效率将会变低。更关键的是，如果不想浪费 50% 的空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都 100% 存活的极端情况，所以在老年代一般不能直接选用这种算法。</p>
+<p><img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-23.png"></p>
+<p>根据<strong>老年代</strong>的特点，有人提出了另外一种 “<strong>标记 - 整理</strong>”（Mark-Compact）算法，标记过程仍然与 “标记 - 清除” 算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。</p>
+<p><img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-24.png"></p>
+<h4 id="分代收集算法（Generational-Collection）"><a href="#分代收集算法（Generational-Collection）" class="headerlink" title="分代收集算法（Generational Collection）"></a>分代收集算法（Generational Collection）</h4><p>当前商业虚拟机的垃圾收集都采用 “分代收集”（Generational Collection）算法，这种算法并没有什么新的思想，只是根据对象的存活周期的不同将内存划分为几块。 一般是把 Java 堆分为<strong>新生代</strong>和<strong>老年代</strong>，这样就可以根据各个年代的特点采用最适当的收集算法。</p>
 <ul>
-<li><p>新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。</p>
+<li><p>  新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。</p>
 </li>
-<li><p>老年代中，因为对象存活率高、没有额外空间对它进行分配担保，就必须使用“标记-清理”或“标记-整理”算法来进行回收。</p>
+<li><p>  老年代中，因为对象存活率高、没有额外空间对它进行分配担保，就必须使用 “标记 - 清理” 或 “标记 - 整理” 算法来进行回收。</p>
 </li>
 </ul>
-<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><p>Java虚拟机规范中对垃圾收集器应该如何实现并没有任何规定，因此不同的厂商、不同版本的虚拟机所提供的垃圾收集器都可能会有很大的差别，并且一般都会提供参数供用户根据自己的应用特点和要求组合出各个年代所使用的收集器。</p>
+<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><p>Java 虚拟机规范中对垃圾收集器应该如何实现并没有任何规定，因此不同的厂商、不同版本的虚拟机所提供的垃圾收集器都可能会有很大的差别，并且一般都会提供参数供用户根据自己的应用特点和要求组合出各个年代所使用的收集器。</p>
 <ul>
-<li><p><strong>Serial收集器（复制算法)：</strong>新生代单线程收集器，标记和清理都是单线程，优点是简单高效。</p>
-</li>
-<li><p><strong>Serial Old收集器(标记-整理算法)：</strong>老年代单线程收集器，Serial收集器的老年代版本。</p>
-</li>
-<li><p><strong>ParNew收集器(停止-复制算法)：</strong>新生代收集器，可以认为是Serial收集器的多线程版本,在多核CPU环境下有着比Serial更好的表现。</p>
-</li>
-<li><p><strong>Parallel Scavenge收集器(停止-复制算法)：</strong>并行收集器，追求高吞吐量，高效利用CPU。吞吐量一般为99%， 吞吐量= 用户线程时间/(用户线程时间+GC线程时间)。适合后台应用等对交互相应要求不高的场景。</p>
-</li>
-<li><p><strong>Parallel Old收集器(停止-复制算法)：</strong>Parallel Scavenge收集器的老年代版本，并行收集器，吞吐量优先</p>
-</li>
-<li><p><strong>CMS(Concurrent Mark Sweep)收集器（标记-清理算法）**</strong>：**高并发、低停顿，追求最短GC回收停顿时间，cpu占用比较高，响应时间快，停顿时间短，多核cpu 追求高响应时间的选择</p>
-<p><img src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-24-1.png" srcset="/img/loading.gif" alt=""></p>
-</li>
+<li>  <strong>Serial 收集器（复制算法)：</strong>新生代单线程收集器，标记和清理都是单线程，优点是简单高效。</li>
+<li>  <strong>Serial Old 收集器 (标记 - 整理算法)：</strong>老年代单线程收集器，Serial 收集器的老年代版本。</li>
+<li>  <strong>ParNew 收集器 (停止 - 复制算法)：</strong>新生代收集器，可以认为是 Serial 收集器的多线程版本，在多核 CPU 环境下有着比 Serial 更好的表现。</li>
+<li>  <strong>Parallel Scavenge 收集器 (停止 - 复制算法)：</strong>并行收集器，追求高吞吐量，高效利用 CPU。吞吐量一般为 99%， 吞吐量 = 用户线程时间 /(用户线程时间 + GC 线程时间)。适合后台应用等对交互相应要求不高的场景。</li>
+<li>  <strong>Parallel Old 收集器 (停止 - 复制算法)：</strong>Parallel Scavenge 收集器的老年代版本，并行收集器，吞吐量优先</li>
+<li>  <strong> CMS (Concurrent Mark Sweep) 收集器（标记 - 清理算法）****：</strong>高并发、低停顿，追求最短 GC 回收停顿时间，cpu 占用比较高，响应时间快，停顿时间短，多核 cpu 追求高响应时间的选择</li>
 </ul>
-<h4 id="1-Serial-Garbage-Collector"><a href="#1-Serial-Garbage-Collector" class="headerlink" title="1. Serial Garbage Collector"></a>1. Serial Garbage Collector</h4><p>Serial Garbage Collector通过暂停所有应用的线程来工作。它是为单线程工作环境而设计的。它中使用一个线程来进行垃圾回收。这种暂停应用线程来进行垃圾回收的方式可能不太适应服务器环境。它最适合简单的命令行程序。通过 -XX:+UseSerialGC 参数来选用Serial Garbage Collector。</p>
-<h4 id="2-Parallel-Garbage-Collector"><a href="#2-Parallel-Garbage-Collector" class="headerlink" title="2. Parallel Garbage Collector"></a>2. Parallel Garbage Collector</h4><p>Parallel Garbage Collector也被称为吞吐量收集器（throughput collector）。它是Java虚拟机的默认垃圾收集器。与Serial Garbage Collector不同，Parallel Garbage Collector使用多个线程进行垃圾回收。与Serial Garbage Collector相似的地方时，它也是暂停所有的应用线程来进行垃圾回收。</p>
-<h4 id="3-CMS-Garbage-Collector"><a href="#3-CMS-Garbage-Collector" class="headerlink" title="3. CMS Garbage Collector"></a>3. CMS Garbage Collector</h4><p>Concurrent Mark Sweep (CMS) Garbage Collector使用多个线程来扫描堆内存来标记需要回收的实例，然后再清除被标记的实例。CMS Garbage Collector只有在如下两种情景才会暂停所有的应用线程：</p>
+<p>&nbsp;<img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-11_12-38-24-1.png"></p>
+<h4 id="1-Serial-Garbage-Collector"><a href="#1-Serial-Garbage-Collector" class="headerlink" title="1. Serial Garbage Collector"></a>1. Serial Garbage Collector</h4><p>Serial Garbage Collector 通过暂停所有应用的线程来工作。它是为单线程工作环境而设计的。它中使用一个线程来进行垃圾回收。这种暂停应用线程来进行垃圾回收的方式可能不太适应服务器环境。它最适合简单的命令行程序。通过 -XX:+UseSerialGC 参数来选用 Serial Garbage Collector。</p>
+<h4 id="2-Parallel-Garbage-Collector"><a href="#2-Parallel-Garbage-Collector" class="headerlink" title="2. Parallel Garbage Collector"></a>2. Parallel Garbage Collector</h4><p>Parallel Garbage Collector 也被称为吞吐量收集器（throughput collector）。它是 Java 虚拟机的默认垃圾收集器。与 Serial Garbage Collector 不同，Parallel Garbage Collector 使用多个线程进行垃圾回收。与 Serial Garbage Collector 相似的地方时，它也是暂停所有的应用线程来进行垃圾回收。</p>
+<h4 id="3-CMS-Garbage-Collector"><a href="#3-CMS-Garbage-Collector" class="headerlink" title="3. CMS Garbage Collector"></a>3. CMS Garbage Collector</h4><p>Concurrent Mark Sweep (CMS) Garbage Collector 使用多个线程来扫描堆内存来标记需要回收的实例，然后再清除被标记的实例。CMS Garbage Collector 只有在如下两种情景才会暂停所有的应用线程：</p>
 <ul>
-<li>当标记永久代内存空间中的对象时；</li>
-<li>当进行垃圾回收时，堆内存同步发生了一些变化。</li>
+<li>  当标记永久代内存空间中的对象时；</li>
+<li>  当进行垃圾回收时，堆内存同步发生了一些变化。</li>
 </ul>
-<p>相比Parallel Garbage Collector，CMS Garbage Collector使用更多的CPU资源来确保应用有一个更好的吞吐量。如果分配更多的CPU资源可以获得更好的性能，那么CMS Garbage Collector是一个更好的选择。 通过 XX:+USeParNewGC 参数来选用CMS Garbage Collector。</p>
-<h4 id="4-G1-Garbage-Collector"><a href="#4-G1-Garbage-Collector" class="headerlink" title="4. G1 Garbage Collector"></a>4. G1 Garbage Collector</h4><p>G1 Garbage Collector用于大的堆内存区域。它将堆内存分割成多个独立区域（Region），然后并发地对它们进行垃圾回收。在释放内存后，G1还可以压缩空闲的堆内存。但是，CMS Garbage Collector是通过“Stop The World (STW)”来进行内存压缩的。G1优先收集可回收更多内存的区域。Java 8 的改进：在用G1 Garbage Collector时，可以开启 -XX:+UseStringDeduplication 参数。它通过将重复的字符串移动到同一个 char 数组中来优化堆内存的使用。该选项在Java 8u20时引用进来。 通过 –XX:+UseG1GC 参数来选用G1 Garbage Collector。</p>
-<h3 id="Java虚拟机中的垃圾回收选项配置"><a href="#Java虚拟机中的垃圾回收选项配置" class="headerlink" title="Java虚拟机中的垃圾回收选项配置"></a>Java虚拟机中的垃圾回收选项配置</h3><p>下面是与Java收集器相关的Java虚拟机选项。</p>
+<p>相比 Parallel Garbage Collector，CMS Garbage Collector 使用更多的 CPU 资源来确保应用有一个更好的吞吐量。如果分配更多的 CPU 资源可以获得更好的性能，那么 CMS Garbage Collector 是一个更好的选择。 通过 XX:+USeParNewGC 参数来选用 CMS Garbage Collector。</p>
+<h4 id="4-G1-Garbage-Collector"><a href="#4-G1-Garbage-Collector" class="headerlink" title="4. G1 Garbage Collector"></a>4. G1 Garbage Collector</h4><p>G1 Garbage Collector 用于大的堆内存区域。它将堆内存分割成多个独立区域（Region），然后并发地对它们进行垃圾回收。在释放内存后，G1 还可以压缩空闲的堆内存。但是，CMS Garbage Collector 是通过 “Stop The World (STW)” 来进行内存压缩的。G1 优先收集可回收更多内存的区域。Java 8 的改进：在用 G1 Garbage Collector 时，可以开启 -XX:+UseStringDeduplication 参数。它通过将重复的字符串移动到同一个 char 数组中来优化堆内存的使用。该选项在 Java 8u20 时引用进来。 通过 –XX:+UseG1GC 参数来选用 G1 Garbage Collector。</p>
+<h3 id="Java虚拟机中的垃圾回收选项配置"><a href="#Java虚拟机中的垃圾回收选项配置" class="headerlink" title="Java虚拟机中的垃圾回收选项配置"></a>Java 虚拟机中的垃圾回收选项配置</h3><p>下面是与 Java 收集器相关的 Java 虚拟机选项。</p>
 <h4 id="垃圾收集器选择"><a href="#垃圾收集器选择" class="headerlink" title="垃圾收集器选择"></a>垃圾收集器选择</h4><p><strong>Option</strong></p>
 <p><strong>Description</strong></p>
 <p>-XX:+UseSerialGC</p>
@@ -320,560 +410,311 @@
 <p>永久代（Permanent Generation）初始化尺寸</p>
 <p>-XX:MaxPermSize</p>
 <p>永久代（Permanent Generation）最大尺寸</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-            </article>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
-                    
-                      <a class="hover-with-bg" href="/tags/JVM/">JVM</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
-              
-              
-                <div class="post-prevnext row">
-                  <div class="post-prev col-6">
-                    
-                    
-                      <a href="/articles/java-lei-jia-zai-ji-zhi-lei-jia-zai-de-shi-ji-he-guo-cheng.html">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java类加载机制-类加载的时机和过程</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </div>
-                  <div class="post-next col-6">
-                    
-                    
-                      <a href="/articles/chang-yong-jvm-qi-dong-can-shu.html">
-                        <span class="hidden-mobile">常用JVM启动参数</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </div>
-                </div>
-              
-            </div>
 
-            
-              <!-- Comments -->
-              <div class="comments" id="comments">
-                
-                
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    function loadGitalk(){
-      addScript('https://cdn.staticfile.org/gitalk/1.6.2/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: 'b98b717d30c8867a2377',
-          clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
-          repo: 'blog-gitalk-comments',
-          owner: 'huzhanfei',
-          admin: 'huzhanfei',
-          id: 'abe2f11339bee105f3f102052ebaa0c7',
-          language: 'zh-CN',
-          perPage: 15,
-          pagerDirection: 'last',
-          createIssueManually: 'true',
-          distractionFreeMode: 'false'
-        });
-        gitalk.render('gitalk-container');
-      });
-    }
-    createObserver(loadGitalk, 'gitalk-container');
-  </script>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/jvm-nei-cun-hua-fen.html" rel="bookmark">JVM 内存划分</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/chang-yong-jvm-qi-dong-can-shu.html" rel="bookmark">常用 JVM 启动参数</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/concurrentlinkedqueue-de-shi-xian-yuan-li-fen-xi.html" rel="bookmark">ConcurrentLinkedQueue 的实现原理分析</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/intellij-idea-chang-yong-kuai-jie-jian-lie-biao.html" rel="bookmark">IntelliJ Idea 常用快捷键列表</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/java-8-zhong-xin-de-date-he-time-lei-ru-men-xiang-jie.html" rel="bookmark">Java 8 中新的 Date 和 Time 类入门详解</a></div>
+    </li>
+  </ul>
 
 
-              </div>
-            
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jeffrey Hu
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://bytelife.net/articles/java-la-ji-hui-shou-ji-zhi-gc.html" title="Java 垃圾回收机制（GC）">https://bytelife.net/articles/java-la-ji-hui-shou-ji-zhi-gc.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/JVM/" rel="tag"># JVM</a>
           </div>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/chang-yong-jvm-qi-dong-can-shu.html" rel="prev" title="常用 JVM 启动参数">
+                  <i class="fa fa-chevron-left"></i> 常用 JVM 启动参数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/java-lei-jia-zai-ji-zhi-lei-jia-zai-de-shi-ji-he-guo-cheng.html" rel="next" title="Java 类加载机制 - 类加载的时机和过程">
+                  Java 类加载机制 - 类加载的时机和过程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
 </div>
 
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
 
 
-    
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
 
-  
-    <!-- APlayer 音乐播放器 -->
-    <div id="aplayer"></div>
-    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
-<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
-<script type="text/javascript">
-  var oldLoadAp = window.onload;
-  window.onload = function () {
-    oldLoadAp && oldLoadAp();
+    <div class="comments gitalk-container"></div>
 
-    new APlayer({
-      container: document.getElementById('aplayer'),
-      fixed: true,
-      autoplay: 'false' === 'true',
-      loop: 'all',
-      order: 'list',
-      theme: '#b7daff',
-      preload: 'none',
-      audio: [{"name":"なんでもないや (movie ver.)","artist":"RADWIMPS","url":"/uploads/MEI-SHEN-ME-DA-BU-LIAO.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"三葉のテーマ","artist":"RADWIMPS","url":"/uploads/SAN-YE.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Alpha","artist":"Christophe Lebled","url":"/uploads/Alpha.mp3","cover":"/uploads/Alpha.jpg"},{"name":"森林狂想曲","artist":"吴金黛","url":"/uploads/Forest-Rhapsody.mp3","cover":"/uploads/Forest-Rhapsody.jpg"},{"name":"Auld Lang Syne","artist":"Home Free","url":"/uploads/Auld-Lang-Syne.mp3","cover":"/uploads/Auld-Lang-Syne.jpg"},{"name":"On a Slow Boat to China","artist":"Luke Thompson","url":"/uploads/On-a-Slow-Boat-to-China.mp3","cover":"/uploads/On-a-Slow-Boat-to-China.jpg"},{"name":"Right Here Waiting","artist":"Richard Marx","url":"/uploads/Right-Here-Waiting.mp3","cover":"/uploads/Right-Here-Waiting.jpg"},{"name":"Something Just Like This","artist":"The Chainsmokers","url":"/uploads/Something-Just-Like-This.mp3","cover":"/uploads/Something-Just-Like-This.jpg"},{"name":"Beautiful In White","artist":"Shane Filan","url":"/uploads/Beautiful-In-White.mp3","cover":"/uploads/Beautiful-In-White.jpg"},{"name":"Illusionary Daytime","artist":"Shirfine","url":"/uploads/Illusionary-Daytime.mp3","cover":"/uploads/Illusionary-Daytime.jpg"},{"name":"夢灯籠","artist":"RADWIMPS","url":"/uploads/MENG-DENG-LONG.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"前前前世 (movie ver.)","artist":"RADWIMPS","url":"/uploads/QIAN-QIAN-QIAN-SHI.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Naruto Main Theme","artist":"Musashi","url":"/uploads/Naruto-Main-Theme.mp3","cover":"/uploads/Naruto-Main-Theme.jpg"},{"name":"Legends Never Die","artist":"英雄联盟","url":"/uploads/Legends-Never-Die.mp3","cover":"/uploads/Legends-Never-Die.jpg"}]
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
+</div>
+  </main>
 
-  
+  <footer class="footer">
+    <div class="footer-inner">
 
-  
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
+      <img src="/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备 44030502005735号 </a>
+  </div>
 
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
+<div class="copyright">
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
     </div>
-    
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
-
-    
-  <!-- 备案信息 -->
-  <div class="beian">
-    <a href="http://beian.miit.gov.cn/" target="_blank"
-       rel="nofollow noopener">粤ICP备20059294号</a>
-    
-  </div>
-
-
-    
-  </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
-
-<!-- Plugins -->
-
+  </footer>
 
   
-    <script  src="/js/lazyload.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
   
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
 
 
-
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
-
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
-
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
       }
-    }
-
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
+      if (document.readyState === 'complete') {
+        NProgress.done();
       }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+
+
+<script data-pjax>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
     function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
           }
-        });
-        getterArr.push(pvGetter);
-      }
-
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
-
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('true' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/articles/java-la-ji-hui-shou-ji-zhi-gc.html');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
-
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
         })
-      }
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
     }
 
-    var app_id = 'WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz'
-    var app_key = 'bG7qAcDfxStNdWtC1T8EE9ku'
-    var server_url = 'https://wapgmgrp.lc-cn-n1-shared.com'
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
 
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":true};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data)
         });
       };
-
-      addCount(Counter);
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
     }
 
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
     } else {
       fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
+        .then(response => response.json())
+        .then(({ api_server }) => {
           fetchData('https://' + api_server);
         });
     }
   })();
 </script>
 
+    <div class="pjax">
+
+  
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
 
-
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b98b717d30c8867a2377',
+      clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
+      repo        : 'blog-gitalk-comments',
+      owner       : 'huzhanfei',
+      admin       : ['huzhanfei'],
+      id          : '8927315151beb14da05b819cccbf250d',
+        language: 'zh-CN',
+      distractionFreeMode: true
     });
-  </script>
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
 
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "Java垃圾回收机制（GC）&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-
-
+    </div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

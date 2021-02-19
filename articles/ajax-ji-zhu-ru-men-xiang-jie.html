@@ -1,249 +1,340 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-
-
-
-
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon.ico">
-  <link rel="icon" type="image/png" href="/images/favicon.ico">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="前言：Ajax 是当今 Web 应用程序开发过程中必不可少的一种技术，使用它可以通过异步处理的方式极大的提高用户体验，这篇文章将以简单易懂的方式介绍 AJAX 技术。  AJAX 技术简介AJAX 即 “Asynchronous Javascript And XML”（异步 JavaScript 和 XML），音译为 “阿贾克斯”，是指一种创建交互式网页应用的网页开发技术。AJAX 通过在后台服">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AJAX 技术入门详解">
+<meta property="og:url" content="https://bytelife.net/articles/ajax-ji-zhu-ru-men-xiang-jie.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="前言：Ajax 是当今 Web 应用程序开发过程中必不可少的一种技术，使用它可以通过异步处理的方式极大的提高用户体验，这篇文章将以简单易懂的方式介绍 AJAX 技术。  AJAX 技术简介AJAX 即 “Asynchronous Javascript And XML”（异步 JavaScript 和 XML），音译为 “阿贾克斯”，是指一种创建交互式网页应用的网页开发技术。AJAX 通过在后台服">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-21-39.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-26-15.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-31-34.png">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-22_16-49-19.png">
+<meta property="article:published_time" content="2016-07-22T17:46:11.000Z">
+<meta property="article:modified_time" content="2021-02-19T18:18:32.403Z">
+<meta property="article:author" content="Jeffrey Hu">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-21-39.png">
+
+
+<link rel="canonical" href="https://bytelife.net/articles/ajax-ji-zhu-ru-men-xiang-jie.html">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>AJAX 技术入门详解 | ByteLife</title>
   
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
-  <meta name="author" content="Jeffrey Hu">
-  <meta name="keywords" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,huzhanfei">
-  <title>AJAX技术入门详解 - ByteLife</title>
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
 
 
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script  src="/js/utils.js" ></script>
-<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>ByteLife</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-          </li>
-        
-      </ul>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">ByteLife</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术交流与学习自留地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
-         style="background: url('/images/banner.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
-              
-            </span>
 
-            
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2016-07-23 01:46">
-      2016年7月23日 凌晨
-    </time>
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AJAX%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">AJAX 技术简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9FWeb%E5%BA%94%E7%94%A8%E7%9A%84%E5%90%8C%E6%AD%A5%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">传统 Web 应用的同步处理方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AJAX%E5%BA%94%E7%94%A8%E7%9A%84%E5%BC%82%E6%AD%A5%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">AJAX 应用的异步处理方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9FWeb%E5%BA%94%E7%94%A8%E4%B8%8EAjax%E5%BA%94%E7%94%A8%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">4.</span> <span class="nav-text">传统 Web 应用与 Ajax 应用的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAAJAX%E6%A0%B8%E5%BF%83%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.</span> <span class="nav-text">创建 AJAX 核心对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XMLHttpRequest%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%8F%8A%E5%B1%9E%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">XMLHttpRequest 常用方法及属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#onreadystatechange-%E5%B1%9E%E6%80%A7"><span class="nav-number">6.1.</span> <span class="nav-text">onreadystatechange 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#readyState%E5%B1%9E%E6%80%A7"><span class="nav-number">6.2.</span> <span class="nav-text">readyState 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#responseText-%E5%B1%9E%E6%80%A7"><span class="nav-number">6.3.</span> <span class="nav-text">responseText 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#open-%E5%87%BD%E6%95%B0"><span class="nav-number">6.4.</span> <span class="nav-text">open () 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#send-%E5%87%BD%E6%95%B0"><span class="nav-number">6.5.</span> <span class="nav-text">send () 函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%EF%BC%9A%E9%80%9A%E8%BF%87%E9%82%AE%E7%BC%96%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E5%9F%8E%E5%B8%82%E5%90%8D%E7%A7%B0"><span class="nav-number">7.</span> <span class="nav-text">实例：通过邮编自动获取城市名称</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2"><span class="nav-number">7.1.</span> <span class="nav-text">前端页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AJAX%E4%BB%A3%E7%A0%81"><span class="nav-number">7.2.</span> <span class="nav-text">AJAX 代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-number">7.3.</span> <span class="nav-text">后端代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeffrey Hu"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description">专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
   </div>
 
 
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      3.2k 字
-    </span>
-  
 
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      37
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- LeanCloud 统计文章PV -->
-      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="leancloud-post-views"></span> 次
-      </span>
-    
-  
-</div>
-
-            
-          </div>
-
-          
         </div>
       </div>
     </div>
-  </header>
+  </aside>
+  <div class="sidebar-dimmer"></div>
 
-  <main>
+
+    </header>
+
     
-      
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
-            
-            <article class="markdown-body">
-              <blockquote>
-<p>前言：Ajax是当今Web应用程序开发过程中必不可少的一种技术，使用它可以通过异步处理的方式极大的提高用户体验，这篇文章将以简单易懂的方式介绍AJAX技术。</p>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/ajax-ji-zhu-ru-men-xiang-jie.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AJAX 技术入门详解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-07-23 01:46:11" itemprop="dateCreated datePublished" datetime="2016-07-23T01:46:11+08:00">2016-07-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-20 02:18:32" itemprop="dateModified" datetime="2021-02-20T02:18:32+08:00">2021-02-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">Web前端</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/articles/ajax-ji-zhu-ru-men-xiang-jie.html" class="post-meta-item leancloud_visitors" data-flag-title="AJAX 技术入门详解" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>前言：Ajax 是当今 Web 应用程序开发过程中必不可少的一种技术，使用它可以通过异步处理的方式极大的提高用户体验，这篇文章将以简单易懂的方式介绍 AJAX 技术。</p>
 </blockquote>
-<h3 id="AJAX技术简介"><a href="#AJAX技术简介" class="headerlink" title="AJAX技术简介"></a>AJAX技术简介</h3><p>AJAX即“Asynchronous Javascript And XML”（异步JavaScript和XML），音译为“阿贾克斯”，是指一种创建交互式网页应用的网页开发技术。AJAX通过在后台服务器进行少量的数据交换，实现对网页的异步刷新，即可以在不重新加载整个网页的情况下，对网页的局部进行更新。 Ajax 不是一个新的技术，事实上，它是一些旧有的成熟的技术以一种全新的更加强大的方式整合在一起 Ajax的关键技术：</p>
+<h3 id="AJAX技术简介"><a href="#AJAX技术简介" class="headerlink" title="AJAX技术简介"></a>AJAX 技术简介</h3><p>AJAX 即 “Asynchronous Javascript And XML”（异步 JavaScript 和 XML），音译为 “阿贾克斯”，是指一种创建交互式网页应用的网页开发技术。AJAX 通过在后台服务器进行少量的数据交换，实现对网页的异步刷新，即可以在不重新加载整个网页的情况下，对网页的局部进行更新。 Ajax 不是一个新的技术，事实上，它是一些旧有的成熟的技术以一种全新的更加强大的方式整合在一起 Ajax 的关键技术：</p>
 <ul>
-<li>使用XHTML(HTML)和CSS构建标准化的展示层</li>
-<li>使用DOM进行动态显示和交互</li>
-<li>使用XML和XSLT进行数据交换和操纵</li>
-<li>使用XMLHttpRequest异步获取数据</li>
-<li>使用JavaScript将所有元素绑定在一起</li>
+<li>  使用 XHTML (HTML) 和 CSS 构建标准化的展示层</li>
+<li>  使用 DOM 进行动态显示和交互</li>
+<li>  使用 XML 和 XSLT 进行数据交换和操纵</li>
+<li>  使用 XMLHttpRequest 异步获取数据</li>
+<li>  使用 JavaScript 将所有元素绑定在一起</li>
 </ul>
 <a id="more"></a>
 
-<h3 id="传统Web应用的同步处理方式"><a href="#传统Web应用的同步处理方式" class="headerlink" title="传统Web应用的同步处理方式"></a>传统Web应用的同步处理方式</h3><p>在传统的Web应用中，如果我们需要更新网页内容，必须重新加载整个页面，传统Web应用同步处理方式模型图如下：</p>
-<p><img src="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-21-39.png" srcset="/img/loading.gif" alt="传统web应用模型图"></p>
-<p>我们可以看到，在传统的Web应用模型下，客户机 （浏览器或者本地机器上运行的代码）向服务器发出请求。该请求是同步的，客户机等待服务器的响应。当客户机等待的时候，会用某种形式通知您正在处理：</p>
+<h3 id="传统Web应用的同步处理方式"><a href="#传统Web应用的同步处理方式" class="headerlink" title="传统Web应用的同步处理方式"></a>传统 Web 应用的同步处理方式</h3><p>在传统的 Web 应用中，如果我们需要更新网页内容，必须重新加载整个页面，传统 Web 应用同步处理方式模型图如下：</p>
+<p><img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-21-39.png" alt="传统web应用模型图"></p>
+<p>我们可以看到，在传统的 Web 应用模型下，客户机 （浏览器或者本地机器上运行的代码）向服务器发出请求。该请求是同步的，客户机等待服务器的响应。当客户机等待的时候，会用某种形式通知您正在处理：</p>
 <ul>
-<li>沙漏（特别是 Windows 上）</li>
-<li>旋转皮球（通常在 Mac 机器上）</li>
-<li>应用程序基本上冻结了，然后过一段时间光标变化了</li>
+<li>  沙漏（特别是 Windows 上）</li>
+<li>  旋转皮球（通常在 Mac 机器上）</li>
+<li>  应用程序基本上冻结了，然后过一段时间光标变化了</li>
 </ul>
-<p>这正是传统Web 应用程序让人感到笨拙或缓慢的原因：缺乏真正的交互性。 按下按钮时，应用程序实际上变得不能使用，直到刚刚触发的请求得到响应。如果请求需要大量服务器处理，那么等待的时间可能很长。这对用户体验是非常不友好的。</p>
-<h3 id="AJAX应用的异步处理方式"><a href="#AJAX应用的异步处理方式" class="headerlink" title="AJAX应用的异步处理方式"></a>AJAX应用的异步处理方式</h3><p>Ajax应用通过在用户和服务器之间引入一个媒介（Ajax engine）来异步发送请求，消除了传统的发送请求－等待－发送请求－等待的特性，极大的提高了用户体验。 Ajax应用的异步处理方式模型图如下： <img src="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-26-15.png" srcset="/img/loading.gif" alt="AJAX应用模型图"> 我们在图中可以看到，当用户在浏览器中进行一定的操作（比如点击按钮）请求更新网页内容，浏览器将请求交由AJAX处理，AJAX引擎收到将请求提交给服务器，此时浏览器端无需刷新当前页面，待服务器处理完成请求后，将响应传给AJAX引擎，由AJAX来更新网页的部分内容。 这样的处理在浏览器端用户完全无需等待，完全由AJAX来完成整个处理。这种处理方式就是异步处理。</p>
-<h3 id="传统Web应用与Ajax应用的比较"><a href="#传统Web应用与Ajax应用的比较" class="headerlink" title="传统Web应用与Ajax应用的比较"></a>传统Web应用与Ajax应用的比较</h3><p>废话不多说，直接看图： <img src="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-31-34.png" srcset="/img/loading.gif" alt="AJAX与传统WEB比较"></p>
-<h3 id="创建AJAX核心对象"><a href="#创建AJAX核心对象" class="headerlink" title="创建AJAX核心对象"></a>创建AJAX核心对象</h3><p>想要使用AJAX技术必然逃不掉AJAX引擎，其实说起引擎可能觉得这个概念有点过于庞大，其实在AJAX中，这个引擎不过就是一个对象！对，你没有看错，只是一个对象而已！这个对象就是XMLHttpRequest。 XMLHttpRequest（简称XHR）是一个JavaScript对象。这个对象产生于浏览器中，它是AJAX的核心。 在不同的浏览器中创建这个对象的方法不同，其实主要的原因当然来自万恶的IE，没办法，毕竟IE拥有着庞大的用户群，我们在开发过程中不得不考虑兼容性问题。 那么为了解决兼容性问题，通常创建XHR对象的代码如下：</p>
+<p>这正是传统 Web 应用程序让人感到笨拙或缓慢的原因：缺乏真正的交互性。 按下按钮时，应用程序实际上变得不能使用，直到刚刚触发的请求得到响应。如果请求需要大量服务器处理，那么等待的时间可能很长。这对用户体验是非常不友好的。</p>
+<h3 id="AJAX应用的异步处理方式"><a href="#AJAX应用的异步处理方式" class="headerlink" title="AJAX应用的异步处理方式"></a>AJAX 应用的异步处理方式</h3><p>Ajax 应用通过在用户和服务器之间引入一个媒介（Ajax engine）来异步发送请求，消除了传统的发送请求－等待－发送请求－等待的特性，极大的提高了用户体验。 Ajax 应用的异步处理方式模型图如下： <img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-26-15.png" alt="AJAX应用模型图"> 我们在图中可以看到，当用户在浏览器中进行一定的操作（比如点击按钮）请求更新网页内容，浏览器将请求交由 AJAX 处理，AJAX 引擎收到将请求提交给服务器，此时浏览器端无需刷新当前页面，待服务器处理完成请求后，将响应传给 AJAX 引擎，由 AJAX 来更新网页的部分内容。 这样的处理在浏览器端用户完全无需等待，完全由 AJAX 来完成整个处理。这种处理方式就是异步处理。</p>
+<h3 id="传统Web应用与Ajax应用的比较"><a href="#传统Web应用与Ajax应用的比较" class="headerlink" title="传统Web应用与Ajax应用的比较"></a>传统 Web 应用与 Ajax 应用的比较</h3><p>废话不多说，直接看图： <img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-22_15-31-34.png" alt="AJAX与传统WEB比较"></p>
+<h3 id="创建AJAX核心对象"><a href="#创建AJAX核心对象" class="headerlink" title="创建AJAX核心对象"></a>创建 AJAX 核心对象</h3><p>想要使用 AJAX 技术必然逃不掉 AJAX 引擎，其实说起引擎可能觉得这个概念有点过于庞大，其实在 AJAX 中，这个引擎不过就是一个对象！对，你没有看错，只是一个对象而已！这个对象就是 XMLHttpRequest。 XMLHttpRequest（简称 XHR）是一个 JavaScript 对象。这个对象产生于浏览器中，它是 AJAX 的核心。 在不同的浏览器中创建这个对象的方法不同，其实主要的原因当然来自万恶的 IE，没办法，毕竟 IE 拥有着庞大的用户群，我们在开发过程中不得不考虑兼容性问题。 那么为了解决兼容性问题，通常创建 XHR 对象的代码如下：</p>
 <p>function ajaxFunction()<br> {<br> var xmlHttp;</p>
-<p> try<br>    {<br>   // Firefox, Opera 8.0+, Safari,IE7及以上版本<br>    xmlHttp=new XMLHttpRequest();<br>    }<br> catch (e)<br>    {<br>  // Internet Explorer<br>   try<br>      {<br>      xmlHttp=new ActiveXObject(“Msxml2.XMLHTTP”);//IE较新版本<br>      }<br>   catch (e)<br>      {</p>
+<p> try<br>    {<br>   // Firefox, Opera 8.0+, Safari,IE7 及以上版本<br>    xmlHttp=new XMLHttpRequest();<br>    }<br> catch (e)<br>    {<br>  // Internet Explorer<br>   try<br>      {<br>      xmlHttp=new ActiveXObject (“Msxml2.XMLHTTP”);//IE 较新版本<br>      }<br>   catch (e)<br>      {</p>
 <pre><code>  try
      {
      xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");//IE较老版本
@@ -254,22 +345,24 @@
      return false;
      }
   }
-}</code></pre><p> }</p>
-<p>注意不要被这些花括号迷住了眼睛，下面分别介绍每一步: 增加try/catch块：</p>
+}
+</code></pre>
+<p> }</p>
+<p>注意不要被这些花括号迷住了眼睛，下面分别介绍每一步：增加 try/catch 块：</p>
 <ul>
-<li>尝试创建 XMLHttpRequest 对象</li>
-<li>如果失败,先尝试使用较新版本的Microsoft浏览器创建 Microsoft 兼容的对象（Msxml2.XMLHTTP），如果失败（尝试使用较老版本的Microsoft浏览器创建 Microsoft兼容的对象（Microsoft.XMLHTTP）</li>
+<li>  尝试创建 XMLHttpRequest 对象</li>
+<li>  如果失败，先尝试使用较新版本的 Microsoft 浏览器创建 Microsoft 兼容的对象（Msxml2.XMLHTTP），如果失败（尝试使用较老版本的 Microsoft 浏览器创建 Microsoft 兼容的对象（Microsoft.XMLHTTP）</li>
 </ul>
-<p>如果全部失败，则使用JavaScript警告通知用户出现了问题并返回false。</p>
-<h3 id="XMLHttpRequest常用方法及属性"><a href="#XMLHttpRequest常用方法及属性" class="headerlink" title="XMLHttpRequest常用方法及属性"></a>XMLHttpRequest常用方法及属性</h3><h4 id="onreadystatechange-属性"><a href="#onreadystatechange-属性" class="headerlink" title="onreadystatechange 属性"></a>onreadystatechange 属性</h4><p>该属性存有处理服务器响应的函数。下面的代码定义了一个空的函数并赋值给onreadystatechange属性：</p>
+<p>如果全部失败，则使用 JavaScript 警告通知用户出现了问题并返回 false。</p>
+<h3 id="XMLHttpRequest常用方法及属性"><a href="#XMLHttpRequest常用方法及属性" class="headerlink" title="XMLHttpRequest常用方法及属性"></a>XMLHttpRequest 常用方法及属性</h3><h4 id="onreadystatechange-属性"><a href="#onreadystatechange-属性" class="headerlink" title="onreadystatechange 属性"></a>onreadystatechange 属性</h4><p>该属性存有处理服务器响应的函数。下面的代码定义了一个空的函数并赋值给 onreadystatechange 属性：</p>
 <p>xmlHttp.onreadystatechange=function()<br>  {<br>  // 我们需要在这里写一些代码<br>  }</p>
-<h4 id="readyState属性"><a href="#readyState属性" class="headerlink" title="readyState属性"></a>readyState属性</h4><p>readyState 属性存有服务器响应的状态信息。每当 readyState 改变时，onreadystatechange 函数就会被执行。 这是 readyState 属性可能的值： AJAX - XMLHttpRequest 对象</p>
+<h4 id="readyState属性"><a href="#readyState属性" class="headerlink" title="readyState属性"></a>readyState 属性</h4><p>readyState 属性存有服务器响应的状态信息。每当 readyState 改变时，onreadystatechange 函数就会被执行。 这是 readyState 属性可能的值： AJAX - XMLHttpRequest 对象</p>
 <p>状态</p>
 <p>描述</p>
 <p>0</p>
-<p>请求未初始化（在调用 open() 之前）</p>
+<p>请求未初始化（在调用 open () 之前）</p>
 <p>1</p>
-<p>请求已提出（调用 send() 之前）</p>
+<p>请求已提出（调用 send () 之前）</p>
 <p>2</p>
 <p>请求已发送（这里通常可以从响应得到内容头部）</p>
 <p>3</p>
@@ -277,29 +370,28 @@
 <p>4</p>
 <p>请求已完成（可以访问服务器响应并使用它）</p>
 <p>我们要向这个 onreadystatechange 函数添加一条 If 语句，来测试我们的响应是否已完成（意味着可获得数据）：</p>
-<p>xmlHttp.onreadystatechange=function()<br>  {<br>  if(xmlHttp.readyState==4)<br>    {<br>    // 从服务器的response获得数据<br>    }<br>  }</p>
+<p>xmlHttp.onreadystatechange=function()<br>  {<br>  if(xmlHttp.readyState==4)<br>    {<br>    // 从服务器的 response 获得数据<br>    }<br>  }</p>
 <h4 id="responseText-属性"><a href="#responseText-属性" class="headerlink" title="responseText 属性"></a>responseText 属性</h4><p>可以通过 responseText 属性来取回由服务器返回的数据。</p>
-<p>xmlHttp.onreadystatechange=function()<br>  {<br>  if(xmlHttp.readyState==4)<br>    {<br>    //例如将某一元素内的HTML代码更换为服务器发送的响应字符串<br>    document.getElementById(“某一元素id”).innerHTML = xmlHttp.responseText;<br>    }<br>  }</p>
-<h4 id="open-函数"><a href="#open-函数" class="headerlink" title="open()函数"></a>open()函数</h4><p>使用 XMLHttpRequest 对象的 open() 方法来建立请求。该方法有五个参数：</p>
+<p>xmlHttp.onreadystatechange=function()<br>  {<br>  if(xmlHttp.readyState==4)<br>    {<br>    // 例如将某一元素内的 HTML 代码更换为服务器发送的响应字符串<br>    document.getElementById (“某一元素 id”).innerHTML = xmlHttp.responseText;<br>    }<br>  }</p>
+<h4 id="open-函数"><a href="#open-函数" class="headerlink" title="open()函数"></a>open () 函数</h4><p>使用 XMLHttpRequest 对象的 open () 方法来建立请求。该方法有五个参数：</p>
 <ul>
-<li>request-type：发送请求的类型。典型的值是 GET 或 POST，但也可以发送 HEAD 请求</li>
-<li>url：要连接的 URL</li>
-<li>asynch：如果希望使用异步连接则为 true，否则为 false。该参数是可选的，默认为 true</li>
-<li>username：如果需要身份验证，则可以在此指定用户名。该可选参数没有默认值</li>
-<li>password：如果需要身份验证，则可以在此指定口令。该可选参数没有默认值</li>
+<li>  request-type：发送请求的类型。典型的值是 GET 或 POST，但也可以发送 HEAD 请求</li>
+<li>  url：要连接的 URL</li>
+<li>  asynch：如果希望使用异步连接则为 true，否则为 false。该参数是可选的，默认为 true</li>
+<li>  username：如果需要身份验证，则可以在此指定用户名。该可选参数没有默认值</li>
+<li>  password：如果需要身份验证，则可以在此指定口令。该可选参数没有默认值</li>
 </ul>
 <p>通常使用其中的前三个参数。事实上，即使需要异步连接，通常指定第三个参数为 “true”，这样更容易理解。</p>
-<h4 id="send-函数"><a href="#send-函数" class="headerlink" title="send()函数"></a>send()函数</h4><p>一旦请求用 open() 配置好之后，就可以使用send()方法发送请求了，send() 方法只有一个参数，就是要发送的内容。通常在open()方法中已经通过url设置好了参数内容，因此一般send方法中的参数传入null即可。 open()和send()函数的具体使用方法将通过后文中的一个简单实例来进行说明。</p>
-<h3 id="实例：通过邮编自动获取城市名称"><a href="#实例：通过邮编自动获取城市名称" class="headerlink" title="实例：通过邮编自动获取城市名称"></a>实例：通过邮编自动获取城市名称</h3><h4 id="前端页面"><a href="#前端页面" class="headerlink" title="前端页面"></a>前端页面</h4><p>网页内容如下图所示： <img src="https://cdn.javacodes.cn/files/2016/07/2016-07-22_16-49-19.png" srcset="/img/loading.gif" alt="ajax实例页面展示"> 当用户在邮编文本框中输入邮编时，则城市文本框内容自动改变为对应城市，我们知道，在传统web应用程序中如果要更新网站内容必须重新加载页面，而本实例要求只是更改城市文本框的内容，因此AJAX的异步处理方式最适合本实例的要求。 首先我们先准备一个HTML表单页面，代码如下：</p>
+<h4 id="send-函数"><a href="#send-函数" class="headerlink" title="send()函数"></a>send () 函数</h4><p>一旦请求用 open () 配置好之后，就可以使用 send () 方法发送请求了，send () 方法只有一个参数，就是要发送的内容。通常在 open () 方法中已经通过 url 设置好了参数内容，因此一般 send 方法中的参数传入 null 即可。 open () 和 send () 函数的具体使用方法将通过后文中的一个简单实例来进行说明。</p>
+<h3 id="实例：通过邮编自动获取城市名称"><a href="#实例：通过邮编自动获取城市名称" class="headerlink" title="实例：通过邮编自动获取城市名称"></a>实例：通过邮编自动获取城市名称</h3><h4 id="前端页面"><a href="#前端页面" class="headerlink" title="前端页面"></a>前端页面</h4><p>网页内容如下图所示： <img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-22_16-49-19.png" alt="ajax实例页面展示"> 当用户在邮编文本框中输入邮编时，则城市文本框内容自动改变为对应城市，我们知道，在传统 web 应用程序中如果要更新网站内容必须重新加载页面，而本实例要求只是更改城市文本框的内容，因此 AJAX 的异步处理方式最适合本实例的要求。 首先我们先准备一个 HTML 表单页面，代码如下：</p>
 
 
 
-<title>AJAX实例-通过邮政编码获取城市名称</title>
+<title>AJAX 实例 - 通过邮政编码获取城市名称</title>
 <meta charset="UTF-8">
 <meta name="content-type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
 </script>
-<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 
 
     邮编：
@@ -310,29 +402,29 @@
 
 
 
-<p>这个页面很简单，body中只有两个input文本框标签。</p>
-<h4 id="AJAX代码"><a href="#AJAX代码" class="headerlink" title="AJAX代码"></a>AJAX代码</h4><p>下面我们来编写AJAX代码，通常实现一个AJAX功能需要四个简单的步骤：</p>
+<p>这个页面很简单，body 中只有两个 input 文本框标签。</p>
+<h4 id="AJAX代码"><a href="#AJAX代码" class="headerlink" title="AJAX代码"></a>AJAX 代码</h4><p>下面我们来编写 AJAX 代码，通常实现一个 AJAX 功能需要四个简单的步骤：</p>
 <ol>
-<li>创建XMLHttpRequest对象；</li>
-<li>通过open()函数建立连接；</li>
-<li>设置onreadystatechange属性并编写回调（callback）函数；</li>
-<li>发送请求send(null)；</li>
+<li> 创建 XMLHttpRequest 对象；</li>
+<li> 通过 open () 函数建立连接；</li>
+<li> 设置 onreadystatechange 属性并编写回调（callback）函数；</li>
+<li> 发送请求 send (null)；</li>
 </ol>
-<p>那么我们按照上面的几个步骤逐步实现： 首先我们需要创建XHR对象，该步骤上文已经详细介绍，在此不在赘述； 然后通过open()函数建立连接：open()函数在上文中我们已经知道其可以传入5个参数，但实际开发中通常只需要传入三个参数即可，分别是：</p>
+<p>那么我们按照上面的几个步骤逐步实现： 首先我们需要创建 XHR 对象，该步骤上文已经详细介绍，在此不在赘述； 然后通过 open () 函数建立连接：open () 函数在上文中我们已经知道其可以传入 5 个参数，但实际开发中通常只需要传入三个参数即可，分别是：</p>
 <ul>
-<li>request-type：请求类型。通常有get和post两种，在本例中由于我们只需要传递一个参数，且该参数无需加密，因此我们采用get方式即可，get与post请求方式的区别请自行查阅相关资料；</li>
-<li>url：请求链接地址及参数；</li>
-<li>asynch：连接方式，分为异步连接和同步连接。当值为true时为异步连接，当false时为同步连接，默认值为true。通常我们使用异步连接方式。</li>
+<li>  request-type：请求类型。通常有 get 和 post 两种，在本例中由于我们只需要传递一个参数，且该参数无需加密，因此我们采用 get 方式即可，get 与 post 请求方式的区别请自行查阅相关资料；</li>
+<li>  url：请求链接地址及参数；</li>
+<li>  asynch：连接方式，分为异步连接和同步连接。当值为 true 时为异步连接，当 false 时为同步连接，默认值为 true。通常我们使用异步连接方式。</li>
 </ul>
-<p>那么在本例中，open函数的代码书写如下：</p>
+<p>那么在本例中，open 函数的代码书写如下：</p>
 <p>xhr.open(“get”, “zipcode.do?zipcode=”+$(“text_zipcode”).value, true);</p>
-<p>在代码中，我们使用get方式建立与zipcode.do建立连接并传递zipcode参数。 接下来我们需要书写回调函数并赋值给onreadystatechanged属性，这个回调函数的意义是当ajax的readyState属性发生改变时所执行的函数，通常在这个函数中我们只关心服务器处理完成ajax的请求后并返回响应时我们需要做的操作，因此我们需要在这个函数中加入一个if判断，判断是否readyState是否为4，代码如下：</p>
-<p>xhr.onreadystatechange = function(){<br>    // 判断ajax状态码（4为成功接受服务端响应）<br>    if (xhr.readyState == 4) {<br>        // 判断响应状态码（200即正确响应）<br>        if (xhr.status == 200) {<br>            // 更新页面部分内容<br>            $(“text_city”).value = xhr.responseText;<br>        }<br>    }<br>}</p>
-<p>最后我们书写发送请求代码：send(null)； 那么根据上面的步骤，我们已经实现好了ajax的全部代码，整合起来代码如下：</p>
+<p>在代码中，我们使用 get 方式建立与 zipcode.do 建立连接并传递 zipcode 参数。 接下来我们需要书写回调函数并赋值给 onreadystatechanged 属性，这个回调函数的意义是当 ajax 的 readyState 属性发生改变时所执行的函数，通常在这个函数中我们只关心服务器处理完成 ajax 的请求后并返回响应时我们需要做的操作，因此我们需要在这个函数中加入一个 if 判断，判断是否 readyState 是否为 4，代码如下：</p>
+<p>xhr.onreadystatechange = function(){<br>    // 判断 ajax 状态码（4 为成功接受服务端响应）<br>    if (xhr.readyState == 4) {<br>        // 判断响应状态码（200 即正确响应）<br>        if (xhr.status == 200) {<br>            // 更新页面部分内容<br>            $(“text_city”).value = xhr.responseText;<br>        }<br>    }<br>}</p>
+<p>最后我们书写发送请求代码：send (null)； 那么根据上面的步骤，我们已经实现好了 ajax 的全部代码，整合起来代码如下：</p>
 
 
 
-<title>AJAX实例-通过邮政编码获取城市名称</title>
+<title>AJAX 实例 - 通过邮政编码获取城市名称</title>
 <meta charset="UTF-8">
 <meta name="content-type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
@@ -361,31 +453,33 @@
         };
     };
 
-<pre><code>function createXHR() {
+<pre><code>function createXHR() &#123;
     var xmlHttp = false;
-    try {
+    try &#123;
         // Firefox, Opera 8.0+, Safari,IE7及以上版本
         xmlHttp = new XMLHttpRequest();
-    } catch (e) {
+    &#125; catch (e) &#123;
         // Internet Explorer
-        try {
+        try &#123;
             xmlHttp = new ActiveXObject(&quot;Msxml2.XMLHTTP&quot;);//IE较新版本
-        } catch (e) {
+        &#125; catch (e) &#123;
 
-            try {
+            try &#123;
                 xmlHttp = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);//IE较老版本
-            } catch (e) {
+            &#125; catch (e) &#123;
                 alert(&quot;您的浏览器不支持AJAX！&quot;);
                 xmlHttp = false;
-            }
-        }
-    }
+            &#125;
+        &#125;
+    &#125;
     return xmlHttp;
-}
+&#125;
 
-function $(id) {
+function $(id) &#123;
     return document.getElementById(id);
-};</code></pre><p></script><p></p>
+&#125;;
+</code></pre>
+<p></script><p></p>
 
 
     邮编：
@@ -393,12 +487,11 @@ function $(id) {
     <br>    <br> 
     城市：
     <input type="text" id="text_city" name="city">
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script>
 
 
 
-
-<h4 id="后端代码"><a href="#后端代码" class="headerlink" title="后端代码"></a>后端代码</h4><p>现在我们已经写好整个前端页面并实现ajax，我们来看一下后端代码示例，由于本篇文章主要介绍AJAX，因此后端实现方法不做过多解释，实现语言为Java，代码如下：</p>
+<p>&nbsp;</p>
+<h4 id="后端代码"><a href="#后端代码" class="headerlink" title="后端代码"></a>后端代码</h4><p>现在我们已经写好整个前端页面并实现 ajax，我们来看一下后端代码示例，由于本篇文章主要介绍 AJAX，因此后端实现方法不做过多解释，实现语言为 Java，代码如下：</p>
 <p>package cn.javacodes.servlet;</p>
 <p>import java.io.IOException;<br>import java.io.PrintWriter;<br>import java.util.HashMap;<br>import java.util.Map;</p>
 <p>import javax.servlet.ServletException;<br>import javax.servlet.http.HttpServlet;<br>import javax.servlet.http.HttpServletRequest;<br>import javax.servlet.http.HttpServletResponse;</p>
@@ -431,569 +524,305 @@ public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
     doGet(request, response);
-}</code></pre><p>}</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Ajax应用的开发确实有些繁琐，实际上，现在有很多成熟稳定的Ajax工具葙（例如JQuery）封装了以上诸多细节，使得Ajax编程更加容易。但是如果不知道应用程序在做什么，就很难发现其中的问题。XMLHttpRequest对象是Ajax应用的核心，必须非常熟悉。 Ajax应用的基本流程：</p>
+}
+</code></pre>
+<p>}</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Ajax 应用的开发确实有些繁琐，实际上，现在有很多成熟稳定的 Ajax 工具葙（例如 JQuery）封装了以上诸多细节，使得 Ajax 编程更加容易。但是如果不知道应用程序在做什么，就很难发现其中的问题。XMLHttpRequest 对象是 Ajax 应用的核心，必须非常熟悉。 Ajax 应用的基本流程：</p>
 <ul>
-<li>创建XMLHttpRequest对象</li>
-<li>从Web表单中获取需要的数据</li>
-<li>设置要连接的URL</li>
-<li>建立到服务器的连接</li>
-<li>设置服务器在完成后要运行的回调函数</li>
-<li>发送请求</li>
+<li>  创建 XMLHttpRequest 对象</li>
+<li>  从 Web 表单中获取需要的数据</li>
+<li>  设置要连接的 URL</li>
+<li>  建立到服务器的连接</li>
+<li>  设置服务器在完成后要运行的回调函数</li>
+<li>  发送请求</li>
 </ul>
-<p>至于如何使用AJAX操作XML、JSON等，我会在以后的文章中在做讨论。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-            </article>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Web%E5%89%8D%E7%AB%AF/">Web前端</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
-              
-              
-                <div class="post-prevnext row">
-                  <div class="post-prev col-6">
-                    
-                    
-                      <a href="/articles/spring-xue-xi-bi-ji-zhi-spring-helloworld.html">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Spring学习笔记之Spring HelloWorld</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </div>
-                  <div class="post-next col-6">
-                    
-                    
-                      <a href="/articles/wan-mei-pei-zhi-centos-nginx-mysql-php-lnmp-wang-zhan-huan-jing.html">
-                        <span class="hidden-mobile">完美配置CentOS+Nginx+MySQL+PHP（LNMP）网站环境</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </div>
-                </div>
-              
-            </div>
+<p>至于如何使用 AJAX 操作 XML、JSON 等，我会在以后的文章中在做讨论。</p>
 
-            
-              <!-- Comments -->
-              <div class="comments" id="comments">
-                
-                
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    function loadGitalk(){
-      addScript('https://cdn.staticfile.org/gitalk/1.6.2/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: 'b98b717d30c8867a2377',
-          clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
-          repo: 'blog-gitalk-comments',
-          owner: 'huzhanfei',
-          admin: 'huzhanfei',
-          id: 'abe2f11339bee105f3f102052ebaa0c7',
-          language: 'zh-CN',
-          perPage: 15,
-          pagerDirection: 'last',
-          createIssueManually: 'true',
-          distractionFreeMode: 'false'
-        });
-        gitalk.render('gitalk-container');
-      });
-    }
-    createObserver(loadGitalk, 'gitalk-container');
-  </script>
+    </div>
+
+    
+    
+    
+      
 
 
-              </div>
-            
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jeffrey Hu
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://bytelife.net/articles/ajax-ji-zhu-ru-men-xiang-jie.html" title="AJAX 技术入门详解">https://bytelife.net/articles/ajax-ji-zhu-ru-men-xiang-jie.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           </div>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/wan-mei-pei-zhi-centos-nginx-mysql-php-lnmp-wang-zhan-huan-jing.html" rel="prev" title="完美配置 CentOS+Nginx+MySQL+PHP（LNMP）网站环境">
+                  <i class="fa fa-chevron-left"></i> 完美配置 CentOS+Nginx+MySQL+PHP（LNMP）网站环境
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/spring-xue-xi-bi-ji-zhi-spring-helloworld.html" rel="next" title="Spring 学习笔记之 Spring HelloWorld">
+                  Spring 学习笔记之 Spring HelloWorld <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
 </div>
 
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
 
 
-    
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
 
-  
-    <!-- APlayer 音乐播放器 -->
-    <div id="aplayer"></div>
-    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
-<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
-<script type="text/javascript">
-  var oldLoadAp = window.onload;
-  window.onload = function () {
-    oldLoadAp && oldLoadAp();
+    <div class="comments gitalk-container"></div>
 
-    new APlayer({
-      container: document.getElementById('aplayer'),
-      fixed: true,
-      autoplay: 'false' === 'true',
-      loop: 'all',
-      order: 'list',
-      theme: '#b7daff',
-      preload: 'none',
-      audio: [{"name":"なんでもないや (movie ver.)","artist":"RADWIMPS","url":"/uploads/MEI-SHEN-ME-DA-BU-LIAO.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"三葉のテーマ","artist":"RADWIMPS","url":"/uploads/SAN-YE.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Alpha","artist":"Christophe Lebled","url":"/uploads/Alpha.mp3","cover":"/uploads/Alpha.jpg"},{"name":"森林狂想曲","artist":"吴金黛","url":"/uploads/Forest-Rhapsody.mp3","cover":"/uploads/Forest-Rhapsody.jpg"},{"name":"Auld Lang Syne","artist":"Home Free","url":"/uploads/Auld-Lang-Syne.mp3","cover":"/uploads/Auld-Lang-Syne.jpg"},{"name":"On a Slow Boat to China","artist":"Luke Thompson","url":"/uploads/On-a-Slow-Boat-to-China.mp3","cover":"/uploads/On-a-Slow-Boat-to-China.jpg"},{"name":"Right Here Waiting","artist":"Richard Marx","url":"/uploads/Right-Here-Waiting.mp3","cover":"/uploads/Right-Here-Waiting.jpg"},{"name":"Something Just Like This","artist":"The Chainsmokers","url":"/uploads/Something-Just-Like-This.mp3","cover":"/uploads/Something-Just-Like-This.jpg"},{"name":"Beautiful In White","artist":"Shane Filan","url":"/uploads/Beautiful-In-White.mp3","cover":"/uploads/Beautiful-In-White.jpg"},{"name":"Illusionary Daytime","artist":"Shirfine","url":"/uploads/Illusionary-Daytime.mp3","cover":"/uploads/Illusionary-Daytime.jpg"},{"name":"夢灯籠","artist":"RADWIMPS","url":"/uploads/MENG-DENG-LONG.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"前前前世 (movie ver.)","artist":"RADWIMPS","url":"/uploads/QIAN-QIAN-QIAN-SHI.mp3","cover":"/uploads/YOUR-NAME.jpg"},{"name":"Naruto Main Theme","artist":"Musashi","url":"/uploads/Naruto-Main-Theme.mp3","cover":"/uploads/Naruto-Main-Theme.jpg"},{"name":"Legends Never Die","artist":"英雄联盟","url":"/uploads/Legends-Never-Die.mp3","cover":"/uploads/Legends-Never-Die.jpg"}]
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
+</div>
+  </main>
 
-  
+  <footer class="footer">
+    <div class="footer-inner">
 
-  
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
+      <img src="/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备 44030502005735号 </a>
+  </div>
 
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
+<div class="copyright">
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
     </div>
-    
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
-
-    
-  <!-- 备案信息 -->
-  <div class="beian">
-    <a href="http://beian.miit.gov.cn/" target="_blank"
-       rel="nofollow noopener">粤ICP备20059294号</a>
-    
-  </div>
-
-
-    
-  </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
-
-<!-- Plugins -->
-
+  </footer>
 
   
-    <script  src="/js/lazyload.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
   
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
 
 
-
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
-
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
-
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
       }
-    }
-
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
+      if (document.readyState === 'complete') {
+        NProgress.done();
       }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+
+
+<script data-pjax>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
     function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
           }
-        });
-        getterArr.push(pvGetter);
-      }
-
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
-
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('true' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/articles/ajax-ji-zhu-ru-men-xiang-jie.html');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
-
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
         })
-      }
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
     }
 
-    var app_id = 'WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz'
-    var app_key = 'bG7qAcDfxStNdWtC1T8EE9ku'
-    var server_url = 'https://wapgmgrp.lc-cn-n1-shared.com'
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
 
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":true};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data)
         });
       };
-
-      addCount(Counter);
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
     }
 
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
     } else {
       fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
+        .then(response => response.json())
+        .then(({ api_server }) => {
           fetchData('https://' + api_server);
         });
     }
   })();
 </script>
 
+    <div class="pjax">
+
+  
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
 
-
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b98b717d30c8867a2377',
+      clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
+      repo        : 'blog-gitalk-comments',
+      owner       : 'huzhanfei',
+      admin       : ['huzhanfei'],
+      id          : 'af06bda5d05d3c786dba624d8d9f2f95',
+        language: 'zh-CN',
+      distractionFreeMode: true
     });
-  </script>
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
 
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "AJAX技术入门详解&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-
-
+    </div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>
