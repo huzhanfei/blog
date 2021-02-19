@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="并发问题的症状多线程 put 后可能导致 get 死循环从前我们的 Java 代码因为一些原因使用了 HashMap 这个东西，但是当时的程序是单线程的，一切都没有问题。后来，我们的程序性能有问题，所以需要变成多线程的，于是，变成多线程后到了线上，发现程序经常占了 100% 的 CPU，查看堆栈，你会发现程序都 Hang 在了 HashMap.get () 这个方法上了，重启程序后问题消失。但是过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap 多线程并发问题分析">
+<meta property="og:url" content="https://bytelife.net/articles/65492.html">
+<meta property="og:site_name" content="ByteLife">
+<meta property="og:description" content="并发问题的症状多线程 put 后可能导致 get 死循环从前我们的 Java 代码因为一些原因使用了 HashMap 这个东西，但是当时的程序是单线程的，一切都没有问题。后来，我们的程序性能有问题，所以需要变成多线程的，于是，变成多线程后到了线上，发现程序经常占了 100% 的 CPU，查看堆栈，你会发现程序都 Hang 在了 HashMap.get () 这个方法上了，重启程序后问题消失。但是过">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-06.jpg">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-07.jpg">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-09.jpg">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-10.jpg">
+<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-12.jpg">
+<meta property="article:published_time" content="2016-07-05T04:45:25.000Z">
+<meta property="article:modified_time" content="2021-02-19T19:56:37.694Z">
+<meta property="article:author" content="Jeffrey Hu">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="并发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-06.jpg">
+
+
+<link rel="canonical" href="https://bytelife.net/articles/65492.html">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>HashMap 多线程并发问题分析 | ByteLife</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">ByteLife</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术交流与学习自留地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E7%9A%84%E7%97%87%E7%8A%B6"><span class="nav-number">1.</span> <span class="nav-text">并发问题的症状</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8Bput%E5%90%8E%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4get%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.1.</span> <span class="nav-text">多线程 put 后可能导致 get 死循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8Bput%E7%9A%84%E6%97%B6%E5%80%99%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E5%85%83%E7%B4%A0%E4%B8%A2%E5%A4%B1"><span class="nav-number">1.2.</span> <span class="nav-text">多线程 put 的时候可能导致元素丢失</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put%E9%9D%9Enull%E5%85%83%E7%B4%A0%E5%90%8Eget%E5%87%BA%E6%9D%A5%E7%9A%84%E5%8D%B4%E6%98%AFnull"><span class="nav-number">1.3.</span> <span class="nav-text">put 非 null 元素后 get 出来的却是 null</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">HashMap 数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap%E7%9A%84rehash%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">HashMap 的 rehash 源代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%B8%B8%E7%9A%84ReHash%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">正常的 ReHash 过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84Rehash%E8%BF%87%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">并发的 Rehash 过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">6.</span> <span class="nav-text">三种解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hashtable%E6%9B%BF%E6%8D%A2HashMap"><span class="nav-number">6.1.</span> <span class="nav-text">Hashtable 替换 HashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collections-synchronizedMap%E5%B0%86HashMap%E5%8C%85%E8%A3%85%E8%B5%B7%E6%9D%A5"><span class="nav-number">6.2.</span> <span class="nav-text">Collections.synchronizedMap 将 HashMap 包装起来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E6%9B%BF%E6%8D%A2HashMap"><span class="nav-number">6.3.</span> <span class="nav-text">ConcurrentHashMap 替换 HashMap</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeffrey Hu"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeffrey Hu</p>
+  <div class="site-description" itemprop="description">专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/65492.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Jeffrey Hu">
+      <meta itemprop="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HashMap 多线程并发问题分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-07-05 12:45:25" itemprop="dateCreated datePublished" datetime="2016-07-05T12:45:25+08:00">2016-07-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-20 03:56:37" itemprop="dateModified" datetime="2021-02-20T03:56:37+08:00">2021-02-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/articles/65492.html" class="post-meta-item leancloud_visitors" data-flag-title="HashMap 多线程并发问题分析" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="并发问题的症状"><a href="#并发问题的症状" class="headerlink" title="并发问题的症状"></a>并发问题的症状</h2><h3 id="多线程put后可能导致get死循环"><a href="#多线程put后可能导致get死循环" class="headerlink" title="多线程put后可能导致get死循环"></a>多线程 put 后可能导致 get 死循环</h3><p>从前我们的 Java 代码因为一些原因使用了 HashMap 这个东西，但是当时的程序是单线程的，一切都没有问题。后来，我们的程序性能有问题，所以需要变成多线程的，于是，变成多线程后到了线上，发现程序经常占了 100% 的 CPU，查看堆栈，你会发现程序都 Hang 在了 HashMap.get () 这个方法上了，重启程序后问题消失。但是过段时间又会来。而且，这个问题在测试环境里可能很难重现。 </p>
+<a id="more"></a>
+
+<p>我们简单的看一下我们自己的代码，我们就知道 HashMap 被多个线程操作。而 Java 的文档说 HashMap 是非线程安全的，应该用 ConcurrentHashMap。但是在这里我们可以来研究一下原因。简单代码如下：</p>
+<p>package com.king.hashmap;</p>
+<p>import java.util.HashMap;</p>
+<p>public class TestLock {</p>
+<pre><code>private HashMap map = new HashMap();
+
+public TestLock() {
+    Thread t1 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.put(new Integer(i), i);
+            }
+            System.out.println("t1 over");
+        }
+    };
+
+    Thread t2 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.put(new Integer(i), i);
+            }
+
+            System.out.println("t2 over");
+        }
+    };
+
+    Thread t3 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.put(new Integer(i), i);
+            }
+
+            System.out.println("t3 over");
+        }
+    };
+
+    Thread t4 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.put(new Integer(i), i);
+            }
+
+            System.out.println("t4 over");
+        }
+    };
+
+    Thread t5 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.put(new Integer(i), i);
+            }
+
+            System.out.println("t5 over");
+        }
+    };
+
+    Thread t6 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.get(new Integer(i));
+            }
+
+            System.out.println("t6 over");
+        }
+    };
+
+    Thread t7 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.get(new Integer(i));
+            }
+
+            System.out.println("t7 over");
+        }
+    };
+
+    Thread t8 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.get(new Integer(i));
+            }
+
+            System.out.println("t8 over");
+        }
+    };
+
+    Thread t9 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.get(new Integer(i));
+            }
+
+            System.out.println("t9 over");
+        }
+    };
+
+    Thread t10 = new Thread() {
+        public void run() {
+            for (int i = 0; i &lt; 50000; i++) {
+                map.get(new Integer(i));
+            }
+
+            System.out.println("t10 over");
+        }
+    };
+
+    t1.start();
+    t2.start();
+    t3.start();
+    t4.start();
+    t5.start();
+
+    t6.start();
+    t7.start();
+    t8.start();
+    t9.start();
+    t10.start();
+}
+
+public static void main(String\[\] args) {
+    new TestLock();
+}
+</code></pre>
+<p>}</p>
+<p>就是启了 10 个线程，不断的往一个非线程安全的 HashMap 中 put 内容 /get 内容，put 的内容很简单，key 和 value 都是从 0 自增的整数（这个 put 的内容做的并不好，以致于后来干扰了我分析问题的思路）。对 HashMap 做并发写操作，我原以为只不过会产生脏数据的情况，但反复运行这个程序，会出现线程 t1、t2 被 hang 住的情况，多数情况下是一个线程被 hang 住另一个成功结束，偶尔会 10 个线程都被 hang 住。 产生这个死循环的根源在于对一个未保护的共享变量 — 一个”HashMap” 数据结构的操作。当在所有操作的方法上加了”synchronized” 后，一切恢复了正常。这算 jvm 的 bug 吗？应该说不是的，这个现象很早以前就报告出来了。Sun 的工程师并不认为这是 bug，而是建议在这样的场景下应采用”ConcurrentHashMap”， CPU 利用率过高一般是因为出现了出现了死循环，导致部分线程一直运行，占用 cpu 时间。问题原因就是 HashMap 是非线程安全的，多个线程 put 的时候造成了某个 key 值 Entry key List 的死循环，问题就这么产生了。 当另外一个线程 get 这个 Entry List 死循环的 key 的时候，这个 get 也会一直执行。最后结果是越来越多的线程死循环，最后导致服务器 dang 掉。我们一般认为 HashMap 重复插入某个值的时候，会覆盖之前的值，这个没错。但是对于多线程访问的时候，由于其内部实现机制 (在多线程环境且未作同步的情况下，对同一个 HashMap 做 put 操作可能导致两个或以上线程同时做 rehash 动作，就可能导致循环键表出现，一旦出现线程将无法终止，持续占用 CPU，导致 CPU 使用率居高不下)，就可能出现安全问题了。 使用 jstack 工具 dump 出问题的那台服务器的栈信息。死循环的话，首先查找 RUNNABLE 的线程，找到问题代码如下：</p>
+<blockquote>
+<p>java.lang.Thread.State:RUNNABLE at java.util.HashMap.get (HashMap.java:303) at com.sohu.twap.service.logic.TransformTweeter.doTransformTweetT5 (TransformTweeter.java:183) 共出现了 23 次。 java.lang.Thread.State:RUNNABLE at java.util.HashMap.put (HashMap.java:374) at com.sohu.twap.service.logic.TransformTweeter.transformT5 (TransformTweeter.java:816) 共出现了 3 次。</p>
+</blockquote>
+<p><strong>注意</strong>：不合理使用 HashMap 导致出现的是死循环而不是死锁。</p>
+<h3 id="多线程put的时候可能导致元素丢失"><a href="#多线程put的时候可能导致元素丢失" class="headerlink" title="多线程put的时候可能导致元素丢失"></a>多线程 put 的时候可能导致元素丢失</h3><p>主要问题出在 addEntry 方法的 new Entry&lt;K,V&gt;(hash, key, value, e)，如果两个线程都同时取得了 e, 则他们下一个元素都是 e，然后赋值给 table 元素的时候有一个成功有一个丢失。</p>
+<h3 id="put非null元素后get出来的却是null"><a href="#put非null元素后get出来的却是null" class="headerlink" title="put非null元素后get出来的却是null"></a>put 非 null 元素后 get 出来的却是 null</h3><p>在 transfer 方法中代码如下：</p>
+<p>void transfer(Entry[] newTable) {<br>    Entry[] src = table;<br>    int newCapacity = newTable.length;<br>    for (int j = 0; j &lt; src.length; j++) {<br>        Entry e = src[j];<br>        if (e != null) {<br>            src[j] = null;<br>            do {<br>                Entry next = e.next;<br>                int i = indexFor(e.hash, newCapacity);<br>                e.next = newTable[i];<br>                newTable[i] = e;<br>                e = next;<br>            } while (e != null);<br>        }<br>    }<br>}</p>
+<p>在这个方法里，将旧数组赋值给 src，遍历 src，当 src 的元素非 null 时，就将 src 中的该元素置 null，即将旧数组中的元素置 null 了，也就是这一句：</p>
+<p>if (e != null) {<br>        src[j] = null;</p>
+<p>此时若有 get 方法访问这个 key，它取得的还是旧数组，当然就取不到其对应的 value 了。 <strong>总结：HashMap 未同步时在并发程序中会产生许多微妙的问题，难以从表层找到原因。所以使用 HashMap 出现了违反直觉的现象，那么可能就是并发导致的了。</strong></p>
+<h2 id="HashMap数据结构"><a href="#HashMap数据结构" class="headerlink" title="HashMap数据结构"></a>HashMap 数据结构</h2><p>我需要简单地说一下 HashMap 这个经典的数据结构。 HashMap 通常会用一个指针数组（假设为 table []）来做分散所有的 key，当一个 key 被加入时，会通过 Hash 算法通过 key 算出这个数组的下标 i，然后就把这个 &lt; key, value&gt; 插到 table [i] 中，如果有两个不同的 key 被算在了同一个 i，那么就叫冲突，又叫碰撞，这样会在 table [i] 上形成一个链表。 我们知道，如果 table [] 的尺寸很小，比如只有 2 个，如果要放进 10 个 keys 的话，那么碰撞非常频繁，于是一个 O (1) 的查找算法，就变成了链表遍历，性能变成了 O (n)，这是 Hash 表的缺陷。 所以，Hash 表的尺寸和容量非常的重要。一般来说，Hash 表这个容器当有数据要插入时，都会检查容量有没有超过设定的 thredhold，如果超过，需要增大 Hash 表的尺寸，但是这样一来，整个 Hash 表里的元素都需要被重算一遍。这叫 rehash，这个成本相当的大。</p>
+<h2 id="HashMap的rehash源代码"><a href="#HashMap的rehash源代码" class="headerlink" title="HashMap的rehash源代码"></a>HashMap 的 rehash 源代码</h2><p>下面，我们来看一下 Java 的 HashMap 的源代码。Put 一个 Key,Value 对到 Hash 表中：</p>
+<p>public V put(K key, V value)<br>{<br>    ……<br>    // 算 Hash 值<br>    int hash = hash(key.hashCode());<br>    int i = indexFor(hash, table.length);<br>    // 如果该 key 已被插入，则替换掉旧的 value （链接操作）<br>    for (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) {<br>        Object k;<br>        if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) {<br>            V oldValue = e.value;<br>            e.value = value;<br>            e.recordAccess(this);<br>            return oldValue;<br>        }<br>    }<br>    modCount++;<br>    // 该 key 不存在，需要增加一个结点<br>    addEntry(hash, key, value, i);<br>    return null;<br>}</p>
+<p>检查容量是否超标：</p>
+<p>void addEntry(int hash, K key, V value, int bucketIndex)<br>{<br>    Entry&lt;K,V&gt; e = table[bucketIndex];<br>    table[bucketIndex] = new Entry&lt;K,V&gt;(hash, key, value, e);<br>    // 查看当前的 size 是否超过了我们设定的阈值 threshold，如果超过，需要 resize<br>    if (size++ &gt;= threshold)<br>        resize(2 * table.length);<br>}</p>
+<p>新建一个更大尺寸的 hash 表，然后把数据从老的 Hash 表中迁移到新的 Hash 表中。</p>
+<p>void resize(int newCapacity)<br>{<br>    Entry[] oldTable = table;<br>    int oldCapacity = oldTable.length;<br>    ……<br>    // 创建一个新的 Hash Table<br>    Entry[] newTable = new Entry[newCapacity];<br>    // 将 Old Hash Table 上的数据迁移到 New Hash Table 上<br>    transfer(newTable);<br>    table = newTable;<br>    threshold = (int)(newCapacity * loadFactor);<br>}</p>
+<p>迁移的源代码，注意高亮处：</p>
+<p>void transfer(Entry[] newTable)<br>{<br>    Entry[] src = table;<br>    int newCapacity = newTable.length;<br>    // 下面这段代码的意思是：<br>    //  从 OldTable 里摘一个元素出来，然后放到 NewTable 中<br>    for (int j = 0; j &lt; src.length; j++) {<br>        Entry&lt;K,V&gt; e = src[j];<br>        if (e != null) {<br>            src[j] = null;<br>            do {<br>                Entry&lt;K,V&gt; next = e.next;<br>                int i = indexFor(e.hash, newCapacity);<br>                e.next = newTable[i];<br>                newTable[i] = e;<br>                e = next;<br>            } while (e != null);<br>        }<br>    }<br>}</p>
+<p>好了，这个代码算是比较正常的。而且没有什么问题。</p>
+<h2 id="正常的ReHash过程"><a href="#正常的ReHash过程" class="headerlink" title="正常的ReHash过程"></a>正常的 ReHash 过程</h2><p>画了个图做了个演示。</p>
+<ol>
+<li> 我假设了我们的 hash 算法就是简单的用 key mod 一下表的大小（也就是数组的长度）。</li>
+<li> 最上面的是 old hash 表，其中的 Hash 表的 size=2, 所以 key = 3, 7, 5，在 mod 2 以后都冲突在 table<a target="_blank" rel="noopener" href="http://static.oschina.net/uploads/space/2015/0331/142929_Vawr_120166.jpg">1</a> 这里了。</li>
+<li> 接下来的三个步骤是 Hash 表 resize 成 4，然后所有的 &lt;key,value&gt; 重新 rehash 的过程。</li>
+</ol>
+<p><img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-06.jpg" alt="在此输入图片描述"></p>
+<h2 id="并发的Rehash过程"><a href="#并发的Rehash过程" class="headerlink" title="并发的Rehash过程"></a>并发的 Rehash 过程</h2><p><strong>（1）假设我们有两个线程。</strong>我用红色和浅蓝色标注了一下。我们再回头看一下我们的 transfer 代码中的这个细节：</p>
+<p>do {<br>    Entry&lt;K,V&gt; next = e.next; // &lt;–假设线程一执行到这里就被调度挂起了<br>    int i = indexFor(e.hash, newCapacity);<br>    e.next = newTable[i];<br>    newTable[i] = e;<br>    e = next;<br>} while (e != null);</p>
+<p>而我们的线程二执行完成了。于是我们有下面的这个样子。 <img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-07.jpg" alt="在此输入图片描述"> 注意：因为 Thread1 的 e 指向了 key (3)，而 next 指向了 key (7)，其在线程二 rehash 后，指向了线程二重组后的链表。我们可以看到链表的顺序被反转后。 <strong>（2）线程一被调度回来执行。</strong></p>
+<ol>
+<li> 先是执行 newTalbe [i] = e。</li>
+<li> 然后是 e = next，导致了 e 指向了 key (7)。</li>
+<li> 而下一次循环的 next = e.next 导致了 next 指向了 key (3)。</li>
+</ol>
+<p><img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-09.jpg" alt="在此输入图片描述"> <strong>（3）一切安好。</strong> 线程一接着工作。把 key (7) 摘下来，放到 newTable [i] 的第一个，然后把 e 和 next 往下移。 <img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-10.jpg" alt="在此输入图片描述"> <strong>（4）环形链接出现。</strong> e.next = newTable [i] 导致 key (3).next 指向了 key (7)。注意：此时的 key (7).next 已经指向了 key (3)， 环形链表就这样出现了。 <img data-src="https://cdn.javacodes.cn/files/2016/07/2016-07-05_04-45-12.jpg" alt="在此输入图片描述"> 于是，当我们的线程一调用到，HashTable.get (11) 时，悲剧就出现了 ——Infinite Loop。</p>
+<h2 id="三种解决方案"><a href="#三种解决方案" class="headerlink" title="三种解决方案"></a>三种解决方案</h2><h3 id="Hashtable替换HashMap"><a href="#Hashtable替换HashMap" class="headerlink" title="Hashtable替换HashMap"></a>Hashtable 替换 HashMap</h3><p>Hashtable 是同步的，但由迭代器返回的 Iterator 和由所有 Hashtable 的 “collection 视图方法” 返回的 Collection 的 listIterator 方法都是快速失败的：在创建 Iterator 之后，如果从结构上对 Hashtable 进行修改，除非通过 Iterator 自身的移除或添加方法，否则在任何时间以任何方式对其进行修改，Iterator 都将抛出 ConcurrentModificationException。因此，面对并发的修改，Iterator 很快就会完全失败，而不冒在将来某个不确定的时间发生任意不确定行为的风险。由 Hashtable 的键和值方法返回的 Enumeration 不是快速失败的。 注意，迭代器的快速失败行为无法得到保证，因为一般来说，不可能对是否出现不同步并发修改做出任何硬性保证。快速失败迭代器会尽最大努力抛出 ConcurrentModificationException。因此，为提高这类迭代器的正确性而编写一个依赖于此异常的程序是错误做法：迭代器的快速失败行为应该仅用于检测程序错误。</p>
+<h3 id="Collections-synchronizedMap将HashMap包装起来"><a href="#Collections-synchronizedMap将HashMap包装起来" class="headerlink" title="Collections.synchronizedMap将HashMap包装起来"></a>Collections.synchronizedMap 将 HashMap 包装起来</h3><p>返回由指定映射支持的同步（线程安全的）映射。为了保证按顺序访问，必须通过返回的映射完成对底层映射的所有访问。在返回的映射或其任意 collection 视图上进行迭代时，强制用户手工在返回的映射上进行同步：</p>
+<p>Map m = Collections.synchronizedMap(new HashMap());<br>…<br>Set s = m.keySet();  // Needn’t be in synchronized block<br>…<br>synchronized(m) {  // Synchronizing on m, not s!<br>Iterator i = s.iterator(); // Must be in synchronized block<br>    while (i.hasNext())<br>        foo(i.next());<br>}</p>
+<p>不遵从此建议将导致无法确定的行为。如果指定映射是可序列化的，则返回的映射也将是可序列化的。</p>
+<h3 id="ConcurrentHashMap替换HashMap"><a href="#ConcurrentHashMap替换HashMap" class="headerlink" title="ConcurrentHashMap替换HashMap"></a>ConcurrentHashMap 替换 HashMap</h3><p>支持检索的完全并发和更新的所期望可调整并发的哈希表。此类遵守与 Hashtable 相同的功能规范，并且包括对应于 Hashtable 的每个方法的方法版本。不过，尽管所有操作都是线程安全的，但检索操作不必锁定，并且不支持以某种防止所有访问的方式锁定整个表。此类可以通过程序完全与 Hashtable 进行互操作，这取决于其线程安全，而与其同步细节无关。 检索操作（包括 get）通常不会受阻塞，因此，可能与更新操作交迭（包括 put 和 remove）。检索会影响最近完成的更新操作的结果。对于一些聚合操作，比如 putAll 和 clear，并发检索可能只影响某些条目的插入和移除。类似地，在创建迭代器 / 枚举时或自此之后，Iterators 和 Enumerations 返回在某一时间点上影响哈希表状态的元素。它们不会抛出 ConcurrentModificationException。不过，迭代器被设计成每次仅由一个线程使用。</p>
+<blockquote>
+<p>来自：陶邦仁的个人空间 - 开源中国社区 作者：陶邦仁 链接：<a target="_blank" rel="noopener" href="http://my.oschina.net/xianggao/blog/393990">http://my.oschina.net/xianggao/blog/393990</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/12742.html" rel="bookmark">ConcurrentLinkedQueue 的实现原理分析</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/46009.html" rel="bookmark">Java 中的 Copy-On-Write 容器</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/36648.html" rel="bookmark">深入剖析 ConcurrentHashMap</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/46308.html" rel="bookmark">ThreadLocal 详解</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/33262.html" rel="bookmark">IntelliJ Idea 常用快捷键列表</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jeffrey Hu
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://bytelife.net/articles/65492.html" title="HashMap 多线程并发问题分析">https://bytelife.net/articles/65492.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag"># 并发</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/20740.html" rel="prev" title="Java 8 中新的 Date 和 Time 类入门详解">
+                  <i class="fa fa-chevron-left"></i> Java 8 中新的 Date 和 Time 类入门详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/54533.html" rel="next" title="HTTP 常见状态码解释">
+                  HTTP 常见状态码解释 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
+      <img src="/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备 44030502005735号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
+      }
+      if (document.readyState === 'complete') {
+        NProgress.done();
+      }
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+  
+
+
+<script data-pjax>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":false};
+    function fetchData(api_server) {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+    <div class="pjax">
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b98b717d30c8867a2377',
+      clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
+      repo        : 'blog-gitalk-comments',
+      owner       : 'huzhanfei',
+      admin       : ['huzhanfei'],
+      id          : 'ee4d1464c0bab39e7c67d36c08a4c292',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
