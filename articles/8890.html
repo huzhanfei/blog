@@ -11,6 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
   <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="code-3cltzkt0vc">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -24,7 +25,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="在默认情况下，Spring 的应用上下文中所有的 bean 都是单例的形式创建的。也就是说，不管给定的一个 bean 被注入到其它 bean 多少次，每次注入的都是同一个实例。 在大多数情况下，单例 bean 是非常理想的方案。初始化和垃圾回收对象实例所带来的成本只留给一些小规模任务，在这些任务中，让对象保持无状态并且在应用中反复重用这些对象可能并不合理。 有时候你所使用的类可能是易变的，它们会保">
 <meta property="og:type" content="article">
@@ -35,7 +36,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.javacodes.cn/files/2016/10/2016-10-20_09-27-28.png">
 <meta property="article:published_time" content="2016-10-20T09:31:11.000Z">
-<meta property="article:modified_time" content="2021-02-19T20:00:07.448Z">
+<meta property="article:modified_time" content="2021-02-20T17:45:27.921Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Spring">
@@ -58,6 +59,15 @@
 <title>Spring 学习笔记之 Bean 的作用域 | ByteLife</title>
   
 
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f5f91653566d97e813f6b13b9ac03aea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -304,7 +314,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-20 04:00:07" itemprop="dateModified" datetime="2021-02-20T04:00:07+08:00">2021-02-20</time>
+        <time title="修改时间：2021-02-21 01:45:27" itemprop="dateModified" datetime="2021-02-21T01:45:27+08:00">2021-02-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -324,6 +334,20 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/articles/8890.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/articles/8890.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 </div>
 
         </div>
@@ -500,7 +524,7 @@ public  void setShoppingCart(ShoppingCart shoppingCart){
 
 
 
-    <div class="comments gitalk-container"></div>
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -718,23 +742,15 @@ document.addEventListener('pjax:success', () => {
   
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
-
 <script>
-NexT.utils.loadComments('.gitalk-container', () => {
-  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID    : 'b98b717d30c8867a2377',
-      clientSecret: 'bd30e039851f7ab8c8e1f1018bbf7631bb297ea9',
-      repo        : 'blog-gitalk-comments',
-      owner       : 'huzhanfei',
-      admin       : ['huzhanfei'],
-      id          : '9c09f3123f715b82532af1f0aab87d40',
-        language: 'zh-CN',
-      distractionFreeMode: true
-    });
-    gitalk.render(document.querySelector('.gitalk-container'));
-  }, window.Gitalk);
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","appKey":"bG7qAcDfxStNdWtC1T8EE9ku","serverURLs":"https://wapgmgrp.lc-cn-n1-shared.com","placeholder":"写下你的评论吧！","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":false,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/articles/8890.html",
+      serverURLs: "https://wapgmgrp.lc-cn-n1-shared.com"
+    }));
+  }, window.Valine);
 });
 </script>
 
