@@ -34,14 +34,14 @@
 <meta property="og:site_name" content="ByteLife">
 <meta property="og:description" content="最近接到电话面试中，面试官问我 ClassNotFoundException 与 NoClassDefFoundError 有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException 我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-18_02-57-20.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16138522353337.jpg">
 <meta property="article:published_time" content="2017-03-18T02:57:13.000Z">
-<meta property="article:modified_time" content="2021-02-20T19:36:58.617Z">
+<meta property="article:modified_time" content="2021-02-20T20:19:49.924Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="类加载">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-18_02-57-20.jpg">
+<meta name="twitter:image" content="https://cdn.bytelife.net/blog/images/16138522353337.jpg">
 
 
 <link rel="canonical" href="https://bytelife.net/articles/60306.html">
@@ -305,7 +305,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-21 03:36:58" itemprop="dateModified" datetime="2021-02-21T03:36:58+08:00">2021-02-21</time>
+        <time title="修改时间：2021-02-21 04:19:49" itemprop="dateModified" datetime="2021-02-21T04:19:49+08:00">2021-02-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -369,7 +369,8 @@
 <li> 没有导入纯 JAVA 驱动包。</li>
 </ol>
 <p>当然啦，我经常遇到这个异常，尤其是在使用 JDBC 加载驱动的时候，驱动类的类全名真的是很难记的有木有！</p>
-<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>可以看到这个错误的类名以 Error 结尾，因此它属于 JVM 虚拟机错误，不需要程序员捕获，下图是它的继承结构： <img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-18_02-57-20.jpg">￼ 还是同样先来看下官方文档中的定义：</p>
+<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>可以看到这个错误的类名以 Error 结尾，因此它属于 JVM 虚拟机错误，不需要程序员捕获，下图是它的继承结构：<br><img data-src="https://cdn.bytelife.net/blog/images/16138522353337.jpg"></p>
+<p>还是同样先来看下官方文档中的定义：</p>
 <blockquote>
 <p>当 Java 虚拟机或 ClassLoader 实例试图在类的定义中加载（作为通常方法调用的一部分或者作为使用 new 表达式创建的新实例的一部分），但无法找到该类的定义时，抛出此异常。 当前执行的类被编译时，所搜索的类定义存在，但无法再找到该定义。</p>
 </blockquote>

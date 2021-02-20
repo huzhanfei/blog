@@ -27,22 +27,22 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="术语定义术语 英文 解释 哈希算法 hash algorithm 是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。&amp;nbsp;">
+<meta name="description" content="术语定义术语：哈希算法英文: hash algorithm解释：是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。&amp;nbsp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入剖析 ConcurrentHashMap">
 <meta property="og:url" content="https://bytelife.net/articles/36648.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="术语定义术语 英文 解释 哈希算法 hash algorithm 是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。&amp;nbsp;">
+<meta property="og:description" content="术语定义术语：哈希算法英文: hash algorithm解释：是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。&amp;nbsp;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-14_15-20-05.jpg">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-14_15-20-04.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16138516190276.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16138516410264.jpg">
 <meta property="article:published_time" content="2017-03-14T14:31:36.000Z">
-<meta property="article:modified_time" content="2021-02-20T19:36:58.617Z">
+<meta property="article:modified_time" content="2021-02-20T20:19:49.924Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="并发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2017/03/2017-03-14_15-20-05.jpg">
+<meta name="twitter:image" content="https://cdn.bytelife.net/blog/images/16138516190276.jpg">
 
 
 <link rel="canonical" href="https://bytelife.net/articles/36648.html">
@@ -199,7 +199,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">术语定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84HashMap"><span class="nav-number">2.</span> <span class="nav-text">线程不安全的 HashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%88%E7%8E%87%E4%BD%8E%E4%B8%8B%E7%9A%84HashTable%E5%AE%B9%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">效率低下的 HashTable 容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E5%88%86%E6%AE%B5%E6%8A%80%E6%9C%AF"><span class="nav-number">4.</span> <span class="nav-text">锁分段技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">ConcurrentHashMap 的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">ConcurrentHashMap 的初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8DSegment"><span class="nav-number">7.</span> <span class="nav-text">定位 Segment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84get%E6%93%8D%E4%BD%9C"><span class="nav-number">8.</span> <span class="nav-text">ConcurrentHashMap 的 get 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84Put%E6%93%8D%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text">ConcurrentHashMap 的 Put 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84size%E6%93%8D%E4%BD%9C"><span class="nav-number">10.</span> <span class="nav-text">ConcurrentHashMap 的 size 操作</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">术语定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84HashMap"><span class="nav-number">2.</span> <span class="nav-text">线程不安全的 HashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%88%E7%8E%87%E4%BD%8E%E4%B8%8B%E7%9A%84HashTable%E5%AE%B9%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">效率低下的 HashTable 容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E5%88%86%E6%AE%B5%E6%8A%80%E6%9C%AF"><span class="nav-number">4.</span> <span class="nav-text">锁分段技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">ConcurrentHashMap 的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">ConcurrentHashMap 的初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8DSegment"><span class="nav-number">7.</span> <span class="nav-text">定位 Segment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84Put%E6%93%8D%E4%BD%9C"><span class="nav-number">8.</span> <span class="nav-text">ConcurrentHashMap 的 Put 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap%E7%9A%84size%E6%93%8D%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text">ConcurrentHashMap 的 size 操作</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -306,7 +306,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-21 03:36:58" itemprop="dateModified" datetime="2021-02-21T03:36:58+08:00">2021-02-21</time>
+        <time title="修改时间：2021-02-21 04:19:49" itemprop="dateModified" datetime="2021-02-21T04:19:49+08:00">2021-02-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -349,108 +349,109 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="术语定义"><a href="#术语定义" class="headerlink" title="术语定义"></a>术语定义</h3><p>术语</p>
-<p>英文</p>
-<p>解释</p>
-<p>哈希算法</p>
-<p>hash algorithm</p>
-<p>是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。&nbsp;</p>
+        <h3 id="术语定义"><a href="#术语定义" class="headerlink" title="术语定义"></a>术语定义</h3><p>术语：哈希算法<br>英文: hash algorithm<br>解释：是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。&nbsp;</p>
 <a id="more"></a>
 
-<p>哈希表</p>
-<p>hash table</p>
-<p>根据设定的哈希函数 H (key) 和处理冲突方法将一组关键字映象到一个有限的地址区间上，并以关键字在地址区间中的象作为记录在表中的存储位置，这种表称为哈希表或散列，所得存储位置称为哈希地址或散列地址。</p>
+<p>术语：哈希表<br>英文: hash table<br>解释：根据设定的哈希函数 H (key) 和处理冲突方法将一组关键字映象到一个有限的地址区间上，并以关键字在地址区间中的象作为记录在表中的存储位置，这种表称为哈希表或散列，所得存储位置称为哈希地址或散列地址。</p>
 <h3 id="线程不安全的HashMap"><a href="#线程不安全的HashMap" class="headerlink" title="线程不安全的HashMap"></a>线程不安全的 HashMap</h3><p>因为多线程环境下，使用 HashMap 进行 put 操作会引起死循环，导致 CPU 利用率接近 100%，所以在并发情况下不能使用 HashMap，如以下代码</p>
-<pre><code>final HashMap&lt;String, String&gt; map = new HashMap&lt;String, String&gt;(2);
-Thread t = new Thread(new Runnable() {
-    @Override
-    public void run() {
-        for (int i = 0; i &lt; 10000; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    map.put(UUID.randomUUID().toString(), "");
-                }
-            }, "ftf" + i).start();
-        }
-    }
-}, "ftf");
-t.start();
-t.join();
-</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">final</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Thread</span> t <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token annotation punctuation">@Override</span>
+                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>UUID<span class="token punctuation">.</span><span class="token function">randomUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">"ftf"</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">"ftf"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+t<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="效率低下的HashTable容器"><a href="#效率低下的HashTable容器" class="headerlink" title="效率低下的HashTable容器"></a>效率低下的 HashTable 容器</h3><p>HashTable 容器使用 synchronized 来保证线程安全，但在线程竞争激烈的情况下 HashTable 的效率非常低下。因为当一个线程访问 HashTable 的同步方法时，其他线程访问 HashTable 的同步方法时，可能会进入阻塞或轮询状态。如线程 1 使用 put 进行添加元素，线程 2 不但不能使用 put 方法添加元素，并且也不能使用 get 方法来获取元素，所以竞争越激烈效率越低。</p>
 <h3 id="锁分段技术"><a href="#锁分段技术" class="headerlink" title="锁分段技术"></a>锁分段技术</h3><p>HashTable 容器在竞争激烈的并发环境下表现出效率低下的原因是所有访问 HashTable 的线程都必须竞争同一把锁，那假如容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率，这就是 ConcurrentHashMap 所使用的锁分段技术，首先将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。</p>
-<h3 id="ConcurrentHashMap的结构"><a href="#ConcurrentHashMap的结构" class="headerlink" title="ConcurrentHashMap的结构"></a>ConcurrentHashMap 的结构</h3><p>我们通过 ConcurrentHashMap 的类图来分析 ConcurrentHashMap 的结构。 <img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-14_15-20-05.jpg">￼ ConcurrentHashMap 是由 Segment 数组结构和 HashEntry 数组结构组成。Segment 是一种可重入锁 ReentrantLock，在 ConcurrentHashMap 里扮演锁的角色，HashEntry 则用于存储键值对数据。一个 ConcurrentHashMap 里包含一个 Segment 数组，Segment 的结构和 HashMap 类似，是一种数组和链表结构， 一个 Segment 里包含一个 HashEntry 数组，每个 HashEntry 是一个链表结构的元素， 每个 Segment 守护者一个 HashEntry 数组里的元素，当对 HashEntry 数组的数据进行修改时，必须首先获得它对应的 Segment 锁。 <img data-src="https://cdn.javacodes.cn/files/2017/03/2017-03-14_15-20-04.jpg">￼</p>
+<h3 id="ConcurrentHashMap的结构"><a href="#ConcurrentHashMap的结构" class="headerlink" title="ConcurrentHashMap的结构"></a>ConcurrentHashMap 的结构</h3><p>我们通过 ConcurrentHashMap 的类图来分析 ConcurrentHashMap 的结构。 <img data-src="https://cdn.bytelife.net/blog/images/16138516190276.jpg"><br>ConcurrentHashMap 是由 Segment 数组结构和 HashEntry 数组结构组成。Segment 是一种可重入锁 ReentrantLock，在 ConcurrentHashMap 里扮演锁的角色，HashEntry 则用于存储键值对数据。一个 ConcurrentHashMap 里包含一个 Segment 数组，Segment 的结构和 HashMap 类似，是一种数组和链表结构， 一个 Segment 里包含一个 HashEntry 数组，每个 HashEntry 是一个链表结构的元素， 每个 Segment 守护者一个 HashEntry 数组里的元素，当对 HashEntry 数组的数据进行修改时，必须首先获得它对应的 Segment 锁。<br><img data-src="https://cdn.bytelife.net/blog/images/16138516410264.jpg"></p>
 <h3 id="ConcurrentHashMap的初始化"><a href="#ConcurrentHashMap的初始化" class="headerlink" title="ConcurrentHashMap的初始化"></a>ConcurrentHashMap 的初始化</h3><p>ConcurrentHashMap 初始化方法是通过 initialCapacity，loadFactor, concurrencyLevel 几个参数来初始化 segments 数组，段偏移量 segmentShift，段掩码 segmentMask 和每个 segment 里的 HashEntry 数组 。 初始化 segments 数组。让我们来看一下初始化 segmentShift，segmentMask 和 segments 数组的源代码。</p>
-<pre><code>if (concurrencyLevel &gt; MAX_SEGMENTS)
-    concurrencyLevel = MAX_SEGMENTS;
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>concurrencyLevel <span class="token operator">&gt;</span> MAX_SEGMENTS<span class="token punctuation">)</span>
+    concurrencyLevel <span class="token operator">=</span> MAX_SEGMENTS<span class="token punctuation">;</span>
 
-// Find power-of-two sizes best matching arguments
-int sshift = 0;
-int ssize = 1;
-while (ssize &lt; concurrencyLevel) {
-    ++sshift;
-    ssize &lt;&lt;= 1;
-}
-segmentShift = 32 - sshift;
-segmentMask = ssize - 1;
-this.segments = Segment.newArray(ssize);
-</code></pre>
+<span class="token comment">// Find power-of-two sizes best matching arguments</span>
+<span class="token keyword">int</span> sshift <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> ssize <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>ssize <span class="token operator">&lt;</span> concurrencyLevel<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">++</span>sshift<span class="token punctuation">;</span>
+    ssize <span class="token operator">&lt;&lt;=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+segmentShift <span class="token operator">=</span> <span class="token number">32</span> <span class="token operator">-</span> sshift<span class="token punctuation">;</span>
+segmentMask <span class="token operator">=</span> ssize <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>segments <span class="token operator">=</span> <span class="token class-name">Segment</span><span class="token punctuation">.</span><span class="token function">newArray</span><span class="token punctuation">(</span>ssize<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>由上面的代码可知 segments 数组的长度 ssize 通过 concurrencyLevel 计算得出。为了能通过按位与的哈希算法来定位 segments 数组的索引，必须保证 segments 数组的长度是 2 的 N 次方（power-of-two size），所以必须计算出一个是大于或等于 concurrencyLevel 的最小的 2 的 N 次方值来作为 segments 数组的长度。假如 concurrencyLevel 等于 14，15 或 16，ssize 都会等于 16，即容器里锁的个数也是 16。注意 concurrencyLevel 的最大大小是 65535，意味着 segments 数组的长度最大为 65536，对应的二进制是 16 位。 初始化 segmentShift 和 segmentMask。这两个全局变量在定位 segment 时的哈希算法里需要使用，sshift 等于 ssize 从 1 向左移位的次数，在默认情况下 concurrencyLevel 等于 16，1 需要向左移位移动 4 次，所以 sshift 等于 4。segmentShift 用于定位参与 hash 运算的位数，segmentShift 等于 32 减 sshift，所以等于 28，这里之所以用 32 是因为 ConcurrentHashMap 里的 hash () 方法输出的最大数是 32 位的，后面的测试中我们可以看到这点。segmentMask 是哈希运算的掩码，等于 ssize 减 1，即 15，掩码的二进制各个位的值都是 1。因为 ssize 的最大长度是 65536，所以 segmentShift 最大值是 16，segmentMask 最大值是 65535，对应的二进制是 16 位，每个位都是 1。 初始化每个 Segment。输入参数 initialCapacity 是 ConcurrentHashMap 的初始化容量，loadfactor 是每个 segment 的负载因子，在构造方法里需要通过这两个参数来初始化数组中的每个 segment。</p>
-<pre><code>if (initialCapacity &gt; MAXIMUM_CAPACITY)
-    initialCapacity = MAXIMUM_CAPACITY;
-int c = initialCapacity / ssize;
-if (c * ssize &lt; initialCapacity)
-    ++c;
-int cap = 1;
-while (cap &lt; c)
-    cap &lt;&lt;= 1;
-for (int i = 0; i &lt; this.segments.length; ++i)
-    this.segments[i] = new Segment&lt;K,V&gt;(cap, loadFactor);
-</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>initialCapacity <span class="token operator">&gt;</span> MAXIMUM_CAPACITY<span class="token punctuation">)</span>
+    initialCapacity <span class="token operator">=</span> MAXIMUM_CAPACITY<span class="token punctuation">;</span>
+<span class="token keyword">int</span> c <span class="token operator">=</span> initialCapacity <span class="token operator">/</span> ssize<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">*</span> ssize <span class="token operator">&lt;</span> initialCapacity<span class="token punctuation">)</span>
+    <span class="token operator">++</span>c<span class="token punctuation">;</span>
+<span class="token keyword">int</span> cap <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>cap <span class="token operator">&lt;</span> c<span class="token punctuation">)</span>
+    cap <span class="token operator">&lt;&lt;=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>segments<span class="token punctuation">.</span>length<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>segments<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Segment</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>cap<span class="token punctuation">,</span> loadFactor<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上面代码中的变量 cap 就是 segment 里 HashEntry 数组的长度，它等于 initialCapacity 除以 ssize 的倍数 c，如果 c 大于 1，就会取大于等于 c 的 2 的 N 次方值，所以 cap 不是 1，就是 2 的 N 次方。segment 的容量 threshold＝(int) cap*loadFactor，默认情况下 initialCapacity 等于 16，loadfactor 等于 0.75，通过运算 cap 等于 1，threshold 等于零。</p>
 <h3 id="定位Segment"><a href="#定位Segment" class="headerlink" title="定位Segment"></a>定位 Segment</h3><p>既然 ConcurrentHashMap 使用分段锁 Segment 来保护不同段的数据，那么在插入和获取元素的时候，必须先通过哈希算法定位到 Segment。可以看到 ConcurrentHashMap 会首先使用 Wang/Jenkins hash 的变种算法对元素的 hashCode 进行一次再哈希。</p>
-<pre><code>private static int hash(int h) {
-        h += (h &lt;&lt; 15) ^ 0xffffcd7d;
-        h ^= (h &gt;&gt;&gt; 10);
-        h += (h &lt;&lt; 3);
-        h ^= (h &gt;&gt;&gt; 6);
-        h += (h &lt;&lt; 2) + (h &lt;&lt; 14);
-        return h ^ (h &gt;&gt;&gt; 16);
-    }
-</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">hash</span><span class="token punctuation">(</span><span class="token keyword">int</span> h<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        h <span class="token operator">+=</span> <span class="token punctuation">(</span>h <span class="token operator">&lt;&lt;</span> <span class="token number">15</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token number">0xffffcd7d</span><span class="token punctuation">;</span>
+        h <span class="token operator">^=</span> <span class="token punctuation">(</span>h <span class="token operator">&gt;&gt;&gt;</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        h <span class="token operator">+=</span> <span class="token punctuation">(</span>h <span class="token operator">&lt;&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        h <span class="token operator">^=</span> <span class="token punctuation">(</span>h <span class="token operator">&gt;&gt;&gt;</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        h <span class="token operator">+=</span> <span class="token punctuation">(</span>h <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>h <span class="token operator">&lt;&lt;</span> <span class="token number">14</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> h <span class="token operator">^</span> <span class="token punctuation">(</span>h <span class="token operator">&gt;&gt;&gt;</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>之所以进行再哈希，其目的是为了减少哈希冲突，使元素能够均匀的分布在不同的 Segment 上，从而提高容器的存取效率。假如哈希的质量差到极点，那么所有的元素都在一个 Segment 中，不仅存取元素缓慢，分段锁也会失去意义。我做了一个测试，不通过再哈希而直接执行哈希计算。</p>
-<pre><code>System.out.println(Integer.parseInt("0001111", 2) &amp; 15);
-System.out.println(Integer.parseInt("0011111", 2) &amp; 15);
-System.out.println(Integer.parseInt("0111111", 2) &amp; 15);
-System.out.println(Integer.parseInt("1111111", 2) &amp; 15);
-</code></pre>
-<p>计算后输出的哈希值全是 15，通过这个例子可以发现如果不进行再哈希，哈希冲突会非常严重，因为只要低位一样，无论高位是什么数，其哈希值总是一样。我们再把上面的二进制数据进行再哈希后结果如下，为了方便阅读，不足 32 位的高位补了 0，每隔四位用竖线分割下。</p>
-<pre><code>0100｜0111｜0110｜0111｜1101｜1010｜0100｜1110
-1111｜0111｜0100｜0011｜0000｜0001｜1011｜1000
-0111｜0111｜0110｜1001｜0100｜0110｜0011｜1110
-1000｜0011｜0000｜0000｜1100｜1000｜0001｜1010
-</code></pre>
-<p>可以发现每一位的数据都散列开了，通过这种再哈希能让数字的每一位都能参加到哈希运算当中，从而减少哈希冲突。ConcurrentHashMap 通过以下哈希算法定位 segment。</p>
-<pre><code>final Segment&lt;K,V&gt; segmentFor(int hash) {
-        return segments[(hash &gt;&gt;&gt; segmentShift) &amp; segmentMask];
-    }
-</code></pre>
-<p>默认情况下 segmentShift 为 28，segmentMask 为 15，再哈希后的数最大是 32 位二进制数据，向右无符号移动 28 位，意思是让高 4 位参与到 hash 运算中， (hash&gt;&gt;&gt; segmentShift) &amp; segmentMask 的运算结果分别是 4，15，7 和 8，可以看到 hash 值没有发生冲突。</p>
-<h3 id="ConcurrentHashMap的get操作"><a href="#ConcurrentHashMap的get操作" class="headerlink" title="ConcurrentHashMap的get操作"></a>ConcurrentHashMap 的 get 操作</h3><p>Segment 的 get 操作实现非常简单和高效。先经过一次再哈希，然后使用这个哈希值通过哈希运算定位到 segment，再通过哈希算法定位到元素，代码如下：</p>
-<pre><code>public V get(Object key) {
-    int hash = hash(key.hashCode());
-    return segmentFor(hash).get(key, hash);
-}
-</code></pre>
-<p>get 操作的高效之处在于整个 get 过程不需要加锁，除非读到的值是空的才会加锁重读，我们知道 HashTable 容器的 get 方法是需要加锁的，那么 ConcurrentHashMap 的 get 操作是如何做到不加锁的呢？原因是它的 get 方法里将要使用的共享变量都定义成 volatile，如用于统计当前 Segement 大小的 count 字段和用于存储值的 HashEntry 的 value。定义成 volatile 的变量，能够在线程之间保持可见性，能够被多线程同时读，并且保证不会读到过期的值，但是只能被单线程写（有一种情况可以被多线程写，就是写入的值不依赖于原值），在 get 操作里只需要读不需要写共享变量 count 和 value，所以可以不用加锁。之所以不会读到过期的值，是根据 java 内存模型的 happen before 原则，对 volatile 字段的写入操作先于读操作，即使两个线程同时修改和获取 volatile 变量，get 操作也能拿到最新的值，这是用 volatile 替换锁的经典应用场景。</p>
-<pre><code>transient volatile int count;
-volatile V value;
-</code></pre>
-<p>在定位元素的代码里我们可以发现定位 HashEntry 和定位 Segment 的哈希算法虽然一样，都与数组的长度减去一相与，但是相与的值不一样，定位 Segment 使用的是元素的 hashcode 通过再哈希后得到的值的高位，而定位 HashEntry 直接使用的是再哈希后的值。其目的是避免两次哈希后的值一样，导致元素虽然在 Segment 里散列开了，但是却没有在 HashEntry 里散列开。</p>
-<pre><code>hash &gt;&gt;&gt; segmentShift) &amp; segmentMask//定位Segment所使用的hash算法
-int index = hash &amp; (tab.length - 1);// 定位HashEntry所使用的hash算法
-</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token string">"0001111"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token string">"0011111"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token string">"0111111"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token string">"1111111"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+```    
+
+计算后输出的哈希值全是<span class="token number">15</span>，通过这个例子可以发现如果不进行再哈希，哈希冲突会非常严重，因为只要低位一样，无论高位是什么数，其哈希值总是一样。我们再把上面的二进制数据进行再哈希后结果如下，为了方便阅读，不足<span class="token number">32</span>位的高位补了<span class="token number">0</span>，每隔四位用竖线分割下。
+```java
+    <span class="token number">0100</span>｜<span class="token number">0111</span>｜<span class="token number">0110</span>｜<span class="token number">0111</span>｜<span class="token number">1101</span>｜<span class="token number">1010</span>｜<span class="token number">0100</span>｜<span class="token number">1110</span>
+    <span class="token number">1111</span>｜<span class="token number">0111</span>｜<span class="token number">0100</span>｜<span class="token number">0011</span>｜<span class="token number">0000</span>｜<span class="token number">0001</span>｜<span class="token number">1011</span>｜<span class="token number">1000</span>
+    <span class="token number">0111</span>｜<span class="token number">0111</span>｜<span class="token number">0110</span>｜<span class="token number">1001</span>｜<span class="token number">0100</span>｜<span class="token number">0110</span>｜<span class="token number">0011</span>｜<span class="token number">1110</span>
+    <span class="token number">1000</span>｜<span class="token number">0011</span>｜<span class="token number">0000</span>｜<span class="token number">0000</span>｜<span class="token number">1100</span>｜<span class="token number">1000</span>｜<span class="token number">0001</span>｜<span class="token number">1010</span>
+```    
+
+可以发现每一位的数据都散列开了，通过这种再哈希能让数字的每一位都能参加到哈希运算当中，从而减少哈希冲突。<span class="token class-name">ConcurrentHashMap</span>通过以下哈希算法定位segment。
+```java
+    <span class="token keyword">final</span> <span class="token class-name">Segment</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span><span class="token class-name">V</span><span class="token punctuation">&gt;</span></span> <span class="token function">segmentFor</span><span class="token punctuation">(</span><span class="token keyword">int</span> hash<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> segments<span class="token punctuation">[</span><span class="token punctuation">(</span>hash <span class="token operator">&gt;&gt;&gt;</span> segmentShift<span class="token punctuation">)</span> <span class="token operator">&amp;</span> segmentMask<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+```    
+
+默认情况下segmentShift为<span class="token number">28</span>，segmentMask为<span class="token number">15</span>，再哈希后的数最大是<span class="token number">32</span>位二进制数据，向右无符号移动<span class="token number">28</span>位，意思是让高<span class="token number">4</span>位参与到hash运算中， <span class="token punctuation">(</span>hash <span class="token operator">&gt;&gt;&gt;</span> segmentShift<span class="token punctuation">)</span> <span class="token operator">&amp;</span> segmentMask的运算结果分别是<span class="token number">4</span>，<span class="token number">15</span>，<span class="token number">7</span>和<span class="token number">8</span>，可以看到hash值没有发生冲突。
+
+### <span class="token class-name">ConcurrentHashMap</span>的get操作
+
+<span class="token class-name">Segment</span>的get操作实现非常简单和高效。先经过一次再哈希，然后使用这个哈希值通过哈希运算定位到segment，再通过哈希算法定位到元素，代码如下：
+```java
+    <span class="token keyword">public</span> <span class="token class-name">V</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">Object</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> hash <span class="token operator">=</span> <span class="token function">hash</span><span class="token punctuation">(</span>key<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">segmentFor</span><span class="token punctuation">(</span>hash<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> hash<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+```    
+
+get操作的高效之处在于整个get过程不需要加锁，除非读到的值是空的才会加锁重读，我们知道<span class="token class-name">HashTable</span>容器的get方法是需要加锁的，那么<span class="token class-name">ConcurrentHashMap</span>的get操作是如何做到不加锁的呢？原因是它的get方法里将要使用的共享变量都定义成<span class="token keyword">volatile</span>，如用于统计当前<span class="token class-name">Segement</span>大小的count字段和用于存储值的<span class="token class-name">HashEntry</span>的value。定义成<span class="token keyword">volatile</span>的变量，能够在线程之间保持可见性，能够被多线程同时读，并且保证不会读到过期的值，但是只能被单线程写（有一种情况可以被多线程写，就是写入的值不依赖于原值），在get操作里只需要读不需要写共享变量count和value，所以可以不用加锁。之所以不会读到过期的值，是根据java内存模型的happen before原则，对<span class="token keyword">volatile</span>字段的写入操作先于读操作，即使两个线程同时修改和获取<span class="token keyword">volatile</span>变量，get操作也能拿到最新的值，这是用<span class="token keyword">volatile</span>替换锁的经典应用场景。
+```java
+    <span class="token keyword">transient</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>
+    <span class="token keyword">volatile</span> <span class="token class-name">V</span> value<span class="token punctuation">;</span>
+```    
+
+在定位元素的代码里我们可以发现定位<span class="token class-name">HashEntry</span>和定位<span class="token class-name">Segment</span>的哈希算法虽然一样，都与数组的长度减去一相与，但是相与的值不一样，定位<span class="token class-name">Segment</span>使用的是元素的hashcode通过再哈希后得到的值的高位，而定位<span class="token class-name">HashEntry</span>直接使用的是再哈希后的值。其目的是避免两次哈希后的值一样，导致元素虽然在<span class="token class-name">Segment</span>里散列开了，但是却没有在<span class="token class-name">HashEntry</span>里散列开。
+``` java
+    hash <span class="token operator">&gt;&gt;&gt;</span> segmentShift<span class="token punctuation">)</span> <span class="token operator">&amp;</span> segmentMask<span class="token comment">//定位Segment所使用的hash算法</span>
+    <span class="token keyword">int</span> index <span class="token operator">=</span> hash <span class="token operator">&amp;</span> <span class="token punctuation">(</span>tab<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 定位HashEntry所使用的hash算法</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="ConcurrentHashMap的Put操作"><a href="#ConcurrentHashMap的Put操作" class="headerlink" title="ConcurrentHashMap的Put操作"></a>ConcurrentHashMap 的 Put 操作</h3><p>由于 put 方法里需要对共享变量进行写入操作，所以为了线程安全，在操作共享变量时必须得加锁。Put 方法首先定位到 Segment，然后在 Segment 里进行插入操作。插入操作需要经历两个步骤，第一步判断是否需要对 Segment 里的 HashEntry 数组进行扩容，第二步定位添加元素的位置然后放在 HashEntry 数组里。 是否需要扩容。在插入元素前会先判断 Segment 里的 HashEntry 数组是否超过容量（threshold），如果超过阀值，数组进行扩容。值得一提的是，Segment 的扩容判断比 HashMap 更恰当，因为 HashMap 是在插入元素后判断元素是否已经到达容量的，如果到达了就进行扩容，但是很有可能扩容之后没有新元素插入，这时 HashMap 就进行了一次无效的扩容。 如何扩容。扩容的时候首先会创建一个两倍于原容量的数组，然后将原数组里的元素进行再 hash 后插入到新的数组里。为了高效 ConcurrentHashMap 不会对整个容器进行扩容，而只对某个 segment 进行扩容。</p>
 <h3 id="ConcurrentHashMap的size操作"><a href="#ConcurrentHashMap的size操作" class="headerlink" title="ConcurrentHashMap的size操作"></a>ConcurrentHashMap 的 size 操作</h3><p>如果我们要统计整个 ConcurrentHashMap 里元素的大小，就必须统计所有 Segment 里元素的大小后求和。Segment 里的全局变量 count 是一个 volatile 变量，那么在多线程场景下，我们是不是直接把所有 Segment 的 count 相加就可以得到整个 ConcurrentHashMap 大小了呢？不是的，虽然相加时可以获取每个 Segment 的 count 的最新值，但是拿到之后可能累加前使用的 count 发生了变化，那么统计结果就不准了。所以最安全的做法，是在统计 size 的时候把所有 Segment 的 put，remove 和 clean 方法全部锁住，但是这种做法显然非常低效。 因为在累加 count 操作过程中，之前累加过的 count 发生变化的几率非常小，所以 ConcurrentHashMap 的做法是先尝试 2 次通过不锁住 Segment 的方式来统计各个 Segment 大小，如果统计的过程中，容器的 count 发生了变化，则再采用加锁的方式来统计所有 Segment 的大小。 那么 ConcurrentHashMap 是如何判断在统计的时候容器是否发生了变化呢？使用 modCount 变量，在 put , remove 和 clean 方法里操作元素前都会将变量 modCount 进行加 1，那么在统计 size 前后比较 modCount 是否发生变化，从而得知容器的大小是否发生变化。 参考资料</p>
 <ol>
