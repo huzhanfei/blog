@@ -18,13 +18,14 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="这篇文章主要是 java8 中新的 Date 和 Time API 的实战。新的 Date 和 Time 类是 java 开发者社区千呼万唤始出来的。Java8 之前存在的 Date 类一直都受人诟病，很多人都会选择使用第三方的 date 库 joda-time。Java8 中的 date 和 time api 是 jodatime 的作者参与开发的，实现了 JSR310 的全部内容。这些新的 a">
 <meta property="og:type" content="article">
@@ -34,7 +35,7 @@
 <meta property="og:description" content="这篇文章主要是 java8 中新的 Date 和 Time API 的实战。新的 Date 和 Time 类是 java 开发者社区千呼万唤始出来的。Java8 之前存在的 Date 类一直都受人诟病，很多人都会选择使用第三方的 date 库 joda-time。Java8 中的 date 和 time api 是 jodatime 的作者参与开发的，实现了 JSR310 的全部内容。这些新的 a">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-07-05T04:38:48.000Z">
-<meta property="article:modified_time" content="2021-02-21T16:42:24.583Z">
+<meta property="article:modified_time" content="2021-02-21T18:32:53.151Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -98,7 +99,7 @@
 <link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -253,6 +254,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -301,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-22 00:42:24" itemprop="dateModified" datetime="2021-02-22T00:42:24+08:00">2021-02-22</time>
+        <time title="修改时间：2021-02-22 02:32:53" itemprop="dateModified" datetime="2021-02-22T02:32:53+08:00">2021-02-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -314,12 +316,12 @@
     </span>
 
   
-    <span id="/articles/20740.html" class="post-meta-item leancloud_visitors" data-flag-title="Java 8 中新的 Date 和 Time 类入门详解" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
   
   <span class="post-meta-item">
@@ -335,6 +337,22 @@
   </span>
   
   
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -349,127 +367,16 @@
 
 <h2 id="新Date类和Time类背后的设计原则："><a href="#新Date类和Time类背后的设计原则：" class="headerlink" title="新Date类和Time类背后的设计原则："></a>新 Date 类和 Time 类背后的设计原则：</h2><p><strong>不可变类</strong><br>java8 之前，Date 类都是可变类。当我们在多线程环境下使用它，编程人员应该确认 Date 对象的线程安全。Java8 的 Date 和 Time API 提供了线程安全的不可变类。编程人员不用考虑并发的问题。<br><strong>领域模型驱动设计方法</strong><br>新的日期和时间的类别遵循 “域驱动设计”。对于开发者来说，理解方法和类的功能是很容易的。</p>
 <h2 id="接下来让我们来看看新Date和Time-API"><a href="#接下来让我们来看看新Date和Time-API" class="headerlink" title="接下来让我们来看看新Date和Time API:"></a>接下来让我们来看看新 Date 和 Time API:</h2><p><strong>java.time.LocalDate:</strong><br>LocalDate 只提供日期不提供时间信息。它是不可变类且线程安全的。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">package org.smarttechie;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-/**
-* This class demonstrates JAVA 8 data and time API
-* @author Siva Prasad Rao Janapati
-* */
-public class DateTimeDemonstration {
-/**
-* @param args
-*/
-public static void main(String[] args) {
-   //Create date LocalDate localDate = LocalDate.now();
-    System.out.println("The local date is :: " + localDate); 
-   //Find the length of the month. That is, how many days are there for this month.
-   System.out.println("The number of days available for this month:: " + localDate.lengthOfMonth()); 
-   //Know the month name
-   System.out.println("What is the month name? :: " + localDate.getMonth().name()); 
-   //add 2 days to the today's date.
-   System.out.println(localDate.plus(2, ChronoUnit.DAYS)); 
-   //substract 2 days from today
-   System.out.println(localDate.minus(2, ChronoUnit.DAYS)); 
-   //Convert the string to date
-   System.out.println(localDate.parse("2017-04-07"));
-  }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.smarttechie;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* This class demonstrates JAVA 8 data and time API</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> Siva Prasad Rao Janapati</span></span><br><span class="line"><span class="comment">* */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTimeDemonstration</span> </span>{</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">   <span class="comment">//Create date LocalDate localDate = LocalDate.now();</span></span><br><span class="line">    System.out.println(<span class="string">"The local date is :: "</span> + localDate); </span><br><span class="line">   <span class="comment">//Find the length of the month. That is, how many days are there for this month.</span></span><br><span class="line">   System.out.println(<span class="string">"The number of days available for this month:: "</span> + localDate.lengthOfMonth()); </span><br><span class="line">   <span class="comment">//Know the month name</span></span><br><span class="line">   System.out.println(<span class="string">"What is the month name? :: "</span> + localDate.getMonth().name()); </span><br><span class="line">   <span class="comment">//add 2 days to the today's date.</span></span><br><span class="line">   System.out.println(localDate.plus(<span class="number">2</span>, ChronoUnit.DAYS)); </span><br><span class="line">   <span class="comment">//substract 2 days from today</span></span><br><span class="line">   System.out.println(localDate.minus(<span class="number">2</span>, ChronoUnit.DAYS)); </span><br><span class="line">   <span class="comment">//Convert the string to date</span></span><br><span class="line">   System.out.println(localDate.parse(<span class="string">"2017-04-07"</span>));</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>java.time.LocalTime:</strong><br>LocalTime 只提供时间而不提供日期信息，它是不可变类且线程安全的。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">package org.smarttechie;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
-/**
-* This class demonstrates JAVA 8 data and time API
-* @author Siva Prasad Rao Janapati
-* */
-public class DateTimeDemonstration {
-/**
-* @param args
-*/
-public static void main(String[] args) {
-   //Get local time
-   LocalTime localTime = LocalTime.now();
-   System.out.println(localTime);
-  //Get the hour of the day
-  System.out.println("The hour of the day:: " + localTime.getHour());
-  //add 2 hours to the time.
-  System.out.println(localTime.plus(2, ChronoUnit.HOURS));
-  //add 6 minutes to the time.
-  System.out.println(localTime.plusMinutes(6));
-  //substract 2 hours from current time
-  System.out.println(localTime.minus(2, ChronoUnit.HOURS));
- }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.smarttechie;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalTime;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* This class demonstrates JAVA 8 data and time API</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> Siva Prasad Rao Janapati</span></span><br><span class="line"><span class="comment">* */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTimeDemonstration</span> </span>{</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">   <span class="comment">//Get local time</span></span><br><span class="line">   LocalTime localTime = LocalTime.now();</span><br><span class="line">   System.out.println(localTime);</span><br><span class="line">  <span class="comment">//Get the hour of the day</span></span><br><span class="line">  System.out.println(<span class="string">"The hour of the day:: "</span> + localTime.getHour());</span><br><span class="line">  <span class="comment">//add 2 hours to the time.</span></span><br><span class="line">  System.out.println(localTime.plus(<span class="number">2</span>, ChronoUnit.HOURS));</span><br><span class="line">  <span class="comment">//add 6 minutes to the time.</span></span><br><span class="line">  System.out.println(localTime.plusMinutes(<span class="number">6</span>));</span><br><span class="line">  <span class="comment">//substract 2 hours from current time</span></span><br><span class="line">  System.out.println(localTime.minus(<span class="number">2</span>, ChronoUnit.HOURS));</span><br><span class="line"> }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>java.time.LocalDateTime:</strong><br>LocalDateTime 提供时间和日期的信息，它是不可变类且线程安全的</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">package orr.smarttechie;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-/**
-* This class demonstrates JAVA 8 data and time API
-* @author Siva Prasad Rao Janapati
-*
-*/
-public class DateTimeDemonstration {
-/**
-* @param args
-*/
-public static void main(String[] args) {
-    //Get LocalDateTime object
-    LocalDateTime localDateTime = LocalDateTime.now();
-    System.out.println(localDateTime);
-    //Find the length of month. That is, how many days are there for this month.
-    System.out.println("The number of days available for this month:: " + localDateTime.getMonth().length(true));
-    //Know the month name
-    System.out.println("What is the month name? :: " + localDateTime.getMonth().name());
-    //add 2 days to today's date.
-    System.out.println(localDateTime.plus(2, ChronoUnit.DAYS));
-    //substract 2 days from today
-    System.out.println(localDateTime.minus(2, ChronoUnit.DAYS));
-  }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> orr.smarttechie;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* This class demonstrates JAVA 8 data and time API</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> Siva Prasad Rao Janapati</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTimeDemonstration</span> </span>{</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">    <span class="comment">//Get LocalDateTime object</span></span><br><span class="line">    LocalDateTime localDateTime = LocalDateTime.now();</span><br><span class="line">    System.out.println(localDateTime);</span><br><span class="line">    <span class="comment">//Find the length of month. That is, how many days are there for this month.</span></span><br><span class="line">    System.out.println(<span class="string">"The number of days available for this month:: "</span> + localDateTime.getMonth().length(<span class="keyword">true</span>));</span><br><span class="line">    <span class="comment">//Know the month name</span></span><br><span class="line">    System.out.println(<span class="string">"What is the month name? :: "</span> + localDateTime.getMonth().name());</span><br><span class="line">    <span class="comment">//add 2 days to today's date.</span></span><br><span class="line">    System.out.println(localDateTime.plus(<span class="number">2</span>, ChronoUnit.DAYS));</span><br><span class="line">    <span class="comment">//substract 2 days from today</span></span><br><span class="line">    System.out.println(localDateTime.minus(<span class="number">2</span>, ChronoUnit.DAYS));</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>java.time.Year:</strong><br>Year 提供年的信息，它是不可变类且线程安全的。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">package orr.smarttechie;
-import java.time.Year;
-import java.time.temporal.ChronoUnit;
-/**
-* This class demonstrates JAVA 8 data and time API
-* @author Siva Prasad Rao Janapati
-*
-*/
-public class DateTimeDemonstration {
-/**
-* @param args
-*/
-public static void main(String[] args) {
-   //Get year
-   Year year = Year.now();
-   System.out.println("Year ::" + year);
-   //know the year is leap year or not
-   System.out.println("Is year[" +year+"] leap year?"+ year.isLeap());
-  }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> orr.smarttechie;</span><br><span class="line"><span class="keyword">import</span> java.time.Year;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* This class demonstrates JAVA 8 data and time API</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> Siva Prasad Rao Janapati</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTimeDemonstration</span> </span>{</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">   <span class="comment">//Get year</span></span><br><span class="line">   Year year = Year.now();</span><br><span class="line">   System.out.println(<span class="string">"Year ::"</span> + year);</span><br><span class="line">   <span class="comment">//know the year is leap year or not</span></span><br><span class="line">   System.out.println(<span class="string">"Is year["</span> +year+<span class="string">"] leap year?"</span>+ year.isLeap());</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>java.time.Duration:</strong><br>Duration 是用来计算两个给定的日期之间包含多少秒，多少毫秒，它是不可变类且线程安全的 </p>
 <p><strong>java.time.Period:</strong> Period 是用来计算两个给定的日期之间包含多少天，多少月或者多少年，它是不可变类且线程安全的</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">package orr.smarttechie;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
-/**
-* This class demonstrates JAVA 8 data and time API
-* @author Siva Prasad Rao Janapati
-*
-*/
-public class DateTimeDemonstration {
-/**
-* @param args
-*/
-public static void main(String[] args) {
-   LocalDate localDate = LocalDate.now();
-   Period period = Period.between(localDate, localDate.plus(2, ChronoUnit.DAYS));
-   System.out.println(period.getDays());
-  }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> orr.smarttechie;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.Period;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* This class demonstrates JAVA 8 data and time API</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> Siva Prasad Rao Janapati</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTimeDemonstration</span> </span>{</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">   LocalDate localDate = LocalDate.now();</span><br><span class="line">   Period period = Period.between(localDate, localDate.plus(<span class="number">2</span>, ChronoUnit.DAYS));</span><br><span class="line">   System.out.println(period.getDays());</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 <p>来自：码农网<br>译文链接：<a target="_blank" rel="noopener" href="http://www.codeceo.com/article/java-8-date-time-guide.html">http://www.codeceo.com/article/java-8-date-time-guide.html</a><br>英文原文：<a target="_blank" rel="noopener" href="https://dzone.com/articles/java-8-new-data-and-time-overview">https://dzone.com/articles/java-8-new-data-and-time-overview</a><br>翻译作者：码农网 – 栗子蜀黍</p>
 </blockquote>
@@ -586,22 +493,55 @@ public static void main(String[] args) {
   </span>
   <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
 </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>
+  </div><script color="0,0,0" opacity="0.7" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
 
     </div>
   </footer>
 
   
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -665,99 +605,9 @@ document.addEventListener('pjax:success', () => {
   </script>
 
   
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script data-pjax>
-  (function() {
-    function leancloudSelector(url) {
-      url = encodeURI(url);
-      return document.getElementById(url).querySelector('.leancloud-visitors-count');
-    }
-
-    function addCount(Counter) {
-      const visitors = document.querySelector('.leancloud_visitors');
-      const url = decodeURI(visitors.id);
-      const title = visitors.dataset.flagTitle;
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            const counter = results[0];
-            leancloudSelector(url).innerText = counter.time + 1;
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .catch(error => {
-                console.error('Failed to save visitor count', error);
-              });
-          } else {
-              Counter('post', '/classes/Counter', { title, url, time: 1 })
-                .then(response => response.json())
-                .then(() => {
-                  leancloudSelector(url).innerText = 1;
-                })
-                .catch(error => {
-                  console.error('Failed to create', error);
-                });
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    function showTime(Counter) {
-      const visitors = document.querySelectorAll('.leancloud_visitors');
-      const entries = [...visitors].map(element => {
-        return decodeURI(element.id);
-      });
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          for (let url of entries) {
-            const target = results.find(item => item.url === url);
-            leancloudSelector(url).innerText = target ? target.time : 0;
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":false};
-    function fetchData(api_server) {
-      const Counter = (method, url, data) => {
-        return fetch(`${api_server}/1.1${url}`, {
-          method,
-          headers: {
-            'X-LC-Id'     : app_id,
-            'X-LC-Key'    : app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        if (CONFIG.hostname !== location.hostname) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    }
-
-    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(response => response.json())
-        .then(({ api_server }) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
 
     <div class="pjax">
 
@@ -787,5 +637,5 @@ NexT.utils.loadComments('#valine-comments', () => {
 </script>
 
     </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

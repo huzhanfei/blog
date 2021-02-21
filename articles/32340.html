@@ -18,13 +18,14 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="问题： 给定数组 arr，arr 中的所有的值都为正数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个整数 aim 代表要找的钱数，求换钱有多少种方法。">
 <meta property="og:type" content="article">
@@ -37,7 +38,7 @@
 <meta property="og:image" content="https://cdn.bytelife.net/blog/images/16138517699600.jpg">
 <meta property="og:image" content="https://cdn.bytelife.net/blog/images/16138517913272.jpg">
 <meta property="article:published_time" content="2017-03-19T17:51:28.000Z">
-<meta property="article:modified_time" content="2021-02-21T16:42:24.587Z">
+<meta property="article:modified_time" content="2021-02-21T18:32:53.155Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -102,7 +103,7 @@
 <link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -257,6 +258,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -305,7 +307,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-22 00:42:24" itemprop="dateModified" datetime="2021-02-22T00:42:24+08:00">2021-02-22</time>
+        <time title="修改时间：2021-02-22 02:32:53" itemprop="dateModified" datetime="2021-02-22T02:32:53+08:00">2021-02-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -318,12 +320,12 @@
     </span>
 
   
-    <span id="/articles/32340.html" class="post-meta-item leancloud_visitors" data-flag-title="动态规划算法问题（经典找零案例）" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
   
   <span class="post-meta-item">
@@ -339,6 +341,22 @@
   </span>
   
   
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -362,32 +380,7 @@
 </ul>
 <p>则 res1、res2……res201 的累加和即为最终的结果。</p>
 <h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><p>定义递归函数：<code>int process1(arr, index, aim)</code>, 它的含义是如果用 arr [index……N-1] 这些面值的钱组成 aim，返回总的方法数。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static int coins1(int[] arr, int aim) {
-    long startTime = System.currentTimeMillis();
-    if (arr == null || arr.length == 0 || aim &lt; 0) {
-        return 0;
-    }
-    int result = process1(arr,0,aim);
-    long endTime = System.currentTimeMillis();
-    System.out.println("暴力搜索方法所用时间：" + (endTime - startTime) +"ms");
-    return result;
-}
-    
-public static int process1(int[] arr, int index, int aim) {
-    int res = 0;
-    // 判断是否所有面值的货币均已经计算完
-    if (index == arr.length) {
-        // 判断本次递归调用时钱的总数是否已经凑够，如果已经凑够则将总方法数加1
-        res = aim == 0 ? 1 : 0; 
-    } else { 
-        // 循环计算i张当前面值的货币
-        for (int i = 0; arr[index] * i &lt;= aim; i++) {
-            // 递归调用当使用i张当前面值的货币时，用其它货币组成剩下的钱
-            res += process1(arr, index + 1, aim - arr[index] * i);
-        }
-    }
-    return res;
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">coins1</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> aim)</span> </span>{</span><br><span class="line">    <span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="keyword">null</span> || arr.length == <span class="number">0</span> || aim &lt; <span class="number">0</span>) {</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">int</span> result = process1(arr,<span class="number">0</span>,aim);</span><br><span class="line">    <span class="keyword">long</span> endTime = System.currentTimeMillis();</span><br><span class="line">    System.out.println(<span class="string">"暴力搜索方法所用时间："</span> + (endTime - startTime) +<span class="string">"ms"</span>);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">process1</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> index, <span class="keyword">int</span> aim)</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 判断是否所有面值的货币均已经计算完</span></span><br><span class="line">    <span class="keyword">if</span> (index == arr.length) {</span><br><span class="line">        <span class="comment">// 判断本次递归调用时钱的总数是否已经凑够，如果已经凑够则将总方法数加1</span></span><br><span class="line">        res = aim == <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>; </span><br><span class="line">    } <span class="keyword">else</span> { </span><br><span class="line">        <span class="comment">// 循环计算i张当前面值的货币</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; arr[index] * i &lt;= aim; i++) {</span><br><span class="line">            <span class="comment">// 递归调用当使用i张当前面值的货币时，用其它货币组成剩下的钱</span></span><br><span class="line">            res += process1(arr, index + <span class="number">1</span>, aim - arr[index] * i);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>暴力搜索方法比较好理解，但他在计算中存在大量的重复递归过程。 例如已经使用了 0 张 5 元和 1 张 10 元货币的情况下，后续将求： <code>process1(arr,2,990)</code> 而当计算使用 2 张 5 元和 0 张 10 元时，后续同样需要求： <code>process1(arr,2,990)</code> 因此这种重复的递归运算将造成大量的时间浪费。</p>
 <h2 id="记忆搜索方法"><a href="#记忆搜索方法" class="headerlink" title="记忆搜索方法"></a>记忆搜索方法</h2><h3 id="思路分析-1"><a href="#思路分析-1" class="headerlink" title="思路分析"></a>思路分析</h3><p>由于暴力搜索方法中存在大量的重复递归，因此我们可以使用一个 “记忆库” 用于存储已经计算过的值，在本题中，使用 index 货币组成剩下的 aim 钱的值是一一对应的，因此可以使用 int mem [index][aim] 数组表示记忆库，其元素值为可以组成的方法数。</p>
@@ -395,32 +388,7 @@ public static int process1(int[] arr, int index, int aim) {
 <li>  每计算完一个 process (index,aim)，都将结果放入 mem 中，index 和 aim 组成共同的 key，返回结果为 value。</li>
 <li>  要进入一个递归过程时，先以 index 和 aim 组成的 key 在 mem 中进行查询，如果已经存在 value，则直接使用，如果不存在，再进入递归过程。</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static int process2(int[] arr, int index, int aim, int[][] mem) {
-    int res = 0;
-    // 判断是否所有面值的货币均已经计算完
-    if (index == arr.length) {
-        // 判断本次递归调用时钱的总数是否已经凑够，如果已经凑够则将总方法数加1
-        res = aim == 0 ? 1 : 0;
-    } else {
-        int memVal = 0;
-        // 循环计算i张当前面值的货币
-        for (int i = 0; arr[index] * i &lt;= aim; i++) {
-            // 获取记忆库中当使用i张index货币时，用其它货币组成剩下的钱
-            memVal = mem[index + 1][aim - arr[index] * i];
-            // 判断记忆库中存在记录
-            if (memVal != 0) {
-                // 将记忆库中的方法数累加到结果中
-                res += memVal == -1 ? 0 : memVal;
-            } else {
-                // 递归调用当使用i张当前面值的货币时，用其它货币组成剩下的钱
-                res += process2(arr, index + 1, aim - arr[index] * i, mem);
-            }
-        }
-    }
-    // 将使用index货币组成aim钱的结果存储到记忆库中
-    mem[index][aim] = res == 0 ? -1 : res;
-    return res;
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">process2</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> index, <span class="keyword">int</span> aim, <span class="keyword">int</span>[][] mem)</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 判断是否所有面值的货币均已经计算完</span></span><br><span class="line">    <span class="keyword">if</span> (index == arr.length) {</span><br><span class="line">        <span class="comment">// 判断本次递归调用时钱的总数是否已经凑够，如果已经凑够则将总方法数加1</span></span><br><span class="line">        res = aim == <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        <span class="keyword">int</span> memVal = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 循环计算i张当前面值的货币</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; arr[index] * i &lt;= aim; i++) {</span><br><span class="line">            <span class="comment">// 获取记忆库中当使用i张index货币时，用其它货币组成剩下的钱</span></span><br><span class="line">            memVal = mem[index + <span class="number">1</span>][aim - arr[index] * i];</span><br><span class="line">            <span class="comment">// 判断记忆库中存在记录</span></span><br><span class="line">            <span class="keyword">if</span> (memVal != <span class="number">0</span>) {</span><br><span class="line">                <span class="comment">// 将记忆库中的方法数累加到结果中</span></span><br><span class="line">                res += memVal == -<span class="number">1</span> ? <span class="number">0</span> : memVal;</span><br><span class="line">            } <span class="keyword">else</span> {</span><br><span class="line">                <span class="comment">// 递归调用当使用i张当前面值的货币时，用其它货币组成剩下的钱</span></span><br><span class="line">                res += process2(arr, index + <span class="number">1</span>, aim - arr[index] * i, mem);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 将使用index货币组成aim钱的结果存储到记忆库中</span></span><br><span class="line">    mem[index][aim] = res == <span class="number">0</span> ? -<span class="number">1</span> : res;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="动态规划方法"><a href="#动态规划方法" class="headerlink" title="动态规划方法"></a>动态规划方法</h2><h3 id="思路分析-2"><a href="#思路分析-2" class="headerlink" title="思路分析"></a>思路分析</h3><p>如果 arr 长度为 N，生成行数为 N，列数为 aim+1 的矩阵 dp。 dp [i][j] 的含义是在使用 arr [0]…arr [i] 货币的情况下，组成钱数 j 的方法数。<br><img data-src="https://cdn.bytelife.net/blog/images/16138517477927.jpg"></p>
 <ol>
@@ -441,69 +409,14 @@ public static int process1(int[] arr, int index, int aim) {
 <li>  本质是利用申请的空间来记录每一个暴力搜索的计算过程，下次要用结果的时候直接使用，而不再进行重复的递归过程。</li>
 <li>  动态规划规定每一种递归状态的计算顺序，依次进行计算。从简单到复杂，按顺序计算。</li>
 </ul>
-<h3 id="具体实现-2"><a href="#具体实现-2" class="headerlink" title="具体实现"></a>具体实现</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">public static int process3(int[] arr, int aim) {
-    // 创建dp矩阵
-    int[][] dp = new int[arr.length][aim + 1];
-    for (int i = 0; i &lt; dp.length; i++) {
-        dp[i][0] = 1; // 凑成0元的方法必然是什么货币都不用，只有1种
-        if (i == 0) {
-            // 如果只是用arr[0]这一种货币，则能凑到j钱置1
-            for (int j = 0; j &lt; dp[i].length; j++) {
-                dp[i][j] = j % arr[i] == 0 ? 1 : 0;
-            }
-        } else {
-            for (int j = 1; j &lt; dp[i].length; j++) {
-                int temp = 0;
-                // 枚举使用k张arr[i]货币后dp[i-1]中组成剩下钱数的方法数
-                for (int k = 0; k * arr[i] &lt;= j; k++) {
-                    temp += dp[i - 1][j - k * arr[i]];//方法数累加
-                }
-                dp[i][j] = temp;
-            }
-        }
-    }
-    // 返回dp矩阵最右下角的值即为最后结果
-    return dp[arr.length - 1][aim];
-}</code></pre>
+<h3 id="具体实现-2"><a href="#具体实现-2" class="headerlink" title="具体实现"></a>具体实现</h3><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">process3</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> aim)</span> </span>{</span><br><span class="line">    <span class="comment">// 创建dp矩阵</span></span><br><span class="line">    <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[arr.length][aim + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dp.length; i++) {</span><br><span class="line">        dp[i][<span class="number">0</span>] = <span class="number">1</span>; <span class="comment">// 凑成0元的方法必然是什么货币都不用，只有1种</span></span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">0</span>) {</span><br><span class="line">            <span class="comment">// 如果只是用arr[0]这一种货币，则能凑到j钱置1</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dp[i].length; j++) {</span><br><span class="line">                dp[i][j] = j % arr[i] == <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">            }</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; dp[i].length; j++) {</span><br><span class="line">                <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">                <span class="comment">// 枚举使用k张arr[i]货币后dp[i-1]中组成剩下钱数的方法数</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k * arr[i] &lt;= j; k++) {</span><br><span class="line">                    temp += dp[i - <span class="number">1</span>][j - k * arr[i]];<span class="comment">//方法数累加</span></span><br><span class="line">                }</span><br><span class="line">                dp[i][j] = temp;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 返回dp矩阵最右下角的值即为最后结果</span></span><br><span class="line">    <span class="keyword">return</span> dp[arr.length - <span class="number">1</span>][aim];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="动态规划方法的再优化"><a href="#动态规划方法的再优化" class="headerlink" title="动态规划方法的再优化"></a>动态规划方法的再优化</h2><h3 id="思路分析-3"><a href="#思路分析-3" class="headerlink" title="思路分析"></a>思路分析</h3><p>由于动态规划方法的执行顺序有着严格的规定，因此使得对算法的进一步优化成为可能。 对于刚才的问题中，我们需要枚举 <code>dp[i-1][j-k*arr[i]]</code>(k=1,2,3…) 并与 <code>dp[i-1][j]</code> 累加，实际上 <code>dp[i-1][j-k*arr[i]]</code>(k=1,2,3…) 的累加值就是 <code>dp[i][j-arr[i]]</code>。<br><img data-src="https://cdn.bytelife.net/blog/images/16138517699600.jpg"><br>所以可以简化为： <code>dp[i][j] = dp[i][j-arr[i]] + dp[i-1][j]</code> 从而彻底省略枚举过程。时间复杂度从 O (N<em>aim2) 变为 O (N</em>aim)</p>
 <h3 id="具体实现-3"><a href="#具体实现-3" class="headerlink" title="具体实现"></a>具体实现</h3><p>经过优化后的代码实现如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static int process4(int[] arr, int aim) {
-    // 创建dp矩阵
-    int[][] dp = new int[arr.length][aim + 1];
-    for (int i = 0; i &lt; dp.length; i++) {
-        dp[i][0] = 1; // 凑成0元的方法必然是什么货币都不用，只有1种
-        for (int j = 1; j &lt; dp[i].length; j++) {
-            if (i == 0) {
-                dp[i][j] = j % arr[i] == 0 ? 1 : 0;
-            } else if(j &gt;= arr[i]){
-                dp[i][j] = dp[i][j - arr[i]] + dp[i - 1][j];
-            } else {
-                dp[i][j] = dp[i - 1][j];
-            }
-        }
-    }
-    // 返回dp矩阵最右下角的值即为最后结果
-    return dp[arr.length - 1][aim];
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">process4</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> aim)</span> </span>{</span><br><span class="line">    <span class="comment">// 创建dp矩阵</span></span><br><span class="line">    <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[arr.length][aim + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dp.length; i++) {</span><br><span class="line">        dp[i][<span class="number">0</span>] = <span class="number">1</span>; <span class="comment">// 凑成0元的方法必然是什么货币都不用，只有1种</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; dp[i].length; j++) {</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span>) {</span><br><span class="line">                dp[i][j] = j % arr[i] == <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">            } <span class="keyword">else</span> <span class="keyword">if</span>(j &gt;= arr[i]){</span><br><span class="line">                dp[i][j] = dp[i][j - arr[i]] + dp[i - <span class="number">1</span>][j];</span><br><span class="line">            } <span class="keyword">else</span> {</span><br><span class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 返回dp矩阵最右下角的值即为最后结果</span></span><br><span class="line">    <span class="keyword">return</span> dp[arr.length - <span class="number">1</span>][aim];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="动态规划方法的空间优化"><a href="#动态规划方法的空间优化" class="headerlink" title="动态规划方法的空间优化"></a>动态规划方法的空间优化</h2><p>我们可以看到，经过优化的动态规划方法速度已经非常让人满意，但是它的空间浪费却很严重，我们发现动态规划方法是严格的矩阵从上至下、从左至右的方向顺序计算，那么其实真正每次计算式只需要用到的是当前行与当前行的上一行，因此其实我们可以将原本的 dp 二维矩阵简化为一维向量。 通过读取和修改向量本身的元素值来达到目的，修改后的代码如下所示：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static int process5(int[] arr, int aim) {
-    // 创建dp向量
-    int[] dp = new int[aim + 1];
-    for (int i = 0; i &lt; arr.length; i++) {
-        dp[0] = 1; // 凑成0元的方法必然是什么货币都不用，只有1种
-        for (int j = 1; j &lt; dp.length; j++) {
-            if (i == 0) {
-                dp[j] = j % arr[i] == 0 ? 1 : 0;
-            } else if(j &gt;= arr[i]){
-                dp[j] += dp[j - arr[i]];
-            }
-        }
-    }
-    // 返回dp向量尾元素即最终结果
-    return dp[aim];
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">process5</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> aim)</span> </span>{</span><br><span class="line">    <span class="comment">// 创建dp向量</span></span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[aim + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) {</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>; <span class="comment">// 凑成0元的方法必然是什么货币都不用，只有1种</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; dp.length; j++) {</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span>) {</span><br><span class="line">                dp[j] = j % arr[i] == <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">            } <span class="keyword">else</span> <span class="keyword">if</span>(j &gt;= arr[i]){</span><br><span class="line">                dp[j] += dp[j - arr[i]];</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 返回dp向量尾元素即最终结果</span></span><br><span class="line">    <span class="keyword">return</span> dp[aim];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="各种计算方法的运行速度对比"><a href="#各种计算方法的运行速度对比" class="headerlink" title="各种计算方法的运行速度对比"></a>各种计算方法的运行速度对比</h2><p>上述所有的实现代码中，都加入了记录算法开始时间和结束时间的代码，我们通过运行测试，得到下面的结果：<br><img data-src="https://cdn.bytelife.net/blog/images/16138517913272.jpg"></p>
 <ul>
@@ -624,22 +537,55 @@ public static int process1(int[] arr, int index, int aim) {
   </span>
   <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
 </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>
+  </div><script color="0,0,0" opacity="0.7" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
 
     </div>
   </footer>
 
   
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -703,99 +649,9 @@ document.addEventListener('pjax:success', () => {
   </script>
 
   
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script data-pjax>
-  (function() {
-    function leancloudSelector(url) {
-      url = encodeURI(url);
-      return document.getElementById(url).querySelector('.leancloud-visitors-count');
-    }
-
-    function addCount(Counter) {
-      const visitors = document.querySelector('.leancloud_visitors');
-      const url = decodeURI(visitors.id);
-      const title = visitors.dataset.flagTitle;
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            const counter = results[0];
-            leancloudSelector(url).innerText = counter.time + 1;
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .catch(error => {
-                console.error('Failed to save visitor count', error);
-              });
-          } else {
-              Counter('post', '/classes/Counter', { title, url, time: 1 })
-                .then(response => response.json())
-                .then(() => {
-                  leancloudSelector(url).innerText = 1;
-                })
-                .catch(error => {
-                  console.error('Failed to create', error);
-                });
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    function showTime(Counter) {
-      const visitors = document.querySelectorAll('.leancloud_visitors');
-      const entries = [...visitors].map(element => {
-        return decodeURI(element.id);
-      });
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          for (let url of entries) {
-            const target = results.find(item => item.url === url);
-            leancloudSelector(url).innerText = target ? target.time : 0;
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":false};
-    function fetchData(api_server) {
-      const Counter = (method, url, data) => {
-        return fetch(`${api_server}/1.1${url}`, {
-          method,
-          headers: {
-            'X-LC-Id'     : app_id,
-            'X-LC-Key'    : app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        if (CONFIG.hostname !== location.hostname) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    }
-
-    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(response => response.json())
-        .then(({ api_server }) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
 
     <div class="pjax">
 
@@ -856,5 +712,5 @@ NexT.utils.loadComments('#valine-comments', () => {
 </script>
 
     </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

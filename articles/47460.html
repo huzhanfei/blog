@@ -18,13 +18,14 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="引言：XML（可扩展标记语言）在软件开发工程中取得了广泛的应用。在 Java 语言中操作 XML 有许多方法，最常用的方法就是使用 JDom、Dom4j 等第三方组件。本文将简单介绍使用 Dom4j 操作 XML 的基本方法。">
 <meta property="og:type" content="article">
@@ -35,7 +36,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139161438607.png">
 <meta property="article:published_time" content="2016-07-16T04:17:32.000Z">
-<meta property="article:modified_time" content="2021-02-21T16:42:24.583Z">
+<meta property="article:modified_time" content="2021-02-21T18:32:53.155Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -100,7 +101,7 @@
 <link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -255,6 +256,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -303,7 +305,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-22 00:42:24" itemprop="dateModified" datetime="2021-02-22T00:42:24+08:00">2021-02-22</time>
+        <time title="修改时间：2021-02-22 02:32:53" itemprop="dateModified" datetime="2021-02-22T02:32:53+08:00">2021-02-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -316,12 +318,12 @@
     </span>
 
   
-    <span id="/articles/47460.html" class="post-meta-item leancloud_visitors" data-flag-title="使用 Dom4j 操作 XML" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
   
   <span class="post-meta-item">
@@ -337,6 +339,22 @@
   </span>
   
   
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -353,237 +371,59 @@
 <span id="more"></span>
 
 <p>本文采用的 Dom4j 版本为 1.6.1，下载地址见文章结尾。 废话不多说，先来看一下本文使用的 XML 文件内容：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;class id="1"&gt;
-	&lt;student&gt;
-		&lt;num&gt;0001&lt;/num&gt;
-		&lt;name&gt;张三&lt;/name&gt;
-		&lt;age&gt;19&lt;/age&gt;
-	&lt;/student&gt;
-	
-	&lt;student&gt;
-		&lt;num&gt;0002&lt;/num&gt;
-		&lt;name&gt;李四&lt;/name&gt;
-		&lt;age&gt;21&lt;/age&gt;
-		&lt;hobby&gt;
-			&lt;name&gt;足球&lt;/name&gt;
-			&lt;name&gt;篮球&lt;/name&gt;
-		&lt;/hobby&gt;
-	&lt;/student&gt;
-	
-	&lt;teacher&gt;
-		&lt;name&gt;王老师&lt;/name&gt;
-		&lt;age&gt;40&lt;/age&gt;
-		&lt;course&gt;Java&lt;/course&gt;
-	&lt;/teacher&gt;
-&lt;/class&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">id</span>=<span class="string">"1"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">num</span>&gt;</span>0001<span class="tag">&lt;/<span class="name">num</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>张三<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">age</span>&gt;</span>19<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">num</span>&gt;</span>0002<span class="tag">&lt;/<span class="name">num</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>李四<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">age</span>&gt;</span>21<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">hobby</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">name</span>&gt;</span>足球<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">name</span>&gt;</span>篮球<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">hobby</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">teacher</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>王老师<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">age</span>&gt;</span>40<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">course</span>&gt;</span>Java<span class="tag">&lt;/<span class="name">course</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">teacher</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>在这个 XML 文件中，可以看到根节点为 class，它有 student 和 teacher 子节点，而 student 子节点中又包含 num、name、age、hobby 等孙子辈节点，teacher 子节点中包含 name、age、course 等孙子辈节点。 下面就使用 dom4j 来操作这个 xml 文件。</p>
 <h3 id="解析XML"><a href="#解析XML" class="headerlink" title="解析XML"></a>解析 XML</h3><p>当使用 dom4j 操作 xml 时，你想做的第一件事可能就是解析一个 Xml 文档，这个操作在 dom4j 中十分容易，使用下面的代码即可以轻松的解析 xml 文件并返回一个 Document 对象。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">package cn.javacodes.dom4j;
-
-import java.io.File;
-
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-
-public class TestDom4j {
-
-	public static void main(String[] args) throws Exception {
-		// 获取SAX阅读器
-		SAXReader reader = new SAXReader();
-		// 获取Document对象
-		Document doc = reader.read(new File("d:/DemoXML.xml"));
-		// 获取根节点
-		Element root = doc.getRootElement();
-		// 输出测试
-		System.out.println("根节点：" + root.getName() + ",id="
-				\+ root.attributeValue("id"));
-	}
-
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javacodes.dom4j;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.Element;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.SAXReader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDom4j</span> </span>{</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>{</span><br><span class="line">		<span class="comment">// 获取SAX阅读器</span></span><br><span class="line">		SAXReader reader = <span class="keyword">new</span> SAXReader();</span><br><span class="line">		<span class="comment">// 获取Document对象</span></span><br><span class="line">		Document doc = reader.read(<span class="keyword">new</span> File(<span class="string">"d:/DemoXML.xml"</span>));</span><br><span class="line">		<span class="comment">// 获取根节点</span></span><br><span class="line">		Element root = doc.getRootElement();</span><br><span class="line">		<span class="comment">// 输出测试</span></span><br><span class="line">		System.out.println(<span class="string">"根节点："</span> + root.getName() + <span class="string">",id="</span></span><br><span class="line">				\+ root.attributeValue(<span class="string">"id"</span>));</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>输出结果：</p>
 <blockquote>
 <p>根节点：class,id=1</p>
 </blockquote>
 <h3 id="使用迭代器Iterator"><a href="#使用迭代器Iterator" class="headerlink" title="使用迭代器Iterator"></a>使用迭代器 Iterator</h3><p>一个 Element 对象可以通过几个方法来返回一个标准的 Java 迭代器： （1）迭代所有子元素</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">// 迭代root元素的所有子元素
-for (Iterator i = root.elementIterator(); i.hasNext(); ) {
-      Element element = (Element) i.next();
-      System.out.println(element.getName());
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 迭代root元素的所有子元素</span></span><br><span class="line"><span class="keyword">for</span> (Iterator i = root.elementIterator(); i.hasNext(); ) {</span><br><span class="line">      Element element = (Element) i.next();</span><br><span class="line">      System.out.println(element.getName());</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>输出结果：</p>
 <blockquote>
 <p>student student teacher</p>
 </blockquote>
 <p>（2）通过元素名称迭代</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">// 通过元素名称“student”迭代子元素
-for ( Iterator i = root.elementIterator( "student" ); i.hasNext(); ) {
-    Element foo = (Element) i.next();
-    System.out.println(foo.getName());
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过元素名称“student”迭代子元素</span></span><br><span class="line"><span class="keyword">for</span> ( Iterator i = root.elementIterator( <span class="string">"student"</span> ); i.hasNext(); ) {</span><br><span class="line">    Element foo = (Element) i.next();</span><br><span class="line">    System.out.println(foo.getName());</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>输出结果：</p>
 <blockquote>
 <p>student student</p>
 </blockquote>
 <p>（3）迭代所有属性</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">// 迭代root元素的所有属性
-for ( Iterator i = root.attributeIterator(); i.hasNext(); ) {
-      Attribute attribute = (Attribute) i.next();
-      System.out.println(attribute.getName() + ":" + attribute.getValue());
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 迭代root元素的所有属性</span></span><br><span class="line"><span class="keyword">for</span> ( Iterator i = root.attributeIterator(); i.hasNext(); ) {</span><br><span class="line">      Attribute attribute = (Attribute) i.next();</span><br><span class="line">      System.out.println(attribute.getName() + <span class="string">":"</span> + attribute.getValue());</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>输出结果：</p>
 <blockquote>
 <p>id:1</p>
 </blockquote>
 <h3 id="获取元素值"><a href="#获取元素值" class="headerlink" title="获取元素值"></a>获取元素值</h3><p>通常我们都需要获取 xml 元素标签内部的文本，也就是元素值，下面一个简单的例子递归显示所有的元素值：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public  static void showAllElementText(Element e){
-      for (Iterator i = e.elementIterator(); i.hasNext(); ) {
-           Element element = (Element) i.next();
-           if (!element.elements().isEmpty()) {
-            	showAllElementText(element);
-           } else {
-                System.out.println(element.getName()+"="+element.getTextTrim());
-           }            
-      }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">showAllElementText</span><span class="params">(Element e)</span></span>{</span><br><span class="line">      <span class="keyword">for</span> (Iterator i = e.elementIterator(); i.hasNext(); ) {</span><br><span class="line">           Element element = (Element) i.next();</span><br><span class="line">           <span class="keyword">if</span> (!element.elements().isEmpty()) {</span><br><span class="line">            	showAllElementText(element);</span><br><span class="line">           } <span class="keyword">else</span> {</span><br><span class="line">                System.out.println(element.getName()+<span class="string">"="</span>+element.getTextTrim());</span><br><span class="line">           }            </span><br><span class="line">      }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>输出结果</p>
 <blockquote>
 <p>num=0001 name = 张三 age=19 num=0002 name = 李四 age=21 name = 足球 name = 篮球 name = 王老师 age=40 course=Java</p>
 </blockquote>
 <h3 id="使用XPath表达式"><a href="#使用XPath表达式" class="headerlink" title="使用XPath表达式"></a>使用 XPath 表达式</h3><p>在 Dom4j 中使用 XPath 表达式可以更加轻松的操作 XML 文档，使用 XPath 表达式可以使用仅一行代码来进行复杂的操作，在 Dom4j 中使用 XPath 的几个简单示例代码如下： （1）查询单个节点（默认查找第一个）：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">// 获取SAX阅读器
-SAXReader reader = new SAXReader();
-// 获取Document对象
-Document doc = reader.read(new File("d:/DemoXML.xml"));
-// 获取student元素的name节点
-Node node = doc.selectSingleNode("//student/name");
-// 输出测试
-System.out.println(node.getName() + "=" + node.getText());</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取SAX阅读器</span></span><br><span class="line">SAXReader reader = <span class="keyword">new</span> SAXReader();</span><br><span class="line"><span class="comment">// 获取Document对象</span></span><br><span class="line">Document doc = reader.read(<span class="keyword">new</span> File(<span class="string">"d:/DemoXML.xml"</span>));</span><br><span class="line"><span class="comment">// 获取student元素的name节点</span></span><br><span class="line">Node node = doc.selectSingleNode(<span class="string">"//student/name"</span>);</span><br><span class="line"><span class="comment">// 输出测试</span></span><br><span class="line">System.out.println(node.getName() + <span class="string">"="</span> + node.getText());</span><br></pre></td></tr></tbody></table></figure>
 <p>（2）查询多个节点</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">// 获取所有student元素的name节点
-List&lt;Node&gt; list = doc.selectNodes("//student");
-// 输出测试
-for (Node node : list) {
-&nbsp;&nbsp; &nbsp;System.out.println(node.getName() 
-                 \+ ":" \+ node.valueOf("name"));
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取所有student元素的name节点</span></span><br><span class="line">List&lt;Node&gt; list = doc.selectNodes(<span class="string">"//student"</span>);</span><br><span class="line"><span class="comment">// 输出测试</span></span><br><span class="line"><span class="keyword">for</span> (Node node : list) {</span><br><span class="line">&nbsp;&nbsp; &nbsp;System.out.println(node.getName() </span><br><span class="line">                 \+ <span class="string">":"</span> \+ node.valueOf(<span class="string">"name"</span>));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>以上为两种经常使用的方法，另外如果你想在一个 XHTML 文档中查找到所有的超文本链接，可以使用下面这个窍门轻松实现：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public void findLinks(Document document) throws DocumentException {
-    List list = document.selectNodes( "//a/@href" );
-    for (Iterator iter = list.iterator(); iter.hasNext(); ) {
-        Attribute attribute = (Attribute) iter.next();
-        String url = attribute.getValue();
-    }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findLinks</span><span class="params">(Document document)</span> <span class="keyword">throws</span> DocumentException </span>{</span><br><span class="line">    List list = document.selectNodes( <span class="string">"//a/@href"</span> );</span><br><span class="line">    <span class="keyword">for</span> (Iterator iter = list.iterator(); iter.hasNext(); ) {</span><br><span class="line">        Attribute attribute = (Attribute) iter.next();</span><br><span class="line">        String url = attribute.getValue();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>如果你需要任何有关学习 XPah 表达式语言的帮助，你可以访问 <a target="_blank" rel="noopener" href="http://www.zvon.org/xxl/XPathTutorial/General/examples.html" title="External Link">Zvon tutorial</a> 进行学习，这里可以通过各种各样的例子帮助你学习。</p>
 <h3 id="快速循环"><a href="#快速循环" class="headerlink" title="快速循环"></a>快速循环</h3><p>如果你需要操作一个十分庞大的 XML 文档，那么你应该使用快速循环的方法以避免在每次循环都创建 Iterator 对象，下面是一个简单的例子：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public void treeWalk(Document document) {
-    treeWalk( document.getRootElement() );
-}
-
-public void treeWalk(Element element) {
-    for ( int i = 0, size = element.nodeCount(); i &lt; size; i++ ) {
-        Node node = element.node(i);
-        if ( node instanceof Element ) {
-            treeWalk( (Element) node );
-        }
-        else {
-            // 这里写你想要做的操作
-        }
-    }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">treeWalk</span><span class="params">(Document document)</span> </span>{</span><br><span class="line">    treeWalk( document.getRootElement() );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">treeWalk</span><span class="params">(Element element)</span> </span>{</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>, size = element.nodeCount(); i &lt; size; i++ ) {</span><br><span class="line">        Node node = element.node(i);</span><br><span class="line">        <span class="keyword">if</span> ( node <span class="keyword">instanceof</span> Element ) {</span><br><span class="line">            treeWalk( (Element) node );</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> {</span><br><span class="line">            <span class="comment">// 这里写你想要做的操作</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="创建XML-Document对象"><a href="#创建XML-Document对象" class="headerlink" title="创建XML Document对象"></a>创建 XML Document 对象</h3><p>在使用 Dom4j 时经常需要创建一个新的 document，下面是一个简单的示例：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-
-public class Foo {
-
-    public Document createDocument() {
-        Document document = DocumentHelper.createDocument();
-        Element root = document.addElement( "root" );
-
-        Element author1 = root.addElement( "author" )
-            .addAttribute( "name", "James" )
-            .addAttribute( "location", "UK" )
-            .addText( "James Strachan" );
-        
-        Element author2 = root.addElement( "author" )
-            .addAttribute( "name", "Bob" )
-            .addAttribute( "location", "US" )
-            .addText( "Bob McWhirter" );
-
-        return document;
-    }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.DocumentHelper;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.Element;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Document <span class="title">createDocument</span><span class="params">()</span> </span>{</span><br><span class="line">        Document document = DocumentHelper.createDocument();</span><br><span class="line">        Element root = document.addElement( <span class="string">"root"</span> );</span><br><span class="line"></span><br><span class="line">        Element author1 = root.addElement( <span class="string">"author"</span> )</span><br><span class="line">            .addAttribute( <span class="string">"name"</span>, <span class="string">"James"</span> )</span><br><span class="line">            .addAttribute( <span class="string">"location"</span>, <span class="string">"UK"</span> )</span><br><span class="line">            .addText( <span class="string">"James Strachan"</span> );</span><br><span class="line">        </span><br><span class="line">        Element author2 = root.addElement( <span class="string">"author"</span> )</span><br><span class="line">            .addAttribute( <span class="string">"name"</span>, <span class="string">"Bob"</span> )</span><br><span class="line">            .addAttribute( <span class="string">"location"</span>, <span class="string">"US"</span> )</span><br><span class="line">            .addText( <span class="string">"Bob McWhirter"</span> );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> document;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="写入XML文件"><a href="#写入XML文件" class="headerlink" title="写入XML文件"></a>写入 XML 文件</h3><p>使用 Dom4j 将 Document 对象写入到 XML 文件十分简单，你只需要 1 行代码即可解决：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">document.write( new FileWriter( "foo.xml" ));</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.write( <span class="keyword">new</span> FileWriter( <span class="string">"foo.xml"</span> ));</span><br></pre></td></tr></tbody></table></figure>
 <p>如果你想修改输出的格式，例如更易读的排版或者压缩（紧凑）的排版，再或者你想通过 Writer 或 OutputStream 进行输出，那么你可以使用 XMLWriter 类：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">import org.dom4j.Document;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
-
-public class Foo {
-
-    public void write(Document document) throws IOException {
-
-        // 写入到一个文件
-        XMLWriter writer = new XMLWriter(
-            new FileWriter( "output.xml" )
-        );
-        writer.write( document );
-        writer.close();
-
-
-        // 更加美观的排版
-        OutputFormat format = OutputFormat.createPrettyPrint();
-        writer = new XMLWriter( System.out, format );
-        writer.write( document );
-
-        // 更加紧凑的排版
-        format = OutputFormat.createCompactFormat();
-        writer = new XMLWriter( System.out, format );
-        writer.write( document );
-    }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.OutputFormat;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.XMLWriter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(Document document)</span> <span class="keyword">throws</span> IOException </span>{</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 写入到一个文件</span></span><br><span class="line">        XMLWriter writer = <span class="keyword">new</span> XMLWriter(</span><br><span class="line">            <span class="keyword">new</span> FileWriter( <span class="string">"output.xml"</span> )</span><br><span class="line">        );</span><br><span class="line">        writer.write( document );</span><br><span class="line">        writer.close();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 更加美观的排版</span></span><br><span class="line">        OutputFormat format = OutputFormat.createPrettyPrint();</span><br><span class="line">        writer = <span class="keyword">new</span> XMLWriter( System.out, format );</span><br><span class="line">        writer.write( document );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 更加紧凑的排版</span></span><br><span class="line">        format = OutputFormat.createCompactFormat();</span><br><span class="line">        writer = <span class="keyword">new</span> XMLWriter( System.out, format );</span><br><span class="line">        writer.write( document );</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="Document对象与XML代码互转"><a href="#Document对象与XML代码互转" class="headerlink" title="Document对象与XML代码互转"></a>Document 对象与 XML 代码互转</h3><p>如果你想通过一个 Document 对象或其他任何节点对象（例如 Attribute 或 Element），你可以通过 asXML () 方法将它转换为 XML 文本字符串，例如：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">Document document = ...;
-String text = document.asXML();</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Document document = ...;</span><br><span class="line">String text = document.asXML();</span><br></pre></td></tr></tbody></table></figure>
 <p>如果你想从一个 XML 文本字符串转为一个 Document 对象，你可以使用 DocumentHelper.parseText () 方法进行解析：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">String text = "&lt;person&gt; &lt;name&gt;James&lt;/name&gt; &lt;/person&gt;";
-Document document = DocumentHelper.parseText(text);</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String text = <span class="string">"&lt;person&gt; &lt;name&gt;James&lt;/name&gt; &lt;/person&gt;"</span>;</span><br><span class="line">Document document = DocumentHelper.parseText(text);</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="XSLT"><a href="#XSLT" class="headerlink" title="XSLT"></a>XSLT</h3><p>通过 Sum 公司提供的 JAXP API 在一个 Document 上应用 XSLT 十分简单。这里有一个使用 JAXP 创建一个 transformer 并应用到 Document 上的例子：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-
-import org.dom4j.Document;
-import org.dom4j.io.DocumentResult;
-import org.dom4j.io.DocumentSource;
-
-public class Foo {
-
-    public Document styleDocument(
-        Document document, 
-        String stylesheet
-    ) throws Exception {
-
-        // 使用JAXP加载transformer
-        TransformerFactory factory = TransformerFactory.newInstance();
-        Transformer transformer = factory.newTransformer( 
-            new StreamSource( stylesheet ) 
-        );
-
-        // 样式化document
-        DocumentSource source = new DocumentSource( document );
-        DocumentResult result = new DocumentResult();
-        transformer.transform( source, result );
-
-        // 返回转换后的document
-        Document transformedDoc = result.getDocument();
-        return transformedDoc;
-    }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.xml.transform.Transformer;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.DocumentResult;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.DocumentSource;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Document <span class="title">styleDocument</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        Document document, </span></span></span><br><span class="line"><span class="function"><span class="params">        String stylesheet</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span> <span class="keyword">throws</span> Exception </span>{</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用JAXP加载transformer</span></span><br><span class="line">        TransformerFactory factory = TransformerFactory.newInstance();</span><br><span class="line">        Transformer transformer = factory.newTransformer( </span><br><span class="line">            <span class="keyword">new</span> StreamSource( stylesheet ) </span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 样式化document</span></span><br><span class="line">        DocumentSource source = <span class="keyword">new</span> DocumentSource( document );</span><br><span class="line">        DocumentResult result = <span class="keyword">new</span> DocumentResult();</span><br><span class="line">        transformer.transform( source, result );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回转换后的document</span></span><br><span class="line">        Document transformedDoc = result.getDocument();</span><br><span class="line">        <span class="keyword">return</span> transformedDoc;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
     </div>
 
@@ -697,22 +537,55 @@ public class Foo {
   </span>
   <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
 </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>
+  </div><script color="0,0,0" opacity="0.7" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
 
     </div>
   </footer>
 
   
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -776,99 +649,9 @@ document.addEventListener('pjax:success', () => {
   </script>
 
   
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script data-pjax>
-  (function() {
-    function leancloudSelector(url) {
-      url = encodeURI(url);
-      return document.getElementById(url).querySelector('.leancloud-visitors-count');
-    }
-
-    function addCount(Counter) {
-      const visitors = document.querySelector('.leancloud_visitors');
-      const url = decodeURI(visitors.id);
-      const title = visitors.dataset.flagTitle;
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            const counter = results[0];
-            leancloudSelector(url).innerText = counter.time + 1;
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .catch(error => {
-                console.error('Failed to save visitor count', error);
-              });
-          } else {
-              Counter('post', '/classes/Counter', { title, url, time: 1 })
-                .then(response => response.json())
-                .then(() => {
-                  leancloudSelector(url).innerText = 1;
-                })
-                .catch(error => {
-                  console.error('Failed to create', error);
-                });
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    function showTime(Counter) {
-      const visitors = document.querySelectorAll('.leancloud_visitors');
-      const entries = [...visitors].map(element => {
-        return decodeURI(element.id);
-      });
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          for (let url of entries) {
-            const target = results.find(item => item.url === url);
-            leancloudSelector(url).innerText = target ? target.time : 0;
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":false};
-    function fetchData(api_server) {
-      const Counter = (method, url, data) => {
-        return fetch(`${api_server}/1.1${url}`, {
-          method,
-          headers: {
-            'X-LC-Id'     : app_id,
-            'X-LC-Key'    : app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        if (CONFIG.hostname !== location.hostname) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    }
-
-    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(response => response.json())
-        .then(({ api_server }) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
 
     <div class="pjax">
 
@@ -898,5 +681,5 @@ NexT.utils.loadComments('#valine-comments', () => {
 </script>
 
     </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

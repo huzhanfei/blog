@@ -18,23 +18,24 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="一、c 命名空间通过构造器注入 Bean 的时候通常需要使用到元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示： &lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt; &amp;">
+<meta name="description" content="一、c 命名空间通过构造器注入 Bean 的时候通常需要使用到元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示： 123456&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring 学习笔记之通过 XML 装配 Bean 的一些细节">
 <meta property="og:url" content="https://bytelife.net/articles/36596.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="一、c 命名空间通过构造器注入 Bean 的时候通常需要使用到元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示： &lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt; &amp;">
+<meta property="og:description" content="一、c 命名空间通过构造器注入 Bean 的时候通常需要使用到元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示： 123456&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-10-20T09:13:13.000Z">
-<meta property="article:modified_time" content="2021-02-21T16:42:24.583Z">
+<meta property="article:modified_time" content="2021-02-21T18:32:53.155Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Spring">
@@ -99,7 +100,7 @@
 <link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -254,6 +255,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -302,7 +304,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-22 00:42:24" itemprop="dateModified" datetime="2021-02-22T00:42:24+08:00">2021-02-22</time>
+        <time title="修改时间：2021-02-22 02:32:53" itemprop="dateModified" datetime="2021-02-22T02:32:53+08:00">2021-02-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -315,12 +317,12 @@
     </span>
 
   
-    <span id="/articles/36596.html" class="post-meta-item leancloud_visitors" data-flag-title="Spring 学习笔记之通过 XML 装配 Bean 的一些细节" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
   
   <span class="post-meta-item">
@@ -336,6 +338,22 @@
   </span>
   
   
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -346,191 +364,48 @@
     
     <div class="post-body" itemprop="articleBody">
         <h3 id="一、c命名空间"><a href="#一、c命名空间" class="headerlink" title="一、c命名空间"></a>一、c 命名空间</h3><p>通过构造器注入 Bean 的时候通常需要使用到<constructor-arg>元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示：</constructor-arg></p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xmlns:c="http://www.springframework.org/schema/c"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
-&lt;/beans&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:c</span>=<span class="string">"http://www.springframework.org/schema/c"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <span id="more"></span>
 
 <p>在 c - 命名空间和模式声明后，就可以使用它来声明构造器参数了，如下所示：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="compactDisc" class="cn.javacodes.spring.beans.soundsystem.Transfer"&gt;&lt;/bean&gt;
-    
-&lt;bean id="cdPlayer" class="cn.javacodes.spring.beans.soundsystem.CDPlayer"
-          c:cd-ref="compactDisc" /&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.Transfer"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cdPlayer"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.CDPlayer"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">c:cd-ref</span>=<span class="string">"compactDisc"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>可以看到上面的方式也有一些问题，c:cd-ref 中的 cd 即为构造器参数的名称，这种方式对于后期代码的重构是非常不友好的，那么为了解决这个问题，可以使用参数的索引来替代参数名称，如下所示：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="compactDisc" class="cn.javacodes.spring.beans.soundsystem.Transfer"&gt;&lt;/bean&gt;
-&lt;bean id="cdPlayer" class="cn.javacodes.spring.beans.soundsystem.CDPlayer"
-      c:_0-ref="compactDisc" /&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.Transfer"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cdPlayer"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.CDPlayer"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">c:_0-ref</span>=<span class="string">"compactDisc"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>当然如果构造器只有一个参数，可以连索引一起略去：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="compactDisc" class="cn.javacodes.spring.beans.soundsystem.Transfer"&gt;&lt;/bean&gt;
-&lt;bean id="cdPlayer" class="cn.javacodes.spring.beans.soundsystem.CDPlayer"
-      c:_-ref="compactDisc" /&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.Transfer"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cdPlayer"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.CDPlayer"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">c:_-ref</span>=<span class="string">"compactDisc"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>不过在我的测试中，这种方式在 idea 中会报错。</p>
 <h3 id="二、装配集合"><a href="#二、装配集合" class="headerlink" title="二、装配集合"></a>二、装配集合</h3><h4 id="（一）装配List和Set"><a href="#（一）装配List和Set" class="headerlink" title="（一）装配List和Set"></a>（一）装配 List 和 Set</h4><p>BlankDisc 类的代码如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">package cn.javacodes.spring.beans.soundsystem.collections;
-import cn.javacodes.spring.beans.soundsystem.CompactDisc;
-import java.util.List;
-/**
- * Created by Eric on 2016/10/16.
- */
-public class BlankDisc implements CompactDisc {
-    private String title;
-    private String artist;
-    private List&lt;String&gt; tracks;
-    public BlankDisc(String title, String artist, List&lt;String&gt; tracks) {
-        this.title = title;
-        this.artist = artist;
-        this.tracks = tracks;
-    }
-    public void play() {
-        System.out.println("正在播放" + artist + "的专辑：" + title);
-        for (String track : tracks) {
-            System.out.println("-Track：" + track);
-        }
-    }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javacodes.spring.beans.soundsystem.collections;</span><br><span class="line"><span class="keyword">import</span> cn.javacodes.spring.beans.soundsystem.CompactDisc;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by Eric on 2016/10/16.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlankDisc</span> <span class="keyword">implements</span> <span class="title">CompactDisc</span> </span>{</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> String artist;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; tracks;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlankDisc</span><span class="params">(String title, String artist, List&lt;String&gt; tracks)</span> </span>{</span><br><span class="line">        <span class="keyword">this</span>.title = title;</span><br><span class="line">        <span class="keyword">this</span>.artist = artist;</span><br><span class="line">        <span class="keyword">this</span>.tracks = tracks;</span><br><span class="line">    }</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>{</span><br><span class="line">        System.out.println(<span class="string">"正在播放"</span> + artist + <span class="string">"的专辑："</span> + title);</span><br><span class="line">        <span class="keyword">for</span> (String track : tracks) {</span><br><span class="line">            System.out.println(<span class="string">"-Track："</span> + track);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>在 Spring 中配置这个类的 bean 时需要提供一个 list，当然，你可以给它传递为空值：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="compactDisc" class="cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"&gt;
-    &lt;constructor-arg value="Transfer"&gt;&lt;/constructor-arg&gt;
-    &lt;constructor-arg value="周传雄/小刚"&gt;&lt;/constructor-arg&gt;
-    &lt;constructor-arg&gt;&lt;null/&gt;&lt;/constructor-arg&gt;
-&lt;/bean&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"Transfer"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"周传雄/小刚"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span>&gt;</span><span class="tag">&lt;<span class="name">null</span>/&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>不过如果传递 null 的话，当调用 play () 方法时，必然会产生 NullPointerException 异常，通常情况下，我们更多的给它装配一个 List。</p>
 <p>我们有很多种解决方案，首先，可以使用<list>元素将其声明为一个列表：</list></p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="compactDisc" class="cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"&gt;
-    &lt;constructor-arg value="Transfer"&gt;&lt;/constructor-arg&gt;
-    &lt;constructor-arg value="周传雄/小刚"&gt;&lt;/constructor-arg&gt;
-    &lt;constructor-arg&gt;
-        &lt;list&gt;
-            &lt;value&gt;忘记&lt;/value&gt;
-            &lt;value&gt;出卖&lt;/value&gt;
-            &lt;value&gt;寂寞轰炸&lt;/value&gt;
-            &lt;value&gt;游戏爱情&lt;/value&gt;
-            &lt;value&gt;心结&lt;/value&gt;
-            &lt;value&gt;记事本&lt;/value&gt;
-            &lt;value&gt;啤酒泡泡&lt;/value&gt;
-            &lt;value&gt;黄昏&lt;/value&gt;
-            &lt;value&gt;末班车&lt;/value&gt;
-            &lt;value&gt;心血来潮&lt;/value&gt;
-            &lt;value&gt;时间&lt;/value&gt;
-        &lt;/list&gt;
-    &lt;/constructor-arg&gt;
-&lt;/bean&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"Transfer"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"周传雄/小刚"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>忘记<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>出卖<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>寂寞轰炸<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>游戏爱情<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>心结<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>记事本<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>啤酒泡泡<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>黄昏<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>末班车<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>心血来潮<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>时间<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>当然，也可以使用<ref>来替代<value>达到引用其它 bean 的目的，再次不做赘述。</value></ref></p>
 <p>在我们的例子中构造器参数类型为 List，因此使用<list>元素进行注入是合情合理的，尽管如此，我们仍然可以使用<set>元素来进行注入：</set></list></p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="compactDisc" class="cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"&gt;
-        &lt;constructor-arg value="Transfer"&gt;&lt;/constructor-arg&gt;
-        &lt;constructor-arg value="周传雄/小刚"&gt;&lt;/constructor-arg&gt;
-        &lt;constructor-arg&gt;
-            &lt;set&gt;
-                &lt;value&gt;忘记&lt;/value&gt;
-                &lt;value&gt;出卖&lt;/value&gt;
-                &lt;value&gt;寂寞轰炸&lt;/value&gt;
-                &lt;value&gt;游戏爱情&lt;/value&gt;
-                &lt;value&gt;心结&lt;/value&gt;
-                &lt;value&gt;记事本&lt;/value&gt;
-                &lt;value&gt;啤酒泡泡&lt;/value&gt;
-                &lt;value&gt;黄昏&lt;/value&gt;
-                &lt;value&gt;末班车&lt;/value&gt;
-                &lt;value&gt;心血来潮&lt;/value&gt;
-                &lt;value&gt;时间&lt;/value&gt;
-            &lt;/set&gt;
-        &lt;/constructor-arg&gt;
-    &lt;/bean&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"Transfer"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"周传雄/小刚"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>忘记<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>出卖<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>寂寞轰炸<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>游戏爱情<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>心结<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>记事本<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>啤酒泡泡<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>黄昏<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>末班车<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>心血来潮<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>时间<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p><set>和<list>元素的区别并不大，其中最重要的区别在于 Spring 创建要装配的集合时，所创建的是 Set 还是 List。如果是 Set 的话，所有重复的值都会被忽略掉，并且存放的顺序也不会得到保证，这个相信大家对 Set 和 List 的区别都有明确的认识。不过无论哪种情况下，<set>和<list>都可以用来装配 List、Set 甚至数组。</list></set></list></set></p>
 <h4 id="（二）、装配Map"><a href="#（二）、装配Map" class="headerlink" title="（二）、装配Map"></a>（二）、装配 Map</h4><p>我们将上面的 BlankDisc 稍作改动，将原有的 List 改为 Map：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">private String title;
-private String artist;
-private Map&lt;String,String&gt; tracks;
-public BlankDisc(String title, String artist, Map&lt;String, String&gt; tracks) {
-    this.title = title;
-    this.artist = artist;
-    this.tracks = tracks;
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> String title;</span><br><span class="line"><span class="keyword">private</span> String artist;</span><br><span class="line"><span class="keyword">private</span> Map&lt;String,String&gt; tracks;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BlankDisc</span><span class="params">(String title, String artist, Map&lt;String, String&gt; tracks)</span> </span>{</span><br><span class="line">    <span class="keyword">this</span>.title = title;</span><br><span class="line">    <span class="keyword">this</span>.artist = artist;</span><br><span class="line">    <span class="keyword">this</span>.tracks = tracks;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>装配 Map 的方式如下：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="compactDisc" class="cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"&gt;
-    &lt;constructor-arg value="Transfer"&gt;&lt;/constructor-arg&gt;
-    &lt;constructor-arg value="周传雄/小刚"&gt;&lt;/constructor-arg&gt;
-    &lt;constructor-arg&gt;
-        &lt;map&gt;
-            &lt;entry key="忘记" value="5:12"/&gt;
-            &lt;entry key="出卖" value="4:54"/&gt;
-            &lt;entry …… 
-        &lt;/map&gt;
-    &lt;/constructor-arg&gt;
-&lt;/bean&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"Transfer"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"周传雄/小刚"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">map</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"忘记"</span> <span class="attr">value</span>=<span class="string">"5:12"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"出卖"</span> <span class="attr">value</span>=<span class="string">"4:54"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">entry</span> …… </span></span><br><span class="line">        &lt;/map&gt;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>当然<key>和<value>元素可以分别用<key-ref>和<value-ref>元素替代用于引用其它 Bean。</value-ref></key-ref></value></key></p>
 <h4 id="（三）、装配Properties"><a href="#（三）、装配Properties" class="headerlink" title="（三）、装配Properties"></a>（三）、装配 Properties</h4><p>Properties 与 Map 非常类似，不过区别主要在于 Map 的 key 和 Value 可以是任意类型的对象，而 Properties 要求 key 和 value 必须都是 String 类型，而很多场景下我们的 key 和 value 的确都是 String 类型，比如数据库连接信息的配置。</p>
 <p>为了演示 Properties 的相关配置，我们创建一个类 DataSource：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">package cn.javacodes.spring.beans.properties;
-import java.util.Properties;
-/**
- * Created by Eric on 2016/10/16.
- */
-public class DataSource {
-    
-    private Properties properties;
-    public DataSource(Properties properties) {
-        this.properties = properties;
-    }
-    public Properties getProperties() {
-        return properties;
-    }
-    public void setProperties(Properties properties) {
-        this.properties = properties;
-    }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javacodes.spring.beans.properties;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by Eric on 2016/10/16.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSource</span> </span>{</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> Properties properties;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DataSource</span><span class="params">(Properties properties)</span> </span>{</span><br><span class="line">        <span class="keyword">this</span>.properties = properties;</span><br><span class="line">    }</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Properties <span class="title">getProperties</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> properties;</span><br><span class="line">    }</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProperties</span><span class="params">(Properties properties)</span> </span>{</span><br><span class="line">        <span class="keyword">this</span>.properties = properties;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>在 Spring XML 配置如下：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="dataSource" class="cn.javacodes.spring.beans.properties.DataSource"&gt;
-    &lt;constructor-arg&gt;
-        &lt;props&gt;
-            &lt;prop key="user"&gt;root&lt;/prop&gt;
-            &lt;prop key="password"&gt;123456&lt;/prop&gt;
-            &lt;prop key="url"&gt;jdbc:mysql:///test&lt;/prop&gt;
-            &lt;prop key="driver"&gt;com.mysql.jdbc.Driver&lt;/prop&gt;
-        &lt;/props&gt;
-    &lt;/constructor-arg&gt;
-&lt;/bean&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.properties.DataSource"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"user"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"password"</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"url"</span>&gt;</span>jdbc:mysql:///test<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"driver"</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <h3 id="三、p命名空间"><a href="#三、p命名空间" class="headerlink" title="三、p命名空间"></a>三、p 命名空间</h3><p>我们知道配置 bean 的属性时需要使用<property>元素，为了简化这种方式，与 c 命名空间一样，Spring 为我们提供了 p 命名空间。为了使用 p - 命名空间，必须在 xml 顶部进行声明：</property></p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
-……
-&lt;/beans&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span></span><br><span class="line">……</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>然后就可以使用 p - 命名空间了，使用方法如下：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="cdPlayer" class="cn.javacodes.spring.beans.soundsystem.CDPlayer"
-    p:cd-ref="compactDisc"/&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cdPlayer"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.CDPlayer"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">p:cd-ref</span>=<span class="string">"compactDisc"</span>/&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>属性的名称以 - ref 结尾的，代表 Spring 要进行装配的是 bean 的引用而不是字面值（String）。</p>
 <h3 id="四、util命名空间"><a href="#四、util命名空间" class="headerlink" title="四、util命名空间"></a>四、util 命名空间</h3><p>p - 命名空间和 c - 命名空间都不能对集合类型进行装配，不过我们可以使用 util 命名空间来简化对集合的装配，声明如下：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:c="http://www.springframework.org/schema/c"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
-&lt;/beans&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:c</span>=<span class="string">"http://www.springframework.org/schema/c"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:util</span>=<span class="string">"http://www.springframework.org/schema/util"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>现在就可以使用 util 命名空间了，例如：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;util:list id="trackList"&gt;
-    &lt;value&gt;忘记&lt;/value&gt;
-    &lt;value&gt;出卖&lt;/value&gt;
-    &lt;value&gt;寂寞轰炸&lt;/value&gt;
-    &lt;value&gt;游戏爱情&lt;/value&gt;
-    &lt;value&gt;心结&lt;/value&gt;
-    &lt;value&gt;记事本&lt;/value&gt;
-    &lt;value&gt;啤酒泡泡&lt;/value&gt;
-    &lt;value&gt;黄昏&lt;/value&gt;
-    &lt;value&gt;末班车&lt;/value&gt;
-    &lt;value&gt;心血来潮&lt;/value&gt;
-    &lt;value&gt;时间&lt;/value&gt;
-&lt;/util:list&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">util:list</span> <span class="attr">id</span>=<span class="string">"trackList"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>忘记<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>出卖<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>寂寞轰炸<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>游戏爱情<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>心结<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>记事本<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>啤酒泡泡<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>黄昏<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>末班车<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>心血来潮<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>时间<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">util:list</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>然后就可以像引用其它 Bean 一样将 list 轻松引用，如下所示：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;bean id="compactDisc" class="cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"
- c:title="Transfer" c:artist="周传雄/小刚" c:tracks-ref="trackList"/&gt;</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"</span></span></span><br><span class="line"><span class="tag"> <span class="attr">c:title</span>=<span class="string">"Transfer"</span> <span class="attr">c:artist</span>=<span class="string">"周传雄/小刚"</span> <span class="attr">c:tracks-ref</span>=<span class="string">"trackList"</span>/&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p><a href="util:list">util:list</a> 只是 util - 命名空间提供的众多元素之一，下表列出了 util - 命名空间提供的所有元素：</p>
 <table>
 <thead>
@@ -678,22 +553,55 @@ public class DataSource {
   </span>
   <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
 </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>
+  </div><script color="0,0,0" opacity="0.7" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
 
     </div>
   </footer>
 
   
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -757,99 +665,9 @@ document.addEventListener('pjax:success', () => {
   </script>
 
   
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script data-pjax>
-  (function() {
-    function leancloudSelector(url) {
-      url = encodeURI(url);
-      return document.getElementById(url).querySelector('.leancloud-visitors-count');
-    }
-
-    function addCount(Counter) {
-      const visitors = document.querySelector('.leancloud_visitors');
-      const url = decodeURI(visitors.id);
-      const title = visitors.dataset.flagTitle;
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            const counter = results[0];
-            leancloudSelector(url).innerText = counter.time + 1;
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .catch(error => {
-                console.error('Failed to save visitor count', error);
-              });
-          } else {
-              Counter('post', '/classes/Counter', { title, url, time: 1 })
-                .then(response => response.json())
-                .then(() => {
-                  leancloudSelector(url).innerText = 1;
-                })
-                .catch(error => {
-                  console.error('Failed to create', error);
-                });
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    function showTime(Counter) {
-      const visitors = document.querySelectorAll('.leancloud_visitors');
-      const entries = [...visitors].map(element => {
-        return decodeURI(element.id);
-      });
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          for (let url of entries) {
-            const target = results.find(item => item.url === url);
-            leancloudSelector(url).innerText = target ? target.time : 0;
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":false};
-    function fetchData(api_server) {
-      const Counter = (method, url, data) => {
-        return fetch(`${api_server}/1.1${url}`, {
-          method,
-          headers: {
-            'X-LC-Id'     : app_id,
-            'X-LC-Key'    : app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        if (CONFIG.hostname !== location.hostname) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    }
-
-    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(response => response.json())
-        .then(({ api_server }) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
 
     <div class="pjax">
 
@@ -879,5 +697,5 @@ NexT.utils.loadComments('#valine-comments', () => {
 </script>
 
     </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

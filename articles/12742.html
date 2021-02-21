@@ -18,13 +18,14 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="引言在并发编程中我们有时候需要使用线程安全的队列。如果我们要实现一个线程安全的队列有两种实现方式：一种是使用阻塞算法，另一种是使用非阻塞算法。使用阻塞算法的队列可以用一个锁（入队和出队用同一把锁）或两个锁（入队和出队用不同的锁）等方式来实现，而非阻塞的实现方式则可以使用循环 CAS 的方式来实现，本文让我们一起来研究下 Doug Lea 是如何使用非阻塞的方式来实现线程安全队列 Concurren">
 <meta property="og:type" content="article">
@@ -37,7 +38,7 @@
 <meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139213588471.jpg">
 <meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139221983079.jpg">
 <meta property="article:published_time" content="2017-03-14T17:10:55.000Z">
-<meta property="article:modified_time" content="2021-02-21T16:42:24.583Z">
+<meta property="article:modified_time" content="2021-02-21T18:32:53.151Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="并发">
@@ -103,7 +104,7 @@
 <link rel="alternate" href="/atom.xml" title="ByteLife" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -258,6 +259,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -306,7 +308,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-22 00:42:24" itemprop="dateModified" datetime="2021-02-22T00:42:24+08:00">2021-02-22</time>
+        <time title="修改时间：2021-02-22 02:32:53" itemprop="dateModified" datetime="2021-02-22T02:32:53+08:00">2021-02-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -319,12 +321,12 @@
     </span>
 
   
-    <span id="/articles/12742.html" class="post-meta-item leancloud_visitors" data-flag-title="ConcurrentLinkedQueue 的实现原理分析" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
   
   <span class="post-meta-item">
@@ -340,6 +342,22 @@
   </span>
   
   
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -354,7 +372,7 @@
 
 <h2 id="ConcurrentLinkedQueue的介绍"><a href="#ConcurrentLinkedQueue的介绍" class="headerlink" title="ConcurrentLinkedQueue的介绍"></a>ConcurrentLinkedQueue 的介绍</h2><p>ConcurrentLinkedQueue 是一个基于链接节点的无界线程安全队列，它采用先进先出的规则对节点进行排序，当我们添加一个元素的时候，它会添加到队列的尾部，当我们获取一个元素时，它会返回队列头部的元素。它采用了 “wait－free” 算法来实现，该算法在 Michael &amp; Scott 算法上进行了一些修改，Michael &amp; Scott 算法的详细信息可以参见参考资料一。</p>
 <h2 id="ConcurrentLinkedQueue的结构"><a href="#ConcurrentLinkedQueue的结构" class="headerlink" title="ConcurrentLinkedQueue的结构"></a>ConcurrentLinkedQueue 的结构</h2><p>我们通过 ConcurrentLinkedQueue 的类图来分析一下它的结构。<br><img data-src="https://cdn.bytelife.net/blog/images/16139213452864.jpg"><br> （图 1） ConcurrentLinkedQueue 由 head 节点和 tair 节点组成，每个节点（Node）由节点元素（item）和指向下一个节点的引用 (next) 组成，节点与节点之间就是通过这个 next 关联起来，从而组成一张链表结构的队列。默认情况下 head 节点存储的元素为空，tair 节点等于 head 节点。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">private transient volatile Node&lt;E&gt; tail = head;</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Node&lt;E&gt; tail = head;</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="入队列"><a href="#入队列" class="headerlink" title="入队列"></a>入队列</h2><p>入队列就是将入队节点添加到队列的尾部。为了方便理解入队时队列的变化，以及 head 节点和 tair 节点的变化，每添加一个节点我就做了一个队列的快照图。<br><img data-src="https://cdn.bytelife.net/blog/images/16139213588471.jpg"><br> （图二）</p>
 <ul>
@@ -364,96 +382,20 @@
 <li>  第四步添加元素 4，设置元素 3 的 next 节点为元素 4 节点，然后将 tail 节点指向元素 4 节点。</li>
 </ul>
 <p>通过 debug 入队过程并观察 head 节点和 tail 节点的变化，发现入队主要做两件事情，第一是将入队节点设置成当前队列尾节点的下一个节点。第二是更新 tail 节点，如果 tail 节点的 next 节点不为空，则将入队节点设置成 tail 节点，如果 tail 节点的 next 节点为空，则将入队节点设置成 tail 的 next 节点，所以 tail 节点不总是尾节点，理解这一点对于我们研究源码会非常有帮助。 上面的分析让我们从单线程入队的角度来理解入队过程，但是多个线程同时进行入队情况就变得更加复杂，因为可能会出现其他线程插队的情况。如果有一个线程正在入队，那么它必须先获取尾节点，然后设置尾节点的下一个节点为入队节点，但这时可能有另外一个线程插队了，那么队列的尾节点就会发生变化，这时当前线程要暂停入队操作，然后重新获取尾节点。让我们再通过源码来详细分析下它是如何使用 CAS 算法来入队的。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public boolean offer(E e) {
-    if (e == null) throw new NullPointerException();
-    //入队前，创建一个入队节点
-    Node&lt;E&gt; n = new Node&lt;E&gt;(e);
-    retry:
-    //死循环，入队不成功反复入队。
-    for (;;) {
-        //创建一个指向tail节点的引用
-        Node&lt;E&gt; t = tail;
-        //p用来表示队列的尾节点，默认情况下等于tail节点。
-        Node&lt;E&gt; p = t;
-        for (int hops = 0; ; hops++) {
-        //获得p节点的下一个节点。
-            Node&lt;E&gt; next = succ(p);
-        //next节点不为空，说明p不是尾节点，需要更新p后在将它指向next节点
-            if (next != null) {
-               //循环了两次及其以上，并且当前节点还是不等于尾节点
-                if (hops &gt; HOPS &amp;&amp; t != tail)
-                    continue retry; 
-                p = next;
-            } 
-            //如果p是尾节点，则设置p节点的next节点为入队节点。
-            else if (p.casNext(null, n)) {
-              //如果tail节点有大于等于1个next节点，则将入队节点设置成tair节点，更新失败了也
-没关系，因为失败了表示有其他线程成功更新了tair节点。
-                if (hops &gt;= HOPS)
-                    casTail(t, n); // 更新tail节点，允许失败
-                return true;  
-            } 
-           // p有next节点,表示p的next节点是尾节点，则重新设置p节点
-            else {
-                p = succ(p);
-            }
-        }
-    }
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(E e)</span> </span>{</span><br><span class="line">    <span class="keyword">if</span> (e == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="comment">//入队前，创建一个入队节点</span></span><br><span class="line">    Node&lt;E&gt; n = <span class="keyword">new</span> Node&lt;E&gt;(e);</span><br><span class="line">    retry:</span><br><span class="line">    <span class="comment">//死循环，入队不成功反复入队。</span></span><br><span class="line">    <span class="keyword">for</span> (;;) {</span><br><span class="line">        <span class="comment">//创建一个指向tail节点的引用</span></span><br><span class="line">        Node&lt;E&gt; t = tail;</span><br><span class="line">        <span class="comment">//p用来表示队列的尾节点，默认情况下等于tail节点。</span></span><br><span class="line">        Node&lt;E&gt; p = t;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> hops = <span class="number">0</span>; ; hops++) {</span><br><span class="line">        <span class="comment">//获得p节点的下一个节点。</span></span><br><span class="line">            Node&lt;E&gt; next = succ(p);</span><br><span class="line">        <span class="comment">//next节点不为空，说明p不是尾节点，需要更新p后在将它指向next节点</span></span><br><span class="line">            <span class="keyword">if</span> (next != <span class="keyword">null</span>) {</span><br><span class="line">               <span class="comment">//循环了两次及其以上，并且当前节点还是不等于尾节点</span></span><br><span class="line">                <span class="keyword">if</span> (hops &gt; HOPS &amp;&amp; t != tail)</span><br><span class="line">                    <span class="keyword">continue</span> retry; </span><br><span class="line">                p = next;</span><br><span class="line">            } </span><br><span class="line">            <span class="comment">//如果p是尾节点，则设置p节点的next节点为入队节点。</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (p.casNext(<span class="keyword">null</span>, n)) {</span><br><span class="line">              <span class="comment">//如果tail节点有大于等于1个next节点，则将入队节点设置成tair节点，更新失败了也</span></span><br><span class="line">没关系，因为失败了表示有其他线程成功更新了tair节点。</span><br><span class="line">                <span class="keyword">if</span> (hops &gt;= HOPS)</span><br><span class="line">                    casTail(t, n); <span class="comment">// 更新tail节点，允许失败</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">            } </span><br><span class="line">           <span class="comment">// p有next节点,表示p的next节点是尾节点，则重新设置p节点</span></span><br><span class="line">            <span class="keyword">else</span> {</span><br><span class="line">                p = succ(p);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p><strong>从源代码角度来看整个入队过程主要做二件事情</strong>。第一是定位出尾节点，第二是使用 CAS 算法能将入队节点设置成尾节点的 next 节点，如不成功则重试。 <strong>第一步定位尾节点</strong>。tail 节点并不总是尾节点，所以每次入队都必须先通过 tail 节点来找到尾节点，尾节点可能就是 tail 节点，也可能是 tail 节点的 next 节点。代码中循环体中的第一个 if 就是判断 tail 是否有 next 节点，有则表示 next 节点可能是尾节点。获取 tail 节点的 next 节点需要注意的是 p 节点等于 p 的 next 节点的情况，只有一种可能就是 p 节点和 p 的 next 节点都等于空，表示这个队列刚初始化，正准备添加第一次节点，所以需要返回 head 节点。获取 p 节点的 next 节点代码如下</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">final Node&lt;E&gt; succ(Node&lt;E&gt; p) {
-         Node&lt;E&gt; next = p.getNext();
-         return (p == next) ? head : next;
-     }</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> Node&lt;E&gt; <span class="title">succ</span><span class="params">(Node&lt;E&gt; p)</span> </span>{</span><br><span class="line">         Node&lt;E&gt; next = p.getNext();</span><br><span class="line">         <span class="keyword">return</span> (p == next) ? head : next;</span><br><span class="line">     }</span><br></pre></td></tr></tbody></table></figure>
 
 <p><strong>第二步设置入队节点为尾节点</strong>。p.casNext (null, n) 方法用于将入队节点设置为当前队列尾节点的 next 节点，p 如果是 null 表示 p 是当前队列的尾节点，如果不为 null 表示有其他线程更新了尾节点，则需要重新获取当前队列的尾节点。 <strong>hops 的设计意图</strong>。上面分析过对于先进先出的队列入队所要做的事情就是将入队节点设置成尾节点，doug lea 写的代码和逻辑还是稍微有点复杂。那么我用以下方式来实现行不行？</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public boolean offer(E e) {
-        if (e == null)
-            throw new NullPointerException();
-        Node&lt;E&gt; n = new Node&lt;E&gt;(e);
-        for (;;) {
-            Node&lt;E&gt; t = tail;
-            if (t.casNext(null, n) &amp;&amp; casTail(t, n)) {
-                return true;
-            }
-        }
-    }</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(E e)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span> (e == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        Node&lt;E&gt; n = <span class="keyword">new</span> Node&lt;E&gt;(e);</span><br><span class="line">        <span class="keyword">for</span> (;;) {</span><br><span class="line">            Node&lt;E&gt; t = tail;</span><br><span class="line">            <span class="keyword">if</span> (t.casNext(<span class="keyword">null</span>, n) &amp;&amp; casTail(t, n)) {</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 
 <p>让 tail 节点永远作为队列的尾节点，这样实现代码量非常少，而且逻辑非常清楚和易懂。但是这么做有个缺点就是每次都需要使用循环 CAS 更新 tail 节点。如果能减少 CAS 更新 tail 节点的次数，就能提高入队的效率，所以 doug lea 使用 hops 变量来控制并减少 tail 节点的更新频率，并不是每次节点入队后都将 tail 节点更新成尾节点，而是当 tail 节点和尾节点的距离大于等于常量 HOPS 的值（默认等于 1）时才更新 tail 节点，tail 和尾节点的距离越长使用 CAS 更新 tail 节点的次数就会越少，但是距离越长带来的负面效果就是每次入队时定位尾节点的时间就越长，因为循环体需要多循环一次来定位出尾节点，但是这样仍然能提高入队的效率，因为从本质上来看它通过增加对 volatile 变量的读操作来减少了对 volatile 变量的写操作，而对 volatile 变量的写操作开销要远远大于读操作，所以入队效率会有所提升。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">private static final int HOPS = 1;</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HOPS = <span class="number">1</span>;</span><br></pre></td></tr></tbody></table></figure>
 
 <p>还有一点需要注意的是入队方法永远返回 true，所以不要通过返回值判断入队是否成功。</p>
 <h2 id="出队列"><a href="#出队列" class="headerlink" title="出队列"></a>出队列</h2><p>出队列的就是从队列里返回一个节点元素，并清空该节点对元素的引用。让我们通过每个节点出队的快照来观察下 head 节点的变化。<br><img data-src="https://cdn.bytelife.net/blog/images/16139221983079.jpg"><br> 从上图可知，并不是每次出队时都更新 head 节点，当 head 节点里有元素时，直接弹出 head 节点里的元素，而不会更新 head 节点。只有当 head 节点里没有元素时，出队操作才会更新 head 节点。这种做法也是通过 hops 变量来减少使用 CAS 更新 head 节点的消耗，从而提高出队效率。让我们再通过源码来深入分析下出队过程。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public E poll() {
-    Node&lt;E&gt; h = head;
-   // p表示头节点，需要出队的节点
-    Node&lt;E&gt; p = h;
-    for (int hops = 0;; hops++) {
-        // 获取p节点的元素
-        E item = p.getItem();
-        // 如果p节点的元素不为空，使用CAS设置p节点引用的元素为null,如果成功则返回p节点的元素。
-        if (item != null &amp;&amp; p.casItem(item, null)) {
-            if (hops &gt;= HOPS) {
-                //将p节点下一个节点设置成head节点
-                Node&lt;E&gt; q = p.getNext();
-                updateHead(h, (q != null) ? q : p);
-            }
-            return item;
-        }
-        // 如果头节点的元素为空或头节点发生了变化，这说明头节点已经被另外一个线程修改了。那么获取p节点的下一个节点 
-        Node&lt;&gt; next = succ(p);
-        // 如果p的下一个节点也为空，说明这个队列已经空了
-        if (next == null) {
-          // 更新头节点。
-            updateHead(h, p);
-            break;
-        }
-        // 如果下一个元素不为空，则将头节点的下一个节点设置成头节点
-        p = next;
-    }
-    return null;
-}</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">poll</span><span class="params">()</span> </span>{</span><br><span class="line">    Node&lt;E&gt; h = head;</span><br><span class="line">   <span class="comment">// p表示头节点，需要出队的节点</span></span><br><span class="line">    Node&lt;E&gt; p = h;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> hops = <span class="number">0</span>;; hops++) {</span><br><span class="line">        <span class="comment">// 获取p节点的元素</span></span><br><span class="line">        E item = p.getItem();</span><br><span class="line">        <span class="comment">// 如果p节点的元素不为空，使用CAS设置p节点引用的元素为null,如果成功则返回p节点的元素。</span></span><br><span class="line">        <span class="keyword">if</span> (item != <span class="keyword">null</span> &amp;&amp; p.casItem(item, <span class="keyword">null</span>)) {</span><br><span class="line">            <span class="keyword">if</span> (hops &gt;= HOPS) {</span><br><span class="line">                <span class="comment">//将p节点下一个节点设置成head节点</span></span><br><span class="line">                Node&lt;E&gt; q = p.getNext();</span><br><span class="line">                updateHead(h, (q != <span class="keyword">null</span>) ? q : p);</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> item;</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 如果头节点的元素为空或头节点发生了变化，这说明头节点已经被另外一个线程修改了。那么获取p节点的下一个节点 </span></span><br><span class="line">        Node&lt;&gt; next = succ(p);</span><br><span class="line">        <span class="comment">// 如果p的下一个节点也为空，说明这个队列已经空了</span></span><br><span class="line">        <span class="keyword">if</span> (next == <span class="keyword">null</span>) {</span><br><span class="line">          <span class="comment">// 更新头节点。</span></span><br><span class="line">            updateHead(h, p);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 如果下一个元素不为空，则将头节点的下一个节点设置成头节点</span></span><br><span class="line">        p = next;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>首先获取头节点的元素，然后判断头节点元素是否为空，如果为空，表示另外一个线程已经进行了一次出队操作将该节点的元素取走，如果不为空，则使用 CAS 的方式将头节点的引用设置成 null，如果 CAS 成功，则直接返回头节点的元素，如果不成功，表示另外一个线程已经进行了一次出队操作更新了 head 节点，导致元素发生了变化，需要重新获取头节点。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
@@ -578,22 +520,55 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jeffrey Hu</span>
 </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>
+  </div><script color="0,0,0" opacity="0.7" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
 
     </div>
   </footer>
 
   
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -657,99 +632,9 @@ document.addEventListener('pjax:success', () => {
   </script>
 
   
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script data-pjax>
-  (function() {
-    function leancloudSelector(url) {
-      url = encodeURI(url);
-      return document.getElementById(url).querySelector('.leancloud-visitors-count');
-    }
-
-    function addCount(Counter) {
-      const visitors = document.querySelector('.leancloud_visitors');
-      const url = decodeURI(visitors.id);
-      const title = visitors.dataset.flagTitle;
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            const counter = results[0];
-            leancloudSelector(url).innerText = counter.time + 1;
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .catch(error => {
-                console.error('Failed to save visitor count', error);
-              });
-          } else {
-              Counter('post', '/classes/Counter', { title, url, time: 1 })
-                .then(response => response.json())
-                .then(() => {
-                  leancloudSelector(url).innerText = 1;
-                })
-                .catch(error => {
-                  console.error('Failed to create', error);
-                });
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    function showTime(Counter) {
-      const visitors = document.querySelectorAll('.leancloud_visitors');
-      const entries = [...visitors].map(element => {
-        return decodeURI(element.id);
-      });
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          for (let url of entries) {
-            const target = results.find(item => item.url === url);
-            leancloudSelector(url).innerText = target ? target.time : 0;
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    const { app_id, app_key, server_url } = {"enable":true,"app_id":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","app_key":"bG7qAcDfxStNdWtC1T8EE9ku","server_url":"https://wapgmgrp.lc-cn-n1-shared.com","security":false};
-    function fetchData(api_server) {
-      const Counter = (method, url, data) => {
-        return fetch(`${api_server}/1.1${url}`, {
-          method,
-          headers: {
-            'X-LC-Id'     : app_id,
-            'X-LC-Key'    : app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        if (CONFIG.hostname !== location.hostname) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    }
-
-    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(response => response.json())
-        .then(({ api_server }) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
 
     <div class="pjax">
 
@@ -779,5 +664,5 @@ NexT.utils.loadComments('#valine-comments', () => {
 </script>
 
     </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>
