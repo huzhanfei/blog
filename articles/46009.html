@@ -25,7 +25,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="Copy-On-Write 简称 COW，是一种用于程序设计中的优化策略。其基本思路是，从一开始大家都在共享同一个内容，当某个人想要修改这个内容的时候，才会真正把内容 Copy 出去形成一个新的内容然后再改，这是一种延时懒惰策略。从 JDK1.5 开始 Java 并发包里提供了两个使用 CopyOnWrite 机制实现的并发容器，它们是 CopyOnWriteArrayList 和 CopyOnW">
 <meta property="og:type" content="article">
@@ -35,7 +35,7 @@
 <meta property="og:description" content="Copy-On-Write 简称 COW，是一种用于程序设计中的优化策略。其基本思路是，从一开始大家都在共享同一个内容，当某个人想要修改这个内容的时候，才会真正把内容 Copy 出去形成一个新的内容然后再改，这是一种延时懒惰策略。从 JDK1.5 开始 Java 并发包里提供了两个使用 CopyOnWrite 机制实现的并发容器，它们是 CopyOnWriteArrayList 和 CopyOnW">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-14T17:16:23.000Z">
-<meta property="article:modified_time" content="2021-02-21T15:52:42.365Z">
+<meta property="article:modified_time" content="2021-02-21T16:37:40.961Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="并发">
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-21 23:52:42" itemprop="dateModified" datetime="2021-02-21T23:52:42+08:00">2021-02-21</time>
+        <time title="修改时间：2021-02-22 00:37:40" itemprop="dateModified" datetime="2021-02-22T00:37:40+08:00">2021-02-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -351,108 +351,106 @@
 
 <h2 id="什么是CopyOnWrite容器"><a href="#什么是CopyOnWrite容器" class="headerlink" title="什么是CopyOnWrite容器"></a>什么是 CopyOnWrite 容器</h2><p>CopyOnWrite 容器即写时复制的容器。通俗的理解是当我们往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行 Copy，复制出一个新的容器，然后新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器。这样做的好处是我们可以对 CopyOnWrite 容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素。所以 CopyOnWrite 容器也是一种读写分离的思想，读和写不同的容器。</p>
 <h2 id="CopyOnWriteArrayList的实现原理"><a href="#CopyOnWriteArrayList的实现原理" class="headerlink" title="CopyOnWriteArrayList的实现原理"></a>CopyOnWriteArrayList 的实现原理</h2><p>在使用 CopyOnWriteArrayList 之前，我们先阅读其源码了解下它是如何实现的。以下代码是向 ArrayList 里添加元素，可以发现在添加的时候是需要加锁的，否则多线程写的时候会 Copy 出 N 个副本出来。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token class-name">T</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">final</span> <span class="token class-name">ReentrantLock</span> lock <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>lock<span class="token punctuation">;</span>
-    lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-        <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> elements <span class="token operator">=</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> len <span class="token operator">=</span> elements<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-        <span class="token comment">// 复制出新数组</span>
-        <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> newElements <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">copyOf</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span> len <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 把新元素添加到新数组里</span>
-        newElements<span class="token punctuation">[</span>len<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>
-        <span class="token comment">// 把原数组引用指向新数组</span>
-        <span class="token function">setArray</span><span class="token punctuation">(</span>newElements<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-        lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>  
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public boolean add(T e) {
+    final ReentrantLock lock = this.lock;
+    lock.lock();
+    try {
+        Object[] elements = getArray();
+        int len = elements.length;
+        // 复制出新数组
+        Object[] newElements = Arrays.copyOf(elements, len + 1);
+        // 把新元素添加到新数组里
+        newElements[len] = e;
+        // 把原数组引用指向新数组
+        setArray(newElements);
+        return true;
+    } finally {
+        lock.unlock();
+    }
+}  
 
-<span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">setArray</span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    array <span class="token operator">=</span> a<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+final void setArray(Object[] a) {
+    array = a;
+}</code></pre>
 
 <p>读的时候不需要加锁，如果读的时候有多个线程正在向 ArrayList 添加数据，读还是会读到旧的数据，因为写的时候不会锁住旧的 ArrayList。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">    <span class="token keyword">public</span> <span class="token class-name">E</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-```    
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public E get(int index) {
+    return get(getArray(), index);
+}</code></pre>
 
-JDK中并没有提供<span class="token class-name">CopyOnWriteMap</span>，我们可以参考<span class="token class-name">CopyOnWriteArrayList</span>来实现一个，基本代码如下：
-```java
-    <span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Collection</span><span class="token punctuation">;</span>
-    <span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Map</span><span class="token punctuation">;</span>
-    <span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Set</span><span class="token punctuation">;</span>
-    
-    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CopyOnWriteMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span> <span class="token keyword">implements</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">,</span> <span class="token class-name">Cloneable</span> <span class="token punctuation">{</span>
-        <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span> internalMap<span class="token punctuation">;</span>
-    
-        <span class="token keyword">public</span> <span class="token class-name">CopyOnWriteMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            internalMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    
-        <span class="token keyword">public</span> <span class="token class-name">V</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">K</span> key<span class="token punctuation">,</span> <span class="token class-name">V</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    
-            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span> newMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>internalMap<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token class-name">V</span> val <span class="token operator">=</span> newMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                internalMap <span class="token operator">=</span> newMap<span class="token punctuation">;</span>
-                <span class="token keyword">return</span> val<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    
-        <span class="token keyword">public</span> <span class="token class-name">V</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">Object</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> internalMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    
-        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">putAll</span><span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span> newData<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span> newMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token class-name">V</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>internalMap<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                newMap<span class="token punctuation">.</span><span class="token function">putAll</span><span class="token punctuation">(</span>newData<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                internalMap <span class="token operator">=</span> newMap<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>JDK 中并没有提供 CopyOnWriteMap，我们可以参考 CopyOnWriteArrayList 来实现一个，基本代码如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
+public class CopyOnWriteMap&lt;K, V&gt; implements Map&lt;K, V&gt;, Cloneable {
+    private volatile Map&lt;K, V&gt; internalMap;
+
+    public CopyOnWriteMap() {
+        internalMap = new HashMap&lt;K, V&gt;();
+    }
+
+    public V put(K key, V value) {
+
+        synchronized (this) {
+            Map&lt;K, V&gt; newMap = new HashMap&lt;K, V&gt;(internalMap);
+            V val = newMap.put(key, value);
+            internalMap = newMap;
+            return val;
+        }
+    }
+
+    public V get(Object key) {
+        return internalMap.get(key);
+    }
+
+    public void putAll(Map&lt;? extends K, ? extends V&gt; newData) {
+        synchronized (this) {
+            Map&lt;K, V&gt; newMap = new HashMap&lt;K, V&gt;(internalMap);
+            newMap.putAll(newData);
+            internalMap = newMap;
+        }
+    }
+}</code></pre>
 
 <p>实现很简单，只要了解了 CopyOnWrite 机制，我们可以实现各种 CopyOnWrite 容器，并且在不同的应用场景中使用。</p>
 <h2 id="CopyOnWrite的应用场景"><a href="#CopyOnWrite的应用场景" class="headerlink" title="CopyOnWrite的应用场景"></a>CopyOnWrite 的应用场景</h2><p>CopyOnWrite 并发容器用于读多写少的并发场景。比如白名单，黑名单，商品类目的访问和更新场景，假如我们有一个搜索网站，用户在这个网站的搜索框中，输入关键字搜索内容，但是某些关键字不允许被搜索。这些不能被搜索的关键字会被放在一个黑名单当中，黑名单每天晚上更新一次。当用户搜索时，会检查当前关键字在不在黑名单当中，如果在，则提示不能搜索。实现代码如下：</p>
-<pre><code class="java">    package com.ifeve.book;
-    
-    import java.util.Map;
-    
-    import com.ifeve.book.forkjoin.CopyOnWriteMap;
-    
-    /**
-     * 黑名单服务
-     *
-     * @author fangtengfei
-     *
-     */
-    public class BlackListServiceImpl {
-    
-        private static CopyOnWriteMap&lt;String, Boolean&gt; blackListMap = new CopyOnWriteMap&lt;String, Boolean&gt;(
-                1000);
-    
-        public static boolean isBlackList(String id) {
-            return blackListMap.get(id) == null ? false : true;
-        }
-    
-        public static void addBlackList(String id) {
-            blackListMap.put(id, Boolean.TRUE);
-        }
-    
-        /**
-         * 批量添加黑名单
-         *
-         * @param ids
-         */
-        public static void addBlackList(Map&lt;String,Boolean&gt; ids) {
-            blackListMap.putAll(ids);
-        }
-    
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">package com.ifeve.book;
+
+import java.util.Map;
+
+import com.ifeve.book.forkjoin.CopyOnWriteMap;
+
+/**
+ * 黑名单服务
+ *
+ * @author fangtengfei
+ *
+ */
+public class BlackListServiceImpl {
+
+    private static CopyOnWriteMap&lt;String, Boolean&gt; blackListMap = new CopyOnWriteMap&lt;String, Boolean&gt;(
+            1000);
+
+    public static boolean isBlackList(String id) {
+        return blackListMap.get(id) == null ? false : true;
     }
-</code></pre>
+
+    public static void addBlackList(String id) {
+        blackListMap.put(id, Boolean.TRUE);
+    }
+
+    /**
+     * 批量添加黑名单
+     *
+     * @param ids
+     */
+    public static void addBlackList(Map&lt;String,Boolean&gt; ids) {
+        blackListMap.putAll(ids);
+    }
+
+}</code></pre>
+
 <p>代码很简单，但是使用 CopyOnWriteMap 需要注意两件事情：</p>
 <ol>
 <li> 减少扩容开销。根据实际需要，初始化 CopyOnWriteMap 的大小，避免写时 CopyOnWriteMap 扩容的开销。</li>
@@ -594,12 +592,13 @@ JDK中并没有提供<span class="token class-name">CopyOnWriteMap</span>，我�
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
 var pjax = new Pjax({
   selectors: [
@@ -762,6 +761,16 @@ document.addEventListener('pjax:success', () => {
 
   
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://bytelife.net/articles/46009.html',]
+      });
+      });
+  </script>
 
 <script>
 NexT.utils.loadComments('#valine-comments', () => {
