@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
@@ -36,7 +36,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.bytelife.net/blog/images/16138522621984.jpg">
 <meta property="article:published_time" content="2016-07-18T04:28:53.000Z">
-<meta property="article:modified_time" content="2021-02-20T20:19:49.924Z">
+<meta property="article:modified_time" content="2021-02-21T15:40:34.266Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -197,7 +197,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">开始安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E5%AE%89%E8%A3%85nginx"><span class="nav-number">2.1.</span> <span class="nav-text">一。安装 nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E5%AE%89%E8%A3%85PHP"><span class="nav-number">2.2.</span> <span class="nav-text">二。安装 PHP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-%E5%AE%89%E8%A3%85-MySQL"><span class="nav-number">2.3.</span> <span class="nav-text">三。安装 MySQL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AEnginx"><span class="nav-number">3.1.</span> <span class="nav-text">1. 配置 nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEphp-fpm"><span class="nav-number">3.2.</span> <span class="nav-text">2. 配置 php-fpm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">4.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">开始测试</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Firewall-configuration-written-by-system-config-firewall"><span class="nav-number"></span> <span class="nav-text">Firewall configuration written by system-config-firewall</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Manual-customization-of-this-file-is-not-recommended"><span class="nav-number"></span> <span class="nav-text">Manual customization of this file is not recommended.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">开始安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E5%AE%89%E8%A3%85nginx"><span class="nav-number">1.1.</span> <span class="nav-text">一。安装 nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E5%AE%89%E8%A3%85PHP"><span class="nav-number">1.2.</span> <span class="nav-text">二。安装 PHP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Centos-5-X"><span class="nav-number"></span> <span class="nav-text">Centos 5.X</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOs-6-x"><span class="nav-number"></span> <span class="nav-text">CentOs 6.x</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOs-7-X"><span class="nav-number"></span> <span class="nav-text">CentOs 7.X</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-%E5%AE%89%E8%A3%85-MySQL"><span class="nav-number">0.1.</span> <span class="nav-text">三。安装 MySQL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9E%E8%BD%A6%EF%BC%8C%E6%A0%B9%E6%8D%AE%E6%8F%90%E7%A4%BA%E8%BE%93%E5%85%A5Y%EF%BC%8C%E8%BE%93%E5%85%A52%E6%AC%A1%E5%AF%86%E7%A0%81%EF%BC%8C%E5%9B%9E%E8%BD%A6%EF%BC%8C%E6%A0%B9%E6%8D%AE%E6%8F%90%E7%A4%BA%E4%B8%80%E8%B7%AF%E8%BE%93%E5%85%A5Y%EF%BC%8C%E6%9C%80%E5%90%8E%E5%87%BA%E7%8E%B0%EF%BC%9AThanks-for-using-MySQL"><span class="nav-number"></span> <span class="nav-text">回车，根据提示输入 Y，输入 2 次密码，回车，根据提示一路输入 Y，最后出现：Thanks for using MySQL!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySql%E5%AF%86%E7%A0%81%E8%AE%BE%E7%BD%AE%E5%AE%8C%E6%88%90%EF%BC%8C%E9%87%8D%E6%96%B0%E5%90%AF%E5%8A%A8-MySQL%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">MySql 密码设置完成，重新启动 MySQL：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AEnginx"><span class="nav-number">1.1.</span> <span class="nav-text">1. 配置 nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEphp-fpm"><span class="nav-number">1.2.</span> <span class="nav-text">2. 配置 php-fpm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-%E9%87%8D%E5%90%AF-%E5%90%AF%E5%8A%A8-%E5%81%9C%E6%AD%A2"><span class="nav-number"></span> <span class="nav-text">nginx 重启 | 启动 | 停止</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#php-fpm-%E9%87%8D%E5%90%AF-%E5%90%AF%E5%8A%A8-%E5%81%9C%E6%AD%A2"><span class="nav-number"></span> <span class="nav-text">php-fpm 重启 | 启动 | 停止</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mysql-%E9%87%8D%E5%90%AF-%E5%90%AF%E5%8A%A8-%E5%81%9C%E6%AD%A2"><span class="nav-number"></span> <span class="nav-text">mysql 重启 | 启动 | 停止</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-conf"><span class="nav-number"></span> <span class="nav-text">nginx.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#php-ini"><span class="nav-number"></span> <span class="nav-text">php.ini</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-cnf"><span class="nav-number"></span> <span class="nav-text">my.cnf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%A0%B9%E7%9B%AE%E5%BD%95"><span class="nav-number"></span> <span class="nav-text">项目根目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">开始测试</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -213,7 +213,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -226,7 +226,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -304,7 +304,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-21 04:19:49" itemprop="dateModified" datetime="2021-02-21T04:19:49+08:00">2021-02-21</time>
+        <time title="修改时间：2021-02-21 23:40:34" itemprop="dateModified" datetime="2021-02-21T23:40:34+08:00">2021-02-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -351,9 +351,10 @@
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
 <li><p>配置防火墙，开启 80 端口、3306 端口、如需使用 SSH 还应开启 22 端口、使用 FTP 需开启 21 端口、如果网站使用 SSL 访问需开启 443 端口： 删除原有的 iptables , 添加合适的配置</p>
 <p> rm -rf /etc/sysconfig/iptables<br> vi /etc/sysconfig/iptables</p>
- <a id="more"></a>
+ <span id="more"></span>
 <p> 添加如下内容 :</p>
-<p> ################################ 添加好之后防火墙规则如下所示 ################################<br> # Firewall configuration written by system-config-firewall<br> # Manual customization of this file is not recommended.<br> *filter<br> :INPUT ACCEPT [0:0]<br> :FORWARD ACCEPT [0:0]<br> :OUTPUT ACCEPT [0:0]<br> -A INPUT -m state –state ESTABLISHED,RELATED -j ACCEPT<br> -A INPUT -p icmp -j ACCEPT<br> -A INPUT -i lo -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 22 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 80 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 8080 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 8081 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 8082 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 3306 -j ACCEPT<br> -A INPUT -j REJECT –reject-with icmp-host-prohibited<br> -A FORWARD -j REJECT –reject-with icmp-host-prohibited<br> COMMIT<br> #######################################################################################</p>
+<p> ################################ 添加好之后防火墙规则如下所示 ################################</p>
+<h1 id="Firewall-configuration-written-by-system-config-firewall"><a href="#Firewall-configuration-written-by-system-config-firewall" class="headerlink" title="Firewall configuration written by system-config-firewall"></a>Firewall configuration written by system-config-firewall</h1><h1 id="Manual-customization-of-this-file-is-not-recommended"><a href="#Manual-customization-of-this-file-is-not-recommended" class="headerlink" title="Manual customization of this file is not recommended."></a>Manual customization of this file is not recommended.</h1><p> *filter<br> :INPUT ACCEPT [0:0]<br> :FORWARD ACCEPT [0:0]<br> :OUTPUT ACCEPT [0:0]<br> -A INPUT -m state –state ESTABLISHED,RELATED -j ACCEPT<br> -A INPUT -p icmp -j ACCEPT<br> -A INPUT -i lo -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 22 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 80 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 8080 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 8081 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 8082 -j ACCEPT<br> -A INPUT -m state –state NEW -m tcp -p tcp –dport 3306 -j ACCEPT<br> -A INPUT -j REJECT –reject-with icmp-host-prohibited<br> -A FORWARD -j REJECT –reject-with icmp-host-prohibited<br> COMMIT<br> #######################################################################################</p>
 <p> <code>:wq</code> 保存退出，重启防火墙使配置生效</p>
 <p> /etc/init.d/iptables restart</p>
 </li>
@@ -371,13 +372,13 @@
 <h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><h3 id="一-安装nginx"><a href="#一-安装nginx" class="headerlink" title="一. 安装nginx"></a>一。安装 nginx</h3><p>#删除系统自带的软件包<br>yum remove httpd* php*<br>#安装 nginx<br>yum install -y nginx<br>#设置 nginx 开机启动<br>chkconfig nginx on<br>#启动 nginx<br>service nginx start</p>
 <h3 id="二-安装PHP"><a href="#二-安装PHP" class="headerlink" title="二. 安装PHP"></a>二。安装 PHP</h3><ol>
 <li>检查当前安装的 PHP 包 yum list installed | grep php 如果有安装的 PHP 包，先删除他们，如: yum remove php.x86_64 php-cli.x86_64 php-common.x86_64</li>
-<li> 配置安装包源: # Centos 5.X<br> rpm -Uvh <a target="_blank" rel="noopener" href="http://mirror.webtatic.com/yum/el5/latest.rpm">http://mirror.webtatic.com/yum/el5/latest.rpm</a><br> # CentOs 6.x<br> rpm -Uvh <a target="_blank" rel="noopener" href="http://mirror.webtatic.com/yum/el6/latest.rpm">http://mirror.webtatic.com/yum/el6/latest.rpm</a><br> # CentOs 7.X<br> rpm -Uvh <a target="_blank" rel="noopener" href="https://mirror.webtatic.com/yum/el7/epel-release.rpm">https://mirror.webtatic.com/yum/el7/epel-release.rpm</a><br> rpm -Uvh <a target="_blank" rel="noopener" href="https://mirror.webtatic.com/yum/el7/webtatic-release.rpm">https://mirror.webtatic.com/yum/el7/webtatic-release.rpm</a> 如果想删除上面安装的包，重新安装 rpm -qa | grep webstatic<br> rpm -e  [上面搜索到的包即可]</li>
+<li> 配置安装包源:<h1 id="Centos-5-X"><a href="#Centos-5-X" class="headerlink" title="Centos 5.X"></a>Centos 5.X</h1> rpm -Uvh <a target="_blank" rel="noopener" href="http://mirror.webtatic.com/yum/el5/latest.rpm">http://mirror.webtatic.com/yum/el5/latest.rpm</a><h1 id="CentOs-6-x"><a href="#CentOs-6-x" class="headerlink" title="CentOs 6.x"></a>CentOs 6.x</h1> rpm -Uvh <a target="_blank" rel="noopener" href="http://mirror.webtatic.com/yum/el6/latest.rpm">http://mirror.webtatic.com/yum/el6/latest.rpm</a><h1 id="CentOs-7-X"><a href="#CentOs-7-X" class="headerlink" title="CentOs 7.X"></a>CentOs 7.X</h1> rpm -Uvh <a target="_blank" rel="noopener" href="https://mirror.webtatic.com/yum/el7/epel-release.rpm">https://mirror.webtatic.com/yum/el7/epel-release.rpm</a><br> rpm -Uvh <a target="_blank" rel="noopener" href="https://mirror.webtatic.com/yum/el7/webtatic-release.rpm">https://mirror.webtatic.com/yum/el7/webtatic-release.rpm</a> 如果想删除上面安装的包，重新安装 rpm -qa | grep webstatic<br> rpm -e  [上面搜索到的包即可]</li>
 <li> 执行安装 yum -y install php56w.x86_64<br> yum -y –enablerepo=webtatic install php56w-devel<br> yum -y install php56w-xml.x86_64 php56w-gd.x86_64 php56w-ldap.x86_64 php56w-mbstring.x86_64 php56w-mcrypt.x86_64 php56w-mysql.x86_64 php56w-pdo.x86_64 php56w-opcache.x86_64</li>
 <li> 安装 PHP FPM yum -y install php56w-fpm<br> #设置 php-fpm 开机启动<br> chkconfig php-fpm on<br> #启动 php-fpm<br> /etc/init.d/php-fpm start 注：如果想更换到 php5.5 或 5.4 版本，直接把上面的 56w 换成 55w 或者 54w 就可以了</li>
 </ol>
 <h3 id="三-安装-MySQL"><a href="#三-安装-MySQL" class="headerlink" title="三. 安装 MySQL"></a>三。安装 MySQL</h3><ol>
 <li>安装 yum install -y mysql mysql-server<br> #启动 MySQL<br> /etc/init.d/mysqld start<br> #设为开机启动<br> chkconfig mysqld on<br> #拷贝配置文件（注意：如果 /etc 目录下面默认有一个 my.cnf，直接覆盖即可）<br> cp /usr/share/mysql/my-medium.cnf /etc/my.cnf</li>
-<li> 为 root 账户设置密码 mysql_secure_installation<br> # 回车，根据提示输入 Y，输入 2 次密码，回车，根据提示一路输入 Y，最后出现：Thanks for using MySQL!<br> #  MySql 密码设置完成，重新启动 MySQL：<br> #重启<br> /etc/init.d/mysqld restart<br> #停止<br> /etc/init.d/mysqld stop<br> #启动<br> /etc/init.d/mysqld start</li>
+<li> 为 root 账户设置密码 mysql_secure_installation<h1 id="回车，根据提示输入Y，输入2次密码，回车，根据提示一路输入Y，最后出现：Thanks-for-using-MySQL"><a href="#回车，根据提示输入Y，输入2次密码，回车，根据提示一路输入Y，最后出现：Thanks-for-using-MySQL" class="headerlink" title="回车，根据提示输入Y，输入2次密码，回车，根据提示一路输入Y，最后出现：Thanks for using MySQL!"></a>回车，根据提示输入 Y，输入 2 次密码，回车，根据提示一路输入 Y，最后出现：Thanks for using MySQL!</h1><h1 id="MySql密码设置完成，重新启动-MySQL："><a href="#MySql密码设置完成，重新启动-MySQL：" class="headerlink" title="MySql密码设置完成，重新启动 MySQL："></a>MySql 密码设置完成，重新启动 MySQL：</h1> #重启<br> /etc/init.d/mysqld restart<br> #停止<br> /etc/init.d/mysqld stop<br> #启动<br> /etc/init.d/mysqld start</li>
 </ol>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="1-配置nginx"><a href="#1-配置nginx" class="headerlink" title="1. 配置nginx"></a>1. 配置 nginx</h3><p>rm -rf /etc/nginx/conf.d/*<br>vi /etc/nginx/conf.d/default.conf</p>
 <p>添加如下内容 :</p>
@@ -402,9 +403,14 @@ location / {
 <p>将用户和用户组设置为 nginx, 默认为 Apache, 如:</p>
 <p>#修改用户为 nginx<br>user = nginx<br> #修改组为 nginx<br>group = nginx</p>
 <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>启动命令:</p>
-<p># nginx 重启 | 启动 | 停止<br>service nginx restart | start | stop<br># php-fpm 重启 | 启动 | 停止<br>service php-fpm restart | start | stop<br># mysql 重启 | 启动 | 停止<br>service mysqld restart | start | stop</p>
+<h1 id="nginx-重启-启动-停止"><a href="#nginx-重启-启动-停止" class="headerlink" title="nginx 重启 | 启动 | 停止"></a>nginx 重启 | 启动 | 停止</h1><p>service nginx restart | start | stop </p>
+<h1 id="php-fpm-重启-启动-停止"><a href="#php-fpm-重启-启动-停止" class="headerlink" title="php-fpm 重启 | 启动 | 停止"></a>php-fpm 重启 | 启动 | 停止</h1><p>service php-fpm restart | start | stop </p>
+<h1 id="mysql-重启-启动-停止"><a href="#mysql-重启-启动-停止" class="headerlink" title="mysql 重启 | 启动 | 停止"></a>mysql 重启 | 启动 | 停止</h1><p>service mysqld restart | start | stop</p>
 <p>一些文件的目录:</p>
-<p># nginx.conf<br>/etc/nginx/nginx.conf<br># php.ini<br>/etc/php.ini<br># my.cnf<br>/etc/my.cnf<br># 项目根目录<br>/var/www</p>
+<h1 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h1><p>/etc/nginx/nginx.conf</p>
+<h1 id="php-ini"><a href="#php-ini" class="headerlink" title="php.ini"></a>php.ini</h1><p>/etc/php.ini</p>
+<h1 id="my-cnf"><a href="#my-cnf" class="headerlink" title="my.cnf"></a>my.cnf</h1><p>/etc/my.cnf</p>
+<h1 id="项目根目录"><a href="#项目根目录" class="headerlink" title="项目根目录"></a>项目根目录</h1><p>/var/www</p>
 <h2 id="开始测试"><a href="#开始测试" class="headerlink" title="开始测试"></a>开始测试</h2><p>vi /var/www/index.php</p>
 <p>添加以下代码</p>
 <!--?php

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
@@ -27,28 +27,28 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="本文转载自：QQ 兴趣部落：java 学习（部落） 原文地址：点击访问  实现方式：JDK 实现，CC，BC JDK 提供比较基础的底层的实现；CC 提供一些简化的操作；BC 提供补充 一、Base64 加密 非常简单，加密解密就一个函数。">
+<meta name="description" content="本文转载自：QQ 兴趣部落：java 学习（部落） 原文地址：点击访问  实现方式：JDK 实现，CC，BC JDK 提供比较基础的底层的实现；CC 提供一些简化的操作；BC 提供补充  一、Base64 加密非常简单，加密解密就一个函数。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 加解密与数字签名">
 <meta property="og:url" content="https://bytelife.net/articles/17609.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="本文转载自：QQ 兴趣部落：java 学习（部落） 原文地址：点击访问  实现方式：JDK 实现，CC，BC JDK 提供比较基础的底层的实现；CC 提供一些简化的操作；BC 提供补充 一、Base64 加密 非常简单，加密解密就一个函数。">
+<meta property="og:description" content="本文转载自：QQ 兴趣部落：java 学习（部落） 原文地址：点击访问  实现方式：JDK 实现，CC，BC JDK 提供比较基础的底层的实现；CC 提供一些简化的操作；BC 提供补充  一、Base64 加密非常简单，加密解密就一个函数。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-42-49.jpg">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-43-58.jpg">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-45-09.jpg">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-46-13.png">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-47-25.jpg">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-48-36.jpg">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-49-48.jpg">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-50-57.jpg">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-07.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139189571991.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139189978006.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139190043769.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139190106650.png">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139191275449.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139191732818.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139191678581.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139191628420.jpg">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139191572820.jpg">
 <meta property="article:published_time" content="2016-09-07T07:41:36.000Z">
-<meta property="article:modified_time" content="2021-02-20T20:19:49.924Z">
+<meta property="article:modified_time" content="2021-02-21T15:40:34.266Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-42-49.jpg">
+<meta name="twitter:image" content="https://cdn.bytelife.net/blog/images/16139189571991.jpg">
 
 
 <link rel="canonical" href="https://bytelife.net/articles/17609.html">
@@ -192,7 +192,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -205,6 +205,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Base64%E5%8A%A0%E5%AF%86"><span class="nav-number">1.</span> <span class="nav-text">一、Base64 加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95%E5%8A%A0%E5%AF%86%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E4%B8%BB%E8%A6%81%E7%94%A8%E4%BA%8E%E9%AA%8C%E8%AF%81%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">二、消息摘要算法加密 ———— 主要用于验证数据完整性。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AF%B9%E7%A7%B0%E5%8A%A0%E8%A7%A3%E5%AF%86"><span class="nav-number">3.</span> <span class="nav-text">三、对称加解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E8%A7%A3%E5%AF%86"><span class="nav-number">4.</span> <span class="nav-text">四、非对称加解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%EF%BC%8EJava%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="nav-number">5.</span> <span class="nav-text">五．Java 实现数字签名</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -220,7 +221,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -233,7 +234,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -311,7 +312,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-21 04:19:49" itemprop="dateModified" datetime="2021-02-21T04:19:49+08:00">2021-02-21</time>
+        <time title="修改时间：2021-02-21 23:40:34" itemprop="dateModified" datetime="2021-02-21T23:40:34+08:00">2021-02-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -357,10 +358,16 @@
         <blockquote>
 <p>本文转载自：QQ 兴趣部落：<strong>java 学习（部落）</strong> <a target="_blank" rel="noopener" href="http://buluo.qq.com/p/detail.html?bid=11148&amp;pid=1064765-1472376406&amp;from=share_qq">原文地址：点击访问</a></p>
 </blockquote>
-<p>实现方式：JDK 实现，CC，BC JDK 提供比较基础的底层的实现；CC 提供一些简化的操作；BC 提供补充 <strong>一、Base64 加密</strong> 非常简单，加密解密就一个函数。 </p>
-<a id="more"></a>
+<p>实现方式：JDK 实现，CC，BC JDK 提供比较基础的底层的实现；CC 提供一些简化的操作；BC 提供补充 </p>
+<h2 id="一、Base64加密"><a href="#一、Base64加密" class="headerlink" title="一、Base64加密"></a>一、Base64 加密</h2><p>非常简单，加密解密就一个函数。 </p>
+<span id="more"></span>
 
-<p>代码如下： <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-42-49.jpg"> <strong>二、消息摘要算法加密 ———— 主要用于验证数据完整性。</strong> MD（消息摘要）： <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-43-58.jpg"> SHA（安全散列） JDK 实现和 MD 一样。 BC 实现如下：（Digest 类） <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-45-09.jpg"> CC 实现最简单（就是一个 DigestUtils 的静态方法）： <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-46-13.png"> MAC（消息认证码）—— 含有密钥的散列函数算法 兼容 MD 和 SHA 的特性，但加入了密钥。 主要 JDK 和 Bouncy Castle 实现。 JDK 实现：获取或定义密钥（byte [] 数组），Mac 类 实例化、初始化、执行。 BC 实现：Hmac 类 实例化、初始化、执行。 ** 三、对称加解密&nbsp;** 对称加密指加密和解密使用相同密钥的加密算法。这里将介绍 DES、3 重 DES、AES 和 PBE 几种常见的对称加密算法在 Java 中的实现。 DES、3DES、AES（密钥）、PBE（口令和盐） DES： JDK 实现：生成并转换 Key；Cipher 类的实例化（getInstance）、初始化（init 选择模式与 Key）；执行（doFinal）加解密。 推荐 BC 实现方式：Security.addProvider (new BouncyCastleProvider ()); 然后剩下的代码就可以和 JDK 实现代码基本一样了。 3DES、AES 实现基本一样，所以就不一一介绍。。。 PBE（基于口令的加密） 特点：通过 salt + 口令 实现：初始化盐；生成口令；Cipher 类加解密。 ** 四、非对称加解密&nbsp;** 非对称加密算法是一种基于密钥的保密方法，需要公开密钥和私有密钥，在文件加密、尤其是网银中应用广泛。这里主要介绍非对称加密算法的实现过程，DH、RSA 和 ELGamal 等几种常见的非对称加密算法的在 Java 中的应用。 概念：公钥、私钥； DH (密钥交换算法)： 代码实现有些麻烦 —— 初始化发送方密钥 -KeyPairGenerator ：能产生 KeyPair -KeyPair ：常用的密钥载体，称为密钥对，分为公钥 PublicKey 与私钥 PrivateKey。 -PublicKey —— 初始化接收方密钥 -KeyFactory ：密钥工厂，生成密钥，通过某种密钥的规范来还原密钥 -X509EncodedKeySpec ：根据 ASN.1 进行密钥编码 -DHPublicKey ： -DHParameterSpec ：遵从 DH 算法发参数的集合 -KeyPairGenerator ： -PrivateKey ： —— 双发根据公布的对方的 PublicKey 构建本地密钥， —— 构建出来的本地密钥是一致的 -KeyAgreement ：用来提供密钥一致性协议 -SecretKey ：秘密密钥，对称 -KeyFactory -X509EncodedKeySpec -PublicKey —— 加密、解密（利用本地密钥） -Cipher ：为加密和解密提供密码功能的类 <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-47-25.jpg"> 解释： 首先，发送方产生密钥对，并公开 公钥；接收方根据这个公钥产生密钥对，然后也公开自己的 公钥。 然后，发送方根据接收方的 公钥 产生自己本地的密钥（本地密钥一般是采用对称密钥），接收方也根据发送方的 公钥 产生自己本地的密钥。其实，这样双方产生的本地密钥是相同的。 最后，双方就可以利用本地密钥进行加解密了。 RSA（基于因子分解）：代码实现较为简单 初始化密钥（包含公钥、密钥）。 可以利用公钥加密，私钥解密；也可以私钥加密，公钥解密 使用过程：双方分别掌握公钥与私钥中的一种，然后就可以加密并传输数据了。 <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-48-36.jpg"> <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-49-48.jpg"> <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-50-57.jpg"> EIGamal（基于离散因数） JDK 没有实现，只能利用 BC 实现。 首先，Security.addProvider (new BouncyCastleProvider ()); 之后实现类似于 RSA。 <img data-src="https://cdn.javacodes.cn/files/2016/09/2016-09-07_07-52-07.jpg"> 五．Java 实现数字签名 数字签名用于鉴别数字信息，公钥和私钥，私钥对数据签名，公钥用于检验。 过程为：首先初始化一个密钥对，在密钥对的基础上进行签名与验证。 1、RSA：既可以加解密，也可以数字签名。 初始化密钥对：KeyPairGenerator、KeyPair、RSAPublic、PSAPrivate； 执行签名；Signature 类 验证签名；Signature 类 2、DSA（数字签名算法） 初始化密钥对，公钥、私钥； 执行签名，用私钥签名； 验证签名，用公钥验证； 3、ECDSA 微软序列号便是采用的 ECDSA 算法进行的签名。速度快，强度高，签名短。 初始化密钥对； 执行签名； 验证签名</p>
+<p>代码如下：<br><img data-src="https://cdn.bytelife.net/blog/images/16139189571991.jpg"></p>
+<h2 id="二、消息摘要算法加密————主要用于验证数据完整性。"><a href="#二、消息摘要算法加密————主要用于验证数据完整性。" class="headerlink" title="二、消息摘要算法加密————主要用于验证数据完整性。"></a>二、消息摘要算法加密 ———— 主要用于验证数据完整性。</h2><p> MD（消息摘要）：<br> <img data-src="https://cdn.bytelife.net/blog/images/16139189978006.jpg"><br> SHA（安全散列） JDK 实现和 MD 一样。 BC 实现如下：（Digest 类）<br> <img data-src="https://cdn.bytelife.net/blog/images/16139190043769.jpg"><br> CC 实现最简单（就是一个 DigestUtils 的静态方法）：<br> <img data-src="https://cdn.bytelife.net/blog/images/16139190106650.png"><br>MAC（消息认证码）<br>含有密钥的散列函数算法，兼容 MD 和 SHA 的特性，但加入了密钥。<br>主要 JDK 和 Bouncy Castle 实现。 JDK 实现：获取或定义密钥（byte [] 数组），Mac 类 实例化、初始化、执行。 BC 实现：Hmac 类 实例化、初始化、执行。 </p>
+<h2 id="三、对称加解密"><a href="#三、对称加解密" class="headerlink" title="三、对称加解密"></a>三、对称加解密</h2><p> 对称加密指加密和解密使用相同密钥的加密算法。这里将介绍 DES、3 重 DES、AES 和 PBE 几种常见的对称加密算法在 Java 中的实现。 DES、3DES、AES（密钥）、PBE（口令和盐） DES： JDK 实现：生成并转换 Key；Cipher 类的实例化（getInstance）、初始化（init 选择模式与 Key）；执行（doFinal）加解密。 推荐 BC 实现方式：Security.addProvider (new BouncyCastleProvider ()); 然后剩下的代码就可以和 JDK 实现代码基本一样了。 3DES、AES 实现基本一样，所以就不一一介绍。。。 PBE（基于口令的加密） 特点：通过 salt + 口令 实现：初始化盐；生成口令；Cipher 类加解密。 </p>
+<h2 id="四、非对称加解密"><a href="#四、非对称加解密" class="headerlink" title="四、非对称加解密"></a>四、非对称加解密</h2><p>非对称加密算法是一种基于密钥的保密方法，需要公开密钥和私有密钥，在文件加密、尤其是网银中应用广泛。这里主要介绍非对称加密算法的实现过程，DH、RSA 和 ELGamal 等几种常见的非对称加密算法的在 Java 中的应用。<br>概念：公钥、私钥； DH (密钥交换算法)： 代码实现有些麻烦<br>—— 初始化发送方密钥<br>-KeyPairGenerator ：能产生 KeyPair<br>-KeyPair ：常用的密钥载体，称为密钥对，分为公钥 PublicKey 与私钥 PrivateKey。 -PublicKey<br>—— 初始化接收方密钥<br>    - KeyFactory ：密钥工厂，生成密钥，通过某种密钥的规范来还原密钥 -X509EncodedKeySpec ：根据 ASN.1 进行密钥编码<br>    - DHPublicKey ：<br>    - DHParameterSpec ：遵从 DH 算法发参数的集合 -KeyPairGenerator ：<br>    - PrivateKey ：<br>—— 双发根据公布的对方的 PublicKey 构建本地密钥，<br>—— 构建出来的本地密钥是一致的 -KeyAgreement ：用来提供密钥一致性协议 -SecretKey ：秘密密钥，对称 -KeyFactory -X509EncodedKeySpec -PublicKey<br>—— 加密、解密（利用本地密钥） -Cipher ：为加密和解密提供密码功能的类<br><img data-src="https://cdn.bytelife.net/blog/images/16139191275449.jpg"></p>
+<p>解释： 首先，发送方产生密钥对，并公开 公钥；接收方根据这个公钥产生密钥对，然后也公开自己的 公钥。 然后，发送方根据接收方的 公钥 产生自己本地的密钥（本地密钥一般是采用对称密钥），接收方也根据发送方的 公钥 产生自己本地的密钥。其实，这样双方产生的本地密钥是相同的。 最后，双方就可以利用本地密钥进行加解密了。 RSA（基于因子分解）：代码实现较为简单 初始化密钥（包含公钥、密钥）。 可以利用公钥加密，私钥解密；也可以私钥加密，公钥解密 使用过程：双方分别掌握公钥与私钥中的一种，然后就可以加密并传输数据了。<br><img data-src="https://cdn.bytelife.net/blog/images/16139191732818.jpg"><br><img data-src="https://cdn.bytelife.net/blog/images/16139191678581.jpg"><br><img data-src="https://cdn.bytelife.net/blog/images/16139191628420.jpg"><br>EIGamal（基于离散因数） JDK 没有实现，只能利用 BC 实现。 首先，Security.addProvider (new BouncyCastleProvider ()); 之后实现类似于 RSA。<br><img data-src="https://cdn.bytelife.net/blog/images/16139191572820.jpg"></p>
+<h2 id="五．Java实现数字签名"><a href="#五．Java实现数字签名" class="headerlink" title="五．Java实现数字签名"></a>五．Java 实现数字签名</h2><p>数字签名用于鉴别数字信息，公钥和私钥，私钥对数据签名，公钥用于检验。 过程为：首先初始化一个密钥对，在密钥对的基础上进行签名与验证。<br>1、RSA：既可以加解密，也可以数字签名。 初始化密钥对：KeyPairGenerator、KeyPair、RSAPublic、PSAPrivate； 执行签名；Signature 类 验证签名；Signature 类<br>2、DSA（数字签名算法） 初始化密钥对，公钥、私钥； 执行签名，用私钥签名； 验证签名，用公钥验证；<br>3、ECDSA 微软序列号便是采用的 ECDSA 算法进行的签名。速度快，强度高，签名短。 初始化密钥对； 执行签名； 验证签名</p>
 
     </div>
 
@@ -374,6 +381,9 @@
       <div class="popular-posts-title"><a href="/articles/12742.html" rel="bookmark">ConcurrentLinkedQueue 的实现原理分析</a></div>
     </li>
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/articles/65492.html" rel="bookmark">HashMap 多线程并发问题分析</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/articles/33262.html" rel="bookmark">IntelliJ Idea 常用快捷键列表</a></div>
     </li>
     <li class="popular-posts-item">
@@ -381,9 +391,6 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/articles/20740.html" rel="bookmark">Java 8 中新的 Date 和 Time 类入门详解</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/46009.html" rel="bookmark">Java 中的 Copy-On-Write 容器</a></div>
     </li>
   </ul>
 

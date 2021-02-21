@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
@@ -34,14 +34,14 @@
 <meta property="og:site_name" content="ByteLife">
 <meta property="og:description" content="在默认情况下，Spring 的应用上下文中所有的 bean 都是单例的形式创建的。也就是说，不管给定的一个 bean 被注入到其它 bean 多少次，每次注入的都是同一个实例。 在大多数情况下，单例 bean 是非常理想的方案。初始化和垃圾回收对象实例所带来的成本只留给一些小规模任务，在这些任务中，让对象保持无状态并且在应用中反复重用这些对象可能并不合理。 有时候你所使用的类可能是易变的，它们会保">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.javacodes.cn/files/2016/10/2016-10-20_09-27-28.png">
+<meta property="og:image" content="https://cdn.bytelife.net/blog/images/16139181440326.png">
 <meta property="article:published_time" content="2016-10-20T09:31:11.000Z">
-<meta property="article:modified_time" content="2021-02-20T20:19:49.924Z">
+<meta property="article:modified_time" content="2021-02-21T15:40:34.266Z">
 <meta property="article:author" content="Jeffrey Hu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.javacodes.cn/files/2016/10/2016-10-20_09-27-28.png">
+<meta name="twitter:image" content="https://cdn.bytelife.net/blog/images/16139181440326.png">
 
 
 <link rel="canonical" href="https://bytelife.net/articles/8890.html">
@@ -214,7 +214,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -227,7 +227,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -305,7 +305,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-21 04:19:49" itemprop="dateModified" datetime="2021-02-21T04:19:49+08:00">2021-02-21</time>
+        <time title="修改时间：2021-02-21 23:40:34" itemprop="dateModified" datetime="2021-02-21T23:40:34+08:00">2021-02-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -351,7 +351,7 @@
         <p>在默认情况下，Spring 的应用上下文中所有的 bean 都是单例的形式创建的。也就是说，不管给定的一个 bean 被注入到其它 bean 多少次，每次注入的都是同一个实例。</p>
 <p>在大多数情况下，单例 bean 是非常理想的方案。初始化和垃圾回收对象实例所带来的成本只留给一些小规模任务，在这些任务中，让对象保持无状态并且在应用中反复重用这些对象可能并不合理。</p>
 <p>有时候你所使用的类可能是易变的，它们会保持一些状态，比如我们在 Web 购物商城中常见的购物车功能，不同的用户不可能同时使用同一个购物车实例，因此重用是不安全的。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h3 id="（一）Spring中的作用域"><a href="#（一）Spring中的作用域" class="headerlink" title="（一）Spring中的作用域"></a>（一）Spring 中的作用域</h3><p>Spring 提供了多种作用域，可以基于这些作用域来创建 bean，包括：</p>
 <ul>
@@ -361,88 +361,95 @@
 <li>  请求（Request）：在 Web 应用中，为每次请求创建一个 bean 实例；</li>
 </ul>
 <p>如果需要自定义 bean 的作用域，需要使用 @Scope 注解，他可以与 @Component 或 @Bean 组合使用：</p>
-<p>@Component<br>@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)<br>public class Cake implements Dessert {<br>}</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@Scope</span><span class="token punctuation">(</span><span class="token class-name">ConfigurableBeanFactory</span><span class="token punctuation">.</span>SCOPE_PROTOTYPE<span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Cake</span> <span class="token keyword">implements</span> <span class="token class-name">Dessert</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里使用 ConfigurableBeanFactory 类的 SCOPE_PROTOTYPE 常亮设置为原型作用域。当然你也可以使用下面这种方式：</p>
-<p>@Component<br>@Scope(“prototype”)<br>public class Cake implements Dessert {<br>}</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@Scope</span><span class="token punctuation">(</span><span class="token string">"prototype"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Cake</span> <span class="token keyword">implements</span> <span class="token class-name">Dessert</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>但是尽可能使用 ConfigurableBeanFactory.SCOPE_PROTOTYPE，这更不容易出错。</p>
 <p>当然也可以在 Java 配置中将作用域设置为原型 bean，例如：</p>
-<pre><code>@Bean
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public Dessert cake(){
-    return new Cake();
-}
-</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
+<span class="token annotation punctuation">@Scope</span><span class="token punctuation">(</span><span class="token class-name">ConfigurableBeanFactory</span><span class="token punctuation">.</span>SCOPE_PROTOTYPE<span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">Dessert</span> <span class="token function">cake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Cake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>同样，也可以在 XML 中配置，应用<bean>元素的 scope 属性：</bean></p>
-<p><bean id="cake" class="cn.javacodes.spring.beans.Cake" scope="prototype"></bean></p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cake<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cn.javacodes.spring.beans.Cake<span class="token punctuation">"</span></span> <span class="token attr-name">scope</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>prototype<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="（二）使用会话和请求作用域"><a href="#（二）使用会话和请求作用域" class="headerlink" title="（二）使用会话和请求作用域"></a>（二）使用会话和请求作用域</h3><p>在 Web 应用中，我们经常需要操作两种作用域：会话和请求。</p>
 <p>就像前面所说，在购物商城的购物车实例上，单例和原型作用域自然不能满足我们的需求，我们希望为每一个会话都创建一个购物车，那么这里会话作用域就是最完美的选择。</p>
 <p>下面来简单模拟一下购物车的作用域场景：</p>
-<pre><code>@Bean
-@Scope(
-    value = WebApplicationContext.SCOPE_SESSION,
-    proxyMode = ScopedProxyMode.INTERFACES)
-public ShoppingCart cart(){
-   // ....
-}
-</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
+<span class="token annotation punctuation">@Scope</span><span class="token punctuation">(</span>
+    value <span class="token operator">=</span> <span class="token class-name">WebApplicationContext</span><span class="token punctuation">.</span>SCOPE_SESSION<span class="token punctuation">,</span>
+    proxyMode <span class="token operator">=</span> <span class="token class-name">ScopedProxyMode</span><span class="token punctuation">.</span>INTERFACES<span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">ShoppingCart</span> <span class="token function">cart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   <span class="token comment">// ....</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里，将 value 值设置成了 WebApplicationContext 中的 SCOPTE_SESSION 常量（值为 session）。这会告诉 Spring 为 Web 应用中的每个会话创建一个 ShoppingCart。对于每一个会话来说，这个 bean 实际上相当于是单例的。</p>
 <p>这里需要注意，@Scope 还有一个 proxyMode 属性，它被设置为 ScopedProxyMode.INTERFACES。我们先不考虑这个属性，先来理解一下对 Spring 作用域的理解。</p>
 <p>现在假设我们要将 ShoppingCart bean 注入到单例 StoreService bean 的 Setter 中，如下所示：</p>
-<p>@Component<br>public class StoreService {</p>
-<pre><code>private ShoppingCart shoppingCart ;
-
-@Autowired
-public  void setShoppingCart(ShoppingCart shoppingCart){
-    this.shoppingCart = shoppingCart;
-}
-</code></pre>
-<p>}</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StoreService</span> <span class="token punctuation">{</span>
+    
+    <span class="token keyword">private</span> <span class="token class-name">ShoppingCart</span> shoppingCart <span class="token punctuation">;</span>
+    
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">public</span>  <span class="token keyword">void</span> <span class="token function">setShoppingCart</span><span class="token punctuation">(</span><span class="token class-name">ShoppingCart</span> shoppingCart<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>shoppingCart <span class="token operator">=</span> shoppingCart<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因为 StoreService 是一个单例 bean，会在 Spring 上下文加载的时候创建，当它创建的时候，Spring 会试图将 ShoppingCart bean 注入到 setShoppingCart () 方法中。但是 ShoppingCart bean 是会话作用域的，此时并不存在。直到某个用户进入系统，创建了会话以后，才会出现 ShoppingCart 实例。</p>
 <p>另外，系统中将会存在多个 ShoppingCart 实例：每个用户一个。我们并不想让 Spring 注入到某个胡定的 ShoppingCart 实例到 StoreService 中。我们希望的是当 StoreService 处理购物车功能时，它所使用的 ShoppingCart 实例恰好是当前会话所对应的那一个。</p>
 <p>Spring 并不会将实际的 ShoppingCart bean 注入到 StoreService 中，Spring 会注入一个到 ShoppingCart bean 的代理。这个代理会暴露与 ShoppingCart 相同的方法，所以 StoreService 会认为他就是一个购物车。但是，当 StoreService 调用 ShoppingCart 的方法时，代理会对其进行懒解析并将调用委托给作用域内真正的 ShoppingCart bean。如下图所示：</p>
-<p><img data-src="https://cdn.javacodes.cn/files/2016/10/2016-10-20_09-27-28.png" alt="QQ截图20161020163515"></p>
+<p><img data-src="https://cdn.bytelife.net/blog/images/16139181440326.png"></p>
 <p>现在我们来讨论一下 proxyMode 属性。我们将 proxyMode 属性设置为了 ScopedProxyMode.INTERFACES，这表明这个代理要实现 ShoppingCart 接口，并将调用委托给实现 bean。</p>
 <p>这里我们的 ShoppingCart 是接口而不是具体的类，这当然是可以的（也是最理想的代理模式）。但如果 ShoppingCart 是具体的实现类而不是接口的话，Spring 就没办法创建基于接口的代理了。此时必须使用 CGLib 来生成基于类的代理。所以，如果 bean 类型是具体的类的话，我们必须要将 proxyMode 设置为 ScopedProxyMode.TARGET_CLASS，以此来表明要以生成目标类扩展的方式创建代理。</p>
 <p>请求作用域与会话作用域十分类似，也应该以作用域代理的方式进行注入，再次不做赘述。</p>
 <h3 id="（三）在XML中声明作用域代理"><a href="#（三）在XML中声明作用域代理" class="headerlink" title="（三）在XML中声明作用域代理"></a>（三）在 XML 中声明作用域代理</h3><p>在 XML 中设置作用域代理需要使用 Spring aop 命名空间的一个元素：</p>
-<pre><code>&lt;bean id="cart" class="cn.javacodes.spring.beans.ShoppingCart" scope="session"&gt;
-    &lt;aop:scoped-proxy /&gt;
-&lt;/bean&gt;
-</code></pre>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cart<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cn.javacodes.spring.beans.ShoppingCart<span class="token punctuation">"</span></span> <span class="token attr-name">scope</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>session<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>scoped-proxy</span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>当然了，在使用 aop 命名空间之前一定要在 xml 的顶部进行对命名空间进行声明：</p>
-<!--?xml version="1.0" encoding="UTF-8"?-->
-<p><beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemalocation="
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xmlns:</span>aop</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/aop<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd"><br>    ……<br></beans></p>
+       http://www.springframework.org/schema/aop/spring-aop.xsd<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    ......
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>注意：在使用 Spring 开发 web 项目时，需要在 web.xml 中加入如下内容（web2.4 以上）：</p>
-<web-app>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>web-app</span><span class="token punctuation">&gt;</span></span>
    ...
-  <listener>
-<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-  </listener>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>listener</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>listener-class</span><span class="token punctuation">&gt;</span></span>org.springframework.web.context.request.RequestContextListener<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>listener-class</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>listener</span><span class="token punctuation">&gt;</span></span>
    ...
-</web-app>
-
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>web-app</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>web 2.4 以下版本需要加入：</p>
-<web-app>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>web-app</span><span class="token punctuation">&gt;</span></span>
  ..
- <filter> 
-    <filter-name>requestContextFilter</filter-name> 
-    <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
- </filter> 
- <filter-mapping> 
-    <filter-name>requestContextFilter</filter-name> 
-    <url-pattern>/*</url-pattern>
- </filter-mapping>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter</span><span class="token punctuation">&gt;</span></span> 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-name</span><span class="token punctuation">&gt;</span></span>requestContextFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-name</span><span class="token punctuation">&gt;</span></span> 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-class</span><span class="token punctuation">&gt;</span></span>org.springframework.web.filter.RequestContextFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-class</span><span class="token punctuation">&gt;</span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter</span><span class="token punctuation">&gt;</span></span> 
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-mapping</span><span class="token punctuation">&gt;</span></span> 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-name</span><span class="token punctuation">&gt;</span></span>requestContextFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-name</span><span class="token punctuation">&gt;</span></span> 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">&gt;</span></span>/*<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">&gt;</span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-mapping</span><span class="token punctuation">&gt;</span></span>
    ...
-</web-app>
-
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>web-app</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>另外，&lt;aop:scoped-proxy /&gt; 是与 @Scope 注解的 proxyMode 属性功能相同的 Spring XML 配置元素。它会告诉 Spring 为 bean 创建一个作用域代理。默认情况下，它会使用 CGLib 创建目标类的代理。但是我们也可以将 proxy-target-class 属性设置为 false，进而要求它生成基于接口的代理：</p>
-<bean id="cart" class="cn.javacodes.spring.beans.ShoppingCart" scope="session">
-        <aop:scoped-proxy proxy-target-class="false">
-    </aop:scoped-proxy></bean>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cart<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cn.javacodes.spring.beans.ShoppingCart<span class="token punctuation">"</span></span> <span class="token attr-name">scope</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>session<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>scoped-proxy</span> <span class="token attr-name">proxy-target-class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
     </div>
 
     
