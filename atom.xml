@@ -6,11 +6,11 @@
   <link href="https://bytelife.net/atom.xml" rel="self"/>
   
   <link href="https://bytelife.net/"/>
-  <updated>2021-02-24T14:09:21.661Z</updated>
+  <updated>2021-02-24T19:04:48.249Z</updated>
   <id>https://bytelife.net/</id>
   
   <author>
-    <name>Jeffrey Hu</name>
+    <name>Jeffrey</name>
     
   </author>
   
@@ -21,7 +21,7 @@
     <link href="https://bytelife.net/articles/32340.html"/>
     <id>https://bytelife.net/articles/32340.html</id>
     <published>2017-03-19T17:51:28.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.249Z</updated>
     
     
     <summary type="html">&lt;p&gt;问题： 给定数组 arr，arr 中的所有的值都为正数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个整数 aim 代表要找的钱数，求换钱有多少种方法。&lt;/p&gt;</summary>
@@ -40,7 +40,7 @@
     <link href="https://bytelife.net/articles/60306.html"/>
     <id>https://bytelife.net/articles/60306.html</id>
     <published>2017-03-18T02:57:13.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.249Z</updated>
     
     
     <summary type="html">&lt;p&gt;最近接到电话面试中，面试官问我 ClassNotFoundException 与 NoClassDefFoundError 有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException 我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一下，感觉非常尴尬。 回来以后又查阅了一些相关的资料，并尝试了一下，整理分享给网友。&lt;/p&gt;</summary>
@@ -61,7 +61,7 @@
     <link href="https://bytelife.net/articles/46308.html"/>
     <id>https://bytelife.net/articles/46308.html</id>
     <published>2017-03-15T15:34:01.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;ThreadLocal是什么&quot;&gt;&lt;a href=&quot;#ThreadLocal是什么&quot; class=&quot;headerlink&quot; title=&quot;ThreadLocal是什么&quot;&gt;&lt;/a&gt;ThreadLocal 是什么&lt;/h2&gt;&lt;p&gt;　　早在 JDK 1.2 的版本中就提供 Java.lang.ThreadLocal，ThreadLocal 为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。 　　 　　&lt;br&gt;　　当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。 　　 　　&lt;br&gt;　　从线程的角度看，目标变量就象是线程的本地变量，这也是类名中 “Local” 所要表达的意思。 　　 　　&lt;br&gt;　　所以，在 Java 中编写线程局部变量的代码相对来说要笨拙一些，因此造成线程局部变量没有在 Java 开发者中得到很好的普及。 　　&lt;/p&gt;</summary>
@@ -82,7 +82,7 @@
     <link href="https://bytelife.net/articles/48365.html"/>
     <id>https://bytelife.net/articles/48365.html</id>
     <published>2017-03-14T17:34:53.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -111,7 +111,7 @@
     <link href="https://bytelife.net/articles/46009.html"/>
     <id>https://bytelife.net/articles/46009.html</id>
     <published>2017-03-14T17:16:23.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;Copy-On-Write 简称 COW，是一种用于程序设计中的优化策略。其基本思路是，从一开始大家都在共享同一个内容，当某个人想要修改这个内容的时候，才会真正把内容 Copy 出去形成一个新的内容然后再改，这是一种延时懒惰策略。从 JDK1.5 开始 Java 并发包里提供了两个使用 CopyOnWrite 机制实现的并发容器，它们是 CopyOnWriteArrayList 和 CopyOnWriteArraySet。CopyOnWrite 容器非常有用，可以在非常多的并发场景中使用到。&lt;/p&gt;</summary>
@@ -132,7 +132,7 @@
     <link href="https://bytelife.net/articles/12742.html"/>
     <id>https://bytelife.net/articles/12742.html</id>
     <published>2017-03-14T17:10:55.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;在并发编程中我们有时候需要使用线程安全的队列。如果我们要实现一个线程安全的队列有两种实现方式：一种是使用阻塞算法，另一种是使用非阻塞算法。使用阻塞算法的队列可以用一个锁（入队和出队用同一把锁）或两个锁（入队和出队用不同的锁）等方式来实现，而非阻塞的实现方式则可以使用循环 CAS 的方式来实现，本文让我们一起来研究下 Doug Lea 是如何使用非阻塞的方式来实现线程安全队列 ConcurrentLinkedQueue 的，相信从大师身上我们能学到不少并发编程的技巧。&lt;/p&gt;</summary>
@@ -153,7 +153,7 @@
     <link href="https://bytelife.net/articles/36648.html"/>
     <id>https://bytelife.net/articles/36648.html</id>
     <published>2017-03-14T14:31:36.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.249Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;术语定义&quot;&gt;&lt;a href=&quot;#术语定义&quot; class=&quot;headerlink&quot; title=&quot;术语定义&quot;&gt;&lt;/a&gt;术语定义&lt;/h3&gt;&lt;p&gt;术语：哈希算法&lt;br&gt;英文: hash algorithm&lt;br&gt;解释：是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。&amp;nbsp;&lt;/p&gt;</summary>
@@ -174,7 +174,7 @@
     <link href="https://bytelife.net/articles/35205.html"/>
     <id>https://bytelife.net/articles/35205.html</id>
     <published>2017-03-12T10:28:32.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如 memcached）的核心其实就是在内存中维护一张大的哈希表，而 HashMap 的实现原理也常常出现在各类的面试题中，重要性可见一斑。本文会对 java 集合框架中的对应实现 HashMap 的实现原理进行讲解，然后会对 JDK7 的 HashMap 源码进行分析。&lt;/p&gt;</summary>
@@ -193,7 +193,7 @@
     <link href="https://bytelife.net/articles/44598.html"/>
     <id>https://bytelife.net/articles/44598.html</id>
     <published>2017-03-12T08:34:51.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;Java 虚拟机类加载过程中的 “加载” 阶段第一步就是 “通过一个类的全限定名来获取描述此类的二级制字节流”，这个动作由 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类，实现这个动作的模块叫做 “类加载器”。&lt;/p&gt;</summary>
@@ -214,7 +214,7 @@
     <link href="https://bytelife.net/articles/49511.html"/>
     <id>https://bytelife.net/articles/49511.html</id>
     <published>2017-03-12T05:33:28.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;类加载的时机&quot;&gt;&lt;a href=&quot;#类加载的时机&quot; class=&quot;headerlink&quot; title=&quot;类加载的时机&quot;&gt;&lt;/a&gt;类加载的时机&lt;/h2&gt;&lt;p&gt;类从被加载到虚拟机开始，到卸载为止，生命周期如图所示：&lt;br&gt;&lt;img src=&quot;https://static.bytelife.net/blog/images/16139181881678.png&quot;&gt;&lt;br&gt;其中，加载、验证、准备、初始化、卸载这五个阶段的顺序是确定的，类的加载过程必须按照这种顺序按部就班的开始（开始不代表完成，通常为交叉混合运行），而解析阶段不一定：它在某些情况下可以在初始化阶段之后再开始。 &lt;/p&gt;</summary>
@@ -235,7 +235,7 @@
     <link href="https://bytelife.net/articles/46172.html"/>
     <id>https://bytelife.net/articles/46172.html</id>
     <published>2017-03-11T12:38:18.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;判断对象是否可回收的常见方法&quot;&gt;&lt;a href=&quot;#判断对象是否可回收的常见方法&quot; class=&quot;headerlink&quot; title=&quot;判断对象是否可回收的常见方法&quot;&gt;&lt;/a&gt;判断对象是否可回收的常见方法&lt;/h3&gt;&lt;h4 id=&quot;引用计数算法（Reference-Counting）&quot;&gt;&lt;a href=&quot;#引用计数算法（Reference-Counting）&quot; class=&quot;headerlink&quot; title=&quot;引用计数算法（Reference Counting）&quot;&gt;&lt;/a&gt;引用计数算法（Reference Counting）&lt;/h4&gt;&lt;p&gt;给对象中添加一个引用计数器，每当有一个地方引用时，计数器加 1；当引用失效时，计数器减 1；任何时刻计数器为 0 的对象就是不可能再被使用的。&lt;/p&gt;
@@ -261,7 +261,7 @@
     <link href="https://bytelife.net/articles/23756.html"/>
     <id>https://bytelife.net/articles/23756.html</id>
     <published>2017-03-11T10:20:57.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.249Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;verbose&quot;&gt;&lt;a href=&quot;#verbose&quot; class=&quot;headerlink&quot; title=&quot;-verbose&quot;&gt;&lt;/a&gt;-verbose&lt;/h3&gt;&lt;p&gt;java -verbose [:class|gc|jni] 在输出设备上显示虚拟机运行信息。&lt;/p&gt;
@@ -287,7 +287,7 @@
     <link href="https://bytelife.net/articles/55127.html"/>
     <id>https://bytelife.net/articles/55127.html</id>
     <published>2017-03-11T05:11:49.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;Java 虚拟机内存规范所管理的内存包括如下运行时数据区域：程序计数器、虚拟机栈、本地方法栈、Java 堆、方法区等。&lt;/p&gt;
@@ -309,7 +309,7 @@
     <link href="https://bytelife.net/articles/8183.html"/>
     <id>https://bytelife.net/articles/8183.html</id>
     <published>2016-10-30T07:46:21.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;锐速（serverspeeder），是一款 TCP 加速程序，能够增强 VPS / 服务器连接的稳定性，且有效的提高服务器的带宽利用率，进而提高访问速度。&lt;/p&gt;</summary>
@@ -328,7 +328,7 @@
     <link href="https://bytelife.net/articles/8890.html"/>
     <id>https://bytelife.net/articles/8890.html</id>
     <published>2016-10-20T09:31:11.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;在默认情况下，Spring 的应用上下文中所有的 bean 都是单例的形式创建的。也就是说，不管给定的一个 bean 被注入到其它 bean 多少次，每次注入的都是同一个实例。&lt;/p&gt;
@@ -351,7 +351,7 @@
     <link href="https://bytelife.net/articles/22338.html"/>
     <id>https://bytelife.net/articles/22338.html</id>
     <published>2016-10-20T09:23:41.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;之前的文章中已经看到了 Spring 的自动装配有很大的用处，它可以帮助我们快速的装配 bean，但是这里存在一个问题，在之前的装配中，仅有一个 bean 匹配所需的结果时，自动装配才是有效的。如果不仅只有一个 bean 能够匹配结果的话，这就会导致 Spring 不知道该装配哪个 bean 从而导致装配失败，例如下面这个例子，我们定义了一个 Dessert 接口，并且有三个类实现了这个接口，分别为 Cake、Cookies 和 IceCream：&lt;/p&gt;
@@ -373,7 +373,7 @@
     <link href="https://bytelife.net/articles/36596.html"/>
     <id>https://bytelife.net/articles/36596.html</id>
     <published>2016-10-20T09:13:13.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;一、c命名空间&quot;&gt;&lt;a href=&quot;#一、c命名空间&quot; class=&quot;headerlink&quot; title=&quot;一、c命名空间&quot;&gt;&lt;/a&gt;一、c 命名空间&lt;/h3&gt;&lt;p&gt;通过构造器注入 Bean 的时候通常需要使用到&lt;constructor-arg&gt;元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示：&lt;/constructor-arg&gt;&lt;/p&gt;
@@ -395,7 +395,7 @@
     <link href="https://bytelife.net/articles/2868.html"/>
     <id>https://bytelife.net/articles/2868.html</id>
     <published>2016-10-20T09:03:27.000Z</published>
-    <updated>2021-02-24T14:09:21.661Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;虽然很多场景下可以使用组件扫描和自动装配来实现 Spring 的自动化配置，但有些时候自动化配置的方案是行不通的，因此需要明确配置 Spring。比如你想讲第三方库中的组件装配到你的应用中，在这种情况下，你必须要显式装配。在进行显式配置的时候，有两种方案，Java 和 XML。&lt;/p&gt;
@@ -417,7 +417,7 @@
     <link href="https://bytelife.net/articles/35577.html"/>
     <id>https://bytelife.net/articles/35577.html</id>
     <published>2016-09-27T15:28:29.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;做数据处理的人可能经常用到一些比如求中位数、众数、均值等等的常用数学方法，下面整理一些算法，由于都比较简单，不做过多的解释了，直接拿去用就好啦！&lt;/p&gt;</summary>
@@ -438,7 +438,7 @@
     <link href="https://bytelife.net/articles/33262.html"/>
     <id>https://bytelife.net/articles/33262.html</id>
     <published>2016-09-26T16:36:21.000Z</published>
-    <updated>2021-02-24T14:09:21.657Z</updated>
+    <updated>2021-02-24T19:04:48.245Z</updated>
     
     
     <summary type="html">&lt;p&gt;Ctrl+Shift + Enter，语句完成 “！”，否定完成，输入表达式时按 “！” 键&lt;br&gt;Ctrl+E，最近的文件&lt;br&gt;Ctrl+Shift+E，最近更改的文件 Shift+Click，可以关闭文件&lt;br&gt;Ctrl+[OR]，可以跑到大括号的开头与结尾&lt;br&gt;Ctrl+F12，可以显示当前文件的结构&lt;br&gt;Ctrl+F7，可以查询当前元素在当前文件中的引用，然后按 F3 可以选择&lt;br&gt;Ctrl+N，可以快速打开类 &lt;/p&gt;</summary>
