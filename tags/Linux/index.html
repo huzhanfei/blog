@@ -44,7 +44,7 @@
 <link rel="canonical" href="https://bytelife.net/tags/Linux/">
 
 
-<script class="page-configurations">
+<script data-pjax class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -55,29 +55,7 @@
 </script><meta name="sogou_site_verification" content="6Hw2GpwQ6g"/>
 <meta name="bytedance-verification-code" content="/UAJcPbq43CVXj2kqtDN" />
 
-<script>
-(function() {
-    var el = document.createElement("script");
-    el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?1b4ac50d1bea930a1b72930facd9deaf7374fc3ae849858eaf77396b7efdfb23d9fdccd457d3c61a47d6299ac7d9d069449138ae0ea906bfd3be416073f210a5";
-    el.id = "ttzz";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(el, s);
-})(window)
-</script>
 
-<script>
-(function() {
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    } else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
 <title>标签: Linux | ByteLife</title>
   
     <script>
@@ -97,7 +75,7 @@
       sendPageView();
     </script>
 
-  <script>
+  <script data-pjax>
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
@@ -484,10 +462,44 @@
   
   <script size="200" alpha="0.3" zIndex="-2" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
   
 <script src="/js/local-search.js"></script>
@@ -518,10 +530,11 @@
   </script>
 
   
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
+    <div class="pjax">
 
   
 
@@ -536,6 +549,29 @@
       });
   </script>
 
+<script>
+(function() {
+    var el = document.createElement("script");
+    el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?1b4ac50d1bea930a1b72930facd9deaf7374fc3ae849858eaf77396b7efdfb23d9fdccd457d3c61a47d6299ac7d9d069449138ae0ea906bfd3be416073f210a5";
+    el.id = "ttzz";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(el, s);
+})(window)
+</script>
 
+<script>
+(function() {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+    </div>
 </body>
 </html>
