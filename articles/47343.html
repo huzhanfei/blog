@@ -7,10 +7,11 @@
 <meta name="generator" content="Hexo 5.4.0">
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="apple-touch-icon" sizes="180x180" href="https://static.bytelife.net/blog/images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://static.bytelife.net/blog/images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://static.bytelife.net/blog/images/favicon.ico">
-  <link rel="mask-icon" href="https://static.bytelife.net/blog/images/avatar.jpg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://static.bytelife.net/blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://static.bytelife.net/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://static.bytelife.net/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="https://static.bytelife.net/blog/images/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="https://static.bytelife.net/blog/images/site.webmanifest">
   <meta name="msvalidate.01" content="4502D0D83E226A5ED754C3EEAAE4AB03">
   <meta name="yandex-verification" content="2453b777d5be12ab">
   <meta name="baidu-site-verification" content="code-3cltzkt0vc">
@@ -27,7 +28,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="在 Web 开发过程中，利用 JSON 可以帮助我们更加方便的开发我们的应用。那么在 Java 语言中，如何实现 Java 实例与 JSON 之间的相互转换（序列化与反序列化）呢？目前流行的 JSON 第三方类库有 Jackson、Gson、Fastjson 等，本文将简单介绍如何使用 Jackson 进行 JSON 的解析与序列化。">
 <meta property="og:type" content="article">
@@ -38,7 +39,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://static.bytelife.net/blog/images/16139161048675.png">
 <meta property="article:published_time" content="2016-09-07T14:12:29.000Z">
-<meta property="article:modified_time" content="2021-02-27T21:28:47.133Z">
+<meta property="article:modified_time" content="2021-02-28T07:29:22.614Z">
 <meta property="article:author" content="Jeffrey">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -342,7 +343,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-28 05:28:47" itemprop="dateModified" datetime="2021-02-28T05:28:47+08:00">2021-02-28</time>
+        <time title="修改时间：2021-02-28 15:29:22" itemprop="dateModified" datetime="2021-02-28T15:29:22+08:00">2021-02-28</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -362,6 +363,20 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span id="busuanzi_value_page_pv"></span>
     </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/articles/47343.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/articles/47343.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -415,7 +430,7 @@
 </ul>
 <p>这些方法使用起来都十分简单，为了简洁直观的介绍 Jackson 的使用方法，我们只介绍 writeValueAsString (Object obj) 的使用方法，用于将 Java 对象转换为一个 JSON 字符串，代码如下：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javacodes.jackson.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.core.JsonProcessingException;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.ParseException;</span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by huzha on 2016-09-07.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JacksonTest</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JsonProcessingException, ParseException </span>{</span><br><span class="line">        User user = <span class="keyword">new</span> User();</span><br><span class="line">        user.setName(<span class="string">"Jeffrey"</span>);</span><br><span class="line">        user.setEmail(<span class="string">"huzhanfei@outloo**k.com"</span>);</span><br><span class="line">        user.setAge(<span class="number">20</span>);</span><br><span class="line">        user.setBirthday(<span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>).parse(<span class="string">"1995-08-23"</span>));</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">        <span class="comment">//User类转JSON</span></span><br><span class="line">        <span class="comment">//输出结果：{"name":"Jeffrey","age":20,"birthday":809107200000,"email":"huzhanfei@outlook.com"}</span></span><br><span class="line">        String json = mapper.writeValueAsString(user);</span><br><span class="line">        System.out.println(json);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Java集合转JSON</span></span><br><span class="line">        <span class="comment">//输出结果：[{"name":"Jeffrey","age":20,"birthday":809107200000,"email":"huzhanfei@outlook.com"}]</span></span><br><span class="line">        List&lt;User&gt; users = <span class="keyword">new</span> ArrayList&lt;User&gt;();</span><br><span class="line">        users.add(user);</span><br><span class="line">        String jsonlist = mapper.writeValueAsString(users);</span><br><span class="line">        System.out.println(jsonlist);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="四、JSON反序列化（JSON转Java对象）"><a href="#四、JSON反序列化（JSON转Java对象）" class="headerlink" title="四、JSON反序列化（JSON转Java对象）"></a>四、JSON 反序列化（JSON 转 Java 对象）</h3><p>Jackson 为我们提供了许多 JSON 反序列化的方法，其中比较常用的方法如下：<br><img data-src="https://static.bytelife.net/blog/images/16139161048675.png"></p>
+<h3 id="四、JSON反序列化（JSON转Java对象）"><a href="#四、JSON反序列化（JSON转Java对象）" class="headerlink" title="四、JSON反序列化（JSON转Java对象）"></a>四、JSON 反序列化（JSON 转 Java 对象）</h3><p>Jackson 为我们提供了许多 JSON 反序列化的方法，其中比较常用的方法如下：<br><img src="https://static.bytelife.net/blog/images/16139161048675.png"></p>
 <p> 我们可以将文件、URL、字符串、流、字节数组等作为数据源进行解析，废话不多说，看例子：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javacodes.jackson.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.text.ParseException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by huzha on 2016-09-07.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JacksonTest</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ParseException </span>{</span><br><span class="line">        String json = <span class="string">"{"</span>name<span class="string">":"</span>Jeffrey<span class="string">","</span>age<span class="string">":20,"</span>birthday<span class="string">":809107200000,"</span>email<span class="string">":"</span>huzhanfei<span class="meta">@outlook</span>.com<span class="string">"}"</span>;</span><br><span class="line">        ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">        User user = mapper.readValue(json,User.class);</span><br><span class="line">        <span class="comment">// 输出结果：User{name='Jeffrey', age=20, birthday=Wed Aug 23 00:00:00 CST 1995, email='huzhanfei@outlook.com'}</span></span><br><span class="line">        System.out.println(user.toString());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="五、JSON注解"><a href="#五、JSON注解" class="headerlink" title="五、JSON注解"></a>五、JSON 注解</h3><p>Jackson 提供了一系列注解，方便对 JSON 序列化和反序列化进行控制，下面介绍一些常用的注解。 @JsonIgnore 此注解用于属性上，作用是进行 JSON 操作时忽略该属性。 @JsonFormat 此注解用于属性上，作用是把 Date 类型直接转化为想要的格式，如 @JsonFormat (pattern = “yyyy-MM-dd HH-mm-ss”)。 @JsonProperty 此注解用于属性上，作用是把该属性的名称序列化为另外一个名称，如把 trueName 属性序列化为 name，@JsonProperty (“name”)。 例如我们对 User 类进行一些修改，修改部分代码如下：</p>
@@ -496,7 +511,7 @@
 
 
 
-    <div class="comments utterances-container"></div>
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -583,7 +598,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
 var pjax = new Pjax({
   selectors: [
@@ -668,15 +682,14 @@ document.addEventListener('pjax:success', () => {
   </script>
 
 <script>
-NexT.utils.loadComments('.utterances-container', () => {
-  const script = document.createElement('script');
-  script.src = 'https://utteranc.es/client.js';
-  script.setAttribute('repo', "huzhanfei/blog-comments");
-  script.setAttribute('issue-term', "pathname");
-  script.setAttribute('theme', "preferred-color-scheme");
-  script.crossOrigin = 'anonymous';
-  script.async = true;
-  document.querySelector('.utterances-container').appendChild(script);
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","appKey":"bG7qAcDfxStNdWtC1T8EE9ku","serverURLs":"https://leancloud.bytelife.net","placeholder":"写下你的评论吧！","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":false,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/articles/47343.html",
+      serverURLs: "https://leancloud.bytelife.net"
+    }));
+  }, window.Valine);
 });
 </script>
 <script>
