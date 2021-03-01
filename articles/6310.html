@@ -360,6 +360,20 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span id="busuanzi_value_page_pv"></span>
     </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/articles/6310.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/articles/6310.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -496,7 +510,7 @@
 
 
 
-    <div class="comments utterances-container"></div>
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -667,15 +681,14 @@ document.addEventListener('pjax:success', () => {
   </script>
 
 <script>
-NexT.utils.loadComments('.utterances-container', () => {
-  const script = document.createElement('script');
-  script.src = 'https://utteranc.es/client.js';
-  script.setAttribute('repo', "huzhanfei/blog-comments");
-  script.setAttribute('issue-term', "pathname");
-  script.setAttribute('theme', "preferred-color-scheme");
-  script.crossOrigin = 'anonymous';
-  script.async = true;
-  document.querySelector('.utterances-container').appendChild(script);
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","appKey":"bG7qAcDfxStNdWtC1T8EE9ku","serverURLs":"https://leancloud.bytelife.net","placeholder":"写下你的评论吧！","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":false,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/articles/6310.html",
+      serverURLs: "https://leancloud.bytelife.net"
+    }));
+  }, window.Valine);
 });
 </script>
 <script>

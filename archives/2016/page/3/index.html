@@ -606,6 +606,17 @@ document.addEventListener('pjax:success', () => {
 
 
 <script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","appKey":"bG7qAcDfxStNdWtC1T8EE9ku","serverURLs":"https://leancloud.bytelife.net","placeholder":"写下你的评论吧！","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":false,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/archives/2016/page/3/",
+      serverURLs: "https://leancloud.bytelife.net"
+    }));
+  }, window.Valine);
+});
+</script>
+<script>
 (function() {
     var el = document.createElement("script");
     el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?1b4ac50d1bea930a1b72930facd9deaf7374fc3ae849858eaf77396b7efdfb23d9fdccd457d3c61a47d6299ac7d9d069449138ae0ea906bfd3be416073f210a5";

@@ -352,6 +352,8 @@
     </span>
 
   
+  
+  
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -447,6 +449,8 @@
         </span>
     </span>
 
+  
+  
   
       </div>
       <div class="post-meta">
@@ -544,6 +548,8 @@
     </span>
 
   
+  
+  
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -639,6 +645,8 @@
         </span>
     </span>
 
+  
+  
   
       </div>
       <div class="post-meta">
@@ -736,6 +744,8 @@
     </span>
 
   
+  
+  
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -831,6 +841,8 @@
         </span>
     </span>
 
+  
+  
   
       </div>
       <div class="post-meta">
@@ -933,6 +945,8 @@
     </span>
 
   
+  
+  
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -1028,6 +1042,8 @@
         </span>
     </span>
 
+  
+  
   
       </div>
       <div class="post-meta">
@@ -1125,6 +1141,8 @@
     </span>
 
   
+  
+  
       </div>
       <div class="post-meta">
     <span class="post-meta-item" title="本文字数">
@@ -1220,6 +1238,8 @@
         </span>
     </span>
 
+  
+  
   
       </div>
       <div class="post-meta">
@@ -1435,6 +1455,17 @@ document.addEventListener('pjax:success', () => {
   
 
 
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"WAPGmgrP2qcUBG4h1C1vFmQB-gzGzoHsz","appKey":"bG7qAcDfxStNdWtC1T8EE9ku","serverURLs":"https://leancloud.bytelife.net","placeholder":"写下你的评论吧！","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":false,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/",
+      serverURLs: "https://leancloud.bytelife.net"
+    }));
+  }, window.Valine);
+});
+</script>
 <script>
 (function() {
     var el = document.createElement("script");
