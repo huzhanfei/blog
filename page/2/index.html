@@ -37,7 +37,7 @@
 <meta property="og:description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Jeffrey">
-<meta property="article:tag" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,huzhanfei">
+<meta property="article:tag" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,jeffrey,编程,hexo">
 <meta name="twitter:card" content="summary">
 
 
@@ -52,10 +52,12 @@
     isPost : false,
     lang   : 'zh-CN'
   };
-</script><meta name="sogou_site_verification" content="6Hw2GpwQ6g"/>
+</script>
+<meta name="keywords" content="java,java博客,bytelife,字节人生,编程人生,技术博客,技术分享,源码,spring,go,golang,博客,jeffrey,编程,hexo" />
+
+
+<meta name="sogou_site_verification" content="6Hw2GpwQ6g"/>
 <meta name="bytedance-verification-code" content="/UAJcPbq43CVXj2kqtDN" />
-
-
 <title>ByteLife - 技术交流与学习自留地</title>
   
     <script>
@@ -306,6 +308,104 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/44598.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://static.bytelife.net/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Jeffrey">
+      <meta itemprop="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ByteLife">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/articles/44598.html" class="post-title-link" itemprop="url">Java 类加载机制 - 类加载器（ClassLoader）与双亲委派模型</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-12 16:34:51" itemprop="dateCreated datePublished" datetime="2017-03-12T16:34:51+08:00">2017-03-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Java 虚拟机类加载过程中的 “加载” 阶段第一步就是 “通过一个类的全限定名来获取描述此类的二级制字节流”，这个动作由 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类，实现这个动作的模块叫做 “类加载器”。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/44598.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/49511.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -332,13 +432,6 @@
 
       <time title="创建时间：2017-03-12 13:33:28" itemprop="dateCreated datePublished" datetime="2017-03-12T13:33:28+08:00">2017-03-12</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -437,13 +530,6 @@
 
       <time title="创建时间：2017-03-11 20:38:18" itemprop="dateCreated datePublished" datetime="2017-03-11T20:38:18+08:00">2017-03-11</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -547,13 +633,6 @@
 
       <time title="创建时间：2017-03-11 18:20:57" itemprop="dateCreated datePublished" datetime="2017-03-11T18:20:57+08:00">2017-03-11</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -657,13 +736,6 @@
 
       <time title="创建时间：2017-03-11 13:11:49" itemprop="dateCreated datePublished" datetime="2017-03-11T13:11:49+08:00">2017-03-11</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -762,13 +834,6 @@
 
       <time title="创建时间：2016-10-30 15:46:21" itemprop="dateCreated datePublished" datetime="2016-10-30T15:46:21+08:00">2016-10-30</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -867,13 +932,6 @@
 
       <time title="创建时间：2016-10-20 17:31:11" itemprop="dateCreated datePublished" datetime="2016-10-20T17:31:11+08:00">2016-10-20</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -974,13 +1032,6 @@
 
       <time title="创建时间：2016-10-20 17:23:41" itemprop="dateCreated datePublished" datetime="2016-10-20T17:23:41+08:00">2016-10-20</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -1079,13 +1130,6 @@
 
       <time title="创建时间：2016-10-20 17:13:13" itemprop="dateCreated datePublished" datetime="2016-10-20T17:13:13+08:00">2016-10-20</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -1184,13 +1228,6 @@
 
       <time title="创建时间：2016-10-20 17:03:27" itemprop="dateCreated datePublished" datetime="2016-10-20T17:03:27+08:00">2016-10-20</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -1234,111 +1271,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/2868.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/35577.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://static.bytelife.net/blog/images/avatar.jpg">
-      <meta itemprop="name" content="Jeffrey">
-      <meta itemprop="description" content="专注于Java、Go、网络、网站、数码设备等技术交流与学习的个人博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ByteLife">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/articles/35577.html" class="post-title-link" itemprop="url">Java 实现数据统计的常用算法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2016-09-27 23:28:29" itemprop="dateCreated datePublished" datetime="2016-09-27T23:28:29+08:00">2016-09-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 01:13:34" itemprop="dateModified" datetime="2021-03-01T01:13:34+08:00">2021-03-01</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-        </span>
-    </span>
-
-  
-  
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>90</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>做数据处理的人可能经常用到一些比如求中位数、众数、均值等等的常用数学方法，下面整理一些算法，由于都比较简单，不做过多的解释了，直接拿去用就好啦！</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/35577.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
