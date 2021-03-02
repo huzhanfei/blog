@@ -27,12 +27,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="Java NIO (New IO) 是一个可以替代标准 Java IO API 的 IO API（从 Java 1.4 开始)，Java NIO 提供了与标准 IO 不同的 IO 工作方式。    Java NIO: Channels and Buffers（通道和缓冲区）：标准的 IO 基于字节流和字符流进行操作的，而 NIO 是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java NIO 教程详解">
-<meta property="og:url" content="https://bytelife.net/articles/48365.html">
+<meta property="og:url" content="https://www.bytelife.net/articles/48365.html">
 <meta property="og:site_name" content="ByteLife">
 <meta property="og:description" content="Java NIO (New IO) 是一个可以替代标准 Java IO API 的 IO API（从 Java 1.4 开始)，Java NIO 提供了与标准 IO 不同的 IO 工作方式。    Java NIO: Channels and Buffers（通道和缓冲区）：标准的 IO 基于字节流和字符流进行操作的，而 NIO 是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总">
 <meta property="og:locale" content="zh_CN">
@@ -57,7 +57,7 @@
 <meta name="twitter:image" content="https://static.bytelife.net/blog/images/16139194654201.jpg">
 
 
-<link rel="canonical" href="https://bytelife.net/articles/48365.html">
+<link rel="canonical" href="https://www.bytelife.net/articles/48365.html">
 
 
 <script data-pjax class="page-configurations">
@@ -70,9 +70,6 @@
   };
 </script>
 <meta name="keywords" content="java,nio,阻塞,同步,异步,多路复用,selector,channel,buffer,linux,网络模型,ByteLife,Jeffrey" />
-
-
-<meta name="bytedance-verification-code" content="JJx8/b2EQ/AeXO7QqQjU" />
 
 <title>Java NIO 教程详解 | ByteLife</title>
   
@@ -326,7 +323,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/48365.html">
+    <link itemprop="mainEntityOfPage" href="https://www.bytelife.net/articles/48365.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://static.bytelife.net/blog/images/avatar.jpg">
@@ -854,7 +851,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://bytelife.net/articles/48365.html" title="Java NIO 教程详解">https://bytelife.net/articles/48365.html</a>
+      <a href="https://www.bytelife.net/articles/48365.html" title="Java NIO 教程详解">https://www.bytelife.net/articles/48365.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -1055,7 +1052,7 @@ document.addEventListener('pjax:success', () => {
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://bytelife.net/articles/48365.html',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://www.bytelife.net/articles/48365.html',]
       });
       });
   </script>
@@ -1074,7 +1071,7 @@ NexT.utils.loadComments('#valine-comments', () => {
 <script>
 (function() {
     var el = document.createElement("script");
-    el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?1b4ac50d1bea930a1b72930facd9deaf7374fc3ae849858eaf77396b7efdfb23d9fdccd457d3c61a47d6299ac7d9d069449138ae0ea906bfd3be416073f210a5";
+    el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?f1c5d0c67c12eed77cb802aa02726851ef3ebdf3a7db6b0aa0bd5f927d3018d4059266b591bbec46857a16352461582a5eef3f18a6919b415e533ce545a239922b8d7c8c6655c9b00211740aa8a98e2e";
     el.id = "ttzz";
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(el, s);
