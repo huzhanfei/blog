@@ -27,12 +27,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="一、IOC 与 DI   IOC (Inversion of Control)：其思想是反转资源获取的方向。传统的资源查找方式要求组件向容器发起请求查找资源。作为回应，容器适时的返回资源。而应用了 IOC 之后，则是容器主动地将资源推送给它所管理的组件，组件所要做的仅是选择一种合适的方式来接受资源。这种行为也被称为查找的被动形式   DI (Dependency Injection) — IOC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring 学习笔记之 IOC 与 DI 概述">
-<meta property="og:url" content="https://bytelife.net/articles/31708.html">
+<meta property="og:url" content="https://www.bytelife.net/articles/31708.html">
 <meta property="og:site_name" content="ByteLife">
 <meta property="og:description" content="一、IOC 与 DI   IOC (Inversion of Control)：其思想是反转资源获取的方向。传统的资源查找方式要求组件向容器发起请求查找资源。作为回应，容器适时的返回资源。而应用了 IOC 之后，则是容器主动地将资源推送给它所管理的组件，组件所要做的仅是选择一种合适的方式来接受资源。这种行为也被称为查找的被动形式   DI (Dependency Injection) — IOC">
 <meta property="og:locale" content="zh_CN">
@@ -51,7 +51,7 @@
 <meta name="twitter:image" content="https://static.bytelife.net/blog/images/16139179370237.png">
 
 
-<link rel="canonical" href="https://bytelife.net/articles/31708.html">
+<link rel="canonical" href="https://www.bytelife.net/articles/31708.html">
 
 
 <script data-pjax class="page-configurations">
@@ -66,8 +66,8 @@
 <meta name="keywords" content="java,spring,springboot,bean,框架,ioc,di,依赖注入,反转控制,容器,ByteLife,Jeffrey" />
 
 
-<meta name="sogou_site_verification" content="6Hw2GpwQ6g"/>
-<meta name="bytedance-verification-code" content="/UAJcPbq43CVXj2kqtDN" />
+<meta name="bytedance-verification-code" content="JJx8/b2EQ/AeXO7QqQjU" />
+
 <title>Spring 学习笔记之 IOC 与 DI 概述 | ByteLife</title>
   
     <script>
@@ -320,7 +320,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://bytelife.net/articles/31708.html">
+    <link itemprop="mainEntityOfPage" href="https://www.bytelife.net/articles/31708.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://static.bytelife.net/blog/images/avatar.jpg">
@@ -456,7 +456,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://bytelife.net/articles/31708.html" title="Spring 学习笔记之 IOC 与 DI 概述">https://bytelife.net/articles/31708.html</a>
+      <a href="https://www.bytelife.net/articles/31708.html" title="Spring 学习笔记之 IOC 与 DI 概述">https://www.bytelife.net/articles/31708.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -657,7 +657,7 @@ document.addEventListener('pjax:success', () => {
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://bytelife.net/articles/31708.html',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://www.bytelife.net/articles/31708.html',]
       });
       });
   </script>
