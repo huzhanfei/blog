@@ -27,7 +27,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="现在用 Hexo 来搭建静态站点的人越来越多了，很多人会选择试用 Github Pages 服务来部署自己的静态站，但 Github Pages 国内访问速度实在无法接受，本文介绍一下如何一键使用阿里云 OSS 对象存储服务部署 Hexo 站点，同时解决一个浏览器缓存的坑。">
 <meta property="og:type" content="article">
@@ -277,17 +277,17 @@
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei"><i class="fab fa-github fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <span class="exturl" data-url="bWFpbHRvOmh1emhhbmZlaUBvdXRsb29rLmNvbQ==" title="E-Mail → mailto:huzhanfei@outlook.com"><i class="fa fa-envelope fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
         <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
       </span>
   </div>
   <div class="cc-license site-overview-item animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
   </div>
 
 
@@ -423,7 +423,7 @@
 <li>对象存储：使用阿里云 OSS 或类似的对象存储服务，国内访问速度不错，也可搭配国内 CDN 使用，速度最好，但要求你的域名有<strong>备案号</strong></li>
 <li>境内对象存储 + 境外 Vercel/Netlify：我所采用的方案，应该是最佳的方案了</li>
 </ul>
-<h2 id="创建Bucket"><a href="#创建Bucket" class="headerlink" title="创建Bucket"></a>创建 Bucket</h2><p>首先要做的事情就是去阿里云 (<a target="_blank" rel="noopener" href="https://aliyun.com/">https://aliyun.com</a>) 创建一个 Bucket:<br><img src="https://static.bytelife.net/blog/images/16144490476215.jpg"></p>
+<h2 id="创建Bucket"><a href="#创建Bucket" class="headerlink" title="创建Bucket"></a>创建 Bucket</h2><p>首先要做的事情就是去阿里云 (<span class="exturl" data-url="aHR0cHM6Ly9hbGl5dW4uY29tLw==">https://aliyun.com<i class="fa fa-external-link-alt"></i></span>) 创建一个 Bucket:<br><img src="https://static.bytelife.net/blog/images/16144490476215.jpg"></p>
 <ul>
 <li>Bucket 名称：随便起，只要不重复就行</li>
 <li>地域：按你的需求，阿里云的节点国内访问速度都可以，如果你不打算使用 CDN 服务的话，可以选择华东节点，全国访问速度都能兼顾。如果使用 CDN 服务的话，那就没区别了，选哪都行。</li>
@@ -443,7 +443,7 @@
 <li> 文件 404 规则：Index</li>
 </ul>
 <h2 id="创建AccessKey并授权"><a href="#创建AccessKey并授权" class="headerlink" title="创建AccessKey并授权"></a>创建 AccessKey 并授权</h2><p>其实现在就可以在阿里云的管理页面上传文件部署网站了，但实在是太麻烦，我们希望的是一个自动化的方案。这里我们需要创建一个 API 的授权 AccessKey：<br><img src="https://static.bytelife.net/blog/images/16144500122868.jpg"><br>阿里云现在开启了子账户授权的功能，因此我们可以选择跳转到子账户管理的页面：<br><img src="https://static.bytelife.net/blog/images/16144500659516.jpg"><br>首先创建一个子账户：<br><img src="https://static.bytelife.net/blog/images/16144501107194.jpg"><br>这里注意，由于我们这个账户是给 API 使用的，所以必须开启编程访问权限：<br><img src="https://static.bytelife.net/blog/images/16144501894558.jpg"><br>返回以后，点击刚创建的账户右侧的 “添加权限”：<br><img src="https://static.bytelife.net/blog/images/16144502596730.jpg"><br>这里搜索 “OSS”，选择添加 <code>AliyunOSSFullAccess</code> 权限：<br><img src="https://static.bytelife.net/blog/images/16144503464152.jpg"><br>返回列表，点击刚创建的账户名称，创建一个 AccessKey，这里要注意，创建完 AccessKey 后，会显示一个 AccessKey 和一个 SecretKey，一定要保存好，只会显示一次：<br><img src="https://static.bytelife.net/blog/images/16144505338176.jpg"></p>
-<h2 id="安装一键部署脚本"><a href="#安装一键部署脚本" class="headerlink" title="安装一键部署脚本"></a>安装一键部署脚本</h2><p>我编写了一个可以一键部署 Hexo 到阿里云 OSS 的 hexo 插件，并支持配置浏览器缓存 HTTP 响应头。<br>源码地址：<a target="_blank" rel="noopener" href="https://github.com/huzhanfei/hexo-deployer-ali-oss-extend">https://github.com/huzhanfei/hexo-deployer-ali-oss-extend</a></p>
+<h2 id="安装一键部署脚本"><a href="#安装一键部署脚本" class="headerlink" title="安装一键部署脚本"></a>安装一键部署脚本</h2><p>我编写了一个可以一键部署 Hexo 到阿里云 OSS 的 hexo 插件，并支持配置浏览器缓存 HTTP 响应头。<br>源码地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaS9oZXhvLWRlcGxveWVyLWFsaS1vc3MtZXh0ZW5k">https://github.com/huzhanfei/hexo-deployer-ali-oss-extend<i class="fa fa-external-link-alt"></i></span></p>
 <p>使用很简单，在 hexo 项目下执行安装命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i hexo-deployer-ali-oss-extend</span><br></pre></td></tr></tbody></table></figure>
 
@@ -488,7 +488,7 @@
       <a href="https://www.bytelife.net/articles/52761.html" title="Hexo 一键部署到阿里云 OSS 并设置浏览器缓存">https://www.bytelife.net/articles/52761.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -547,8 +547,8 @@
   <footer class="footer">
     <div class="footer-inner">
 
-  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
-      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备44030502005735号 </a>
+  <div class="beian"><span class="exturl" data-url="aHR0cHM6Ly9iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备20059294号 </span>
+      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5nb3YuY24vcG9ydGFsL3JlZ2lzdGVyU3lzdGVtSW5mbz9yZWNvcmRjb2RlPTQ0MDMwNTAyMDA1NzM1">粤公⽹安备44030502005735号 </span>
   </div>
 
 <div class="copyright">
@@ -593,7 +593,7 @@
       </span>
     </span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div><!--<script color="0,0,0" opacity="0.6" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>-->
 
     </div>
@@ -605,7 +605,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/next-boot.min.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -641,7 +641,7 @@ document.addEventListener('pjax:success', () => {
 
 
   
-<script src="/js/local-search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/local-search.min.js"></script>
 
 
 

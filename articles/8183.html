@@ -27,7 +27,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="锐速（serverspeeder），是一款 TCP 加速程序，能够增强 VPS &#x2F; 服务器连接的稳定性，且有效的提高服务器的带宽利用率，进而提高访问速度。">
 <meta property="og:type" content="article">
@@ -261,17 +261,17 @@
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei"><i class="fab fa-github fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <span class="exturl" data-url="bWFpbHRvOmh1emhhbmZlaUBvdXRsb29rLmNvbQ==" title="E-Mail → mailto:huzhanfei@outlook.com"><i class="fa fa-envelope fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
         <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
       </span>
   </div>
   <div class="cc-license site-overview-item animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
   </div>
 
 
@@ -394,7 +394,7 @@
         <p>锐速（serverspeeder），是一款 TCP 加速程序，能够增强 VPS / 服务器连接的稳定性，且有效的提高服务器的带宽利用率，进而提高访问速度。</p>
 <span id="more"></span>
 
-<p>老左经常看到论坛、群里有用户提到锐速这款软件可以提高 VPS 的访问速度、加速应用效率，于是今天就在 VULTR VPS 中进行尝试安装使用。 大概 2 月份的时候锐速宣布不再免费，原来宣传的永久免费 20M 也没了。一时间让广大 vps 爱好者陷入低谷，不过各路破解高手也是不断抛砖引玉，从开始的改 MAC 方法到后来的算 lic 方法，现在连一键安装包都出来了，算是比较成熟了吧。这里转载一个用的比较多的一键安装包，亲测可用，由 91yun.org 博主带来的。 锐速官方支持的 Linux 发行版列表：<a target="_blank" rel="noopener" href="http://dl.serverspeeder.com/ls.do?m=availables">http://dl.serverspeeder.com/ls.do?m=availables</a> 脚本已托管在 Github：<a target="_blank" rel="noopener" href="https://github.com/91yun/serverspeeder">https://github.com/91yun/serverspeeder</a> </p>
+<p>老左经常看到论坛、群里有用户提到锐速这款软件可以提高 VPS 的访问速度、加速应用效率，于是今天就在 VULTR VPS 中进行尝试安装使用。 大概 2 月份的时候锐速宣布不再免费，原来宣传的永久免费 20M 也没了。一时间让广大 vps 爱好者陷入低谷，不过各路破解高手也是不断抛砖引玉，从开始的改 MAC 方法到后来的算 lic 方法，现在连一键安装包都出来了，算是比较成熟了吧。这里转载一个用的比较多的一键安装包，亲测可用，由 91yun.org 博主带来的。 锐速官方支持的 Linux 发行版列表：<span class="exturl" data-url="aHR0cDovL2RsLnNlcnZlcnNwZWVkZXIuY29tL2xzLmRvP209YXZhaWxhYmxlcw==">http://dl.serverspeeder.com/ls.do?m=availables<i class="fa fa-external-link-alt"></i></span> 脚本已托管在 Github：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tLzkxeXVuL3NlcnZlcnNwZWVkZXI=">https://github.com/91yun/serverspeeder<i class="fa fa-external-link-alt"></i></span> </p>
 <p>锐速破解版安装方法： </p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh &amp;&amp; bash serverspeeder-all.sh</span><br></pre></td></tr></tbody></table></figure>
 <p>锐速破解版卸载方法： </p>
@@ -436,7 +436,7 @@
       <a href="https://www.bytelife.net/articles/8183.html" title="TCP 加速锐速 SS（ServerSpeeder）破解版一键安装">https://www.bytelife.net/articles/8183.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -497,8 +497,8 @@
   <footer class="footer">
     <div class="footer-inner">
 
-  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
-      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备44030502005735号 </a>
+  <div class="beian"><span class="exturl" data-url="aHR0cHM6Ly9iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备20059294号 </span>
+      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5nb3YuY24vcG9ydGFsL3JlZ2lzdGVyU3lzdGVtSW5mbz9yZWNvcmRjb2RlPTQ0MDMwNTAyMDA1NzM1">粤公⽹安备44030502005735号 </span>
   </div>
 
 <div class="copyright">
@@ -543,7 +543,7 @@
       </span>
     </span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div><!--<script color="0,0,0" opacity="0.6" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>-->
 
     </div>
@@ -555,7 +555,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/next-boot.min.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -591,7 +591,7 @@ document.addEventListener('pjax:success', () => {
 
 
   
-<script src="/js/local-search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/local-search.min.js"></script>
 
 
 

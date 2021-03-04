@@ -27,7 +27,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="原文链接：蔓草札记 » WordPress 博客同步到 CSDN 插件  在没用 WordPress 博客前就在 CSDN 写了一些日志，后来自己搭建博客后，就希望能够将博客同步到 CSDN 中，无奈 CSDN 在 2011 年 7 月宣布暂不支持 Windows&amp;nbsp;Live&amp;nbsp;Writer 发布博文，直到在 2014 年 5 月 29 日才宣布重新让插件同步成为可能，不过目前网">
 <meta property="og:type" content="article">
@@ -264,17 +264,17 @@
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei"><i class="fab fa-github fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <span class="exturl" data-url="bWFpbHRvOmh1emhhbmZlaUBvdXRsb29rLmNvbQ==" title="E-Mail → mailto:huzhanfei@outlook.com"><i class="fa fa-envelope fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
         <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
       </span>
   </div>
   <div class="cc-license site-overview-item animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
   </div>
 
 
@@ -402,7 +402,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p>原文链接：<a target="_blank" rel="noopener" href="http://xuhehuan.com/">蔓草札记</a> » <a target="_blank" rel="noopener" href="http://xuhehuan.com/2027.html">WordPress 博客同步到 CSDN 插件</a></p>
+<p>原文链接：<span class="exturl" data-url="aHR0cDovL3h1aGVodWFuLmNvbS8=">蔓草札记<i class="fa fa-external-link-alt"></i></span> » <span class="exturl" data-url="aHR0cDovL3h1aGVodWFuLmNvbS8yMDI3Lmh0bWw=">WordPress 博客同步到 CSDN 插件<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p>在没用 WordPress 博客前就在 CSDN 写了一些日志，后来自己搭建博客后，就希望能够将博客同步到 CSDN 中，无奈 CSDN 在 2011 年 7 月宣布暂不支持 Windows&nbsp;Live&nbsp;Writer 发布博文，直到在 2014 年 5 月 29 日才宣布重新让插件同步成为可能，不过目前网上搜到的插件现在都已经失效了。 </p>
 <span id="more"></span>
@@ -438,12 +438,12 @@
 <li>后台控制面板 “配置 (Settings)-&gt;wp2csdnblog” 中配置 CSDN 账户信息 </li>
 </ol>
 <p><strong>软件配置界面（V1.1 版本）:</strong><br><img src="https://static.bytelife.net/blog/images/16139164713418.png"></p>
-<p><strong>代码地址：</strong><br><a target="_blank" rel="noopener" href="https://gitcafe.com/xhhjin/WP2CSDNBlog/tree/master">https://gitcafe.com/xhhjin/WP2CSDNBlog/tree/master</a> </p>
-<p><strong>代码地址：</strong><br><a target="_blank" rel="noopener" href="https://coding.net/u/xhhjin/p/WP2CSDNBlog">https://coding.net/u/xhhjin/p/WP2CSDNBlog</a> </p>
-<p><strong>百度云下载：</strong><br><a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1c0dHqTy">http://pan.baidu.com/s/1c0dHqTy</a>（V1.1 版本） </p>
+<p><strong>代码地址：</strong><br><span class="exturl" data-url="aHR0cHM6Ly9naXRjYWZlLmNvbS94aGhqaW4vV1AyQ1NETkJsb2cvdHJlZS9tYXN0ZXI=">https://gitcafe.com/xhhjin/WP2CSDNBlog/tree/master<i class="fa fa-external-link-alt"></i></span> </p>
+<p><strong>代码地址：</strong><br><span class="exturl" data-url="aHR0cHM6Ly9jb2RpbmcubmV0L3UveGhoamluL3AvV1AyQ1NETkJsb2c=">https://coding.net/u/xhhjin/p/WP2CSDNBlog<i class="fa fa-external-link-alt"></i></span> </p>
+<p><strong>百度云下载：</strong><br><span class="exturl" data-url="aHR0cDovL3Bhbi5iYWlkdS5jb20vcy8xYzBkSHFUeQ==">http://pan.baidu.com/s/1c0dHqTy<i class="fa fa-external-link-alt"></i></span>（V1.1 版本） </p>
 <p>建议通过代码地址下载，百度云下载后续不一定更新。 WP2CSDNBlog 插件，开始同步吧 :） </p>
-<p><strong>2015.05.12 更新：</strong><br>插件已上传 WordPress plugins，可以在 WordPress 后台安装插件页面直接搜索 “wp2csdnblog” 安装。 WordPress plugins 地址：<a target="_blank" rel="noopener" href="https://wordpress.org/plugins/wp2csdnblog/">https://wordpress.org/plugins/wp2csdnblog/</a> </p>
-<p><strong>2015.06.14 更新：</strong><br>更新插件到 V1.2 版本，支持同时同步 WordPress 博客内容到新浪博客和网易博客。 新浪博客设置的用户名是博客的登录名，如果登录名是邮箱，不要忘了邮箱后缀。 网易博客设置的用户名根据邮箱区分。例如：您的邮箱帐号是 163 的：<a href="mailto:blog_admin@163.com">blog_admin@163.com</a>，则用户名是 blog_admin，如果你的邮箱账号是 126 的：<a href="mailto:blog_admin@126.com">blog_admin@126.com</a>，则用户名是 blog_admin@126，其余 yeah.net、188 等非 163 邮箱用户，请参考 126 邮箱的格式。 </p>
+<p><strong>2015.05.12 更新：</strong><br>插件已上传 WordPress plugins，可以在 WordPress 后台安装插件页面直接搜索 “wp2csdnblog” 安装。 WordPress plugins 地址：<span class="exturl" data-url="aHR0cHM6Ly93b3JkcHJlc3Mub3JnL3BsdWdpbnMvd3AyY3NkbmJsb2cv">https://wordpress.org/plugins/wp2csdnblog/<i class="fa fa-external-link-alt"></i></span> </p>
+<p><strong>2015.06.14 更新：</strong><br>更新插件到 V1.2 版本，支持同时同步 WordPress 博客内容到新浪博客和网易博客。 新浪博客设置的用户名是博客的登录名，如果登录名是邮箱，不要忘了邮箱后缀。 网易博客设置的用户名根据邮箱区分。例如：您的邮箱帐号是 163 的：<span class="exturl" data-url="bWFpbHRvOmJsb2dfYWRtaW5AMTYzLmNvbQ==">blog_admin@163.com<i class="fa fa-external-link-alt"></i></span>，则用户名是 blog_admin，如果你的邮箱账号是 126 的：<span class="exturl" data-url="bWFpbHRvOmJsb2dfYWRtaW5AMTI2LmNvbQ==">blog_admin@126.com<i class="fa fa-external-link-alt"></i></span>，则用户名是 blog_admin@126，其余 yeah.net、188 等非 163 邮箱用户，请参考 126 邮箱的格式。 </p>
 <p><strong>2015.06.22 更新：</strong><br>更新插件到 V1.3 版本，支持将 wordpress 的定时发布文章发布到设置的博客。 </p>
 <p><strong>2015.07.05 更新：</strong><br>更新插件到 V1.4 版本，完善对定时发布文章功能的支持，改善同步文章的排版格式。 </p>
 <p><strong>2016.05.04 更新：</strong><br>更新插件到 V1.5 版本，修改 CSDN 博客同步文章排版格式。 最近一段时间同步 CSDN 和网易博客的文章都没有成功，是 CSDN 和网易服务器返回错误导致的。大家可以用 Windows Live Writer 或者 Word 来发文章测试，如果能发布成功，则说明是插件的问题，反之很可能是服务器的问题，然后建议将服务器返回的错误在下面对应文章下留言。</p>
@@ -469,7 +469,7 @@
       <a href="https://www.bytelife.net/articles/49539.html" title="WordPress 博客同步到 CSDN 插件">https://www.bytelife.net/articles/49539.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -530,8 +530,8 @@
   <footer class="footer">
     <div class="footer-inner">
 
-  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
-      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备44030502005735号 </a>
+  <div class="beian"><span class="exturl" data-url="aHR0cHM6Ly9iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备20059294号 </span>
+      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5nb3YuY24vcG9ydGFsL3JlZ2lzdGVyU3lzdGVtSW5mbz9yZWNvcmRjb2RlPTQ0MDMwNTAyMDA1NzM1">粤公⽹安备44030502005735号 </span>
   </div>
 
 <div class="copyright">
@@ -576,7 +576,7 @@
       </span>
     </span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div><!--<script color="0,0,0" opacity="0.6" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>-->
 
     </div>
@@ -588,7 +588,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/next-boot.min.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -624,7 +624,7 @@ document.addEventListener('pjax:success', () => {
 
 
   
-<script src="/js/local-search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/local-search.min.js"></script>
 
 
 

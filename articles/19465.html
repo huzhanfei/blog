@@ -27,7 +27,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="准备工作 配置防火墙，开启 80 端口、3306 端口、如需使用 SSH 还应开启 22 端口、使用 FTP 需开启 21 端口、如果网站使用 SSL 访问需开启 443 端口： 删除原有的 iptables , 添加合适的配置  rm -rf &#x2F;etc&#x2F;sysconfig&#x2F;iptables vi &#x2F;etc&#x2F;sysconfig&#x2F;iptables">
 <meta property="og:type" content="article">
@@ -264,17 +264,17 @@
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei"><i class="fab fa-github fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <span class="exturl" data-url="bWFpbHRvOmh1emhhbmZlaUBvdXRsb29rLmNvbQ==" title="E-Mail → mailto:huzhanfei@outlook.com"><i class="fa fa-envelope fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
         <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
       </span>
   </div>
   <div class="cc-license site-overview-item animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
   </div>
 
 
@@ -413,13 +413,13 @@
 <p> #重启系统<br> shutdown -r now</p>
 </li>
 <li><p>安装第三方 yum 源</p>
-<p> #安装下载工具<br> yum install wget<br> #下载<br> wget <a target="_blank" rel="noopener" href="http://www.atomicorp.com/installers/atomic">http://www.atomicorp.com/installers/atomic</a><br> #安装<br> sh ./atomic<br> #更新 yum 源<br> yum check-update</p>
+<p> #安装下载工具<br> yum install wget<br> #下载<br> wget <span class="exturl" data-url="aHR0cDovL3d3dy5hdG9taWNvcnAuY29tL2luc3RhbGxlcnMvYXRvbWlj">http://www.atomicorp.com/installers/atomic<i class="fa fa-external-link-alt"></i></span><br> #安装<br> sh ./atomic<br> #更新 yum 源<br> yum check-update</p>
 </li>
 </ol>
 <h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><h3 id="一-安装nginx"><a href="#一-安装nginx" class="headerlink" title="一. 安装nginx"></a>一。安装 nginx</h3><p>#删除系统自带的软件包<br>yum remove httpd* php*<br>#安装 nginx<br>yum install -y nginx<br>#设置 nginx 开机启动<br>chkconfig nginx on<br>#启动 nginx<br>service nginx start</p>
 <h3 id="二-安装PHP"><a href="#二-安装PHP" class="headerlink" title="二. 安装PHP"></a>二。安装 PHP</h3><ol>
 <li>检查当前安装的 PHP 包 yum list installed | grep php 如果有安装的 PHP 包，先删除他们，如: yum remove php.x86_64 php-cli.x86_64 php-common.x86_64</li>
-<li> 配置安装包源:<h1 id="Centos-5-X"><a href="#Centos-5-X" class="headerlink" title="Centos 5.X"></a>Centos 5.X</h1> rpm -Uvh <a target="_blank" rel="noopener" href="http://mirror.webtatic.com/yum/el5/latest.rpm">http://mirror.webtatic.com/yum/el5/latest.rpm</a><h1 id="CentOs-6-x"><a href="#CentOs-6-x" class="headerlink" title="CentOs 6.x"></a>CentOs 6.x</h1> rpm -Uvh <a target="_blank" rel="noopener" href="http://mirror.webtatic.com/yum/el6/latest.rpm">http://mirror.webtatic.com/yum/el6/latest.rpm</a><h1 id="CentOs-7-X"><a href="#CentOs-7-X" class="headerlink" title="CentOs 7.X"></a>CentOs 7.X</h1> rpm -Uvh <a target="_blank" rel="noopener" href="https://mirror.webtatic.com/yum/el7/epel-release.rpm">https://mirror.webtatic.com/yum/el7/epel-release.rpm</a><br> rpm -Uvh <a target="_blank" rel="noopener" href="https://mirror.webtatic.com/yum/el7/webtatic-release.rpm">https://mirror.webtatic.com/yum/el7/webtatic-release.rpm</a> 如果想删除上面安装的包，重新安装 rpm -qa | grep webstatic<br> rpm -e  [上面搜索到的包即可]</li>
+<li> 配置安装包源:<h1 id="Centos-5-X"><a href="#Centos-5-X" class="headerlink" title="Centos 5.X"></a>Centos 5.X</h1> rpm -Uvh <span class="exturl" data-url="aHR0cDovL21pcnJvci53ZWJ0YXRpYy5jb20veXVtL2VsNS9sYXRlc3QucnBt">http://mirror.webtatic.com/yum/el5/latest.rpm<i class="fa fa-external-link-alt"></i></span><h1 id="CentOs-6-x"><a href="#CentOs-6-x" class="headerlink" title="CentOs 6.x"></a>CentOs 6.x</h1> rpm -Uvh <span class="exturl" data-url="aHR0cDovL21pcnJvci53ZWJ0YXRpYy5jb20veXVtL2VsNi9sYXRlc3QucnBt">http://mirror.webtatic.com/yum/el6/latest.rpm<i class="fa fa-external-link-alt"></i></span><h1 id="CentOs-7-X"><a href="#CentOs-7-X" class="headerlink" title="CentOs 7.X"></a>CentOs 7.X</h1> rpm -Uvh <span class="exturl" data-url="aHR0cHM6Ly9taXJyb3Iud2VidGF0aWMuY29tL3l1bS9lbDcvZXBlbC1yZWxlYXNlLnJwbQ==">https://mirror.webtatic.com/yum/el7/epel-release.rpm<i class="fa fa-external-link-alt"></i></span><br> rpm -Uvh <span class="exturl" data-url="aHR0cHM6Ly9taXJyb3Iud2VidGF0aWMuY29tL3l1bS9lbDcvd2VidGF0aWMtcmVsZWFzZS5ycG0=">https://mirror.webtatic.com/yum/el7/webtatic-release.rpm<i class="fa fa-external-link-alt"></i></span> 如果想删除上面安装的包，重新安装 rpm -qa | grep webstatic<br> rpm -e  [上面搜索到的包即可]</li>
 <li> 执行安装 yum -y install php56w.x86_64<br> yum -y –enablerepo=webtatic install php56w-devel<br> yum -y install php56w-xml.x86_64 php56w-gd.x86_64 php56w-ldap.x86_64 php56w-mbstring.x86_64 php56w-mcrypt.x86_64 php56w-mysql.x86_64 php56w-pdo.x86_64 php56w-opcache.x86_64</li>
 <li> 安装 PHP FPM yum -y install php56w-fpm<br> #设置 php-fpm 开机启动<br> chkconfig php-fpm on<br> #启动 php-fpm<br> /etc/init.d/php-fpm start 注：如果想更换到 php5.5 或 5.4 版本，直接把上面的 56w 换成 55w 或者 54w 就可以了</li>
 </ol>
@@ -446,7 +446,7 @@ location / {
 <blockquote>
 <p><em>说明: <code>/var/www</code> 为 web 根目录，<code>location / ...</code> 为 url 的 rewrite, 隐藏 <code>index.php</code></em></p>
 </blockquote>
-<h3 id="2-配置php-fpm"><a href="#2-配置php-fpm" class="headerlink" title="2. 配置php-fpm"></a>2. 配置 php-fpm</h3><p>vi /etc/php-fpm.d/<a target="_blank" rel="noopener" href="http://www.conf/">www.conf</a></p>
+<h3 id="2-配置php-fpm"><a href="#2-配置php-fpm" class="headerlink" title="2. 配置php-fpm"></a>2. 配置 php-fpm</h3><p>vi /etc/php-fpm.d/<span class="exturl" data-url="aHR0cDovL3d3dy5jb25mLw==">www.conf<i class="fa fa-external-link-alt"></i></span></p>
 <p>将用户和用户组设置为 nginx, 默认为 Apache, 如:</p>
 <p>#修改用户为 nginx<br>user = nginx<br> #修改组为 nginx<br>group = nginx</p>
 <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>启动命令:</p>
@@ -468,7 +468,7 @@ phpinfo();
 <p>#设置权限<br>chown nginx.nginx /var/www -R<br>#重启 nginx<br>service nginx restart<br>#重启 php-fpm<br>service php-fpm restart</p>
 <p>在客户端浏览器输入服务器 IP 地址 (如: 127.0.0.1)，可以看到相关的配置信息！ 说明 lnmp 配置成功！ &nbsp;</p>
 <blockquote>
-<p>本文参考自：<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/447e02d7951d">点击进入</a></p>
+<p>本文参考自：<span class="exturl" data-url="aHR0cDovL3d3dy5qaWFuc2h1LmNvbS9wLzQ0N2UwMmQ3OTUxZA==">点击进入<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 
     </div>
@@ -501,7 +501,7 @@ phpinfo();
       <a href="https://www.bytelife.net/articles/19465.html" title="完美配置 CentOS+Nginx+MySQL+PHP（LNMP）网站环境">https://www.bytelife.net/articles/19465.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -562,8 +562,8 @@ phpinfo();
   <footer class="footer">
     <div class="footer-inner">
 
-  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
-      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备44030502005735号 </a>
+  <div class="beian"><span class="exturl" data-url="aHR0cHM6Ly9iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备20059294号 </span>
+      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5nb3YuY24vcG9ydGFsL3JlZ2lzdGVyU3lzdGVtSW5mbz9yZWNvcmRjb2RlPTQ0MDMwNTAyMDA1NzM1">粤公⽹安备44030502005735号 </span>
   </div>
 
 <div class="copyright">
@@ -608,7 +608,7 @@ phpinfo();
       </span>
     </span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div><!--<script color="0,0,0" opacity="0.6" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>-->
 
     </div>
@@ -620,7 +620,7 @@ phpinfo();
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/next-boot.min.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -656,7 +656,7 @@ document.addEventListener('pjax:success', () => {
 
 
   
-<script src="/js/local-search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/local-search.min.js"></script>
 
 
 

@@ -27,7 +27,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="这篇文章主要是 java8 中新的 Date 和 Time API 的实战。新的 Date 和 Time 类是 java 开发者社区千呼万唤始出来的。Java8 之前存在的 Date 类一直都受人诟病，很多人都会选择使用第三方的 date 库 joda-time。Java8 中的 date 和 time api 是 jodatime 的作者参与开发的，实现了 JSR310 的全部内容。这些新的 a">
 <meta property="og:type" content="article">
@@ -262,17 +262,17 @@
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei"><i class="fab fa-github fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <span class="exturl" data-url="bWFpbHRvOmh1emhhbmZlaUBvdXRsb29rLmNvbQ==" title="E-Mail → mailto:huzhanfei@outlook.com"><i class="fa fa-envelope fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
         <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
       </span>
   </div>
   <div class="cc-license site-overview-item animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
   </div>
 
 
@@ -392,7 +392,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这篇文章主要是 java8 中新的 Date 和 Time API 的实战。新的 Date 和 Time 类是 java 开发者社区千呼万唤始出来的。Java8 之前存在的 Date 类一直都受人诟病，很多人都会选择使用第三方的 date 库 <a target="_blank" rel="noopener" href="http://www.joda.org/joda-time/">joda-time</a>。Java8 中的 date 和 time api 是 jodatime 的作者参与开发的，实现了 JSR310 的全部内容。这些新的 api 都在包 java.time 下。 既然第三方的 joda-time,date4j 都已经足够强大了，为什么 java8 还要重新实现他呢，一部分的原因是这些第三方的库是存在兼容问题的，比如标准的 JSF 日期转化器与 joda-time api，就不兼容，每次使用都需要编写自己的转换器，所以标准化 api 是必须的，就有了 JSR310，java8 中就实现了他全部的规定内容。</p>
+        <p>这篇文章主要是 java8 中新的 Date 和 Time API 的实战。新的 Date 和 Time 类是 java 开发者社区千呼万唤始出来的。Java8 之前存在的 Date 类一直都受人诟病，很多人都会选择使用第三方的 date 库 <span class="exturl" data-url="aHR0cDovL3d3dy5qb2RhLm9yZy9qb2RhLXRpbWUv">joda-time<i class="fa fa-external-link-alt"></i></span>。Java8 中的 date 和 time api 是 jodatime 的作者参与开发的，实现了 JSR310 的全部内容。这些新的 api 都在包 java.time 下。 既然第三方的 joda-time,date4j 都已经足够强大了，为什么 java8 还要重新实现他呢，一部分的原因是这些第三方的库是存在兼容问题的，比如标准的 JSF 日期转化器与 joda-time api，就不兼容，每次使用都需要编写自己的转换器，所以标准化 api 是必须的，就有了 JSR310，java8 中就实现了他全部的规定内容。</p>
 <span id="more"></span>
 
 <h2 id="新Date类和Time类背后的设计原则："><a href="#新Date类和Time类背后的设计原则：" class="headerlink" title="新Date类和Time类背后的设计原则："></a>新 Date 类和 Time 类背后的设计原则：</h2><p><strong>不可变类</strong><br>java8 之前，Date 类都是可变类。当我们在多线程环境下使用它，编程人员应该确认 Date 对象的线程安全。Java8 的 Date 和 Time API 提供了线程安全的不可变类。编程人员不用考虑并发的问题。<br><strong>领域模型驱动设计方法</strong><br>新的日期和时间的类别遵循 “域驱动设计”。对于开发者来说，理解方法和类的功能是很容易的。</p>
@@ -408,7 +408,7 @@
 <p><strong>java.time.Period:</strong> Period 是用来计算两个给定的日期之间包含多少天，多少月或者多少年，它是不可变类且线程安全的</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> orr.smarttechie;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.Period;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* This class demonstrates JAVA 8 data and time API</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> Siva Prasad Rao Janapati</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTimeDemonstration</span> </span>{</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">   LocalDate localDate = LocalDate.now();</span><br><span class="line">   Period period = Period.between(localDate, localDate.plus(<span class="number">2</span>, ChronoUnit.DAYS));</span><br><span class="line">   System.out.println(period.getDays());</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
-<p>来自：码农网<br>译文链接：<a target="_blank" rel="noopener" href="http://www.codeceo.com/article/java-8-date-time-guide.html">http://www.codeceo.com/article/java-8-date-time-guide.html</a><br>英文原文：<a target="_blank" rel="noopener" href="https://dzone.com/articles/java-8-new-data-and-time-overview">https://dzone.com/articles/java-8-new-data-and-time-overview</a><br>翻译作者：码农网 – 栗子蜀黍</p>
+<p>来自：码农网<br>译文链接：<span class="exturl" data-url="aHR0cDovL3d3dy5jb2RlY2VvLmNvbS9hcnRpY2xlL2phdmEtOC1kYXRlLXRpbWUtZ3VpZGUuaHRtbA==">http://www.codeceo.com/article/java-8-date-time-guide.html<i class="fa fa-external-link-alt"></i></span><br>英文原文：<span class="exturl" data-url="aHR0cHM6Ly9kem9uZS5jb20vYXJ0aWNsZXMvamF2YS04LW5ldy1kYXRhLWFuZC10aW1lLW92ZXJ2aWV3">https://dzone.com/articles/java-8-new-data-and-time-overview<i class="fa fa-external-link-alt"></i></span><br>翻译作者：码农网 – 栗子蜀黍</p>
 </blockquote>
 
     </div>
@@ -450,7 +450,7 @@
       <a href="https://www.bytelife.net/articles/20740.html" title="Java 8 中新的 Date 和 Time 类入门详解">https://www.bytelife.net/articles/20740.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -511,8 +511,8 @@
   <footer class="footer">
     <div class="footer-inner">
 
-  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
-      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备44030502005735号 </a>
+  <div class="beian"><span class="exturl" data-url="aHR0cHM6Ly9iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备20059294号 </span>
+      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5nb3YuY24vcG9ydGFsL3JlZ2lzdGVyU3lzdGVtSW5mbz9yZWNvcmRjb2RlPTQ0MDMwNTAyMDA1NzM1">粤公⽹安备44030502005735号 </span>
   </div>
 
 <div class="copyright">
@@ -557,7 +557,7 @@
       </span>
     </span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div><!--<script color="0,0,0" opacity="0.6" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>-->
 
     </div>
@@ -569,7 +569,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/next-boot.min.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -605,7 +605,7 @@ document.addEventListener('pjax:success', () => {
 
 
   
-<script src="/js/local-search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/local-search.min.js"></script>
 
 
 

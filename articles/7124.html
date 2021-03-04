@@ -27,7 +27,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="误解七：HTTPS 无法缓存许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：  “说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age&#x3D;600，那么">
 <meta property="og:type" content="article">
@@ -273,17 +273,17 @@
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/huzhanfei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;huzhanfei"><i class="fab fa-github fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:huzhanfei@outlook.com" title="E-Mail → mailto:huzhanfei@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <span class="exturl" data-url="bWFpbHRvOmh1emhhbmZlaUBvdXRsb29rLmNvbQ==" title="E-Mail → mailto:huzhanfei@outlook.com"><i class="fa fa-envelope fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
         <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
       </span>
   </div>
   <div class="cc-license site-overview-item animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
   </div>
 
 
@@ -411,7 +411,7 @@
 
 <p>Firefox 默认只在内存中缓存 HTTPS。但是，只要头命令中有 Cache-Control: Public，缓存就会被写到硬盘上。下面的图片显示，Firefox 的硬盘缓存中有 HTTPS 内容，头命令正是 Cache-Control:Public。<br><img src="https://static.bytelife.net/blog/images/16139210436054.png"></p>
 <h3 id="误解六：SSL证书很贵"><a href="#误解六：SSL证书很贵" class="headerlink" title="误解六：SSL证书很贵"></a><strong>误解六：SSL 证书很贵</strong></h3><p>如果你在网上搜一下，就会发现很多便宜的 SSL 证书，大概 10 美元一年，这和一个.com 域名的年费差不多。而且事实上，还能找到免费的 SSL 证书。 在效力上，便宜的证书当然会比大机构颁发的证书差一点，但是几乎所有的主流浏览器都接受这些证书。 &nbsp;</p>
-<h3 id="误解五：HTTPS站点必须有独享的IP地址"><a href="#误解五：HTTPS站点必须有独享的IP地址" class="headerlink" title="误解五：HTTPS站点必须有独享的IP地址"></a><strong>误解五：HTTPS 站点必须有独享的 IP 地址</strong></h3><p>由于 IPv4 将要分配完毕，所以很多人关心这个问题。每个 IP 地址只能安装一张 SSL 证书，这是毫无疑问的。但是，如果你使用子域名通配符 SSL 证书（wildcard SSL certificate，价格大约是每年 125 美元），就能在一个 IP 地址上部署多个 HTTPS 子域名。比如，<a target="_blank" rel="noopener" href="https://www.httpwatch.com和https//store.httpwatch.com%EF%BC%8C%E5%B0%B1%E5%85%B1%E4%BA%AB%E5%90%8C%E4%B8%80%E4%B8%AAIP%E5%9C%B0%E5%9D%80%E3%80%82">https://www.httpwatch.com 和 https://store.httpwatch.com，就共享同一个 IP 地址。</a><br><img src="https://static.bytelife.net/blog/images/16139210533569.png"><br> 另外，UCC（统一通信证书，Unified Communications Certificate）支持一张证书同时匹配多个站点，可以是完全不同的域名。SNI（服务器名称指示，Server Name Indication）允许一个 IP 地址上多个域名安装多张证书。服务器端，Apache 和 Nginx 支持该技术，IIS 不支持；客户端，IE 7+、Firefox 2.0+、Chrome 6+、Safari 2.1 + 和 Opera 8.0 + 支持。 &nbsp;</p>
+<h3 id="误解五：HTTPS站点必须有独享的IP地址"><a href="#误解五：HTTPS站点必须有独享的IP地址" class="headerlink" title="误解五：HTTPS站点必须有独享的IP地址"></a><strong>误解五：HTTPS 站点必须有独享的 IP 地址</strong></h3><p>由于 IPv4 将要分配完毕，所以很多人关心这个问题。每个 IP 地址只能安装一张 SSL 证书，这是毫无疑问的。但是，如果你使用子域名通配符 SSL 证书（wildcard SSL certificate，价格大约是每年 125 美元），就能在一个 IP 地址上部署多个 HTTPS 子域名。比如，<span class="exturl" data-url="aHR0cHM6Ly93d3cuaHR0cHdhdGNoLmNvbeWSjGh0dHBzLy9zdG9yZS5odHRwd2F0Y2guY29tJUVGJUJDJThDJUU1JUIwJUIxJUU1JTg1JUIxJUU0JUJBJUFCJUU1JTkwJThDJUU0JUI4JTgwJUU0JUI4JUFBSVAlRTUlOUMlQjAlRTUlOUQlODAlRTMlODAlODI=">https://www.httpwatch.com 和 https://store.httpwatch.com，就共享同一个 IP 地址。<i class="fa fa-external-link-alt"></i></span><br><img src="https://static.bytelife.net/blog/images/16139210533569.png"><br> 另外，UCC（统一通信证书，Unified Communications Certificate）支持一张证书同时匹配多个站点，可以是完全不同的域名。SNI（服务器名称指示，Server Name Indication）允许一个 IP 地址上多个域名安装多张证书。服务器端，Apache 和 Nginx 支持该技术，IIS 不支持；客户端，IE 7+、Firefox 2.0+、Chrome 6+、Safari 2.1 + 和 Opera 8.0 + 支持。 &nbsp;</p>
 <h3 id="误解四：转移服务器时要购买新证书"><a href="#误解四：转移服务器时要购买新证书" class="headerlink" title="误解四：转移服务器时要购买新证书"></a><strong>误解四：转移服务器时要购买新证书</strong></h3><p>部署 SSL 证书，需要这样几步：</p>
 <blockquote>
 <ol>
@@ -431,7 +431,7 @@
 </blockquote>
 <p>以 Twitter 为例，它的登录页使用了 HTTPS，但是登录以后，其他页面就变成了 HTTP。这时，它的 cookie 里的 session 值就暴露了。<br><img src="https://static.bytelife.net/blog/images/16139211218521.png"><br><img src="https://cdn.javacodes.cn/files/2016/07/2016-07-04_15-58-23.png"> 也就是说，这些 cookie 是在 HTTPS 环境下建立的，但是却在 HTTP 环境下传输。如果有人劫持到这些 cookie，那他就能以你的身份在 Twitter 上发言了。 （完） &nbsp;</p>
 <blockquote>
-<p><strong>来自：阮一峰的网络日志</strong><br><strong>译者：</strong>阮一峰 ****<br><strong>链接：<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/02/seven/_myths/_about_https.html">http://www.ruanyifeng.com/blog/2011/02/seven\_myths\_about_https.html</a></strong><br><strong> 原文：<a target="_blank" rel="noopener" href="http://blog.httpwatch.com/2011/01/28/top-7-myths-about-https/">http://blog.httpwatch.com/2011/01/28/top-7-myths-about-https/</a></strong></p>
+<p><strong>来自：阮一峰的网络日志</strong><br><strong>译者：</strong>阮一峰 ****<br><strong>链接：<span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTEvMDIvc2V2ZW4vX215dGhzL19hYm91dF9odHRwcy5odG1s">http://www.ruanyifeng.com/blog/2011/02/seven\_myths\_about_https.html<i class="fa fa-external-link-alt"></i></span></strong><br><strong> 原文：<span class="exturl" data-url="aHR0cDovL2Jsb2cuaHR0cHdhdGNoLmNvbS8yMDExLzAxLzI4L3RvcC03LW15dGhzLWFib3V0LWh0dHBzLw==">http://blog.httpwatch.com/2011/01/28/top-7-myths-about-https/<i class="fa fa-external-link-alt"></i></span></strong></p>
 </blockquote>
 
     </div>
@@ -464,7 +464,7 @@
       <a href="https://www.bytelife.net/articles/7124.html" title="HTTPS 的 7 个误解">https://www.bytelife.net/articles/7124.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -522,8 +522,8 @@
   <footer class="footer">
     <div class="footer-inner">
 
-  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备20059294号 </a>
-      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502005735" rel="noopener" target="_blank">粤公⽹安备44030502005735号 </a>
+  <div class="beian"><span class="exturl" data-url="aHR0cHM6Ly9iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备20059294号 </span>
+      <img src="https://static.bytelife.net/blog/images/beian.png" style="display: inline-block;"><span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5nb3YuY24vcG9ydGFsL3JlZ2lzdGVyU3lzdGVtSW5mbz9yZWNvcmRjb2RlPTQ0MDMwNTAyMDA1NzM1">粤公⽹安备44030502005735号 </span>
   </div>
 
 <div class="copyright">
@@ -568,7 +568,7 @@
       </span>
     </span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div><!--<script color="0,0,0" opacity="0.6" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>-->
 
     </div>
@@ -580,7 +580,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/next-boot.min.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
@@ -616,7 +616,7 @@ document.addEventListener('pjax:success', () => {
 
 
   
-<script src="/js/local-search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.2.2/source/js/local-search.min.js"></script>
 
 
 
