@@ -1,44 +1,24 @@
-# robots.txt generated at http://tool.chinaz.com/robots/ 
-User-agent: Baiduspider
-Disallow: 
-User-agent: Sosospider
-Disallow: 
-User-agent: sogou spider
-Disallow: 
-User-agent: YodaoBot
-Disallow: 
-User-agent: Googlebot
-Disallow: 
-User-agent: Bingbot
-Disallow: 
-User-agent: Slurp
-Disallow: 
-User-agent: Teoma
-Disallow: 
-User-agent: ia_archiver
-Disallow: 
-User-agent: twiceler
-Disallow: 
-User-agent: MSNBot
-Disallow: 
-User-agent: Scrubby
-Disallow: 
-User-agent: Robozilla
-Disallow: 
-User-agent: Gigabot
-Disallow: 
-User-agent: googlebot-image
-Disallow: 
-User-agent: googlebot-mobile
-Disallow: 
-User-agent: yahoo-mmcrawler
-Disallow: 
-User-agent: yahoo-blogs/v3.9
-Disallow: 
-User-agent: psbot
-Disallow: 
+# 允许所有用户代理的浏览器爬虫进行访问
 User-agent: *
-Disallow: 
+
+# 允许访问的内容
+Allow: /
+Allow: /archives/
+Allow: /articles/
+Allow: /categories/
+Allow: /page/
+Allow: /about/
+Allow: /tags/
+
+# 不允许访问的内容
+Disallow: /images/
+Disallow: /css/
+Disallow: /js/
+Disallow: /*.js
+Disallow: /*.css
+
 Crawl-delay: 60
-Sitemap: https://bytelife.net/sitemap.xml
-Sitemap: https://bytelife.net/baidusitemap.xml
+
+# 网站地图Sitemap
+Sitemap: https://www.bytelife.net/sitemap.xml
+Sitemap: https://www.bytelife.net/baidusitemap.xml
