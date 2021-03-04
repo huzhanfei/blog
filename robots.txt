@@ -1,21 +1,10 @@
 # 允许所有用户代理的浏览器爬虫进行访问
 User-agent: *
 
-# 允许访问的内容
-Allow: /
-Allow: /archives/
-Allow: /articles/
-Allow: /categories/
-Allow: /page/
-Allow: /about/
-Allow: /tags/
-
 # 不允许访问的内容
 Disallow: /images/
 Disallow: /css/
 Disallow: /js/
-Disallow: /*.js
-Disallow: /*.css
 
 Crawl-delay: 60
 
