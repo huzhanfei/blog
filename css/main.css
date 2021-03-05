@@ -3075,3 +3075,7 @@ mjx-container[display="true"] + br {
     padding: 10px 12px;
   }
 }
+.use-motion .post-header,
+.use-motion .post-body {
+  visibility: inherit;
+}
