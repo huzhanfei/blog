@@ -528,7 +528,7 @@ Duration 是用来计算两个给定的日期之间包含多少秒，多少毫�
   </div>
 
 <div class="copyright">
-  &copy; 
+  &copy; 2018 – 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -568,9 +568,13 @@ Duration 是用来计算两个给定的日期之间包含多少秒，多少毫�
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
+</div><!--<script color="0,0,0" opacity="0.6" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>-->
+<div>
+  <span id="siteTimeDate">载入天数...</span>
+  <span id="siteTimes">载入时分秒...</span>
+  <script src="/js/duration.js"></script>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
-  </div><!--<script color="0,0,0" opacity="0.6" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>-->
+
 
     </div>
   </footer>
@@ -622,6 +626,19 @@ document.addEventListener('pjax:success', () => {
 
 
 
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
 
   <script>
     NProgress.configure({
