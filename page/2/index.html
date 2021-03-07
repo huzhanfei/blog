@@ -358,7 +358,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>18 分钟</span>
+      <span>23 分钟</span>
     </span>
 </div>
 
@@ -456,7 +456,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>11 分钟</span>
     </span>
 </div>
 
@@ -554,7 +554,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -565,7 +565,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="类加载的时机"><a href="#类加载的时机" class="headerlink" title="类加载的时机"></a>类加载的时机</h2><p>类从被加载到虚拟机开始，到卸载为止，生命周期如图所示：<br><img src="https://static.bytelife.net/blog/images/16139181881678.png"><br>其中，加载、验证、准备、初始化、卸载这五个阶段的顺序是确定的，类的加载过程必须按照这种顺序按部就班的开始（开始不代表完成，通常为交叉混合运行），而解析阶段不一定：它在某些情况下可以在初始化阶段之后再开始。 </p>
+          <h2 id="类加载的时机"><a class="markdownIt-Anchor" href="#类加载的时机"></a> 类加载的时机</h2>
+<p>类从被加载到虚拟机开始，到卸载为止，生命周期如图所示：<br>
+<img src="https://static.bytelife.net/blog/images/16139181881678.png" alt=""><br>
+其中，加载、验证、准备、初始化、卸载这五个阶段的顺序是确定的，类的加载过程必须按照这种顺序按部就班的开始（开始不代表完成，通常为交叉混合运行），而解析阶段不一定：它在某些情况下可以在初始化阶段之后再开始。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/49511.html#more" rel="contents">
@@ -652,7 +655,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>17 分钟</span>
+      <span>21 分钟</span>
     </span>
 </div>
 
@@ -663,10 +666,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="判断对象是否可回收的常见方法"><a href="#判断对象是否可回收的常见方法" class="headerlink" title="判断对象是否可回收的常见方法"></a>判断对象是否可回收的常见方法</h3><h4 id="引用计数算法（Reference-Counting）"><a href="#引用计数算法（Reference-Counting）" class="headerlink" title="引用计数算法（Reference Counting）"></a>引用计数算法（Reference Counting）</h4><p>给对象中添加一个引用计数器，每当有一个地方引用时，计数器加 1；当引用失效时，计数器减 1；任何时刻计数器为 0 的对象就是不可能再被使用的。</p>
+          <h3 id="判断对象是否可回收的常见方法"><a class="markdownIt-Anchor" href="#判断对象是否可回收的常见方法"></a> 判断对象是否可回收的常见方法</h3>
+<h4 id="引用计数算法reference-counting"><a class="markdownIt-Anchor" href="#引用计数算法reference-counting"></a> 引用计数算法（Reference Counting）</h4>
+<p>给对象中添加一个引用计数器，每当有一个地方引用时，计数器加 1；当引用失效时，计数器减 1；任何时刻计数器为 0 的对象就是不可能再被使用的。</p>
 <ul>
-<li>  优点：实现简单，判定效率高；</li>
-<li>  缺点：很难解决对象之间的循环引用问题；</li>
+<li>优点：实现简单，判定效率高；</li>
+<li>缺点：很难解决对象之间的循环引用问题；</li>
 </ul>
 <p>JVM 并不使用这种算法。</p>
           <!--noindex-->
@@ -755,7 +760,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -766,11 +771,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="verbose"><a href="#verbose" class="headerlink" title="-verbose"></a>-verbose</h3><p>java -verbose [:class|gc|jni] 在输出设备上显示虚拟机运行信息。</p>
+          <h3 id="-verbose"><a class="markdownIt-Anchor" href="#-verbose"></a> -verbose</h3>
+<p>java -verbose [:class|gc|jni] 在输出设备上显示虚拟机运行信息。</p>
 <ul>
-<li>  -verbose:class：监视输出运行期间的类加载情况</li>
-<li>  -verbose:gc：监视输出运行期间的内存回收 GC 情况</li>
-<li>  -verbose:jni：监视输出 native 方法调用的相关情况，一般用于诊断 jni 调用错误信息。</li>
+<li>-verbose:class：监视输出运行期间的类加载情况</li>
+<li> -verbose:gc：监视输出运行期间的内存回收 GC 情况</li>
+<li> -verbose:jni：监视输出 native 方法调用的相关情况，一般用于诊断 jni 调用错误信息。</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -858,7 +864,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -1054,7 +1060,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -1154,7 +1160,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
+      <span>14 分钟</span>
     </span>
 </div>
 
@@ -1252,7 +1258,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -1263,7 +1269,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="一、c命名空间"><a href="#一、c命名空间" class="headerlink" title="一、c命名空间"></a>一、c 命名空间</h3><p>通过构造器注入 Bean 的时候通常需要使用到<constructor-arg>元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示：</constructor-arg></p>
+          <h3 id="一-c命名空间"><a class="markdownIt-Anchor" href="#一-c命名空间"></a> 一、c 命名空间</h3>
+<p>通过构造器注入 Bean 的时候通常需要使用到<constructor-arg>元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示：</constructor-arg></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/36596.html#more" rel="contents">
@@ -1326,7 +1333,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -1346,7 +1353,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">

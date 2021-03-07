@@ -230,7 +230,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%A1%AE%E8%AE%A4%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">一、确认硬件环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%A6%81%E7%94%A8Nouveau"><span class="nav-number">2.</span> <span class="nav-text">二、禁用 Nouveau</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85Bumblebee"><span class="nav-number">3.</span> <span class="nav-text">三、安装 Bumblebee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85Bumblebee-nvidia"><span class="nav-number">4.</span> <span class="nav-text">四、安装 Bumblebee-nvidia</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F"><span class="nav-number">5.</span> <span class="nav-text">五、检查是否成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%BD%BF%E7%94%A8Bumblebee%E8%BD%AF%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">六、使用 Bumblebee 软件</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E7%A1%AE%E8%AE%A4%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text"> 一、确认硬件环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E7%A6%81%E7%94%A8nouveau"><span class="nav-number">2.</span> <span class="nav-text"> 二、禁用 Nouveau</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-%E5%AE%89%E8%A3%85bumblebee"><span class="nav-number">3.</span> <span class="nav-text"> 三、安装 Bumblebee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B-%E5%AE%89%E8%A3%85bumblebee-nvidia"><span class="nav-number">4.</span> <span class="nav-text"> 四、安装 Bumblebee-nvidia</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94-%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F"><span class="nav-number">5.</span> <span class="nav-text"> 五、检查是否成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD-%E4%BD%BF%E7%94%A8bumblebee%E8%BD%AF%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text"> 六、使用 Bumblebee 软件</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -385,7 +385,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -398,20 +398,22 @@
     <div class="post-body" itemprop="articleBody">
         <p>现在的笔记本显卡多为 Intel 核心显卡 + Nvidia 显卡的组合模式，如果没能正确的管理 Linux 操作系统的双显卡驱动，可能会导致发热和性能差的问题。由于我们在 Linux 中极少运行对显卡要求特别高的 3D 程序，因此并不需要一直开启 Nvidia 独立显卡，只在需要它的时候再开启就好，Bumblebee 提供了一个很棒的解决方案。 本文以 Fedora24 为例：</p>
 <span id="more"></span>
-
-<h3 id="一、确认硬件环境"><a href="#一、确认硬件环境" class="headerlink" title="一、确认硬件环境"></a>一、确认硬件环境</h3><p>当然，首先你得确定你的电脑确实是 Intel+Nvidia 的双显卡组合模式（optimus），查看方法很简单，只需要一条命令：</p>
+<h3 id="一-确认硬件环境"><a class="markdownIt-Anchor" href="#一-确认硬件环境"></a> 一、确认硬件环境</h3>
+<p>当然，首先你得确定你的电脑确实是 Intel+Nvidia 的双显卡组合模式（optimus），查看方法很简单，只需要一条命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lspci | egrep <span class="string">'VGA|3D'</span></span><br></pre></td></tr></tbody></table></figure>
-
-
-<p>如果你的电脑是双显卡，将会输出类似如下的信息：<br><img src="https://static.bytelife.net/blog/images/16139211553705.png"></p>
-<h3 id="二、禁用Nouveau"><a href="#二、禁用Nouveau" class="headerlink" title="二、禁用Nouveau"></a>二、禁用 Nouveau</h3><p>Nouveau 是一个大多数 Linux 发行版都会自带的 Nvidia 第三方驱动程序，不过 Nouveau 只支持 2D，不支持 3D，可想而知其性能有多差。安装 Bumblebee 之前必须禁用 Nouveau，否则会出现问题，方法如下： 运行命令：</p>
+<p>如果你的电脑是双显卡，将会输出类似如下的信息：<br>
+<img src="https://static.bytelife.net/blog/images/16139211553705.png" alt=""></p>
+<h3 id="二-禁用nouveau"><a class="markdownIt-Anchor" href="#二-禁用nouveau"></a> 二、禁用 Nouveau</h3>
+<p>Nouveau 是一个大多数 Linux 发行版都会自带的 Nvidia 第三方驱动程序，不过 Nouveau 只支持 2D，不支持 3D，可想而知其性能有多差。安装 Bumblebee 之前必须禁用 Nouveau，否则会出现问题，方法如下： 运行命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/modprobe.d/blacklist.conf</span><br></pre></td></tr></tbody></table></figure>
 <p>在打开的窗口中加上如下内容：</p>
 <blockquote>
 <p>blacklist nouveau options nouveau modeset=0</p>
 </blockquote>
 <p>保存并重新启动操作系统。</p>
-<h3 id="三、安装Bumblebee"><a href="#三、安装Bumblebee" class="headerlink" title="三、安装Bumblebee"></a>三、安装 Bumblebee</h3><p>不同版本的 Fedora 稍有不同 开源驱动（Nouveau）命令如下（如果安装此版本，则无需执行上面的第二步）：<br><strong>fedora 22:</strong></p>
+<h3 id="三-安装bumblebee"><a class="markdownIt-Anchor" href="#三-安装bumblebee"></a> 三、安装 Bumblebee</h3>
+<p>不同版本的 Fedora 稍有不同 开源驱动（Nouveau）命令如下（如果安装此版本，则无需执行上面的第二步）：<br>
+<strong>fedora 22:</strong></p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y --nogpgcheck install http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee/fedora22/noarch/bumblebee-release-1.2-1.noarch.rpm</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>fedora 23:</strong></p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y --nogpgcheck install http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee/fedora23/noarch/bumblebee-release-1.2-1.noarch.rpm</span><br></pre></td></tr></tbody></table></figure>
@@ -423,24 +425,31 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y --nogpgcheck install http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee-nonfree/fedora23/noarch/bumblebee-nonfree-release-1.2-1.noarch.rpm</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>fedora 24:</strong></p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y --nogpgcheck install http://install.linux.ncsu.edu/pub/yum/itecs/public/bumblebee-nonfree/fedora24/noarch/bumblebee-nonfree-release-1.2-1.noarch.rpm</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="四、安装Bumblebee-nvidia"><a href="#四、安装Bumblebee-nvidia" class="headerlink" title="四、安装Bumblebee-nvidia"></a>四、安装 Bumblebee-nvidia</h3><p>接下来执行（根据系统选择）： 1、32 位系统：</p>
+<h3 id="四-安装bumblebee-nvidia"><a class="markdownIt-Anchor" href="#四-安装bumblebee-nvidia"></a> 四、安装 Bumblebee-nvidia</h3>
+<p>接下来执行（根据系统选择）： 1、32 位系统：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf install bumblebee-nvidia bbswitch-dkms primus kernel-devel</span><br></pre></td></tr></tbody></table></figure>
 <p>2、64 位系统：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf install bumblebee-nvidia bbswitch-dkms VirtualGL.x86\_64 VirtualGL.i686 primus.x86\_64 primus.i686 kernel-devel</span><br></pre></td></tr></tbody></table></figure>
 <p>耐心的等待下载并安装完成，重新启动操作系统。</p>
-<h3 id="五、检查是否成功"><a href="#五、检查是否成功" class="headerlink" title="五、检查是否成功"></a>五、检查是否成功</h3><p>1、运行如下命令再次查看显卡 pci 信息：</p>
+<h3 id="五-检查是否成功"><a class="markdownIt-Anchor" href="#五-检查是否成功"></a> 五、检查是否成功</h3>
+<p>1、运行如下命令再次查看显卡 pci 信息：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lspci | egrep <span class="string">'VGA|3D'</span></span><br></pre></td></tr></tbody></table></figure>
 <p>检查 nvidia 显卡信息后面是否是 (rev ff)，如果是，则证明 Bumblebee 已经运行； 2、运行如下命令比较帧数： 首先运行：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glxgears</span><br></pre></td></tr></tbody></table></figure>
-<p>查看终端中输出的 FPS 数值，此处的数值为使用核心显卡时的数值：<br><img src="https://static.bytelife.net/blog/images/16139212547585.png"><br>运行：</p>
+<p>查看终端中输出的 FPS 数值，此处的数值为使用核心显卡时的数值：<br>
+<img src="https://static.bytelife.net/blog/images/16139212547585.png" alt=""><br>
+运行：</p>
 <p>optirun glxgears</p>
-<p>查看终端 FPS 信息，此时如果能够正常运行，则为 Nvidia 显卡在工作：<br><img src="https://static.bytelife.net/blog/images/16139212622535.png"><br> 明显看出 FPS 从 60 飙升到 2000，证明 NVIDIA 生效；</p>
-<h3 id="六、使用Bumblebee软件"><a href="#六、使用Bumblebee软件" class="headerlink" title="六、使用Bumblebee软件"></a>六、使用 Bumblebee 软件</h3><p>常规用法：</p>
+<p>查看终端 FPS 信息，此时如果能够正常运行，则为 Nvidia 显卡在工作：<br>
+<img src="https://static.bytelife.net/blog/images/16139212622535.png" alt=""><br>
+明显看出 FPS 从 60 飙升到 2000，证明 NVIDIA 生效；</p>
+<h3 id="六-使用bumblebee软件"><a class="markdownIt-Anchor" href="#六-使用bumblebee软件"></a> 六、使用 Bumblebee 软件</h3>
+<p>常规用法：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optirun [options] application [application-parameters]</span><br></pre></td></tr></tbody></table></figure>
-<p>下面举几个例子： </p>
+<p>下面举几个例子：</p>
 <p>1、使用独立显卡运行 Windows（通过 Wine）应用程序：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ optirun wine application.exe</span><br></pre></td></tr></tbody></table></figure>
-<p>我就是用这种方式来运行魔兽世界的，虽然不总玩，哈哈，谁说 Linux 不可以玩游戏！ </p>
+<p>我就是用这种方式来运行魔兽世界的，虽然不总玩，哈哈，谁说 Linux 不可以玩游戏！</p>
 <p>2、打开 nvidia 显卡设置</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ optirun -b none nvidia-settings -c :8</span><br></pre></td></tr></tbody></table></figure>
 <p>3、使用独立显卡运行 Java 程序</p>
@@ -541,7 +550,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -561,7 +570,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -29,12 +29,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="误解七：HTTPS 无法缓存许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：  “说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age&#x3D;600，那么">
+<meta name="description" content="误解七：HTTPS 无法缓存 许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：  “说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age&#x3D;600，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTPS 的 7 个误解">
 <meta property="og:url" content="https://www.bytelife.net/articles/7124.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="误解七：HTTPS 无法缓存许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：  “说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age&#x3D;600，那么">
+<meta property="og:description" content="误解七：HTTPS 无法缓存 许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：  “说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age&#x3D;600，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://static.bytelife.net/blog/images/16139210436054.png">
 <meta property="og:image" content="https://static.bytelife.net/blog/images/16139210533569.png">
@@ -237,7 +237,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%B8%83%EF%BC%9AHTTPS%E6%97%A0%E6%B3%95%E7%BC%93%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text">误解七：HTTPS 无法缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E5%85%AD%EF%BC%9ASSL%E8%AF%81%E4%B9%A6%E5%BE%88%E8%B4%B5"><span class="nav-number">2.</span> <span class="nav-text">误解六：SSL 证书很贵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%BA%94%EF%BC%9AHTTPS%E7%AB%99%E7%82%B9%E5%BF%85%E9%A1%BB%E6%9C%89%E7%8B%AC%E4%BA%AB%E7%9A%84IP%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">误解五：HTTPS 站点必须有独享的 IP 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E5%9B%9B%EF%BC%9A%E8%BD%AC%E7%A7%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%97%B6%E8%A6%81%E8%B4%AD%E4%B9%B0%E6%96%B0%E8%AF%81%E4%B9%A6"><span class="nav-number">4.</span> <span class="nav-text">误解四：转移服务器时要购买新证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%B8%89%EF%BC%9AHTTPS%E5%A4%AA%E6%85%A2"><span class="nav-number">5.</span> <span class="nav-text">误解三：HTTPS 太慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%BA%8C%EF%BC%9A%E6%9C%89%E4%BA%86HTTPS%EF%BC%8CCookie%E5%92%8C%E6%9F%A5%E8%AF%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B0%B1%E5%AE%89%E5%85%A8%E4%BA%86"><span class="nav-number">6.</span> <span class="nav-text">误解二：有了 HTTPS，Cookie 和查询字符串就安全了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%B8%80%EF%BC%9A%E5%8F%AA%E6%9C%89%E6%B3%A8%E5%86%8C%E7%99%BB%E5%BD%95%E9%A1%B5%EF%BC%8C%E6%89%8D%E9%9C%80%E8%A6%81HTTPS"><span class="nav-number">7.</span> <span class="nav-text">误解一：只有注册登录页，才需要 HTTPS</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%B8%83https%E6%97%A0%E6%B3%95%E7%BC%93%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text"> 误解七：HTTPS 无法缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E5%85%ADssl%E8%AF%81%E4%B9%A6%E5%BE%88%E8%B4%B5"><span class="nav-number">2.</span> <span class="nav-text"> 误解六：SSL 证书很贵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%BA%94https%E7%AB%99%E7%82%B9%E5%BF%85%E9%A1%BB%E6%9C%89%E7%8B%AC%E4%BA%AB%E7%9A%84ip%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text"> 误解五：HTTPS 站点必须有独享的 IP 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E5%9B%9B%E8%BD%AC%E7%A7%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%97%B6%E8%A6%81%E8%B4%AD%E4%B9%B0%E6%96%B0%E8%AF%81%E4%B9%A6"><span class="nav-number">4.</span> <span class="nav-text"> 误解四：转移服务器时要购买新证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%B8%89https%E5%A4%AA%E6%85%A2"><span class="nav-number">5.</span> <span class="nav-text"> 误解三：HTTPS 太慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%BA%8C%E6%9C%89%E4%BA%86httpscookie%E5%92%8C%E6%9F%A5%E8%AF%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B0%B1%E5%AE%89%E5%85%A8%E4%BA%86"><span class="nav-number">6.</span> <span class="nav-text"> 误解二：有了 HTTPS，Cookie 和查询字符串就安全了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E8%A7%A3%E4%B8%80%E5%8F%AA%E6%9C%89%E6%B3%A8%E5%86%8C%E7%99%BB%E5%BD%95%E9%A1%B5%E6%89%8D%E9%9C%80%E8%A6%81https"><span class="nav-number">7.</span> <span class="nav-text"> 误解一：只有注册登录页，才需要 HTTPS</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -385,14 +385,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -403,35 +403,61 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="误解七：HTTPS无法缓存"><a href="#误解七：HTTPS无法缓存" class="headerlink" title="误解七：HTTPS无法缓存"></a><strong>误解七：HTTPS 无法缓存</strong></h3><p>许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：</p>
+        <h3 id="误解七https无法缓存"><a class="markdownIt-Anchor" href="#误解七https无法缓存"></a> <strong>误解七：HTTPS 无法缓存</strong></h3>
+<p>许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：</p>
 <blockquote>
 <p>“说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age=600，那么这个网页就将被 IE 缓存 10 分钟。IE 的缓存策略，与是否使用 HTTPS 协议无关。（其他浏览器在这方面的行为不一致，取决于你使用的版本，所以这里不加以讨论。）”</p>
 </blockquote>
 <span id="more"></span>
-
-<p>Firefox 默认只在内存中缓存 HTTPS。但是，只要头命令中有 Cache-Control: Public，缓存就会被写到硬盘上。下面的图片显示，Firefox 的硬盘缓存中有 HTTPS 内容，头命令正是 Cache-Control:Public。<br><img src="https://static.bytelife.net/blog/images/16139210436054.png"></p>
-<h3 id="误解六：SSL证书很贵"><a href="#误解六：SSL证书很贵" class="headerlink" title="误解六：SSL证书很贵"></a><strong>误解六：SSL 证书很贵</strong></h3><p>如果你在网上搜一下，就会发现很多便宜的 SSL 证书，大概 10 美元一年，这和一个.com 域名的年费差不多。而且事实上，还能找到免费的 SSL 证书。 在效力上，便宜的证书当然会比大机构颁发的证书差一点，但是几乎所有的主流浏览器都接受这些证书。 &nbsp;</p>
-<h3 id="误解五：HTTPS站点必须有独享的IP地址"><a href="#误解五：HTTPS站点必须有独享的IP地址" class="headerlink" title="误解五：HTTPS站点必须有独享的IP地址"></a><strong>误解五：HTTPS 站点必须有独享的 IP 地址</strong></h3><p>由于 IPv4 将要分配完毕，所以很多人关心这个问题。每个 IP 地址只能安装一张 SSL 证书，这是毫无疑问的。但是，如果你使用子域名通配符 SSL 证书（wildcard SSL certificate，价格大约是每年 125 美元），就能在一个 IP 地址上部署多个 HTTPS 子域名。比如，<span class="exturl" data-url="aHR0cHM6Ly93d3cuaHR0cHdhdGNoLmNvbeWSjGh0dHBzLy9zdG9yZS5odHRwd2F0Y2guY29tJUVGJUJDJThDJUU1JUIwJUIxJUU1JTg1JUIxJUU0JUJBJUFCJUU1JTkwJThDJUU0JUI4JTgwJUU0JUI4JUFBSVAlRTUlOUMlQjAlRTUlOUQlODAlRTMlODAlODI=">https://www.httpwatch.com 和 https://store.httpwatch.com，就共享同一个 IP 地址。<i class="fa fa-external-link-alt"></i></span><br><img src="https://static.bytelife.net/blog/images/16139210533569.png"><br> 另外，UCC（统一通信证书，Unified Communications Certificate）支持一张证书同时匹配多个站点，可以是完全不同的域名。SNI（服务器名称指示，Server Name Indication）允许一个 IP 地址上多个域名安装多张证书。服务器端，Apache 和 Nginx 支持该技术，IIS 不支持；客户端，IE 7+、Firefox 2.0+、Chrome 6+、Safari 2.1 + 和 Opera 8.0 + 支持。 &nbsp;</p>
-<h3 id="误解四：转移服务器时要购买新证书"><a href="#误解四：转移服务器时要购买新证书" class="headerlink" title="误解四：转移服务器时要购买新证书"></a><strong>误解四：转移服务器时要购买新证书</strong></h3><p>部署 SSL 证书，需要这样几步：</p>
+<p>Firefox 默认只在内存中缓存 HTTPS。但是，只要头命令中有 Cache-Control: Public，缓存就会被写到硬盘上。下面的图片显示，Firefox 的硬盘缓存中有 HTTPS 内容，头命令正是 Cache-Control:Public。<br>
+<img src="https://static.bytelife.net/blog/images/16139210436054.png" alt=""></p>
+<h3 id="误解六ssl证书很贵"><a class="markdownIt-Anchor" href="#误解六ssl证书很贵"></a> <strong>误解六：SSL 证书很贵</strong></h3>
+<p>如果你在网上搜一下，就会发现很多便宜的 SSL 证书，大概 10 美元一年，这和一个.com 域名的年费差不多。而且事实上，还能找到免费的 SSL 证书。 在效力上，便宜的证书当然会比大机构颁发的证书差一点，但是几乎所有的主流浏览器都接受这些证书。</p>
+<h3 id="误解五https站点必须有独享的ip地址"><a class="markdownIt-Anchor" href="#误解五https站点必须有独享的ip地址"></a> <strong>误解五：HTTPS 站点必须有独享的 IP 地址</strong></h3>
+<p>由于 IPv4 将要分配完毕，所以很多人关心这个问题。每个 IP 地址只能安装一张 SSL 证书，这是毫无疑问的。但是，如果你使用子域名通配符 SSL 证书（wildcard SSL certificate，价格大约是每年 125 美元），就能在一个 IP 地址上部署多个 HTTPS 子域名。比如，<span class="exturl" data-url="aHR0cHM6Ly93d3cuaHR0cHdhdGNoLnhuLS1jb21odHRwcy0xYzJu">https://www.httpwatch.com 和 https<i class="fa fa-external-link-alt"></i></span>😕/store.httpwatch.com，就共享同一个 IP 地址。<br>
+<img src="https://static.bytelife.net/blog/images/16139210533569.png" alt=""><br>
+另外，UCC（统一通信证书，Unified Communications Certificate）支持一张证书同时匹配多个站点，可以是完全不同的域名。SNI（服务器名称指示，Server Name Indication）允许一个 IP 地址上多个域名安装多张证书。服务器端，Apache 和 Nginx 支持该技术，IIS 不支持；客户端，IE 7+、Firefox 2.0+、Chrome 6+、Safari 2.1 + 和 Opera 8.0 + 支持。</p>
+<h3 id="误解四转移服务器时要购买新证书"><a class="markdownIt-Anchor" href="#误解四转移服务器时要购买新证书"></a> <strong>误解四：转移服务器时要购买新证书</strong></h3>
+<p>部署 SSL 证书，需要这样几步：</p>
 <blockquote>
 <ol>
-<li>在你的服务器上，生成一个 CSR 文件（SSL 证书请求文件，SSL Certificate Signing Request）。 </li>
+<li>在你的服务器上，生成一个 CSR 文件（SSL 证书请求文件，SSL Certificate Signing Request）。</li>
 <li>使用 CSR 文件，购买 SSL 证书。 3. 安装 SSL 证书。</li>
 </ol>
 </blockquote>
-<p>这些步骤都经过精心设计，保证传输的安全，防止有人截取或非法获得证书。结果就是，你在第二步得到的证书不能用在另一台服务器上。如果你需要这样做，就必须以其他格式输出证书。 比如，IIS 的做法是生成一个可以转移的.pfx 文件，并加以密码保护。<br><img src="https://static.bytelife.net/blog/images/16139210741414.png"><br>将这个文件传入其他服务器，将可以继续使用原来的 SSL 证书了。 &nbsp;</p>
-<h3 id="误解三：HTTPS太慢"><a href="#误解三：HTTPS太慢" class="headerlink" title="误解三：HTTPS太慢"></a><strong>误解三：HTTPS 太慢</strong></h3><p>使用 HTTPS 不会使你的网站变得更快（实际上有可能，请看下文），但是有一些技巧可以大大减少额外开销。 首先，只要压缩文本内容，就会降低解码耗用的 CPU 资源。不过，对于当代 CPU 来说，这点开销不值一提。 其次，建立 HTTPS 连接，要求额外的 TCP 往返，因此会新增一些发送和接收的字节。但是，从下图可以看到，新增的字节是很少的。<br><img src="https://static.bytelife.net/blog/images/16139210834526.png"><br> 第一次打开网页的时候，HTTPS 协议会比 HTTP 协议慢一点，这是因为读取和验证 SSL 证书的时间。下面是一张 HTTP 网页打开时间的瀑布图。<br><img src="https://static.bytelife.net/blog/images/16139210883485.png"><br>同一张网页使用 HTTPS 协议之后，打开时间变长了。 建立连接的部分，大约慢了 10%。但是，一旦有效的 HTTPS 连接建立起来，再刷新网页，两种协议几乎没有区别。先是 HTTP 协议的刷新表现：<br><img src="https://static.bytelife.net/blog/images/16139210937090.png"><br> 然后是 HTTPS 协议：<br><img src="https://static.bytelife.net/blog/images/16139211049326.png"><br> 某些用户可能发现，HTTPS 比 HTTP 更快一点。这会发生在一些大公司的内部局域网，因为通常情况下，公司的网关会截取并分析所有的网络通信。但是，当它遇到 HTTPS 连接时，它就只能直接放行，因为 HTTPS 无法被解读。正是因为少了这个解读的过程，所以 HTTPS 变得比较快。 &nbsp;</p>
-<h3 id="误解二：有了HTTPS，Cookie和查询字符串就安全了"><a href="#误解二：有了HTTPS，Cookie和查询字符串就安全了" class="headerlink" title="误解二：有了HTTPS，Cookie和查询字符串就安全了"></a><strong>误解二：有了 HTTPS，Cookie 和查询字符串就安全了</strong></h3><p>虽然无法直接从 HTTPS 数据中读取 Cookie 和查询字符串，但是你仍然需要使它们的值变得难以预测。 比如，曾经有一家英国银行，直接使用顺序排列的数值表示 session id:<br><img src="https://static.bytelife.net/blog/images/16139211144205.png"><br> 黑客可以先注册一个账户，找到这个 cookie，看到这个值的表示方法。然后，改动 cookie，从而劫持其他人的 session id。至于查询字符串，也可以通过类似方式泄漏。 &nbsp;</p>
-<h3 id="误解一：只有注册登录页，才需要HTTPS"><a href="#误解一：只有注册登录页，才需要HTTPS" class="headerlink" title="误解一：只有注册登录页，才需要HTTPS"></a><strong>误解一：只有注册登录页，才需要 HTTPS</strong></h3><p>这种想法很普遍。人们觉得，HTTPS 可以保护用户的密码，此外就不需要了。Firefox 浏览器新插件 Firesheep，证明了这种想法是错的。我们可以看到，在 Twitter 和 Facebook 上，劫持其他人的 session 是非常容易的。 咖啡馆的免费 WiFi，就是一个很理想的劫持环境，因为两个原因：</p>
+<p>这些步骤都经过精心设计，保证传输的安全，防止有人截取或非法获得证书。结果就是，你在第二步得到的证书不能用在另一台服务器上。如果你需要这样做，就必须以其他格式输出证书。 比如，IIS 的做法是生成一个可以转移的.pfx 文件，并加以密码保护。<br>
+<img src="https://static.bytelife.net/blog/images/16139210741414.png" alt=""><br>
+将这个文件传入其他服务器，将可以继续使用原来的 SSL 证书了。</p>
+<h3 id="误解三https太慢"><a class="markdownIt-Anchor" href="#误解三https太慢"></a> <strong>误解三：HTTPS 太慢</strong></h3>
+<p>使用 HTTPS 不会使你的网站变得更快（实际上有可能，请看下文），但是有一些技巧可以大大减少额外开销。 首先，只要压缩文本内容，就会降低解码耗用的 CPU 资源。不过，对于当代 CPU 来说，这点开销不值一提。 其次，建立 HTTPS 连接，要求额外的 TCP 往返，因此会新增一些发送和接收的字节。但是，从下图可以看到，新增的字节是很少的。<br>
+<img src="https://static.bytelife.net/blog/images/16139210834526.png" alt=""><br>
+第一次打开网页的时候，HTTPS 协议会比 HTTP 协议慢一点，这是因为读取和验证 SSL 证书的时间。下面是一张 HTTP 网页打开时间的瀑布图。<br>
+<img src="https://static.bytelife.net/blog/images/16139210883485.png" alt=""><br>
+同一张网页使用 HTTPS 协议之后，打开时间变长了。 建立连接的部分，大约慢了 10%。但是，一旦有效的 HTTPS 连接建立起来，再刷新网页，两种协议几乎没有区别。先是 HTTP 协议的刷新表现：<br>
+<img src="https://static.bytelife.net/blog/images/16139210937090.png" alt=""><br>
+然后是 HTTPS 协议：<br>
+<img src="https://static.bytelife.net/blog/images/16139211049326.png" alt=""><br>
+某些用户可能发现，HTTPS 比 HTTP 更快一点。这会发生在一些大公司的内部局域网，因为通常情况下，公司的网关会截取并分析所有的网络通信。但是，当它遇到 HTTPS 连接时，它就只能直接放行，因为 HTTPS 无法被解读。正是因为少了这个解读的过程，所以 HTTPS 变得比较快。</p>
+<h3 id="误解二有了httpscookie和查询字符串就安全了"><a class="markdownIt-Anchor" href="#误解二有了httpscookie和查询字符串就安全了"></a> <strong>误解二：有了 HTTPS，Cookie 和查询字符串就安全了</strong></h3>
+<p>虽然无法直接从 HTTPS 数据中读取 Cookie 和查询字符串，但是你仍然需要使它们的值变得难以预测。 比如，曾经有一家英国银行，直接使用顺序排列的数值表示 session id:<br>
+<img src="https://static.bytelife.net/blog/images/16139211144205.png" alt=""><br>
+黑客可以先注册一个账户，找到这个 cookie，看到这个值的表示方法。然后，改动 cookie，从而劫持其他人的 session id。至于查询字符串，也可以通过类似方式泄漏。</p>
+<h3 id="误解一只有注册登录页才需要https"><a class="markdownIt-Anchor" href="#误解一只有注册登录页才需要https"></a> <strong>误解一：只有注册登录页，才需要 HTTPS</strong></h3>
+<p>这种想法很普遍。人们觉得，HTTPS 可以保护用户的密码，此外就不需要了。Firefox 浏览器新插件 Firesheep，证明了这种想法是错的。我们可以看到，在 Twitter 和 Facebook 上，劫持其他人的 session 是非常容易的。 咖啡馆的免费 WiFi，就是一个很理想的劫持环境，因为两个原因：</p>
 <blockquote>
 <ol>
-<li>这种 WiFi 通常不会加密，所以很容易监控所有流量。 </li>
+<li>这种 WiFi 通常不会加密，所以很容易监控所有流量。</li>
 <li>WiFi 通常使用 NAT 进行外网和内网的地址转换，所有内网客户端都共享一个外网地址。这意味着，被劫持的 session，看上去很像来自原来的登录者。</li>
 </ol>
 </blockquote>
-<p>以 Twitter 为例，它的登录页使用了 HTTPS，但是登录以后，其他页面就变成了 HTTP。这时，它的 cookie 里的 session 值就暴露了。<br><img src="https://static.bytelife.net/blog/images/16139211218521.png"><br><img src="https://cdn.javacodes.cn/files/2016/07/2016-07-04_15-58-23.png"> 也就是说，这些 cookie 是在 HTTPS 环境下建立的，但是却在 HTTP 环境下传输。如果有人劫持到这些 cookie，那他就能以你的身份在 Twitter 上发言了。 （完） &nbsp;</p>
+<p>以 Twitter 为例，它的登录页使用了 HTTPS，但是登录以后，其他页面就变成了 HTTP。这时，它的 cookie 里的 session 值就暴露了。<br>
+<img src="https://static.bytelife.net/blog/images/16139211218521.png" alt=""><br>
+<img src="https://cdn.javacodes.cn/files/2016/07/2016-07-04_15-58-23.png" alt=""> 也就是说，这些 cookie 是在 HTTPS 环境下建立的，但是却在 HTTP 环境下传输。如果有人劫持到这些 cookie，那他就能以你的身份在 Twitter 上发言了。 （完）</p>
 <blockquote>
-<p><strong>来自：阮一峰的网络日志</strong><br><strong>译者：</strong>阮一峰 ****<br><strong>链接：<span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTEvMDIvc2V2ZW4vX215dGhzL19hYm91dF9odHRwcy5odG1s">http://www.ruanyifeng.com/blog/2011/02/seven\_myths\_about_https.html<i class="fa fa-external-link-alt"></i></span></strong><br><strong> 原文：<span class="exturl" data-url="aHR0cDovL2Jsb2cuaHR0cHdhdGNoLmNvbS8yMDExLzAxLzI4L3RvcC03LW15dGhzLWFib3V0LWh0dHBzLw==">http://blog.httpwatch.com/2011/01/28/top-7-myths-about-https/<i class="fa fa-external-link-alt"></i></span></strong></p>
+<p><strong>来自：阮一峰的网络日志</strong><br>
+<strong>译者：<strong>阮一峰</strong></strong><br>
+<strong>链接：<span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTEvMDIvc2V2ZW5fbXl0aHNfYWJvdXRfaHR0cHMuaHRtbA==">http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html<i class="fa fa-external-link-alt"></i></span></strong><br>
+<strong> 原文：<span class="exturl" data-url="aHR0cDovL2Jsb2cuaHR0cHdhdGNoLmNvbS8yMDExLzAxLzI4L3RvcC03LW15dGhzLWFib3V0LWh0dHBzLw==">http://blog.httpwatch.com/2011/01/28/top-7-myths-about-https/<i class="fa fa-external-link-alt"></i></span></strong></p>
 </blockquote>
 
     </div>
@@ -527,7 +553,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -547,7 +573,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">

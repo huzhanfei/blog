@@ -229,7 +229,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ClassNotFoundException"><span class="nav-number">1.</span> <span class="nav-text">ClassNotFoundException</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NoClassDefFoundError"><span class="nav-number">2.</span> <span class="nav-text">NoClassDefFoundError</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#classnotfoundexception"><span class="nav-number">1.</span> <span class="nav-text"> ClassNotFoundException</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#noclassdeffounderror"><span class="nav-number">2.</span> <span class="nav-text"> NoClassDefFoundError</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -384,7 +384,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>7 分钟</span>
     </span>
 </div>
 
@@ -397,26 +397,28 @@
     <div class="post-body" itemprop="articleBody">
         <p>最近接到电话面试中，面试官问我 ClassNotFoundException 与 NoClassDefFoundError 有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException 我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一下，感觉非常尴尬。 回来以后又查阅了一些相关的资料，并尝试了一下，整理分享给网友。</p>
 <span id="more"></span>
-
-<h3 id="ClassNotFoundException"><a href="#ClassNotFoundException" class="headerlink" title="ClassNotFoundException"></a>ClassNotFoundException</h3><p>这个异常我们遇到的频率还是很高的，先来看看官方文档中的定义：</p>
+<h3 id="classnotfoundexception"><a class="markdownIt-Anchor" href="#classnotfoundexception"></a> ClassNotFoundException</h3>
+<p>这个异常我们遇到的频率还是很高的，先来看看官方文档中的定义：</p>
 <blockquote>
 <p>当应用程序试图使用以下方法通过<strong>字符串名</strong>加载类时，抛出该异常：</p>
 <ul>
-<li>  Class 类中的 forName 方法。</li>
-<li>  ClassLoader 类中的 findSystemClass 方法。</li>
-<li>  ClassLoader 类中的 loadClass 方法。</li>
+<li>Class 类中的 forName 方法。</li>
+<li>ClassLoader 类中的 findSystemClass 方法。</li>
+<li>ClassLoader 类中的 loadClass 方法。</li>
 </ul>
 <p>但是没有找到具有指定名称的类的定义。 从 1.4 版本开始，此异常已经更新，以符合通用的异常链机制。在构造时提供并通过 <code>getException()</code> 方法访问的 “加载类时引发的可选异常”，现在被称为原因，它可以通过 <code>Throwable.getCause()</code> 方法以及与上面提到的 “遗留方法” 来访问。</p>
 </blockquote>
 <p>也就是说在<strong>类加载</strong>阶段，通过类全名加载类时，如果不能找到这个类，就会抛出 ClassNotFoundException，当然，通常在开发中可能出现该异常的情况总结如下：</p>
 <ol>
-<li> 所需要的支持类库放错了地方，并没有放在类路径 (CLASSPATH 环境变量) 里面。</li>
-<li> 使用了重复的类库，且版本不一致。导致低版本的被优先使用。</li>
-<li> 类名错了，一般是使用 Class.forName 的时候，手工指定了类名的情况。</li>
-<li> 没有导入纯 JAVA 驱动包。</li>
+<li>所需要的支持类库放错了地方，并没有放在类路径 (CLASSPATH 环境变量) 里面。</li>
+<li>使用了重复的类库，且版本不一致。导致低版本的被优先使用。</li>
+<li>类名错了，一般是使用 Class.forName 的时候，手工指定了类名的情况。</li>
+<li>没有导入纯 JAVA 驱动包。</li>
 </ol>
 <p>当然啦，我经常遇到这个异常，尤其是在使用 JDBC 加载驱动的时候，驱动类的类全名真的是很难记的有木有！</p>
-<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>可以看到这个错误的类名以 Error 结尾，因此它属于 JVM 虚拟机错误，不需要程序员捕获，下图是它的继承结构：<br><img src="https://static.bytelife.net/blog/images/16138522353337.jpg"></p>
+<h3 id="noclassdeffounderror"><a class="markdownIt-Anchor" href="#noclassdeffounderror"></a> NoClassDefFoundError</h3>
+<p>可以看到这个错误的类名以 Error 结尾，因此它属于 JVM 虚拟机错误，不需要程序员捕获，下图是它的继承结构：<br>
+<img src="https://static.bytelife.net/blog/images/16138522353337.jpg" alt=""></p>
 <p>还是同样先来看下官方文档中的定义：</p>
 <blockquote>
 <p>当 Java 虚拟机或 ClassLoader 实例试图在类的定义中加载（作为通常方法调用的一部分或者作为使用 new 表达式创建的新实例的一部分），但无法找到该类的定义时，抛出此异常。 当前执行的类被编译时，所搜索的类定义存在，但无法再找到该定义。</p>
@@ -532,7 +534,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -552,7 +554,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">

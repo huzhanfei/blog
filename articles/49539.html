@@ -390,7 +390,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -404,49 +404,58 @@
         <blockquote>
 <p>原文链接：<span class="exturl" data-url="aHR0cDovL3h1aGVodWFuLmNvbS8=">蔓草札记<i class="fa fa-external-link-alt"></i></span> » <span class="exturl" data-url="aHR0cDovL3h1aGVodWFuLmNvbS8yMDI3Lmh0bWw=">WordPress 博客同步到 CSDN 插件<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
-<p>在没用 WordPress 博客前就在 CSDN 写了一些日志，后来自己搭建博客后，就希望能够将博客同步到 CSDN 中，无奈 CSDN 在 2011 年 7 月宣布暂不支持 Windows&nbsp;Live&nbsp;Writer 发布博文，直到在 2014 年 5 月 29 日才宣布重新让插件同步成为可能，不过目前网上搜到的插件现在都已经失效了。 </p>
+<p>在没用 WordPress 博客前就在 CSDN 写了一些日志，后来自己搭建博客后，就希望能够将博客同步到 CSDN 中，无奈 CSDN 在 2011 年 7 月宣布暂不支持 Windows&nbsp;Live&nbsp;Writer 发布博文，直到在 2014 年 5 月 29 日才宣布重新让插件同步成为可能，不过目前网上搜到的插件现在都已经失效了。</p>
 <span id="more"></span>
-<p><img src="https://static.bytelife.net/blog/images/16139163582293.png"></p>
-<p>这两天闲时测试了下之前润物无声写的，也在网上查了不少关于 MetaWeblog 和 xmlrpc 的说明，但对解决问题都没什么大的帮助，最后只能一点点调试了。功夫不负有心人，终于在今天下午的时候，调试成功了。在 wp2metaweblog 插件的基础上做了些修改，并整理了下代码，防止和原 wp2metaweblog 插件冲突，改名为 WP2CSDNBlog 插件。 WP2CSDNBlog 插件是同步 WordPress 博客日志到 CSDN 博客的，理论上也可用在所有支持 Metaweblog API 的博客系统中，安装后需要到设置页面填下同步需要的信息。 </p>
-<p><strong>Version 1.1 支持功能：</strong> </p>
+<p><img src="https://static.bytelife.net/blog/images/16139163582293.png" alt=""></p>
+<p>这两天闲时测试了下之前润物无声写的，也在网上查了不少关于 MetaWeblog 和 xmlrpc 的说明，但对解决问题都没什么大的帮助，最后只能一点点调试了。功夫不负有心人，终于在今天下午的时候，调试成功了。在 wp2metaweblog 插件的基础上做了些修改，并整理了下代码，防止和原 wp2metaweblog 插件冲突，改名为 WP2CSDNBlog 插件。 WP2CSDNBlog 插件是同步 WordPress 博客日志到 CSDN 博客的，理论上也可用在所有支持 Metaweblog API 的博客系统中，安装后需要到设置页面填下同步需要的信息。</p>
+<p><strong>Version 1.1 支持功能：</strong></p>
 <ol>
-<li>支持发布 wordpress 的博文到 CSDN 博客 </li>
-<li>支持将 WordPress 中文章链接发布到 CSDN 博客 </li>
-<li>支持发布文章的自动归类 </li>
+<li>支持发布 wordpress 的博文到 CSDN 博客</li>
+<li>支持将 WordPress 中文章链接发布到 CSDN 博客</li>
+<li>支持发布文章的自动归类</li>
 </ol>
-<p><strong>Version 1.2 支持功能：</strong> </p>
+<p><strong>Version 1.2 支持功能：</strong></p>
 <ol>
-<li>同时支持发布 wordpress 的博文到网易和新浪博客 </li>
+<li>同时支持发布 wordpress 的博文到网易和新浪博客</li>
 </ol>
-<p><strong>Version 1.3 支持功能：</strong> </p>
+<p><strong>Version 1.3 支持功能：</strong></p>
 <ol>
-<li>支持将 wordpress 的定时发布文章发布到设置的博客 </li>
+<li>支持将 wordpress 的定时发布文章发布到设置的博客</li>
 </ol>
-<p><strong>Version 1.4 支持功能：</strong> </p>
+<p><strong>Version 1.4 支持功能：</strong></p>
 <ol>
-<li>完善对定时发布功能的支持 </li>
-<li>完善同步文章排版格式问题 </li>
+<li>完善对定时发布功能的支持</li>
+<li>完善同步文章排版格式问题</li>
 </ol>
-<p><strong>Version 1.5 支持功能：</strong> </p>
+<p><strong>Version 1.5 支持功能：</strong></p>
 <ol>
-<li>修改 CSDN 博客同步文章排版格式 </li>
+<li>修改 CSDN 博客同步文章排版格式</li>
 </ol>
-<p><strong>安装使用：</strong> </p>
+<p><strong>安装使用：</strong></p>
 <ol>
-<li>上传整个文件夹 wp2csdnblog 到 /wp-content/plugins/ 目录 </li>
-<li>后台控制面板 “插件 (Plugins)” 中激活 wp2csdnblog 插件 </li>
-<li>后台控制面板 “配置 (Settings)-&gt;wp2csdnblog” 中配置 CSDN 账户信息 </li>
+<li>上传整个文件夹 wp2csdnblog 到 /wp-content/plugins/ 目录</li>
+<li>后台控制面板 “插件 (Plugins)” 中激活 wp2csdnblog 插件</li>
+<li>后台控制面板 “配置 (Settings)-&gt;wp2csdnblog” 中配置 CSDN 账户信息</li>
 </ol>
-<p><strong>软件配置界面（V1.1 版本）:</strong><br><img src="https://static.bytelife.net/blog/images/16139164713418.png"></p>
-<p><strong>代码地址：</strong><br><span class="exturl" data-url="aHR0cHM6Ly9naXRjYWZlLmNvbS94aGhqaW4vV1AyQ1NETkJsb2cvdHJlZS9tYXN0ZXI=">https://gitcafe.com/xhhjin/WP2CSDNBlog/tree/master<i class="fa fa-external-link-alt"></i></span> </p>
-<p><strong>代码地址：</strong><br><span class="exturl" data-url="aHR0cHM6Ly9jb2RpbmcubmV0L3UveGhoamluL3AvV1AyQ1NETkJsb2c=">https://coding.net/u/xhhjin/p/WP2CSDNBlog<i class="fa fa-external-link-alt"></i></span> </p>
-<p><strong>百度云下载：</strong><br><span class="exturl" data-url="aHR0cDovL3Bhbi5iYWlkdS5jb20vcy8xYzBkSHFUeQ==">http://pan.baidu.com/s/1c0dHqTy<i class="fa fa-external-link-alt"></i></span>（V1.1 版本） </p>
-<p>建议通过代码地址下载，百度云下载后续不一定更新。 WP2CSDNBlog 插件，开始同步吧 :） </p>
-<p><strong>2015.05.12 更新：</strong><br>插件已上传 WordPress plugins，可以在 WordPress 后台安装插件页面直接搜索 “wp2csdnblog” 安装。 WordPress plugins 地址：<span class="exturl" data-url="aHR0cHM6Ly93b3JkcHJlc3Mub3JnL3BsdWdpbnMvd3AyY3NkbmJsb2cv">https://wordpress.org/plugins/wp2csdnblog/<i class="fa fa-external-link-alt"></i></span> </p>
-<p><strong>2015.06.14 更新：</strong><br>更新插件到 V1.2 版本，支持同时同步 WordPress 博客内容到新浪博客和网易博客。 新浪博客设置的用户名是博客的登录名，如果登录名是邮箱，不要忘了邮箱后缀。 网易博客设置的用户名根据邮箱区分。例如：您的邮箱帐号是 163 的：<span class="exturl" data-url="bWFpbHRvOmJsb2dfYWRtaW5AMTYzLmNvbQ==">blog_admin@163.com<i class="fa fa-external-link-alt"></i></span>，则用户名是 blog_admin，如果你的邮箱账号是 126 的：<span class="exturl" data-url="bWFpbHRvOmJsb2dfYWRtaW5AMTI2LmNvbQ==">blog_admin@126.com<i class="fa fa-external-link-alt"></i></span>，则用户名是 blog_admin@126，其余 yeah.net、188 等非 163 邮箱用户，请参考 126 邮箱的格式。 </p>
-<p><strong>2015.06.22 更新：</strong><br>更新插件到 V1.3 版本，支持将 wordpress 的定时发布文章发布到设置的博客。 </p>
-<p><strong>2015.07.05 更新：</strong><br>更新插件到 V1.4 版本，完善对定时发布文章功能的支持，改善同步文章的排版格式。 </p>
-<p><strong>2016.05.04 更新：</strong><br>更新插件到 V1.5 版本，修改 CSDN 博客同步文章排版格式。 最近一段时间同步 CSDN 和网易博客的文章都没有成功，是 CSDN 和网易服务器返回错误导致的。大家可以用 Windows Live Writer 或者 Word 来发文章测试，如果能发布成功，则说明是插件的问题，反之很可能是服务器的问题，然后建议将服务器返回的错误在下面对应文章下留言。</p>
+<p><strong>软件配置界面（V1.1 版本）:</strong><br>
+<img src="https://static.bytelife.net/blog/images/16139164713418.png" alt=""></p>
+<p><strong>代码地址：</strong><br>
+<span class="exturl" data-url="aHR0cHM6Ly9naXRjYWZlLmNvbS94aGhqaW4vV1AyQ1NETkJsb2cvdHJlZS9tYXN0ZXI=">https://gitcafe.com/xhhjin/WP2CSDNBlog/tree/master<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>代码地址：</strong><br>
+<span class="exturl" data-url="aHR0cHM6Ly9jb2RpbmcubmV0L3UveGhoamluL3AvV1AyQ1NETkJsb2c=">https://coding.net/u/xhhjin/p/WP2CSDNBlog<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>百度云下载：</strong><br>
+<span class="exturl" data-url="aHR0cDovL3Bhbi5iYWlkdS5jb20vcy8xYzBkSHFUeQ==">http://pan.baidu.com/s/1c0dHqTy<i class="fa fa-external-link-alt"></i></span>（V1.1 版本）</p>
+<p>建议通过代码地址下载，百度云下载后续不一定更新。 WP2CSDNBlog 插件，开始同步吧 :）</p>
+<p><strong>2015.05.12 更新：</strong><br>
+插件已上传 WordPress plugins，可以在 WordPress 后台安装插件页面直接搜索 “wp2csdnblog” 安装。 WordPress plugins 地址：<span class="exturl" data-url="aHR0cHM6Ly93b3JkcHJlc3Mub3JnL3BsdWdpbnMvd3AyY3NkbmJsb2cv">https://wordpress.org/plugins/wp2csdnblog/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>2015.06.14 更新：</strong><br>
+更新插件到 V1.2 版本，支持同时同步 WordPress 博客内容到新浪博客和网易博客。 新浪博客设置的用户名是博客的登录名，如果登录名是邮箱，不要忘了邮箱后缀。 网易博客设置的用户名根据邮箱区分。例如：您的邮箱帐号是 163 的：blog_admin@163.com，则用户名是 blog_admin，如果你的邮箱账号是 126 的：blog_admin@126.com，则用户名是 blog_admin@126，其余 <span class="exturl" data-url="aHR0cDovL3llYWgubmV0">yeah.net<i class="fa fa-external-link-alt"></i></span>、188 等非 163 邮箱用户，请参考 126 邮箱的格式。</p>
+<p><strong>2015.06.22 更新：</strong><br>
+更新插件到 V1.3 版本，支持将 wordpress 的定时发布文章发布到设置的博客。</p>
+<p><strong>2015.07.05 更新：</strong><br>
+更新插件到 V1.4 版本，完善对定时发布文章功能的支持，改善同步文章的排版格式。</p>
+<p><strong>2016.05.04 更新：</strong><br>
+更新插件到 V1.5 版本，修改 CSDN 博客同步文章排版格式。 最近一段时间同步 CSDN 和网易博客的文章都没有成功，是 CSDN 和网易服务器返回错误导致的。大家可以用 Windows Live Writer 或者 Word 来发文章测试，如果能发布成功，则说明是插件的问题，反之很可能是服务器的问题，然后建议将服务器返回的错误在下面对应文章下留言。</p>
 
     </div>
 
@@ -535,7 +544,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -555,7 +564,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">

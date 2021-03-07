@@ -229,7 +229,81 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E4%B8%8E%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">类与类加载器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">Java 中的类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">自定义类加载器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">双亲委派模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">双亲委派模型的工作过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">为什么使用双亲委派模型？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.3.</span> <span class="nav-text">双亲委派模型的实现</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E4%B8%8E%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text"> 类与类加载器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text"> Java 中的类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text"> 自定义类加载器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-code0-%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text"> 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+public class FileSystemClassLoader extends ClassLoader { 
+    private String rootDir; 
+    public FileSystemClassLoader(String rootDir) { 
+        this.rootDir &#x3D; rootDir; 
+    } 
+    protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException { 
+        byte[] classData &#x3D; getClassData(name); 
+        if (classData &#x3D;&#x3D; null) { 
+            throw new ClassNotFoundException(); 
+        } 
+        else { 
+            return defineClass(name, classData, 0, classData.length); 
+        } 
+    } 
+    private byte[] getClassData(String className) { 
+        String path &#x3D; classNameToPath(className); 
+        try { 
+            InputStream ins &#x3D; new FileInputStream(path); 
+            ByteArrayOutputStream baos &#x3D; new ByteArrayOutputStream(); 
+            int bufferSize &#x3D; 4096; 
+            byte[] buffer &#x3D; new byte[bufferSize]; 
+            int bytesNumRead &#x3D; 0; 
+            while ((bytesNumRead &#x3D; ins.read(buffer)) !&#x3D; -1) { 
+                baos.write(buffer, 0, bytesNumRead); 
+            } 
+            return baos.toByteArray(); 
+        } catch (IOException e) { 
+            e.printStackTrace(); 
+        } 
+        return null; 
+    } 
+    private String classNameToPath(String className) { 
+        return rootDir + File.separatorChar 
+                + className.replace(&#39;.&#39;, File.separatorChar) + &quot;.class&quot;; 
+    } 
+ }
+
+
+双亲委派模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text"> 双亲委派模型的工作过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text"> 为什么使用双亲委派模型？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.3.</span> <span class="nav-text"> 双亲委派模型的实现</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -384,7 +458,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>11 分钟</span>
     </span>
 </div>
 
@@ -397,43 +471,49 @@
     <div class="post-body" itemprop="articleBody">
         <p>Java 虚拟机类加载过程中的 “加载” 阶段第一步就是 “通过一个类的全限定名来获取描述此类的二级制字节流”，这个动作由 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类，实现这个动作的模块叫做 “类加载器”。</p>
 <span id="more"></span>
-
-<h2 id="类与类加载器"><a href="#类与类加载器" class="headerlink" title="类与类加载器"></a>类与类加载器</h2><p>类加载器虽然只用于实现类的加载动作，但它在 Java 程序中的作用远不限于此。</p>
+<h2 id="类与类加载器"><a class="markdownIt-Anchor" href="#类与类加载器"></a> 类与类加载器</h2>
+<p>类加载器虽然只用于实现类的加载动作，但它在 Java 程序中的作用远不限于此。</p>
 <blockquote>
 <p>对于任意一个类，都需要由<strong>加载它的类加载器</strong>和这个<strong>类本身</strong>一同确立其在 Java 虚拟机中的唯一性，每一个类加载器，都拥有一个独立的类命名空间。</p>
 </blockquote>
 <p>换言之，比较两个类 “相等”，只有在两个类是由<strong>同一个类加载器</strong>加载的前提下才有意义，否则，即使这两个类来源于同一个 Class 文件，被同一个虚拟机加载，只要加载它们的类加载器不同，那这两个类就必定不相等。</p>
-<h2 id="Java中的类加载器"><a href="#Java中的类加载器" class="headerlink" title="Java中的类加载器"></a>Java 中的类加载器</h2><p>Java 虚拟机只有两种不同的类加载器：</p>
+<h2 id="java中的类加载器"><a class="markdownIt-Anchor" href="#java中的类加载器"></a> Java 中的类加载器</h2>
+<p>Java 虚拟机只有两种不同的类加载器：</p>
 <ul>
-<li>  <strong>启动类加载器（Bootstrap ClassLoader）</strong>：使用 C++ 语言（HotSpot）实现，是虚拟机的一部分，该类加载器实例无法被用户获取；</li>
-<li>  <strong>所有其它的类加载器</strong>：均由 Java 语言实现，独立于虚拟机外部，并且全部继承自抽象类 java.lang.ClassLoader；</li>
+<li><strong>启动类加载器（Bootstrap ClassLoader）</strong>：使用 C++ 语言（HotSpot）实现，是虚拟机的一部分，该类加载器实例无法被用户获取；</li>
+<li><strong>所有其它的类加载器</strong>：均由 Java 语言实现，独立于虚拟机外部，并且全部继承自抽象类 java.lang.ClassLoader；</li>
 </ul>
 <p>从 Java 程序员的角度，类加载器还可以继续细化，绝大部分 Java 程序都会使用到以下 3 种类加载器。</p>
 <ul>
-<li>  <strong>启动类加载器 （Bootstrap ClassLoader）</strong>：这个类加载器负责将存放在 <code>&lt;JAVA_HOME&gt;\lib</code> 目录中的，或者被 <code>-Xbootclasspath</code> 参数所指定的目录中的，并且是虚拟机识别的（仅按照文件名识别，例如 rt.jar）类库加载到虚拟机内存中。 启动类加载器无法被 Java 程序直接引用，用户在编写自定义加载器时，如果需要把加载请求委托给引导类加载器，直接使用 null 代替即可。</li>
-<li>  <strong>扩展类加载器（Extension ClassLoader）</strong>：这个加载器由 <code>sun.misc.Launcher$ExtClassLoader</code> 实现，他负责加载 <code>&lt;JAVA_HOME&gt;\lib\ext</code> 目录中的，或者被 <code>java.ext.dirs</code> 系统变量所指定的路径中的所有类库，开发者可以直接使用扩展类加载器。</li>
-<li>  <strong>应用程序类加载器（Application ClassLoader）</strong>：这个类加载器由 <code>sun.misc.Launcher$AppClassLoader</code> 实现。该类是 ClassLoader 中的 <code>getSystemClassLoader()</code> 方法的返回值，因此也称作 “<strong>系统类加载器</strong>”。它负责用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有定义过自己的类加载器，一般情况下这个就是程序的默认类加载器。</li>
+<li><strong>启动类加载器 （Bootstrap ClassLoader）</strong>：这个类加载器负责将存放在 <code>&lt;JAVA_HOME&gt;\lib</code> 目录中的，或者被 <code>-Xbootclasspath</code> 参数所指定的目录中的，并且是虚拟机识别的（仅按照文件名识别，例如 rt.jar）类库加载到虚拟机内存中。 启动类加载器无法被 Java 程序直接引用，用户在编写自定义加载器时，如果需要把加载请求委托给引导类加载器，直接使用 null 代替即可。</li>
+<li><strong>扩展类加载器（Extension ClassLoader）</strong>：这个加载器由 <code>sun.misc.Launcher$ExtClassLoader</code> 实现，他负责加载 <code>&lt;JAVA_HOME&gt;\lib\ext</code> 目录中的，或者被 <code>java.ext.dirs</code> 系统变量所指定的路径中的所有类库，开发者可以直接使用扩展类加载器。</li>
+<li><strong>应用程序类加载器（Application ClassLoader）</strong>：这个类加载器由 <code>sun.misc.Launcher$AppClassLoader</code> 实现。该类是 ClassLoader 中的 <code>getSystemClassLoader()</code> 方法的返回值，因此也称作 “<strong>系统类加载器</strong>”。它负责用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有定义过自己的类加载器，一般情况下这个就是程序的默认类加载器。</li>
 </ul>
 <p>应用程序一般由这 3 中类加载器相互配合加载，如果有必要，还可以加入自己定义的类加载器，集成。</p>
-<h3 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h3><p>自定义类加载器可以直接或间接继承自类 <code>java.lang.ClassLoader</code>。在 <code>java.lang.ClassLoader</code> 类的常用方法中，一般来说，自己开发的类加载器只需要覆写 <code>findClass(String name)</code> 方法即可。 java.lang.ClassLoader 类的方法 loadClass () 封装了代理模式的实现。</p>
+<h3 id="自定义类加载器"><a class="markdownIt-Anchor" href="#自定义类加载器"></a> 自定义类加载器</h3>
+<p>自定义类加载器可以直接或间接继承自类 <code>java.lang.ClassLoader</code>。在 <code>java.lang.ClassLoader</code> 类的常用方法中，一般来说，自己开发的类加载器只需要覆写 <code>findClass(String name)</code> 方法即可。 java.lang.ClassLoader 类的方法 loadClass () 封装了代理模式的实现。</p>
 <ul>
-<li>  该方法会首先调用 findLoadedClass () 方法来检查该类是否已经被加载过；</li>
-<li>  如果没有加载过的话，会调用父类加载器的 loadClass () 方法来尝试加载该类；</li>
-<li>  如果父类加载器无法加载该类的话，就调用 findClass () 方法来查找该类。</li>
+<li>该方法会首先调用 findLoadedClass () 方法来检查该类是否已经被加载过；</li>
+<li>如果没有加载过的话，会调用父类加载器的 loadClass () 方法来尝试加载该类；</li>
+<li>如果父类加载器无法加载该类的话，就调用 findClass () 方法来查找该类。</li>
 </ul>
 <p>因此，为了保证类加载器都正确实现代理模式，在开发自己的类加载器时，最好不要覆写 loadClass () 方法，而是覆写 findClass () 方法。 下面是一个文件系统类加载器的例子：</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystemClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>{ </span><br><span class="line">    <span class="keyword">private</span> String rootDir; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileSystemClassLoader</span><span class="params">(String rootDir)</span> </span>{ </span><br><span class="line">        <span class="keyword">this</span>.rootDir = rootDir; </span><br><span class="line">    } </span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException { </span><br><span class="line">        <span class="keyword">byte</span>[] classData = getClassData(name); </span><br><span class="line">        <span class="keyword">if</span> (classData == <span class="keyword">null</span>) { </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(); </span><br><span class="line">        } </span><br><span class="line">        <span class="keyword">else</span> { </span><br><span class="line">            <span class="keyword">return</span> defineClass(name, classData, <span class="number">0</span>, classData.length); </span><br><span class="line">        } </span><br><span class="line">    } </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] getClassData(String className) { </span><br><span class="line">        String path = classNameToPath(className); </span><br><span class="line">        <span class="keyword">try</span> { </span><br><span class="line">            InputStream ins = <span class="keyword">new</span> FileInputStream(path); </span><br><span class="line">            ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream(); </span><br><span class="line">            <span class="keyword">int</span> bufferSize = <span class="number">4096</span>; </span><br><span class="line">            <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[bufferSize]; </span><br><span class="line">            <span class="keyword">int</span> bytesNumRead = <span class="number">0</span>; </span><br><span class="line">            <span class="keyword">while</span> ((bytesNumRead = ins.read(buffer)) != -<span class="number">1</span>) { </span><br><span class="line">                baos.write(buffer, <span class="number">0</span>, bytesNumRead); </span><br><span class="line">            } </span><br><span class="line">            <span class="keyword">return</span> baos.toByteArray(); </span><br><span class="line">        } <span class="keyword">catch</span> (IOException e) { </span><br><span class="line">            e.printStackTrace(); </span><br><span class="line">        } </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>; </span><br><span class="line">    } </span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">classNameToPath</span><span class="params">(String className)</span> </span>{ </span><br><span class="line">        <span class="keyword">return</span> rootDir + File.separatorChar </span><br><span class="line">                + className.replace(<span class="string">'.'</span>, File.separatorChar) + <span class="string">".class"</span>; </span><br><span class="line">    } </span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h2><p>下图展示的类加载器之间的层次关系，称为类加载器的 “双亲委派模型”。双亲委派模型要求除了顶层的启动类加载器外，其它类加载器必须有自己的父加载器。</p>
-<p><img src="https://static.bytelife.net/blog/images/16139184079219.png"></p>
+<h2 id="-code0-双亲委派模型"><a class="markdownIt-Anchor" href="#-code0-双亲委派模型"></a> <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystemClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>{ </span><br><span class="line">    <span class="keyword">private</span> String rootDir; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileSystemClassLoader</span><span class="params">(String rootDir)</span> </span>{ </span><br><span class="line">        <span class="keyword">this</span>.rootDir = rootDir; </span><br><span class="line">    } </span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException { </span><br><span class="line">        <span class="keyword">byte</span>[] classData = getClassData(name); </span><br><span class="line">        <span class="keyword">if</span> (classData == <span class="keyword">null</span>) { </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(); </span><br><span class="line">        } </span><br><span class="line">        <span class="keyword">else</span> { </span><br><span class="line">            <span class="keyword">return</span> defineClass(name, classData, <span class="number">0</span>, classData.length); </span><br><span class="line">        } </span><br><span class="line">    } </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] getClassData(String className) { </span><br><span class="line">        String path = classNameToPath(className); </span><br><span class="line">        <span class="keyword">try</span> { </span><br><span class="line">            InputStream ins = <span class="keyword">new</span> FileInputStream(path); </span><br><span class="line">            ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream(); </span><br><span class="line">            <span class="keyword">int</span> bufferSize = <span class="number">4096</span>; </span><br><span class="line">            <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[bufferSize]; </span><br><span class="line">            <span class="keyword">int</span> bytesNumRead = <span class="number">0</span>; </span><br><span class="line">            <span class="keyword">while</span> ((bytesNumRead = ins.read(buffer)) != -<span class="number">1</span>) { </span><br><span class="line">                baos.write(buffer, <span class="number">0</span>, bytesNumRead); </span><br><span class="line">            } </span><br><span class="line">            <span class="keyword">return</span> baos.toByteArray(); </span><br><span class="line">        } <span class="keyword">catch</span> (IOException e) { </span><br><span class="line">            e.printStackTrace(); </span><br><span class="line">        } </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>; </span><br><span class="line">    } </span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">classNameToPath</span><span class="params">(String className)</span> </span>{ </span><br><span class="line">        <span class="keyword">return</span> rootDir + File.separatorChar </span><br><span class="line">                + className.replace(<span class="string">'.'</span>, File.separatorChar) + <span class="string">".class"</span>; </span><br><span class="line">    } </span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure><br>
+双亲委派模型</h2>
+<p>下图展示的类加载器之间的层次关系，称为类加载器的 “双亲委派模型”。双亲委派模型要求除了顶层的启动类加载器外，其它类加载器必须有自己的父加载器。</p>
+<p><img src="https://static.bytelife.net/blog/images/16139184079219.png" alt=""></p>
 <blockquote>
 <p>这里的类加载器之间的父子关系一般不通过继承（Inheritance）来实现，而是通过组合（Composition）关系来服用父加载器代码。 双亲委派模型并不是一个强制性约束，而是 Java 设计者推荐给开发者的一种类加载实现方式。</p>
 </blockquote>
-<h3 id="双亲委派模型的工作过程"><a href="#双亲委派模型的工作过程" class="headerlink" title="双亲委派模型的工作过程"></a>双亲委派模型的工作过程</h3><ul>
-<li>  如果一个类加载器收到了类加载的请求，它不会先自己尝试处理这个请求，而是委派给它的父类加载器，所有的请求最终都会传送到顶层的启动类加载器</li>
-<li>  只有当父类反馈自己无法完成该请求（它的搜索范围中没有找到所需的类，即抛出 ClassNotFoundException）时，子加载器才会尝试自己加载。</li>
+<h3 id="双亲委派模型的工作过程"><a class="markdownIt-Anchor" href="#双亲委派模型的工作过程"></a> 双亲委派模型的工作过程</h3>
+<ul>
+<li>如果一个类加载器收到了类加载的请求，它不会先自己尝试处理这个请求，而是委派给它的父类加载器，所有的请求最终都会传送到顶层的启动类加载器</li>
+<li>只有当父类反馈自己无法完成该请求（它的搜索范围中没有找到所需的类，即抛出 ClassNotFoundException）时，子加载器才会尝试自己加载。</li>
 </ul>
-<h3 id="为什么使用双亲委派模型？"><a href="#为什么使用双亲委派模型？" class="headerlink" title="为什么使用双亲委派模型？"></a>为什么使用双亲委派模型？</h3><p>使用双亲委派模型可以使得 Java 类随着它的类加载器一起具备了一种<strong>带有优先级的层次关系</strong>。 例如类 <code>java.lang.Object</code>，它存放在 rt.jar 中，无论哪一个类加载器要加载这个类，最终都是委派给处于模型最顶端的启动类加载器加载，因此 Objcet 类在程序中的各种类加载器环境中都是同一个类。 如果没有使用双亲委派模型，那么如果用户自己写了一个称为 <code>“java.lang.Object”</code> 的类，并放在程序的 classpath 中，那么系统将产生多个不同的 Object 类，可想而知，程序将一片混乱。</p>
-<h3 id="双亲委派模型的实现"><a href="#双亲委派模型的实现" class="headerlink" title="双亲委派模型的实现"></a>双亲委派模型的实现</h3><p>双亲委派模型的实现非常简单，几乎所有的代码仅在 <code>loadClass()</code> 方法中实现，下面是一个简单的例子：</p>
+<h3 id="为什么使用双亲委派模型"><a class="markdownIt-Anchor" href="#为什么使用双亲委派模型"></a> 为什么使用双亲委派模型？</h3>
+<p>使用双亲委派模型可以使得 Java 类随着它的类加载器一起具备了一种<strong>带有优先级的层次关系</strong>。 例如类 <code>java.lang.Object</code>，它存放在 rt.jar 中，无论哪一个类加载器要加载这个类，最终都是委派给处于模型最顶端的启动类加载器加载，因此 Objcet 类在程序中的各种类加载器环境中都是同一个类。 如果没有使用双亲委派模型，那么如果用户自己写了一个称为 <code>“java.lang.Object”</code> 的类，并放在程序的 classpath 中，那么系统将产生多个不同的 Object 类，可想而知，程序将一片混乱。</p>
+<h3 id="双亲委派模型的实现"><a class="markdownIt-Anchor" href="#双亲委派模型的实现"></a> 双亲委派模型的实现</h3>
+<p>双亲委派模型的实现非常简单，几乎所有的代码仅在 <code>loadClass()</code> 方法中实现，下面是一个简单的例子：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//双亲委派模型的实现源码  </span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">synchronized</span> Class&lt;?&gt; loadClass(String name, Boolean resolve)  <span class="keyword">throws</span> ClassNotFoundException{  </span><br><span class="line">    <span class="comment">// 1、首先检查请求的类是否已经被加载过  </span></span><br><span class="line">    Class c = findLoadedClass(name);  </span><br><span class="line">    <span class="keyword">if</span>(c == <span class="keyword">null</span>){  </span><br><span class="line">        <span class="keyword">try</span>{  </span><br><span class="line">            <span class="keyword">if</span>(parent != <span class="keyword">null</span>){    <span class="comment">// 2、如果没有则调用父加载器的loadClass()方法  </span></span><br><span class="line">                c = parent.loadClass(name, <span class="keyword">false</span>);  </span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3、如果父加载器为空则默认使用启动类加载器作为父加载器  </span></span><br><span class="line">            } <span class="keyword">else</span>{  </span><br><span class="line">                c = findBootstrapClassOrNull(name);  </span><br><span class="line">            }  </span><br><span class="line">        }<span class="keyword">catch</span>(ClassNotFoundException e){  </span><br><span class="line">            <span class="comment">// 4、如果父类加载器加载失败，则先抛出ClassNotFoundException  </span></span><br><span class="line">        }  </span><br><span class="line">        <span class="comment">// 5、然后再调用自己的findClass()方法进行加载  </span></span><br><span class="line">        <span class="keyword">if</span>(c == <span class="keyword">null</span>){  </span><br><span class="line">            c = findClass(name);  </span><br><span class="line">        }  </span><br><span class="line">    }  </span><br><span class="line">    <span class="keyword">if</span>(resolve){  </span><br><span class="line">        resolveClass(c);  </span><br><span class="line">    }  </span><br><span class="line">    <span class="keyword">return</span> c;  </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
     </div>
 
@@ -541,7 +621,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -561,7 +641,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">

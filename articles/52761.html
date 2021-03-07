@@ -241,7 +241,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">加速方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BABucket"><span class="nav-number">2.</span> <span class="nav-text">创建 Bucket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%8A%9F%E8%83%BD"><span class="nav-number">3.</span> <span class="nav-text">开启静态页面功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAAccessKey%E5%B9%B6%E6%8E%88%E6%9D%83"><span class="nav-number">4.</span> <span class="nav-text">创建 AccessKey 并授权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text">安装一键部署脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D"><span class="nav-number">6.</span> <span class="nav-text">配置自定义域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AF%9D"><span class="nav-number">7.</span> <span class="nav-text">后话</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text"> 加速方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAbucket"><span class="nav-number">2.</span> <span class="nav-text"> 创建 Bucket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%8A%9F%E8%83%BD"><span class="nav-number">3.</span> <span class="nav-text"> 开启静态页面功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAaccesskey%E5%B9%B6%E6%8E%88%E6%9D%83"><span class="nav-number">4.</span> <span class="nav-text"> 创建 AccessKey 并授权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text"> 安装一键部署脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D"><span class="nav-number">6.</span> <span class="nav-text"> 配置自定义域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AF%9D"><span class="nav-number">7.</span> <span class="nav-text"> 后话</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -403,7 +403,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>11 分钟</span>
     </span>
 </div>
 
@@ -416,14 +416,16 @@
     <div class="post-body" itemprop="articleBody">
         <p>现在用 Hexo 来搭建静态站点的人越来越多了，很多人会选择试用 Github Pages 服务来部署自己的静态站，但 Github Pages 国内访问速度实在无法接受，本文介绍一下如何一键使用阿里云 OSS 对象存储服务部署 Hexo 站点，同时解决一个浏览器缓存的坑。</p>
 <span id="more"></span>
-
-<h2 id="加速方案"><a href="#加速方案" class="headerlink" title="加速方案"></a>加速方案</h2><ul>
+<h2 id="加速方案"><a class="markdownIt-Anchor" href="#加速方案"></a> 加速方案</h2>
+<ul>
 <li>Netlify：与 Github 配合使用很方便，但国内访问速度不佳，需要搭配国内 CDN 使用</li>
 <li> Vercel：与 Netlify 类似，国内访问速度不错，域名没有备案的话是个不错的选择</li>
 <li>对象存储：使用阿里云 OSS 或类似的对象存储服务，国内访问速度不错，也可搭配国内 CDN 使用，速度最好，但要求你的域名有<strong>备案号</strong></li>
 <li>境内对象存储 + 境外 Vercel/Netlify：我所采用的方案，应该是最佳的方案了</li>
 </ul>
-<h2 id="创建Bucket"><a href="#创建Bucket" class="headerlink" title="创建Bucket"></a>创建 Bucket</h2><p>首先要做的事情就是去阿里云 (<span class="exturl" data-url="aHR0cHM6Ly9hbGl5dW4uY29tLw==">https://aliyun.com<i class="fa fa-external-link-alt"></i></span>) 创建一个 Bucket:<br><img src="https://static.bytelife.net/blog/images/16144490476215.jpg"></p>
+<h2 id="创建bucket"><a class="markdownIt-Anchor" href="#创建bucket"></a> 创建 Bucket</h2>
+<p>首先要做的事情就是去阿里云 (<span class="exturl" data-url="aHR0cHM6Ly9hbGl5dW4uY29t">https://aliyun.com<i class="fa fa-external-link-alt"></i></span>) 创建一个 Bucket:<br>
+<img src="https://static.bytelife.net/blog/images/16144490476215.jpg" alt=""></p>
 <ul>
 <li>Bucket 名称：随便起，只要不重复就行</li>
 <li>地域：按你的需求，阿里云的节点国内访问速度都可以，如果你不打算使用 CDN 服务的话，可以选择华东节点，全国访问速度都能兼顾。如果使用 CDN 服务的话，那就没区别了，选哪都行。</li>
@@ -435,33 +437,57 @@
 <li>实时日志查询：看需求，有免费 7 天的实时日志查询，但有 900GB / 天的限制</li>
 <li>定时备份：不开通</li>
 </ul>
-<h2 id="开启静态页面功能"><a href="#开启静态页面功能" class="headerlink" title="开启静态页面功能"></a>开启静态页面功能</h2><p>进入 Bucket 的配置页面，选择 “基础设置 - 静态页面”：<br><img src="https://static.bytelife.net/blog/images/16144491145634.jpg"><br>按照图中的内容进行配置：<br><img src="https://static.bytelife.net/blog/images/16144492022270.jpg"></p>
+<h2 id="开启静态页面功能"><a class="markdownIt-Anchor" href="#开启静态页面功能"></a> 开启静态页面功能</h2>
+<p>进入 Bucket 的配置页面，选择 “基础设置 - 静态页面”：<br>
+<img src="https://static.bytelife.net/blog/images/16144491145634.jpg" alt=""><br>
+按照图中的内容进行配置：<br>
+<img src="https://static.bytelife.net/blog/images/16144492022270.jpg" alt=""></p>
 <ul>
 <li>默认首页：index.html</li>
 <li> 默认 404 页：404.html（按照你实际的 404 页面地址填写）</li>
 <li>子目录首页：开通，这里由于 Hexo 的分类、标签等页面，都是子目录的形式（例如：/tags/），如果不开通这个功能，不会自动定位到对应目录的 index.html</li>
 <li> 文件 404 规则：Index</li>
 </ul>
-<h2 id="创建AccessKey并授权"><a href="#创建AccessKey并授权" class="headerlink" title="创建AccessKey并授权"></a>创建 AccessKey 并授权</h2><p>其实现在就可以在阿里云的管理页面上传文件部署网站了，但实在是太麻烦，我们希望的是一个自动化的方案。这里我们需要创建一个 API 的授权 AccessKey：<br><img src="https://static.bytelife.net/blog/images/16144500122868.jpg"><br>阿里云现在开启了子账户授权的功能，因此我们可以选择跳转到子账户管理的页面：<br><img src="https://static.bytelife.net/blog/images/16144500659516.jpg"><br>首先创建一个子账户：<br><img src="https://static.bytelife.net/blog/images/16144501107194.jpg"><br>这里注意，由于我们这个账户是给 API 使用的，所以必须开启编程访问权限：<br><img src="https://static.bytelife.net/blog/images/16144501894558.jpg"><br>返回以后，点击刚创建的账户右侧的 “添加权限”：<br><img src="https://static.bytelife.net/blog/images/16144502596730.jpg"><br>这里搜索 “OSS”，选择添加 <code>AliyunOSSFullAccess</code> 权限：<br><img src="https://static.bytelife.net/blog/images/16144503464152.jpg"><br>返回列表，点击刚创建的账户名称，创建一个 AccessKey，这里要注意，创建完 AccessKey 后，会显示一个 AccessKey 和一个 SecretKey，一定要保存好，只会显示一次：<br><img src="https://static.bytelife.net/blog/images/16144505338176.jpg"></p>
-<h2 id="安装一键部署脚本"><a href="#安装一键部署脚本" class="headerlink" title="安装一键部署脚本"></a>安装一键部署脚本</h2><p>我编写了一个可以一键部署 Hexo 到阿里云 OSS 的 hexo 插件，并支持配置浏览器缓存 HTTP 响应头。<br>源码地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaS9oZXhvLWRlcGxveWVyLWFsaS1vc3MtZXh0ZW5k">https://github.com/huzhanfei/hexo-deployer-ali-oss-extend<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="创建accesskey并授权"><a class="markdownIt-Anchor" href="#创建accesskey并授权"></a> 创建 AccessKey 并授权</h2>
+<p>其实现在就可以在阿里云的管理页面上传文件部署网站了，但实在是太麻烦，我们希望的是一个自动化的方案。这里我们需要创建一个 API 的授权 AccessKey：<br>
+<img src="https://static.bytelife.net/blog/images/16144500122868.jpg" alt=""><br>
+阿里云现在开启了子账户授权的功能，因此我们可以选择跳转到子账户管理的页面：<br>
+<img src="https://static.bytelife.net/blog/images/16144500659516.jpg" alt=""><br>
+首先创建一个子账户：<br>
+<img src="https://static.bytelife.net/blog/images/16144501107194.jpg" alt=""><br>
+这里注意，由于我们这个账户是给 API 使用的，所以必须开启编程访问权限：<br>
+<img src="https://static.bytelife.net/blog/images/16144501894558.jpg" alt=""><br>
+返回以后，点击刚创建的账户右侧的 “添加权限”：<br>
+<img src="https://static.bytelife.net/blog/images/16144502596730.jpg" alt=""><br>
+这里搜索 “OSS”，选择添加 <code>AliyunOSSFullAccess</code> 权限：<br>
+<img src="https://static.bytelife.net/blog/images/16144503464152.jpg" alt=""><br>
+返回列表，点击刚创建的账户名称，创建一个 AccessKey，这里要注意，创建完 AccessKey 后，会显示一个 AccessKey 和一个 SecretKey，一定要保存好，只会显示一次：<br>
+<img src="https://static.bytelife.net/blog/images/16144505338176.jpg" alt=""></p>
+<h2 id="安装一键部署脚本"><a class="markdownIt-Anchor" href="#安装一键部署脚本"></a> 安装一键部署脚本</h2>
+<p>我编写了一个可以一键部署 Hexo 到阿里云 OSS 的 hexo 插件，并支持配置浏览器缓存 HTTP 响应头。<br>
+源码地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h1emhhbmZlaS9oZXhvLWRlcGxveWVyLWFsaS1vc3MtZXh0ZW5k">https://github.com/huzhanfei/hexo-deployer-ali-oss-extend<i class="fa fa-external-link-alt"></i></span></p>
 <p>使用很简单，在 hexo 项目下执行安装命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i hexo-deployer-ali-oss-extend</span><br></pre></td></tr></tbody></table></figure>
-
 <p>在 hexo 项目配置文件<code>_config.yml</code> 中添加如下配置：</p>
 <figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">ali-oss</span></span><br><span class="line">  <span class="attr">region:</span> <span class="string">"&lt;您的oss 区域代码&gt;"</span></span><br><span class="line">  <span class="attr">accessKeyId:</span> <span class="string">"&lt;您的oss  accessKeyId&gt;"</span></span><br><span class="line">  <span class="attr">accessKeySecret:</span> <span class="string">"&lt;您的oss accessKeySecret&gt;"</span></span><br><span class="line">  <span class="attr">bucket:</span> <span class="string">"&lt;您的bucket name&gt;"</span></span><br><span class="line">  <span class="attr">cacheControl:</span></span><br><span class="line">    <span class="attr">images:</span> <span class="string">"&lt;图片文件HTTP响应头Cache-Control&gt;，留空为no-cache"</span></span><br><span class="line">    <span class="attr">css:</span> <span class="string">"&lt;CSS文件HTTP响应头Cache-Control&gt;，留空为no-cache"</span></span><br><span class="line">    <span class="attr">js:</span> <span class="string">"&lt;JS文件HTTP响应头Cache-Control&gt;，留空为no-cache"</span></span><br><span class="line">    <span class="attr">html:</span> <span class="string">"&lt;HTML文件HTTP响应头Cache-Control&gt;，留空为no-cache"</span></span><br><span class="line">    <span class="attr">other:</span> <span class="string">"&lt;其它文件HTTP响应头Cache-Control&gt;，留空为no-cache"</span></span><br></pre></td></tr></tbody></table></figure>
-
-<p>其中区域代码，可以在 OSS 的 Bucket 概览当中找到，如下图所示：<br><img src="https://static.bytelife.net/blog/images/16144516114701.jpg"></p>
+<p>其中区域代码，可以在 OSS 的 Bucket 概览当中找到，如下图所示：<br>
+<img src="https://static.bytelife.net/blog/images/16144516114701.jpg" alt=""></p>
 <p>另外，这里增加 Cache-Control 功能，是由于 OSS 对象存储并没有针对常见的网页文件（如 css、js、图片等）进行默认 HTTP 响应头的设置，这些不常更新的文件不缓存，会导致流量大量浪费，后面如果使用 CDN 的时候，CDN 获取不到缓存配置也会进行不断的回源，产生回源流量浪费。</p>
 <p>配置就这么简单，然后执行部署命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></tbody></table></figure>
-
 <p>即可将项目部署到 OSS 中，默认情况下将文件上传到 bucket 的根目录下，如果需要部署到其他目录，请在 deploy 下添加 remotePath 选项进行指定</p>
 <figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">remotePath:</span> <span class="string">"&lt;您要部署的目录&gt;"</span></span><br></pre></td></tr></tbody></table></figure>
-
 <p>当然，如果你使用了 GitHub 的 Actions 功能，可以配置自动执行 hexo d，提交源码的时候自动执行部署脚本，简直不要太方便，具体配置方式不是本文讨论的重点内容，可自行研究。</p>
-<h2 id="配置自定义域名"><a href="#配置自定义域名" class="headerlink" title="配置自定义域名"></a>配置自定义域名</h2><p>其实做到这一步，就已经可以访问你的网站了，可以在 Bucket 概览页面找到你的访问域名，当然我们大概率需要使用自己的域名访问，如果你的域名已经进行了备案，可以添加自定义域名。</p>
-<p>可以在 “传输管理 - 域名管理” 中配置域名：<br><img src="https://static.bytelife.net/blog/images/16144521040524.jpg"><br>点击 “绑定域名”，在如图所示的内容中填入自己的域名，如果你的域名解析服务器是阿里云的话，可以点击 “自动添加 CNAME 记录” 快速设置域名解析：<br><img src="https://static.bytelife.net/blog/images/16144521363658.jpg"><br>如果你的域名不在阿里云解析的话，请根据页面提示手动设置域名解析。</p>
-<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>到此，就可以通过你的域名访问站点了，你也可以上传 SSL 证书以开启 HTTPS 访问。<br>当然，如果你有更高的要求，也可以选择更多的优化：</p>
+<h2 id="配置自定义域名"><a class="markdownIt-Anchor" href="#配置自定义域名"></a> 配置自定义域名</h2>
+<p>其实做到这一步，就已经可以访问你的网站了，可以在 Bucket 概览页面找到你的访问域名，当然我们大概率需要使用自己的域名访问，如果你的域名已经进行了备案，可以添加自定义域名。</p>
+<p>可以在 “传输管理 - 域名管理” 中配置域名：<br>
+<img src="https://static.bytelife.net/blog/images/16144521040524.jpg" alt=""><br>
+点击 “绑定域名”，在如图所示的内容中填入自己的域名，如果你的域名解析服务器是阿里云的话，可以点击 “自动添加 CNAME 记录” 快速设置域名解析：<br>
+<img src="https://static.bytelife.net/blog/images/16144521363658.jpg" alt=""><br>
+如果你的域名不在阿里云解析的话，请根据页面提示手动设置域名解析。</p>
+<h2 id="后话"><a class="markdownIt-Anchor" href="#后话"></a> 后话</h2>
+<p>到此，就可以通过你的域名访问站点了，你也可以上传 SSL 证书以开启 HTTPS 访问。<br>
+当然，如果你有更高的要求，也可以选择更多的优化：</p>
 <ul>
 <li>开启 CDN 服务：开启 CDN 服务后，相当于在全国多地部署你了的镜像站，以获取更快的访问速度，同时可以通过 CDN 服务开启图片压缩、页面优化等等功能</li>
 <li>分区域解析：设置 DNS 解析将国内解析到阿里云 OSS 或 CDN，国外解析到 Netlify、Vercel 甚至直接解析到 GitHub Pages 服务</li>
@@ -555,7 +581,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -575,7 +601,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -359,7 +359,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>9 分钟</span>
     </span>
 </div>
 
@@ -464,7 +464,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>11 分钟</span>
     </span>
 </div>
 
@@ -562,7 +562,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
+      <span>14 分钟</span>
     </span>
 </div>
 
@@ -660,7 +660,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>7 分钟</span>
     </span>
 </div>
 
@@ -758,7 +758,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>49 分钟</span>
+      <span>1:01</span>
     </span>
 </div>
 
@@ -856,7 +856,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>18 分钟</span>
+      <span>22 分钟</span>
     </span>
 </div>
 
@@ -867,7 +867,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="ThreadLocal是什么"><a href="#ThreadLocal是什么" class="headerlink" title="ThreadLocal是什么"></a>ThreadLocal 是什么</h2><p>早在 JDK 1.2 的版本中就提供 Java.lang.ThreadLocal，ThreadLocal 为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。<br>当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。<br>从线程的角度看，目标变量就象是线程的本地变量，这也是类名中 “Local” 所要表达的意思。<br>所以，在 Java 中编写线程局部变量的代码相对来说要笨拙一些，因此造成线程局部变量没有在 Java 开发者中得到很好的普及。 　　</p>
+          <h2 id="threadlocal是什么"><a class="markdownIt-Anchor" href="#threadlocal是什么"></a> ThreadLocal 是什么</h2>
+<p>早在 JDK 1.2 的版本中就提供 Java.lang.ThreadLocal，ThreadLocal 为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。<br>
+当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。<br>
+从线程的角度看，目标变量就象是线程的本地变量，这也是类名中 “Local” 所要表达的意思。<br>
+所以，在 Java 中编写线程局部变量的代码相对来说要笨拙一些，因此造成线程局部变量没有在 Java 开发者中得到很好的普及。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/46308.html#more" rel="contents">
@@ -954,7 +958,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1:05</span>
+      <span>1:22</span>
     </span>
 </div>
 
@@ -967,9 +971,9 @@
     <div class="post-body" itemprop="articleBody">
           <p>Java NIO (New IO) 是一个可以替代标准 Java IO API 的 IO API（从 Java 1.4 开始)，Java NIO 提供了与标准 IO 不同的 IO 工作方式。</p>
 <ul>
-<li>  <strong>Java NIO: Channels and Buffers（通道和缓冲区）</strong>：标准的 IO 基于字节流和字符流进行操作的，而 NIO 是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</li>
-<li>  <strong>Java NIO: Non-blocking IO（非阻塞 IO）</strong>：Java NIO 可以让你非阻塞的使用 IO，例如：当线程从通道读取数据到缓冲区时，线程还是可以进行其他事情。当数据被写入到缓冲区时，线程可以继续处理它。从缓冲区写入通道也类似。</li>
-<li>  <strong>Java NIO: Selectors（选择器）</strong>：Java NIO 引入了选择器的概念，选择器用于监听多个通道的事件（比如：连接打开，数据到达）。因此，单个的线程可以监听多个数据通道。</li>
+<li><strong>Java NIO: Channels and Buffers（通道和缓冲区）</strong>：标准的 IO 基于字节流和字符流进行操作的，而 NIO 是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</li>
+<li><strong>Java NIO: Non-blocking IO（非阻塞 IO）</strong>：Java NIO 可以让你非阻塞的使用 IO，例如：当线程从通道读取数据到缓冲区时，线程还是可以进行其他事情。当数据被写入到缓冲区时，线程可以继续处理它。从缓冲区写入通道也类似。</li>
+<li><strong>Java NIO: Selectors（选择器）</strong>：Java NIO 引入了选择器的概念，选择器用于监听多个通道的事件（比如：连接打开，数据到达）。因此，单个的线程可以监听多个数据通道。</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -1057,7 +1061,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>9 分钟</span>
     </span>
 </div>
 
@@ -1155,7 +1159,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
+      <span>14 分钟</span>
     </span>
 </div>
 
@@ -1166,7 +1170,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在并发编程中我们有时候需要使用线程安全的队列。如果我们要实现一个线程安全的队列有两种实现方式：一种是使用阻塞算法，另一种是使用非阻塞算法。使用阻塞算法的队列可以用一个锁（入队和出队用同一把锁）或两个锁（入队和出队用不同的锁）等方式来实现，而非阻塞的实现方式则可以使用循环 CAS 的方式来实现，本文让我们一起来研究下 Doug Lea 是如何使用非阻塞的方式来实现线程安全队列 ConcurrentLinkedQueue 的，相信从大师身上我们能学到不少并发编程的技巧。</p>
+          <h2 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言</h2>
+<p>在并发编程中我们有时候需要使用线程安全的队列。如果我们要实现一个线程安全的队列有两种实现方式：一种是使用阻塞算法，另一种是使用非阻塞算法。使用阻塞算法的队列可以用一个锁（入队和出队用同一把锁）或两个锁（入队和出队用不同的锁）等方式来实现，而非阻塞的实现方式则可以使用循环 CAS 的方式来实现，本文让我们一起来研究下 Doug Lea 是如何使用非阻塞的方式来实现线程安全队列 ConcurrentLinkedQueue 的，相信从大师身上我们能学到不少并发编程的技巧。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/12742.html#more" rel="contents">
@@ -1253,7 +1258,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>19 分钟</span>
+      <span>24 分钟</span>
     </span>
 </div>
 
@@ -1264,7 +1269,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="术语定义"><a href="#术语定义" class="headerlink" title="术语定义"></a>术语定义</h3><p>术语：哈希算法<br>英文: hash algorithm<br>解释：是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。&nbsp;</p>
+          <h3 id="术语定义"><a class="markdownIt-Anchor" href="#术语定义"></a> 术语定义</h3>
+<p>术语：哈希算法<br>
+英文: hash algorithm<br>
+解释：是一种将任意内容的输入转换成相同长度输出的加密方式，其输出被称为哈希值。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/36648.html#more" rel="contents">
@@ -1327,7 +1335,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -1347,7 +1355,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">

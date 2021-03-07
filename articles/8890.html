@@ -229,7 +229,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89Spring%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">（一）Spring 中的作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BD%BF%E7%94%A8%E4%BC%9A%E8%AF%9D%E5%92%8C%E8%AF%B7%E6%B1%82%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">2.</span> <span class="nav-text">（二）使用会话和请求作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%B8%89%EF%BC%89%E5%9C%A8XML%E4%B8%AD%E5%A3%B0%E6%98%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%BB%A3%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">（三）在 XML 中声明作用域代理</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80spring%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text"> （一）Spring 中的作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E4%BD%BF%E7%94%A8%E4%BC%9A%E8%AF%9D%E5%92%8C%E8%AF%B7%E6%B1%82%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">2.</span> <span class="nav-text"> （二）使用会话和请求作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%9C%A8xml%E4%B8%AD%E5%A3%B0%E6%98%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%BB%A3%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text"> （三）在 XML 中声明作用域代理</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -384,7 +384,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -399,13 +399,13 @@
 <p>在大多数情况下，单例 bean 是非常理想的方案。初始化和垃圾回收对象实例所带来的成本只留给一些小规模任务，在这些任务中，让对象保持无状态并且在应用中反复重用这些对象可能并不合理。</p>
 <p>有时候你所使用的类可能是易变的，它们会保持一些状态，比如我们在 Web 购物商城中常见的购物车功能，不同的用户不可能同时使用同一个购物车实例，因此重用是不安全的。</p>
 <span id="more"></span>
-
-<h3 id="（一）Spring中的作用域"><a href="#（一）Spring中的作用域" class="headerlink" title="（一）Spring中的作用域"></a>（一）Spring 中的作用域</h3><p>Spring 提供了多种作用域，可以基于这些作用域来创建 bean，包括：</p>
+<h3 id="一spring中的作用域"><a class="markdownIt-Anchor" href="#一spring中的作用域"></a> （一）Spring 中的作用域</h3>
+<p>Spring 提供了多种作用域，可以基于这些作用域来创建 bean，包括：</p>
 <ul>
-<li>  单例（Singleton）：在整个应用中，只创建 bean 的一个实例；</li>
-<li>  原型（Prototype）：每次注入或者通过 Spring 上下文获取的时候，都会创建一个新的 bean 实例；</li>
-<li>  会话（Session）：在 Web 应用中，为每个会话创建一个 bean 实例；</li>
-<li>  请求（Request）：在 Web 应用中，为每次请求创建一个 bean 实例；</li>
+<li>单例（Singleton）：在整个应用中，只创建 bean 的一个实例；</li>
+<li>原型（Prototype）：每次注入或者通过 Spring 上下文获取的时候，都会创建一个新的 bean 实例；</li>
+<li>会话（Session）：在 Web 应用中，为每个会话创建一个 bean 实例；</li>
+<li>请求（Request）：在 Web 应用中，为每次请求创建一个 bean 实例；</li>
 </ul>
 <p>如果需要自定义 bean 的作用域，需要使用 @Scope 注解，他可以与 @Component 或 @Bean 组合使用：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cake</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>{</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
@@ -416,7 +416,8 @@
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Dessert <span class="title">cake</span><span class="params">()</span></span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Cake();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>同样，也可以在 XML 中配置，应用<bean>元素的 scope 属性：</bean></p>
 <figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cake"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.Cake"</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<h3 id="（二）使用会话和请求作用域"><a href="#（二）使用会话和请求作用域" class="headerlink" title="（二）使用会话和请求作用域"></a>（二）使用会话和请求作用域</h3><p>在 Web 应用中，我们经常需要操作两种作用域：会话和请求。</p>
+<h3 id="二使用会话和请求作用域"><a class="markdownIt-Anchor" href="#二使用会话和请求作用域"></a> （二）使用会话和请求作用域</h3>
+<p>在 Web 应用中，我们经常需要操作两种作用域：会话和请求。</p>
 <p>就像前面所说，在购物商城的购物车实例上，单例和原型作用域自然不能满足我们的需求，我们希望为每一个会话都创建一个购物车，那么这里会话作用域就是最完美的选择。</p>
 <p>下面来简单模拟一下购物车的作用域场景：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@Scope(</span></span><br><span class="line"><span class="meta">    value = WebApplicationContext.SCOPE_SESSION,</span></span><br><span class="line"><span class="meta">    proxyMode = ScopedProxyMode.INTERFACES)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ShoppingCart <span class="title">cart</span><span class="params">()</span></span>{</span><br><span class="line">   <span class="comment">// ....</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
@@ -427,11 +428,12 @@
 <p>因为 StoreService 是一个单例 bean，会在 Spring 上下文加载的时候创建，当它创建的时候，Spring 会试图将 ShoppingCart bean 注入到 setShoppingCart () 方法中。但是 ShoppingCart bean 是会话作用域的，此时并不存在。直到某个用户进入系统，创建了会话以后，才会出现 ShoppingCart 实例。</p>
 <p>另外，系统中将会存在多个 ShoppingCart 实例：每个用户一个。我们并不想让 Spring 注入到某个胡定的 ShoppingCart 实例到 StoreService 中。我们希望的是当 StoreService 处理购物车功能时，它所使用的 ShoppingCart 实例恰好是当前会话所对应的那一个。</p>
 <p>Spring 并不会将实际的 ShoppingCart bean 注入到 StoreService 中，Spring 会注入一个到 ShoppingCart bean 的代理。这个代理会暴露与 ShoppingCart 相同的方法，所以 StoreService 会认为他就是一个购物车。但是，当 StoreService 调用 ShoppingCart 的方法时，代理会对其进行懒解析并将调用委托给作用域内真正的 ShoppingCart bean。如下图所示：</p>
-<p><img src="https://static.bytelife.net/blog/images/16139181440326.png"></p>
+<p><img src="https://static.bytelife.net/blog/images/16139181440326.png" alt=""></p>
 <p>现在我们来讨论一下 proxyMode 属性。我们将 proxyMode 属性设置为了 ScopedProxyMode.INTERFACES，这表明这个代理要实现 ShoppingCart 接口，并将调用委托给实现 bean。</p>
 <p>这里我们的 ShoppingCart 是接口而不是具体的类，这当然是可以的（也是最理想的代理模式）。但如果 ShoppingCart 是具体的实现类而不是接口的话，Spring 就没办法创建基于接口的代理了。此时必须使用 CGLib 来生成基于类的代理。所以，如果 bean 类型是具体的类的话，我们必须要将 proxyMode 设置为 ScopedProxyMode.TARGET_CLASS，以此来表明要以生成目标类扩展的方式创建代理。</p>
 <p>请求作用域与会话作用域十分类似，也应该以作用域代理的方式进行注入，再次不做赘述。</p>
-<h3 id="（三）在XML中声明作用域代理"><a href="#（三）在XML中声明作用域代理" class="headerlink" title="（三）在XML中声明作用域代理"></a>（三）在 XML 中声明作用域代理</h3><p>在 XML 中设置作用域代理需要使用 Spring aop 命名空间的一个元素：</p>
+<h3 id="三在xml中声明作用域代理"><a class="markdownIt-Anchor" href="#三在xml中声明作用域代理"></a> （三）在 XML 中声明作用域代理</h3>
+<p>在 XML 中设置作用域代理需要使用 Spring aop 命名空间的一个元素：</p>
 <figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cart"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.ShoppingCart"</span> <span class="attr">scope</span>=<span class="string">"session"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:scoped-proxy</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>当然了，在使用 aop 命名空间之前一定要在 xml 的顶部进行对命名空间进行声明：</p>
 <figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"</span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/aop/spring-aop.xsd"</span>&gt;</span></span><br><span class="line">    ......</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
@@ -547,7 +549,7 @@
   </div>
 
 <div class="copyright">
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -567,7 +569,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:54</span>
+    <span title="站点阅读时长">9:53</span>
   </span>
 </div>
 <div class="busuanzi-count">
