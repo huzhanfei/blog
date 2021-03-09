@@ -874,7 +874,7 @@ Ctrl+N，可以快速打开类&lt;/p&gt;</summary>
 &lt;li&gt;
 &lt;p&gt;配置防火墙，开启 80 端口、3306 端口、如需使用 SSH 还应开启 22 端口、使用 FTP 需开启 21 端口、如果网站使用 SSL 访问需开启 443 端口： 删除原有的 iptables , 添加合适的配置&lt;/p&gt;
 &lt;p&gt;rm -rf /etc/sysconfig/iptables&lt;br&gt;
-vi /etc/sysconfig/iptables&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;</summary>
+vi /etc/sysconfig/iptables&lt;/p&gt;</summary>
     
     
     
