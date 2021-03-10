@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>ByteLife</title>
-  <icon>https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/favicon-32x32.png</icon>
+  <icon>https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images/favicon-32x32.png</icon>
   <subtitle>技术交流与学习自留地</subtitle>
   <link href="https://www.bytelife.net/atom.xml" rel="self"/>
   
@@ -10,7 +10,7 @@
   <id>https://www.bytelife.net/</id>
   
   <image>
-    <url>https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/favicon-32x32.png</url>
+    <url>https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images/favicon-32x32.png</url>
     <title>ByteLife</title>
     <link>https://www.bytelife.net/</link>
   </image>
