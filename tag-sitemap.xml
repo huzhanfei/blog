@@ -3,6 +3,34 @@
 
 
     <url>
+        <loc>https://www.bytelife.net/tags/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/</loc>
+        <lastmod>2021-03-14T15:10:31.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.bytelife.net/tags/validator/</loc>
+        <lastmod>2021-03-14T15:10:31.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.bytelife.net/tags/%E5%BC%82%E5%B8%B8/</loc>
+        <lastmod>2021-03-14T15:10:31.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.bytelife.net/tags/Java/</loc>
+        <lastmod>2021-03-14T15:10:31.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://www.bytelife.net/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</loc>
         <lastmod>2021-03-07T04:46:20.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -53,13 +81,6 @@
 
     <url>
         <loc>https://www.bytelife.net/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/</loc>
-        <lastmod>2017-03-18T02:57:13.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://www.bytelife.net/tags/Java/</loc>
         <lastmod>2017-03-18T02:57:13.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
