@@ -10,4 +10,8 @@ Crawl-delay: 60
 
 # 网站地图Sitemap
 Sitemap: https://www.bytelife.net/sitemap.xml
+Sitemap: https://www.bytelife.net/post-sitemap.xml
+Sitemap: https://www.bytelife.net/page-sitemap.xml
+Sitemap: https://www.bytelife.net/category-sitemap.xml
+Sitemap: https://www.bytelife.net/tag-sitemap.xml
 Sitemap: https://www.bytelife.net/baidusitemap.xml
