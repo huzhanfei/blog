@@ -30,12 +30,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="准备工作 配置防火墙，开启 80 端口、3306 端口、如需使用 SSH 还应开启 22 端口、使用 FTP 需开启 21 端口、如果网站使用 SSL 访问需开启 443 端口： 删除原有的 iptables , 添加合适的配置  rm -rf &#x2F;etc&#x2F;sysconfig&#x2F;iptables vi &#x2F;etc&#x2F;sysconfig&#x2F;iptables">
+<meta name="description" content="准备工作 配置防火墙，开启80端口、3306端口、如需使用SSH还应开启22端口、使用FTP需开启21端口、如果网站使用SSL访问需开启443端口： 删除原有的 iptables , 添加合适的配置  rm -rf &#x2F;etc&#x2F;sysconfig&#x2F;iptables vi &#x2F;etc&#x2F;sysconfig&#x2F;iptables">
 <meta property="og:type" content="article">
 <meta property="og:title" content="完美配置 CentOS+Nginx+MySQL+PHP（LNMP）网站环境">
 <meta property="og:url" content="https://www.bytelife.net/articles/19465.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="准备工作 配置防火墙，开启 80 端口、3306 端口、如需使用 SSH 还应开启 22 端口、使用 FTP 需开启 21 端口、如果网站使用 SSL 访问需开启 443 端口： 删除原有的 iptables , 添加合适的配置  rm -rf &#x2F;etc&#x2F;sysconfig&#x2F;iptables vi &#x2F;etc&#x2F;sysconfig&#x2F;iptables">
+<meta property="og:description" content="准备工作 配置防火墙，开启80端口、3306端口、如需使用SSH还应开启22端口、使用FTP需开启21端口、如果网站使用SSL访问需开启443端口： 删除原有的 iptables , 添加合适的配置  rm -rf &#x2F;etc&#x2F;sysconfig&#x2F;iptables vi &#x2F;etc&#x2F;sysconfig&#x2F;iptables">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16138522621984.jpg">
 <meta property="article:published_time" content="2016-07-18T04:28:53.000Z">
@@ -381,7 +381,7 @@ window.addEventListener('load', () => {
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
+      <span>3.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -485,10 +485,10 @@ phpinfo();
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/6310.html" rel="bookmark">Fedora24（Linux）Nvidia 双显卡驱动解决方案（Bumblebee）</a></div>
+      <div class="popular-posts-title"><a href="/articles/6310.html" rel="bookmark">Fedora24（Linux）Nvidia双显卡驱动解决方案（Bumblebee）</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/8183.html" rel="bookmark">TCP 加速锐速 SS（ServerSpeeder）破解版一键安装</a></div>
+      <div class="popular-posts-title"><a href="/articles/8183.html" rel="bookmark">TCP加速锐速SS（ServerSpeeder）破解版一键安装</a></div>
     </li>
   </ul>
 
@@ -585,14 +585,14 @@ phpinfo();
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">120k</span>
+    <span title="站点总字数">121k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:02</span>
+    <span title="站点阅读时长">10:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

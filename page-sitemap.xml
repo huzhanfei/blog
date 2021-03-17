@@ -10,17 +10,8 @@
     
     
     <url>
-        <loc>https://www.bytelife.net/tags/</loc>
-        <lastmod>2021-03-17T17:22:24.124Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    
-    
-    <url>
         <loc>https://www.bytelife.net/about/</loc>
-        <lastmod>2021-03-17T17:22:24.120Z</lastmod>
+        <lastmod>2021-03-17T17:45:58.597Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -29,7 +20,16 @@
     
     <url>
         <loc>https://www.bytelife.net/categories/</loc>
-        <lastmod>2021-03-17T17:22:24.120Z</lastmod>
+        <lastmod>2021-03-17T17:45:58.597Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    
+    
+    <url>
+        <loc>https://www.bytelife.net/tags/</loc>
+        <lastmod>2021-03-17T17:45:58.597Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -38,7 +38,7 @@
     
     <url>
         <loc>https://www.bytelife.net/404.html</loc>
-        <lastmod>2021-03-17T17:22:24.116Z</lastmod>
+        <lastmod>2021-03-17T17:45:58.589Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

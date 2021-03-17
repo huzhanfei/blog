@@ -30,12 +30,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="一、c 命名空间通过构造器注入 Bean 的时候通常需要使用到元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示：">
+<meta name="description" content="一、c命名空间通过构造器注入Bean的时候通常需要使用到元素，作为替代的方案，可以使用Spring的c-命名空间。c-命名空间是在Spring 3.0中加入的，它是在XML中更为简洁地描述构造器参数的方式。要使用c-命名空间，必须要在XML的顶部声明其模式，如下所示：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring 学习笔记之通过 XML 装配 Bean 的一些细节">
 <meta property="og:url" content="https://www.bytelife.net/articles/36596.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="一、c 命名空间通过构造器注入 Bean 的时候通常需要使用到元素，作为替代的方案，可以使用 Spring 的 c - 命名空间。c - 命名空间是在 Spring 3.0 中加入的，它是在 XML 中更为简洁地描述构造器参数的方式。要使用 c - 命名空间，必须要在 XML 的顶部声明其模式，如下所示：">
+<meta property="og:description" content="一、c命名空间通过构造器注入Bean的时候通常需要使用到元素，作为替代的方案，可以使用Spring的c-命名空间。c-命名空间是在Spring 3.0中加入的，它是在XML中更为简洁地描述构造器参数的方式。要使用c-命名空间，必须要在XML的顶部声明其模式，如下所示：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-10-20T09:13:13.000Z">
 <meta property="article:modified_time" content="2016-10-20T09:13:13.000Z">
@@ -443,37 +443,37 @@ window.addEventListener('load', () => {
 <figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">util:list</span> <span class="attr">id</span>=<span class="string">"trackList"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>忘记<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>出卖<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>寂寞轰炸<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>游戏爱情<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>心结<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>记事本<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>啤酒泡泡<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>黄昏<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>末班车<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>心血来潮<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>时间<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">util:list</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>然后就可以像引用其它 Bean 一样将 list 轻松引用，如下所示：</p>
 <figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem.collections.BlankDisc"</span></span></span><br><span class="line"><span class="tag"> <span class="attr">c:title</span>=<span class="string">"Transfer"</span> <span class="attr">c:artist</span>=<span class="string">"周传雄/小刚"</span> <span class="attr">c:tracks-ref</span>=<span class="string">"trackList"</span>/&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<p><span class="exturl" data-url="dXRpbDpsaXN0">util:list<i class="fa fa-external-link-alt"></i></span> 只是 util - 命名空间提供的众多元素之一，下表列出了 util - 命名空间提供的所有元素：</p>
+<p><span class="exturl" data-url="dXRpbDpsaXN0">util:list<i class="fa fa-external-link-alt"></i></span>只是 util - 命名空间提供的众多元素之一，下表列出了 util - 命名空间提供的所有元素：</p>
 <table>
 <thead>
 <tr>
 <th>元素</th>
-<th>描述 </th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><span class="exturl" data-url="dXRpbDpjb25zdGFudA==">util:constant<i class="fa fa-external-link-alt"></i></span></td>
-<td> 引用某个类型的 public static 域，并墙漆暴露为 bean</td>
+<td><span class="exturl" data-url="dXRpbDpjb25zdGFudA=="> util:constant<i class="fa fa-external-link-alt"></i></span></td>
+<td>引用某个类型的 public static 域，并墙漆暴露为 bean</td>
 </tr>
 <tr>
 <td><span class="exturl" data-url="dXRpbDpsaXN0">util:list<i class="fa fa-external-link-alt"></i></span></td>
-<td> 创建一个 java.util.List 类型的 bean，其中包含值或引用 </td>
+<td>创建一个 java.util.List 类型的 bean，其中包含值或引用</td>
 </tr>
 <tr>
-<td><span class="exturl" data-url="dXRpbDptYXA=">util:map<i class="fa fa-external-link-alt"></i></span></td>
-<td> 创建一个 java.util.Map 类型的 bean，其中包含值或引用 </td>
+<td><span class="exturl" data-url="dXRpbDptYXA="> util:map<i class="fa fa-external-link-alt"></i></span></td>
+<td>创建一个 java.util.Map 类型的 bean，其中包含值或引用</td>
 </tr>
 <tr>
-<td><span class="exturl" data-url="dXRpbDpwcm9wZXJ0aWVz">util:properties<i class="fa fa-external-link-alt"></i></span></td>
-<td> 创建一个 java.util.Properties 类型的 bean</td>
+<td><span class="exturl" data-url="dXRpbDpwcm9wZXJ0aWVz"> util:properties<i class="fa fa-external-link-alt"></i></span></td>
+<td>创建一个 java.util.Properties 类型的 bean</td>
 </tr>
 <tr>
 <td><span class="exturl" data-url="dXRpbDpwcm9wZXJ0eS1wYXRo">util:property-path<i class="fa fa-external-link-alt"></i></span></td>
-<td> 引用一个 bean 的属性（或内嵌属性），并将其暴露为 bean</td>
+<td>引用一个 bean 的属性（或内嵌属性），并将其暴露为 bean</td>
 </tr>
 <tr>
 <td><span class="exturl" data-url="dXRpbDpzZXQ=">util:set<i class="fa fa-external-link-alt"></i></span></td>
-<td> 创建一个 java.util.set 类型的 bean，其中包含值或引用</td>
+<td>创建一个 java.util.set 类型的 bean，其中包含值或引用</td>
 </tr>
 </tbody></table>
 
@@ -486,19 +486,19 @@ window.addEventListener('load', () => {
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/8890.html" rel="bookmark">Spring 学习笔记之 Bean 的作用域</a></div>
+      <div class="popular-posts-title"><a href="/articles/8890.html" rel="bookmark">Spring学习笔记之Bean的作用域</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/61060.html" rel="bookmark">Spring 学习笔记之 Bean 的属性注入</a></div>
+      <div class="popular-posts-title"><a href="/articles/61060.html" rel="bookmark">Spring学习笔记之Bean的属性注入</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/31708.html" rel="bookmark">Spring 学习笔记之 IOC 与 DI 概述</a></div>
+      <div class="popular-posts-title"><a href="/articles/31708.html" rel="bookmark">Spring学习笔记之IOC与DI概述</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/1737.html" rel="bookmark">Spring 学习笔记之 Spring HelloWorld</a></div>
+      <div class="popular-posts-title"><a href="/articles/1737.html" rel="bookmark">Spring学习笔记之Spring HelloWorld</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/22338.html" rel="bookmark">Spring 学习笔记之处理自动装配的歧义性</a></div>
+      <div class="popular-posts-title"><a href="/articles/22338.html" rel="bookmark">Spring学习笔记之处理自动装配的歧义性</a></div>
     </li>
   </ul>
 
@@ -596,14 +596,14 @@ window.addEventListener('load', () => {
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">120k</span>
+    <span title="站点总字数">121k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:02</span>
+    <span title="站点阅读时长">10:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

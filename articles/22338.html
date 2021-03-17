@@ -30,12 +30,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="之前的文章中已经看到了 Spring 的自动装配有很大的用处，它可以帮助我们快速的装配 bean，但是这里存在一个问题，在之前的装配中，仅有一个 bean 匹配所需的结果时，自动装配才是有效的。如果不仅只有一个 bean 能够匹配结果的话，这就会导致 Spring 不知道该装配哪个 bean 从而导致装配失败，例如下面这个例子，我们定义了一个 Dessert 接口，并且有三个类实现了这个接口，分别">
+<meta name="description" content="之前的文章中已经看到了Spring的自动装配有很大的用处，它可以帮助我们快速的装配bean，但是这里存在一个问题，在之前的装配中，仅有一个bean匹配所需的结果时，自动装配才是有效的。如果不仅只有一个bean能够匹配结果的话，这就会导致Spring不知道该装配哪个bean从而导致装配失败，例如下面这个例子，我们定义了一个Dessert接口，并且有三个类实现了这个接口，分别为Cake、Cookies">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring 学习笔记之处理自动装配的歧义性">
 <meta property="og:url" content="https://www.bytelife.net/articles/22338.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="之前的文章中已经看到了 Spring 的自动装配有很大的用处，它可以帮助我们快速的装配 bean，但是这里存在一个问题，在之前的装配中，仅有一个 bean 匹配所需的结果时，自动装配才是有效的。如果不仅只有一个 bean 能够匹配结果的话，这就会导致 Spring 不知道该装配哪个 bean 从而导致装配失败，例如下面这个例子，我们定义了一个 Dessert 接口，并且有三个类实现了这个接口，分别">
+<meta property="og:description" content="之前的文章中已经看到了Spring的自动装配有很大的用处，它可以帮助我们快速的装配bean，但是这里存在一个问题，在之前的装配中，仅有一个bean匹配所需的结果时，自动装配才是有效的。如果不仅只有一个bean能够匹配结果的话，这就会导致Spring不知道该装配哪个bean从而导致装配失败，例如下面这个例子，我们定义了一个Dessert接口，并且有三个类实现了这个接口，分别为Cake、Cookies">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-10-20T09:23:41.000Z">
 <meta property="article:modified_time" content="2016-10-20T09:23:41.000Z">
@@ -457,19 +457,19 @@ window.addEventListener('load', () => {
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/8890.html" rel="bookmark">Spring 学习笔记之 Bean 的作用域</a></div>
+      <div class="popular-posts-title"><a href="/articles/8890.html" rel="bookmark">Spring学习笔记之Bean的作用域</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/61060.html" rel="bookmark">Spring 学习笔记之 Bean 的属性注入</a></div>
+      <div class="popular-posts-title"><a href="/articles/61060.html" rel="bookmark">Spring学习笔记之Bean的属性注入</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/31708.html" rel="bookmark">Spring 学习笔记之 IOC 与 DI 概述</a></div>
+      <div class="popular-posts-title"><a href="/articles/31708.html" rel="bookmark">Spring学习笔记之IOC与DI概述</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/1737.html" rel="bookmark">Spring 学习笔记之 Spring HelloWorld</a></div>
+      <div class="popular-posts-title"><a href="/articles/1737.html" rel="bookmark">Spring学习笔记之Spring HelloWorld</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/33415.html" rel="bookmark">Spring 学习笔记之自动化装配 Bean</a></div>
+      <div class="popular-posts-title"><a href="/articles/33415.html" rel="bookmark">Spring学习笔记之自动化装配Bean</a></div>
     </li>
   </ul>
 
@@ -567,14 +567,14 @@ window.addEventListener('load', () => {
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">120k</span>
+    <span title="站点总字数">121k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:02</span>
+    <span title="站点阅读时长">10:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

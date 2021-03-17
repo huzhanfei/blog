@@ -30,12 +30,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="引言：XML（可扩展标记语言）在软件开发工程中取得了广泛的应用。在 Java 语言中操作 XML 有许多方法，最常用的方法就是使用 JDom、Dom4j 等第三方组件。本文将简单介绍使用 Dom4j 操作 XML 的基本方法。">
+<meta name="description" content="引言：XML（可扩展标记语言）在软件开发工程中取得了广泛的应用。在Java语言中操作XML有许多方法，最常用的方法就是使用JDom、Dom4j等第三方组件。本文将简单介绍使用Dom4j操作XML的基本方法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Dom4j 操作 XML">
 <meta property="og:url" content="https://www.bytelife.net/articles/47460.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="引言：XML（可扩展标记语言）在软件开发工程中取得了广泛的应用。在 Java 语言中操作 XML 有许多方法，最常用的方法就是使用 JDom、Dom4j 等第三方组件。本文将简单介绍使用 Dom4j 操作 XML 的基本方法。">
+<meta property="og:description" content="引言：XML（可扩展标记语言）在软件开发工程中取得了广泛的应用。在Java语言中操作XML有许多方法，最常用的方法就是使用JDom、Dom4j等第三方组件。本文将简单介绍使用Dom4j操作XML的基本方法。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16139161438607.png">
 <meta property="article:published_time" content="2016-07-16T04:17:32.000Z">
@@ -451,7 +451,7 @@ window.addEventListener('load', () => {
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取所有student元素的name节点</span></span><br><span class="line">List&lt;Node&gt; list = doc.selectNodes(<span class="string">"//student"</span>);</span><br><span class="line"><span class="comment">// 输出测试</span></span><br><span class="line"><span class="keyword">for</span> (Node node : list) {</span><br><span class="line">&nbsp;&nbsp; &nbsp;System.out.println(node.getName() </span><br><span class="line">                 \+ <span class="string">":"</span> \+ node.valueOf(<span class="string">"name"</span>));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>以上为两种经常使用的方法，另外如果你想在一个 XHTML 文档中查找到所有的超文本链接，可以使用下面这个窍门轻松实现：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findLinks</span><span class="params">(Document document)</span> <span class="keyword">throws</span> DocumentException </span>{</span><br><span class="line">    List list = document.selectNodes( <span class="string">"//a/@href"</span> );</span><br><span class="line">    <span class="keyword">for</span> (Iterator iter = list.iterator(); iter.hasNext(); ) {</span><br><span class="line">        Attribute attribute = (Attribute) iter.next();</span><br><span class="line">        String url = attribute.getValue();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>如果你需要任何有关学习 XPah 表达式语言的帮助，你可以访问 <span class="exturl" data-url="aHR0cDovL3d3dy56dm9uLm9yZy94eGwvWFBhdGhUdXRvcmlhbC9HZW5lcmFsL2V4YW1wbGVzLmh0bWw=" title="External Link">Zvon tutorial<i class="fa fa-external-link-alt"></i></span> 进行学习，这里可以通过各种各样的例子帮助你学习。</p>
+<p>如果你需要任何有关学习 XPah 表达式语言的帮助，你可以访问<span class="exturl" data-url="aHR0cDovL3d3dy56dm9uLm9yZy94eGwvWFBhdGhUdXRvcmlhbC9HZW5lcmFsL2V4YW1wbGVzLmh0bWw=" title="External Link"> Zvon tutorial<i class="fa fa-external-link-alt"></i></span>进行学习，这里可以通过各种各样的例子帮助你学习。</p>
 <h3 id="快速循环"><a href="#快速循环" class="headerlink" title="快速循环"></a>快速循环</h3><p>如果你需要操作一个十分庞大的 XML 文档，那么你应该使用快速循环的方法以避免在每次循环都创建 Iterator 对象，下面是一个简单的例子：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">treeWalk</span><span class="params">(Document document)</span> </span>{</span><br><span class="line">    treeWalk( document.getRootElement() );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">treeWalk</span><span class="params">(Element element)</span> </span>{</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>, size = element.nodeCount(); i &lt; size; i++ ) {</span><br><span class="line">        Node node = element.node(i);</span><br><span class="line">        <span class="keyword">if</span> ( node <span class="keyword">instanceof</span> Element ) {</span><br><span class="line">            treeWalk( (Element) node );</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> {</span><br><span class="line">            <span class="comment">// 这里写你想要做的操作</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="创建XML-Document对象"><a href="#创建XML-Document对象" class="headerlink" title="创建XML Document对象"></a>创建 XML Document 对象</h3><p>在使用 Dom4j 时经常需要创建一个新的 document，下面是一个简单的示例：</p>
@@ -476,16 +476,16 @@ window.addEventListener('load', () => {
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/12742.html" rel="bookmark">ConcurrentLinkedQueue 的实现原理分析</a></div>
+      <div class="popular-posts-title"><a href="/articles/12742.html" rel="bookmark">ConcurrentLinkedQueue的实现原理分析</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/42700.html" rel="bookmark">Hibernate Validator 异常 HV000221 解决办法</a></div>
+      <div class="popular-posts-title"><a href="/articles/42700.html" rel="bookmark">Hibernate Validator异常HV000221解决办法</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/articles/33262.html" rel="bookmark">IntelliJ Idea 常用快捷键列表</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/55127.html" rel="bookmark">JVM 内存划分</a></div>
+      <div class="popular-posts-title"><a href="/articles/55127.html" rel="bookmark">JVM内存划分</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/articles/20740.html" rel="bookmark">Java 8 中新的 Date 和 Time 类入门详解</a></div>
@@ -585,14 +585,14 @@ window.addEventListener('load', () => {
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">120k</span>
+    <span title="站点总字数">121k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:02</span>
+    <span title="站点阅读时长">10:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -374,7 +374,7 @@ window.addEventListener('load', () => {
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>状态码的职责是当客户端向服务器端发送请求时，描述返回请求结果。借助状态码，用户可以知道服务器端是正常处理了请求，还是出现了什么错误。 RFC2616 定义的状态码，由 3 位数字和原因短信组成。 数字中的第一位指定了响应类别，后两位无分类。响应类别有以下 5 种：</p>
+          <p>状态码的职责是当客户端向服务器端发送请求时，描述返回请求结果。借助状态码，用户可以知道服务器端是正常处理了请求，还是出现了什么错误。 RFC2616定义的状态码，由3位数字和原因短信组成。 数字中的第一位指定了响应类别，后两位无分类。响应类别有以下5种：</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/54533.html#more" rel="contents">
@@ -472,7 +472,7 @@ window.addEventListener('load', () => {
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="并发问题的症状"><a href="#并发问题的症状" class="headerlink" title="并发问题的症状"></a>并发问题的症状</h2><h3 id="多线程put后可能导致get死循环"><a href="#多线程put后可能导致get死循环" class="headerlink" title="多线程put后可能导致get死循环"></a>多线程 put 后可能导致 get 死循环</h3><p>从前我们的 Java 代码因为一些原因使用了 HashMap 这个东西，但是当时的程序是单线程的，一切都没有问题。后来，我们的程序性能有问题，所以需要变成多线程的，于是，变成多线程后到了线上，发现程序经常占了 100% 的 CPU，查看堆栈，你会发现程序都 Hang 在了 HashMap.get () 这个方法上了，重启程序后问题消失。但是过段时间又会来。而且，这个问题在测试环境里可能很难重现。 </p>
+          <h2 id="并发问题的症状"><a href="#并发问题的症状" class="headerlink" title="并发问题的症状"></a>并发问题的症状</h2><h3 id="多线程put后可能导致get死循环"><a href="#多线程put后可能导致get死循环" class="headerlink" title="多线程put后可能导致get死循环"></a>多线程put后可能导致get死循环</h3><p>从前我们的Java代码因为一些原因使用了HashMap这个东西，但是当时的程序是单线程的，一切都没有问题。后来，我们的程序性能有问题，所以需要变成多线程的，于是，变成多线程后到了线上，发现程序经常占了100%的CPU，查看堆栈，你会发现程序都Hang在了HashMap.get()这个方法上了，重启程序后问题消失。但是过段时间又会来。而且，这个问题在测试环境里可能很难重现。 </p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/65492.html#more" rel="contents">
@@ -570,7 +570,7 @@ window.addEventListener('load', () => {
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>这篇文章主要是 java8 中新的 Date 和 Time API 的实战。新的 Date 和 Time 类是 java 开发者社区千呼万唤始出来的。Java8 之前存在的 Date 类一直都受人诟病，很多人都会选择使用第三方的 date 库 <a target="_blank" rel="noopener" href="http://www.joda.org/joda-time/">joda-time</a>。Java8 中的 date 和 time api 是 jodatime 的作者参与开发的，实现了 JSR310 的全部内容。这些新的 api 都在包 java.time 下。 既然第三方的 joda-time,date4j 都已经足够强大了，为什么 java8 还要重新实现他呢，一部分的原因是这些第三方的库是存在兼容问题的，比如标准的 JSF 日期转化器与 joda-time api，就不兼容，每次使用都需要编写自己的转换器，所以标准化 api 是必须的，就有了 JSR310，java8 中就实现了他全部的规定内容。</p>
+          <p>这篇文章主要是java8中新的Date和Time API的实战。新的Date和Time类是java开发者社区千呼万唤始出来的。Java8 之前存在的Date类一直都受人诟病，很多人都会选择使用第三方的date库<a target="_blank" rel="noopener" href="http://www.joda.org/joda-time/">joda-time</a>。Java8中的date和time api是jodatime的作者参与开发的，实现了JSR310的全部内容。这些新的api都在包java.time下。 既然第三方的joda-time,date4j都已经足够强大了，为什么java8还要重新实现他呢，一部分的原因是这些第三方的库是存在兼容问题的，比如标准的JSF日期转化器与joda-time api，就不兼容，每次使用都需要编写自己的转换器，所以标准化api是必须的，就有了JSR310，java8中就实现了他全部的规定内容。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/20740.html#more" rel="contents">
@@ -650,7 +650,7 @@ window.addEventListener('load', () => {
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -668,9 +668,9 @@ window.addEventListener('load', () => {
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="误解七：HTTPS无法缓存"><a href="#误解七：HTTPS无法缓存" class="headerlink" title="误解七：HTTPS无法缓存"></a><strong>误解七：HTTPS 无法缓存</strong></h3><p>许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：</p>
+          <h3 id="误解七：HTTPS无法缓存"><a href="#误解七：HTTPS无法缓存" class="headerlink" title="误解七：HTTPS无法缓存"></a><strong>误解七：HTTPS无法缓存</strong></h3><p>许多人以为，出于安全考虑，浏览器不会在本地保存HTTPS缓存。实际上，只要在HTTP头中使用特定命令，HTTPS是可以缓存的。 微软的IE项目经理Eric Lawrence写道：</p>
 <blockquote>
-<p>“说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age=600，那么这个网页就将被 IE 缓存 10 分钟。IE 的缓存策略，与是否使用 HTTPS 协议无关。（其他浏览器在这方面的行为不一致，取决于你使用的版本，所以这里不加以讨论。）”</p>
+<p>“说来也许令人震惊，只要HTTP头允许这样做，所有版本的IE都缓存HTTPS内容。比如，如果头命令是Cache-Control: max-age=600，那么这个网页就将被IE缓存10分钟。IE的缓存策略，与是否使用HTTPS协议无关。（其他浏览器在这方面的行为不一致，取决于你使用的版本，所以这里不加以讨论。）”</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
@@ -747,14 +747,14 @@ window.addEventListener('load', () => {
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">120k</span>
+    <span title="站点总字数">121k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:02</span>
+    <span title="站点阅读时长">10:03</span>
   </span>
 </div>
 <div class="busuanzi-count">
