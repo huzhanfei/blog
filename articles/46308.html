@@ -30,12 +30,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="ThreadLocal是什么早在JDK 1.2的版本中就提供Java.lang.ThreadLocal，ThreadLocal为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。当使用ThreadLocal维护变量时，ThreadLocal为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。">
+<meta name="description" content="ThreadLocal 是什么早在 JDK 1.2 的版本中就提供 Java.lang.ThreadLocal，ThreadLocal 为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThreadLocal 详解">
 <meta property="og:url" content="https://www.bytelife.net/articles/46308.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="ThreadLocal是什么早在JDK 1.2的版本中就提供Java.lang.ThreadLocal，ThreadLocal为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。当使用ThreadLocal维护变量时，ThreadLocal为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。">
+<meta property="og:description" content="ThreadLocal 是什么早在 JDK 1.2 的版本中就提供 Java.lang.ThreadLocal，ThreadLocal 为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16139168064615.gif">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16139169894405.jpg">
@@ -460,7 +460,7 @@ thread[Thread-2] --&gt; sn[3]
 
 <p>源码就是以上，这源码自然是在 ThreadLocal 里面的，有截图为证。 　　 　　<br><img src="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16139169894405.jpg"><br>本文是自己在学习 ThreadLocal 的时候，一时兴起，深入看了源码，思考了此类的作用、使用范围，进而联想到对传统的 synchronize 共享变量线程安全的问题进行比较，而总结的博文，总结一句话就是一个是锁机制进行时间换空间，一个是存储拷贝进行空间换时间。 (全文完)</p>
 <blockquote>
-<p>转载自<span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVmZW5nMjA="> http://blog.csdn.net/lufeng20<i class="fa fa-external-link-alt"></i></span></p>
+<p>转载自 <span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVmZW5nMjA=">http://blog.csdn.net/lufeng20<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 
     </div>
@@ -472,19 +472,19 @@ thread[Thread-2] --&gt; sn[3]
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/12742.html" rel="bookmark">ConcurrentLinkedQueue的实现原理分析</a></div>
+      <div class="popular-posts-title"><a href="/articles/12742.html" rel="bookmark">ConcurrentLinkedQueue 的实现原理分析</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/46009.html" rel="bookmark">Java中的Copy-On-Write容器</a></div>
+      <div class="popular-posts-title"><a href="/articles/46009.html" rel="bookmark">Java 中的 Copy-On-Write 容器</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/articles/36648.html" rel="bookmark">深入剖析 ConcurrentHashMap</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/65492.html" rel="bookmark">HashMap多线程并发问题分析</a></div>
+      <div class="popular-posts-title"><a href="/articles/65492.html" rel="bookmark">HashMap 多线程并发问题分析</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/42700.html" rel="bookmark">Hibernate Validator异常HV000221解决办法</a></div>
+      <div class="popular-posts-title"><a href="/articles/42700.html" rel="bookmark">Hibernate Validator 异常 HV000221 解决办法</a></div>
     </li>
   </ul>
 
@@ -582,14 +582,14 @@ thread[Thread-2] --&gt; sn[3]
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">120k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:03</span>
+    <span title="站点阅读时长">10:02</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -30,12 +30,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="误解七：HTTPS无法缓存许多人以为，出于安全考虑，浏览器不会在本地保存HTTPS缓存。实际上，只要在HTTP头中使用特定命令，HTTPS是可以缓存的。 微软的IE项目经理Eric Lawrence写道：  “说来也许令人震惊，只要HTTP头允许这样做，所有版本的IE都缓存HTTPS内容。比如，如果头命令是Cache-Control: max-age&#x3D;600，那么这个网页就将被IE缓存10分钟。I">
+<meta name="description" content="误解七：HTTPS 无法缓存许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：  “说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age&#x3D;600，那么">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTPS 的 7 个误解">
 <meta property="og:url" content="https://www.bytelife.net/articles/7124.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="误解七：HTTPS无法缓存许多人以为，出于安全考虑，浏览器不会在本地保存HTTPS缓存。实际上，只要在HTTP头中使用特定命令，HTTPS是可以缓存的。 微软的IE项目经理Eric Lawrence写道：  “说来也许令人震惊，只要HTTP头允许这样做，所有版本的IE都缓存HTTPS内容。比如，如果头命令是Cache-Control: max-age&#x3D;600，那么这个网页就将被IE缓存10分钟。I">
+<meta property="og:description" content="误解七：HTTPS 无法缓存许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。 微软的 IE 项目经理 Eric Lawrence 写道：  “说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 Cache-Control: max-age&#x3D;600，那么">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16139210436054.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16139210533569.png">
@@ -390,7 +390,7 @@ window.addEventListener('load', () => {
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.4k</span>
+      <span>2.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -436,7 +436,7 @@ window.addEventListener('load', () => {
 </blockquote>
 <p>以 Twitter 为例，它的登录页使用了 HTTPS，但是登录以后，其他页面就变成了 HTTP。这时，它的 cookie 里的 session 值就暴露了。<br><img src="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16139211218521.png"><br><img src="https://cdn.javacodes.cn/files/2016/07/2016-07-04_15-58-23.png"> 也就是说，这些 cookie 是在 HTTPS 环境下建立的，但是却在 HTTP 环境下传输。如果有人劫持到这些 cookie，那他就能以你的身份在 Twitter 上发言了。 （完） &nbsp;</p>
 <blockquote>
-<p><strong>来自：阮一峰的网络日志</strong><br><strong>译者：</strong>阮一峰 ****<br><strong>链接：<span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTEvMDIvc2V2ZW4vX215dGhzL19hYm91dF9odHRwcy5odG1s">http://www.ruanyifeng.com/blog/2011/02/seven\_myths\_about_https.html<i class="fa fa-external-link-alt"></i></span></strong><br><strong>原文：<span class="exturl" data-url="aHR0cDovL2Jsb2cuaHR0cHdhdGNoLmNvbS8yMDExLzAxLzI4L3RvcC03LW15dGhzLWFib3V0LWh0dHBzLw==">http://blog.httpwatch.com/2011/01/28/top-7-myths-about-https/<i class="fa fa-external-link-alt"></i></span></strong></p>
+<p><strong>来自：阮一峰的网络日志</strong><br><strong>译者：</strong>阮一峰 ****<br><strong>链接：<span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTEvMDIvc2V2ZW4vX215dGhzL19hYm91dF9odHRwcy5odG1s">http://www.ruanyifeng.com/blog/2011/02/seven\_myths\_about_https.html<i class="fa fa-external-link-alt"></i></span></strong><br><strong> 原文：<span class="exturl" data-url="aHR0cDovL2Jsb2cuaHR0cHdhdGNoLmNvbS8yMDExLzAxLzI4L3RvcC03LW15dGhzLWFib3V0LWh0dHBzLw==">http://blog.httpwatch.com/2011/01/28/top-7-myths-about-https/<i class="fa fa-external-link-alt"></i></span></strong></p>
 </blockquote>
 
     </div>
@@ -448,10 +448,10 @@ window.addEventListener('load', () => {
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/54533.html" rel="bookmark">HTTP常见状态码解释</a></div>
+      <div class="popular-posts-title"><a href="/articles/54533.html" rel="bookmark">HTTP 常见状态码解释</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/56430.html" rel="bookmark">全面理解HTTP</a></div>
+      <div class="popular-posts-title"><a href="/articles/56430.html" rel="bookmark">全面理解 HTTP</a></div>
     </li>
   </ul>
 
@@ -545,14 +545,14 @@ window.addEventListener('load', () => {
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">120k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:03</span>
+    <span title="站点阅读时长">10:02</span>
   </span>
 </div>
 <div class="busuanzi-count">

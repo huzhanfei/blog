@@ -30,12 +30,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="最近接到电话面试中，面试官问我ClassNotFoundException与NoClassDefFoundError有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一下，感觉非">
+<meta name="description" content="最近接到电话面试中，面试官问我 ClassNotFoundException 与 NoClassDefFoundError 有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException 我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析 ClassNotFoundException 与 NoClassDefFoundError">
 <meta property="og:url" content="https://www.bytelife.net/articles/60306.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="最近接到电话面试中，面试官问我ClassNotFoundException与NoClassDefFoundError有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一下，感觉非">
+<meta property="og:description" content="最近接到电话面试中，面试官问我 ClassNotFoundException 与 NoClassDefFoundError 有什么样的区别，至于前者经常遇到，我还是能答上一些，至于后者，完全没遇到过啊，只好瞎编了，都忘记当时是怎么回答的。然后面试官问我他们都会出现在哪些情况，ClassNotFoundException 我还可以说出几种情况，可是后者这下不能编了，只好求饶。结果面试官还给我讲解了一">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/16138522353337.jpg">
 <meta property="article:published_time" content="2017-03-18T02:57:13.000Z">
@@ -440,16 +440,16 @@ window.addEventListener('load', () => {
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/44598.html" rel="bookmark">Java类加载机制-类加载器（ClassLoader）与双亲委派模型</a></div>
+      <div class="popular-posts-title"><a href="/articles/44598.html" rel="bookmark">Java 类加载机制 - 类加载器（ClassLoader）与双亲委派模型</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/49511.html" rel="bookmark">Java类加载机制-类加载的时机和过程</a></div>
+      <div class="popular-posts-title"><a href="/articles/49511.html" rel="bookmark">Java 类加载机制 - 类加载的时机和过程</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/12742.html" rel="bookmark">ConcurrentLinkedQueue的实现原理分析</a></div>
+      <div class="popular-posts-title"><a href="/articles/12742.html" rel="bookmark">ConcurrentLinkedQueue 的实现原理分析</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/42700.html" rel="bookmark">Hibernate Validator异常HV000221解决办法</a></div>
+      <div class="popular-posts-title"><a href="/articles/42700.html" rel="bookmark">Hibernate Validator 异常 HV000221 解决办法</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/articles/33262.html" rel="bookmark">IntelliJ Idea 常用快捷键列表</a></div>
@@ -550,14 +550,14 @@ window.addEventListener('load', () => {
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">120k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:03</span>
+    <span title="站点阅读时长">10:02</span>
   </span>
 </div>
 <div class="busuanzi-count">

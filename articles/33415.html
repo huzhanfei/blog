@@ -30,12 +30,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"www.bytelife.net","root":"/","images":"https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"none","post_body":"none","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="在Spring中可以使用Java代码、XML和自动化装配三种方式来装配Bean。从便利性角度来说，最强大的还是Spring的自动化配置，如果Spring能够进行自动化装配的话，那何苦还要显式的将这些Bean装配在一起呢？ Spring从两个角度来实现自动化装配：   组件扫描：Spring会自动发现应用上下文中所创建的Bean；  自动装配：Spring自动满足bean之间的依赖。   为了阐述组">
+<meta name="description" content="在 Spring 中可以使用 Java 代码、XML 和自动化装配三种方式来装配 Bean。从便利性角度来说，最强大的还是 Spring 的自动化配置，如果 Spring 能够进行自动化装配的话，那何苦还要显式的将这些 Bean 装配在一起呢？ Spring 从两个角度来实现自动化装配：   组件扫描：Spring 会自动发现应用上下文中所创建的 Bean；  自动装配：Spring 自动满足 b">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring 学习笔记之自动化装配 Bean">
 <meta property="og:url" content="https://www.bytelife.net/articles/33415.html">
 <meta property="og:site_name" content="ByteLife">
-<meta property="og:description" content="在Spring中可以使用Java代码、XML和自动化装配三种方式来装配Bean。从便利性角度来说，最强大的还是Spring的自动化配置，如果Spring能够进行自动化装配的话，那何苦还要显式的将这些Bean装配在一起呢？ Spring从两个角度来实现自动化装配：   组件扫描：Spring会自动发现应用上下文中所创建的Bean；  自动装配：Spring自动满足bean之间的依赖。   为了阐述组">
+<meta property="og:description" content="在 Spring 中可以使用 Java 代码、XML 和自动化装配三种方式来装配 Bean。从便利性角度来说，最强大的还是 Spring 的自动化配置，如果 Spring 能够进行自动化装配的话，那何苦还要显式的将这些 Bean 装配在一起呢？ Spring 从两个角度来实现自动化装配：   组件扫描：Spring 会自动发现应用上下文中所创建的 Bean；  自动装配：Spring 自动满足 b">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-09-17T16:14:00.000Z">
 <meta property="article:modified_time" content="2016-09-17T16:14:00.000Z">
@@ -412,7 +412,7 @@ window.addEventListener('load', () => {
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javacodes.spring.beans.soundsystem;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Transfer</span> <span class="keyword">implements</span> <span class="title">CompactDisc</span> </span>{</span><br><span class="line">    <span class="keyword">private</span> String title = <span class="string">"transfer"</span>;</span><br><span class="line">    <span class="keyword">private</span> String artist = <span class="string">"周传雄/小刚"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>{</span><br><span class="line">        System.out.println(<span class="string">"正在播放"</span>+artist+<span class="string">"的专辑："</span> + title);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>这里需要注意的是该类使用了 @Component 注解，表明该类会作为组件类，并告知 Spring 要为这个组件创建 bean。但是在这之前，由于默认组件扫描是不启用的。我们还需要显式配置一下 Spring，从而命令它去寻找带有 @Component 注解的类，并为其创建 bean。 下面的这个类展现了完成这件事情的最简介配置方式：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javacodes.spring.beans.soundsystem;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>{</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>如果没有其他配置的话，@ComponentScan 默认会扫描与配置类相同的包。因为 CDPlayerConfig 类位于 cn.javacodes.spring.beans.soundsystem 包中，因此 Spring 将会扫描这个包以及这个包下的所有子包，查找带有 @Component 注解标示的类，并在 Spring 中自动为其创建一个 bean。 当然，如果你更加倾向于使用 XML 来启用组件扫描的话，那么可以使用 Spring context 命名空间的<span class="exturl" data-url="Y29udGV4dDpjb21wb25lbnQtc2Nhbg=="> context:component-scan<i class="fa fa-external-link-alt"></i></span>元素。</p>
+<p>如果没有其他配置的话，@ComponentScan 默认会扫描与配置类相同的包。因为 CDPlayerConfig 类位于 cn.javacodes.spring.beans.soundsystem 包中，因此 Spring 将会扫描这个包以及这个包下的所有子包，查找带有 @Component 注解标示的类，并在 Spring 中自动为其创建一个 bean。 当然，如果你更加倾向于使用 XML 来启用组件扫描的话，那么可以使用 Spring context 命名空间的 <span class="exturl" data-url="Y29udGV4dDpjb21wb25lbnQtc2Nhbg==">context:component-scan<i class="fa fa-external-link-alt"></i></span> 元素。</p>
 <figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:configurator</span>=<span class="string">"http://www.springframework.org/schema/c"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:avalon</span>=<span class="string">"http://www.springframework.org/schema/p"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"cn.javacodes.spring.beans.soundsystem"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>尽管我们可以使用 XML 的方案来启用组件扫描，但在后面的讨论中，更多的还是会使用基于 Java 的配置。 下面我们创建一个简单的 JUnit 测试，它会创建 Spring 上下文，并判断 CompactDisc 是不是真的创建出来了。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javacodes.spring.beans.soundsystem;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.ContextConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertNotNull;</span><br><span class="line"><span class="meta">@RunWith(SpringJUnit4ClassRunner.class)</span></span><br><span class="line"><span class="meta">@ContextConfiguration(classes = CDPlayerConfig.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerTest</span> </span>{</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> CompactDisc cd;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cdShouldNotBeNull</span><span class="params">()</span></span>{</span><br><span class="line">        assertNotNull(cd);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
@@ -453,19 +453,19 @@ window.addEventListener('load', () => {
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/8890.html" rel="bookmark">Spring学习笔记之Bean的作用域</a></div>
+      <div class="popular-posts-title"><a href="/articles/8890.html" rel="bookmark">Spring 学习笔记之 Bean 的作用域</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/61060.html" rel="bookmark">Spring学习笔记之Bean的属性注入</a></div>
+      <div class="popular-posts-title"><a href="/articles/61060.html" rel="bookmark">Spring 学习笔记之 Bean 的属性注入</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/31708.html" rel="bookmark">Spring学习笔记之IOC与DI概述</a></div>
+      <div class="popular-posts-title"><a href="/articles/31708.html" rel="bookmark">Spring 学习笔记之 IOC 与 DI 概述</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/1737.html" rel="bookmark">Spring学习笔记之Spring HelloWorld</a></div>
+      <div class="popular-posts-title"><a href="/articles/1737.html" rel="bookmark">Spring 学习笔记之 Spring HelloWorld</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/articles/22338.html" rel="bookmark">Spring学习笔记之处理自动装配的歧义性</a></div>
+      <div class="popular-posts-title"><a href="/articles/22338.html" rel="bookmark">Spring 学习笔记之处理自动装配的歧义性</a></div>
     </li>
   </ul>
 
@@ -563,14 +563,14 @@ window.addEventListener('load', () => {
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">120k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:03</span>
+    <span title="站点阅读时长">10:02</span>
   </span>
 </div>
 <div class="busuanzi-count">
