@@ -67,21 +67,14 @@ window.addEventListener('load', () => {
 </script>
 <title>TCP 加速锐速 SS（ServerSpeeder）破解版一键安装 | ByteLife</title>
   
-    <script>
-      function sendPageView() {
-        if (CONFIG.hostname !== location.hostname) return;
-        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
-        localStorage.setItem('uid', uid);
-        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
-          v  : 1,
-          tid: 'UA-190433082-1',
-          cid: uid,
-          t  : 'pageview',
-          dp : encodeURIComponent(location.pathname)
-        }));
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-190433082-1"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-190433082-1');
       }
-      document.addEventListener('pjax:complete', sendPageView);
-      sendPageView();
     </script>
 
   <script data-pjax>
