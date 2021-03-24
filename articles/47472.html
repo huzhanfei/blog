@@ -43,7 +43,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/242240109L8lbS.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/huzhanfei/static@main/blog/images/2021/03/24225038nCibnY.png">
 <meta property="article:published_time" content="2021-03-24T13:34:04.000Z">
-<meta property="article:modified_time" content="2021-03-24T15:00:45.455Z">
+<meta property="article:modified_time" content="2021-03-24T16:29:28.530Z">
 <meta property="article:author" content="Jeffrey">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="腾讯云">
@@ -71,6 +71,40 @@ window.addEventListener('load', () => {
 	console.log(`\n%cByteLife%cJeffrey @huzhanfei%c\n`, 'padding: 8px; background: #3f5973; font-weight: bold; font-size: large; color: white;', 'padding: 8px; background: #649ab6; font-size: large; color: #eee;','');
 	console.log(`页面加载完毕消耗了${Math.round(performance.now() * 100) / 100}ms`);
 });
+</script>
+
+<script data-pjax>
+(function() {
+    var el = document.createElement("script");
+    el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?f1c5d0c67c12eed77cb802aa02726851ef3ebdf3a7db6b0aa0bd5f927d3018d4059266b591bbec46857a16352461582a5eef3f18a6919b415e533ce545a239922b8d7c8c6655c9b00211740aa8a98e2e";
+    el.id = "ttzz";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+<script data-pjax>
+(function() {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script data-pjax>
+(function(){
+    var el = document.createElement("script");
+    el.src = "https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/js/360-push.min.js?d182b3f28525f2db83acfaaf6e696dba";
+    el.id = "sozz";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(el, s);
+})();
 </script>
 <title>Hexo 静态网站托管到腾讯云 COS+CDN 加速以及缓存自动刷新完美方案 | ByteLife</title>
   
@@ -337,10 +371,16 @@ window.addEventListener('load', () => {
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发布：</span>
-      
 
-      <time title="创建时间：2021-03-24 21:34:04 / 修改时间：23:00:45" itemprop="dateCreated datePublished" datetime="2021-03-24T21:34:04+08:00">2021-03-24</time>
+      <time title="创建时间：2021-03-24 21:34:04" itemprop="dateCreated datePublished" datetime="2021-03-24T21:34:04+08:00">2021-03-24</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-25 00:29:28" itemprop="dateModified" datetime="2021-03-25T00:29:28+08:00">2021-03-25</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -683,38 +723,6 @@ NexT.utils.loadComments('#waline-comments', () => {
     }));
   }, window.Waline);
 });
-</script><script>
-(function() {
-    var el = document.createElement("script");
-    el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?f1c5d0c67c12eed77cb802aa02726851ef3ebdf3a7db6b0aa0bd5f927d3018d4059266b591bbec46857a16352461582a5eef3f18a6919b415e533ce545a239922b8d7c8c6655c9b00211740aa8a98e2e";
-    el.id = "ttzz";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(el, s);
-})(window)
-</script>
-
-<script>
-(function() {
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    } else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-<script>
-(function(){
-    var el = document.createElement("script");
-    el.src = "https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/js/360-push.min.js?d182b3f28525f2db83acfaaf6e696dba";
-    el.id = "sozz";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(el, s);
-})();
 </script>
     </div>
 </body>

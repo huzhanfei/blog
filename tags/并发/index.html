@@ -63,6 +63,40 @@ window.addEventListener('load', () => {
 	console.log(`页面加载完毕消耗了${Math.round(performance.now() * 100) / 100}ms`);
 });
 </script>
+
+<script data-pjax>
+(function() {
+    var el = document.createElement("script");
+    el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?f1c5d0c67c12eed77cb802aa02726851ef3ebdf3a7db6b0aa0bd5f927d3018d4059266b591bbec46857a16352461582a5eef3f18a6919b415e533ce545a239922b8d7c8c6655c9b00211740aa8a98e2e";
+    el.id = "ttzz";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+<script data-pjax>
+(function() {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script data-pjax>
+(function(){
+    var el = document.createElement("script");
+    el.src = "https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/js/360-push.min.js?d182b3f28525f2db83acfaaf6e696dba";
+    el.id = "sozz";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(el, s);
+})();
+</script>
 <title>标签: 并发 | ByteLife</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-190433082-1"></script>
@@ -610,38 +644,6 @@ NexT.utils.loadComments('#waline-comments', () => {
     }));
   }, window.Waline);
 });
-</script><script>
-(function() {
-    var el = document.createElement("script");
-    el.src = "https://sf1-scmcdn-tos.pstatp.com/goofy/ttzz/push.js?f1c5d0c67c12eed77cb802aa02726851ef3ebdf3a7db6b0aa0bd5f927d3018d4059266b591bbec46857a16352461582a5eef3f18a6919b415e533ce545a239922b8d7c8c6655c9b00211740aa8a98e2e";
-    el.id = "ttzz";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(el, s);
-})(window)
-</script>
-
-<script>
-(function() {
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    } else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-<script>
-(function(){
-    var el = document.createElement("script");
-    el.src = "https://cdn.jsdelivr.net/gh/huzhanfei/blog-assets/js/360-push.min.js?d182b3f28525f2db83acfaaf6e696dba";
-    el.id = "sozz";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(el, s);
-})();
 </script>
     </div>
 </body>
